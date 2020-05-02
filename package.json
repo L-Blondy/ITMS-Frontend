@@ -1,0 +1,36 @@
+{
+  "name": "serivecenow-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel public/index.html",
+    "build": "rm -rf dist && parcel build index.html 404.html --public-url /H2O/",
+    "deploy": "npm run build && copyfiles public/robots.txt dist && gh-pages -d dist",
+    "analyze": "source-map-explorer dist/H2O.*",
+    "test:eslint": "eslint src/ --ext .js --ext .jsx"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
+    "source-map-explorer": "^2.4.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "axios": "^0.19.2",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-styled-components": "^1.10.7",
+    "bundler": "^0.8.0",
+    "element-scroll-polyfill": "^1.0.1",
+    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.4",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2",
+    "styled-components": "^5.0.1"
+  }
+}
