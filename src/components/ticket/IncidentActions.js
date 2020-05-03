@@ -1,8 +1,7 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Validate } from '../../utils';
-import { usePost } from '../../hooks';
 import { baseURL } from '../../../baseURL';
 import { UserCtx } from '../../Context';
 import { UploadFile } from './';
@@ -10,7 +9,6 @@ import http from '../../utils/http';
 
 function IncidentActions({ formControls: [ state, , form ] }) {
 
-	const [ response, post, postError ] = usePost('');
 	const user = useContext(UserCtx);
 	const hist = useHistory();
 
@@ -65,24 +63,14 @@ function IncidentActions({ formControls: [ state, , form ] }) {
 		};
 		console.log('SUBMITTING DATA', data);
 
-		// setTimeout(() => post(baseURL + hist.location.pathname, data), 500);
 		http()
 			.post(baseURL + hist.location.pathname, data)
 			.then(res => hist.push('/ticket/' + res.id))
-			.catch(e => console.log(e));
+			.catch(error => {
+				console.error(error);
+				form.current.classList.remove('disabled');
+			});
 	};
-
-	useEffect(() => {
-		// console.log(postError);
-		form.current.classList.remove('disabled');
-	}, [ postError ]);
-
-	useEffect(() => {
-		if (response) {
-			console.log('Posted with success', response);
-			hist.push('/ticket/' + response.id);
-		}
-	}, [ response ]);
 
 	return (
 		<IncidentActions$>

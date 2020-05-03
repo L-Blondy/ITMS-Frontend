@@ -40,7 +40,7 @@ const http = () => ({
 		this.thenCB = () => { };
 		this.catchCB = () => { };
 		this.req = new XMLHttpRequest();
-		this.req.open('POST', URL + query, true);
+		this.req.open('POST', URL, true);
 		this.req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		this.req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		this.req.setRequestHeader('Cache-Control', 'no-cache');
