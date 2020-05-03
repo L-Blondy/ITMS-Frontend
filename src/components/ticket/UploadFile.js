@@ -23,8 +23,6 @@ function UploadFile() {
 
 		const req = new XMLHttpRequest();
 		req.open("POST", baseURL + location.pathname + '/attach', true);
-		// req.setRequestHeader('Content-type', 'multipart/form-data');
-		// req.setRequestHeader('Content-Disposition', 'form-data');
 		req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		req.setRequestHeader('Cache-Control', 'no-cache');
 		req.msCaching = 'disabled';
