@@ -1,3 +1,5 @@
+import './utils/httpTest';
+
 import React, { useState, Suspense } from 'react';
 import { NavLink, Link, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
