@@ -6,6 +6,7 @@ import { usePost } from '../../hooks';
 import { baseURL } from '../../../baseURL';
 import { UserCtx } from '../../Context';
 import { UploadFile } from './';
+import http from '../../utils/http';
 
 function IncidentActions({ formControls: [ state, , form ] }) {
 
@@ -64,7 +65,11 @@ function IncidentActions({ formControls: [ state, , form ] }) {
 		};
 		console.log('SUBMITTING DATA', data);
 
-		setTimeout(() => post(baseURL + hist.location.pathname, data), 500);
+		// setTimeout(() => post(baseURL + hist.location.pathname, data), 500);
+		http()
+			.post(baseURL + hist.location.pathname, data)
+			.then(res => hist.push('/ticket/' + res.id))
+			.catch(e => console.log(e));
 	};
 
 	useEffect(() => {

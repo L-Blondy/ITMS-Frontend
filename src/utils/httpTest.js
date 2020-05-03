@@ -29,7 +29,7 @@ import http from './http';
 // 	user: "Guest user",
 // };
 
-http()
-	.post('http://localhost:3000/ticket/new', data)
-	.then(res => console.log(res))
-	.catch(error => console.log(error));
+// http()
+// 	.post('http://localhost:3000/ticket/new', data)
+// 	.then(res => console.log(res))
+// 	.catch(error => console.log(error));
