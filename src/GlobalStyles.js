@@ -24,7 +24,13 @@ const GlobalStyles = createGlobalStyle`
 
 	button {
 		font-size: inherit;
-		padding: 0.5em 1.3em;
+		padding: 0.35em 1.2em;
+		border-style: solid;
+		border-width: 1px;
+
+		&:hover {
+			cursor: pointer;
+		}
 	}
 
 	a {

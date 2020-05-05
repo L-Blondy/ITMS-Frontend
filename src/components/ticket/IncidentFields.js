@@ -2,12 +2,12 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-function IncidentFields ( { formControls: [ state, handleChange, form ] } ) {
+function IncidentFields({ formControls: [ state, handleChange, form ] }) {
 
 	const { pathname } = useLocation();
 
 	const getPriority = () => {
-		switch ( state.priority ) {
+		switch (state.priority) {
 			case 'P1':
 				return 'P1 - Critical';
 			case 'P2':
@@ -19,8 +19,15 @@ function IncidentFields ( { formControls: [ state, handleChange, form ] } ) {
 		}
 	};
 
+	const displayDate = (strDate, timezone = []) => {
+		const dateAndTime = new Date(strDate);
+		const date = dateAndTime.toLocaleDateString(timezone);
+		const time = dateAndTime.toLocaleTimeString(timezone, { hour: '2-digit', minute: '2-digit' });
+		return date + '  ' + time;
+	};
+
 	return (
-		<Form$ ref={ form } onSubmit={ ( e ) => e.preventDefault() }>
+		<Form$ ref={ form } onSubmit={ (e) => e.preventDefault() }>
 
 			<div className='main-fields'>
 				<div className='column'>
@@ -37,23 +44,23 @@ function IncidentFields ( { formControls: [ state, handleChange, form ] } ) {
 					</label>
 
 					<label htmlFor='createdOn'>
-						<span>createdOn</span>
+						<span>Created on</span>
 						<input
 							id='createdOn'
 							name='createdOn'
 							type='text'
-							value={ state.createdOn }
+							value={ displayDate(state.createdOn) }
 							disabled
 						/>
 					</label>
 
-					<label htmlFor='status'>
-						<span>Status</span>
+					<label htmlFor='dueDate'>
+						<span>Due date</span>
 						<input
-							id='status'
-							name='status'
+							id='dueDate'
+							name='dueDate'
 							type='text'
-							value={ state.status }
+							value={ displayDate(state.dueDate) }
 							disabled
 						/>
 					</label>
@@ -73,9 +80,9 @@ function IncidentFields ( { formControls: [ state, handleChange, form ] } ) {
 						<span>Category</span>
 						<select id='category' name='category' onChange={ handleChange } value={ state.category } >
 							<option value=''>-none-</option>
-							{ state.staticData.category.map( cat => (
+							{ state.staticData.category.map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
-							) ) }
+							)) }
 						</select>
 					</label>
 
@@ -83,15 +90,28 @@ function IncidentFields ( { formControls: [ state, handleChange, form ] } ) {
 						<span>Sub category</span>
 						<select id='subCategory' name='subCategory' onChange={ handleChange } value={ state.subCategory } >
 							<option value=''>-none-</option>
-							{ state.staticData.subCategory.map( cat => (
+							{ state.staticData.subCategory.map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
-							) ) }
+							)) }
 						</select>
 					</label>
 
 				</div>
 
 				<div className='column'>
+
+					<label htmlFor='status'>
+						<span>Status</span>
+						<input
+							id='status'
+							name='status'
+							type='text'
+							value={ state.status }
+							style={ { textTransform: 'capitalize' } }
+							disabled
+						/>
+					</label>
+
 
 					<label htmlFor='impact'>
 						<span>Impact</span>
@@ -176,7 +196,7 @@ function IncidentFields ( { formControls: [ state, handleChange, form ] } ) {
 						autoComplete="off"
 					/>
 				</label>
-				{ pathname !== '/ticket/new' ? ( <>
+				{ pathname !== '/ticket/new' ? (<>
 					<label htmlFor='log'>
 						<span>Work notes</span>
 						<textarea
@@ -188,7 +208,7 @@ function IncidentFields ( { formControls: [ state, handleChange, form ] } ) {
 							autoComplete="off"
 						/>
 					</label>
-				</> ) : '' }
+				</>) : '' }
 
 			</div>
 		</Form$>
@@ -199,7 +219,7 @@ export default IncidentFields;
 
 const Form$ = styled.form`
 	position: relative;
-	font-size: 1rem;
+	font-size: 14px;
 	margin-bottom: 3rem;
 	width: 70%;
 	margin: auto;
@@ -251,7 +271,7 @@ const Form$ = styled.form`
 		font-size: inherit;
 		border-radius: 3px;
 		border: 1px solid #bbb;
-		padding-left: 0.35rem;
+		padding-left: 0.45rem;
 	}
 
 	input, select {

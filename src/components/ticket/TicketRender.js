@@ -25,7 +25,11 @@ function TicketRender({ serverData }) {
 
 	return (
 		<>
-			<CustomPrompt when={ needToSave } message={ 'Are you sure ?' } />
+			<CustomPrompt
+				when={ needToSave }
+				message={ 'Do you want to exit this page ?' }
+				reason={ 'Modifications may not be saved.' }
+			/>
 
 			<IncidentActions formControls={ [ state, setState, form, needToSave, setNeedToSave ] } />
 
@@ -38,7 +42,6 @@ function TicketRender({ serverData }) {
 			) : '' }
 
 			<WorknotesHistory worknotesHistory={ worknotesHistoryData || worknotesHistory } />
-
 		</>
 	);
 }

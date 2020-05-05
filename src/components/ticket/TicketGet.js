@@ -22,6 +22,7 @@ function TicketGet() {
 
 	useEffect(() => {
 		setKey(Math.random());
+		console.log(serverData);
 	}, [ serverData ]);
 
 	if (error) {
@@ -38,7 +39,9 @@ function TicketGet() {
 		);
 	}
 	else {
-		return <h2>Loading...</h2>;
+		return (
+			<h2>Loading...</h2>
+		);
 	}
 }
 

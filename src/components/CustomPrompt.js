@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
-const CustomPrompt = ({ when, message }) => {
+const CustomPrompt = ({ when, message, reason }) => {
 	const [ isVisible, setIsVisible ] = useState(false);
 	const [ nextLocation, setNextLocation ] = useState();
 	const [ isConfirmed, setIsConfirmed ] = useState(false);
 	const history = useHistory();
 
 	const handleBlockNavigation = (location) => {
-		// console.log(isConfirmed);
 		if (!isConfirmed) {
 			setIsVisible(true);
 			setNextLocation(location);
@@ -32,17 +32,82 @@ const CustomPrompt = ({ when, message }) => {
 	return (
 		<>
 			<Prompt when={ when } message={ handleBlockNavigation } />
-			{ isVisible && <CustomAlert message={ message } handleConfirmation={ handleConfirmation } /> }
+			{ isVisible && <CustomAlert
+				message={ message }
+				reason={ reason }
+				handleConfirmation={ handleConfirmation }
+			/> }
 		</>
 	);
 };
 
-function CustomAlert({ message, handleConfirmation }) {
-	return <div>
-		<h1>{ message }</h1>
-		<button onClick={ () => handleConfirmation(true) }>Yes</button>
-		<button onClick={ () => handleConfirmation(false) }>No</button>
-	</div>;
+function CustomAlert({ message, reason, handleConfirmation }) {
+	return <Alert$>
+		<div className='alert'>
+			<div className='message'>{ message }</div>
+			<div className='reason'>{ reason }</div>
+			<div className='buttons'>
+				<button className='contained' onClick={ () => handleConfirmation(true) }>Exit</button>
+				<button className='outlined' onClick={ () => handleConfirmation(false) }>Cancel</button>
+			</div>
+		</div>
+	</Alert$>;
 }
 export default CustomPrompt;
+
+const btnColor = '#61a0d5';
+
+const Alert$ = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,0.4);
+	z-index: 1001;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+
+	.alert {
+		text-align: center;
+		overflow: hidden;
+		background: white;
+		padding: 1rem 4rem
+	}
+	.message {
+		color: #444;
+		font-size: 1.2rem;
+	}
+
+	.reason {
+		color: #888;
+		font-size: 1.05rem;
+	}
+
+	.message,
+	.reason,
+	.buttons {
+		margin: 1.5rem 0;
+	}
+
+	button {
+		margin: 0.2rem 0.35rem 0 0.35rem;
+		min-width: 6em;
+
+		&.contained {
+			background: ${ btnColor };
+			border-color: ${ btnColor };
+			color: white;
+		}
+
+		&.outlined {
+			background: #ccc;
+			border-color: #ccc;
+			color: white;
+			font-weight: bold;
+		}
+	}
+`;
 
