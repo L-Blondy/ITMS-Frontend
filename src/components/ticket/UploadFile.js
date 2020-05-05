@@ -1,32 +1,37 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-// import axios from 'axios';
 import { usePost } from '../../hooks';
 import { baseURL } from '../../../baseURL';
 import { UserCtx } from '../../Context';
+import http from '../../utils/http';
 
-function UploadFile() {
+function UploadFile () {
 
 	const location = useLocation();
 	const input = useRef();
-	const user = useContext(UserCtx);
+	const user = useContext( UserCtx );
 	const [ res, post ] = usePost();
 
-	const uploadFile = (e) => {
+	const uploadFile = ( e ) => {
 		e.preventDefault();
 		const file = input.current.files[ 0 ];
-		if (!file)
+		if ( !file )
 			return;
 		const formData = new FormData();
-		formData.append("file", file);
-		formData.append("user", user);
+		formData.append( "file", file );
+		formData.append( "user", user );
 
-		const req = new XMLHttpRequest();
-		req.open("POST", baseURL + location.pathname + '/attach', true);
-		req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		req.setRequestHeader('Cache-Control', 'no-cache');
-		req.msCaching = 'disabled';
-		req.send(formData);
+		http()
+			.post( baseURL + location.pathname + '/attach', formData )
+			.send()
+			.catch( e => console.error( e ) );
+
+		// const req = new XMLHttpRequest();
+		// req.open( "POST", baseURL + location.pathname + '/attach', true );
+		// req.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' );
+		// req.setRequestHeader( 'Cache-Control', 'no-cache' );
+		// req.msCaching = 'disabled';
+		// req.send( formData );
 
 		// axios
 		// 	.post(baseURL + location.pathname + '/attach', formData)

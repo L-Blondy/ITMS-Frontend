@@ -3,12 +3,12 @@ import toQuery from './toQuery';
 const http = () => ({
 
 	get(URL, params) {
-		const query = params ? toQuery(params) : '';
+		const query = typeof params === 'string' ? params : toQuery(params);
+		this.method = 'GET';
 		this.thenCB = () => { };
 		this.catchCB = () => { };
 		this.req = new XMLHttpRequest();
-		this.req.open('GET', URL + query, true);
-		this.req.setRequestHeader('Content-type', 'application/json');
+		this.req.open(this.method, URL + query, true);
 		this.req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		this.req.setRequestHeader('Cache-Control', 'no-cache');
 		this.req.msCaching = 'disabled';
@@ -36,16 +36,26 @@ const http = () => ({
 	},
 
 	post(URL, params) {
-		const query = params ? toQuery(params) : '';
+		let query;
+		if (!params) {
+			query = '';
+		}
+		else if (params.constructor && params.constructor.name === 'FormData') {
+			query = params;
+		}
+		else {
+			query = toQuery(params);
+		}
+		this.method = 'POST';
 		this.thenCB = () => { };
 		this.catchCB = () => { };
 		this.req = new XMLHttpRequest();
-		this.req.open('POST', URL, true);
-		this.req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		this.req.open(this.method, URL, true);
 		this.req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		this.req.setRequestHeader('Cache-Control', 'no-cache');
 		this.req.msCaching = 'disabled';
 		this.query = query;
+
 		this.req.onreadystatechange = (e) => {
 
 			if (this.req.readyState === 4) {
@@ -74,14 +84,16 @@ const http = () => ({
 	},
 
 	send() {
+		if (typeof this.query === 'string' && this.method === 'POST') {
+			this.set('Content-type', 'application/x-www-form-urlencoded');
+		}
 		this.req.send(this.query);
 		return this;
 	},
 
 	then(cb) {
 		if (this.req.readyState === 1) {
-			this.req.send(this.query);
-			console.log(this.query);
+			this.send();
 			this.thenCB = cb;
 		}
 		return this;

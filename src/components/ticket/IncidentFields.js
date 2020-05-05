@@ -2,12 +2,12 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-function IncidentFields({ formControls: [ state, handleChange, form ] }) {
+function IncidentFields ( { formControls: [ state, handleChange, form ] } ) {
 
 	const { pathname } = useLocation();
 
 	const getPriority = () => {
-		switch (state.priority) {
+		switch ( state.priority ) {
 			case 'P1':
 				return 'P1 - Critical';
 			case 'P2':
@@ -20,7 +20,7 @@ function IncidentFields({ formControls: [ state, handleChange, form ] }) {
 	};
 
 	return (
-		<Form$ ref={ form } onSubmit={ (e) => e.preventDefault() }>
+		<Form$ ref={ form } onSubmit={ ( e ) => e.preventDefault() }>
 
 			<div className='main-fields'>
 				<div className='column'>
@@ -73,9 +73,9 @@ function IncidentFields({ formControls: [ state, handleChange, form ] }) {
 						<span>Category</span>
 						<select id='category' name='category' onChange={ handleChange } value={ state.category } >
 							<option value=''>-none-</option>
-							{ state.staticData.category.map(cat => (
+							{ state.staticData.category.map( cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
-							)) }
+							) ) }
 						</select>
 					</label>
 
@@ -83,9 +83,9 @@ function IncidentFields({ formControls: [ state, handleChange, form ] }) {
 						<span>Sub category</span>
 						<select id='subCategory' name='subCategory' onChange={ handleChange } value={ state.subCategory } >
 							<option value=''>-none-</option>
-							{ state.staticData.subCategory.map(cat => (
+							{ state.staticData.subCategory.map( cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
-							)) }
+							) ) }
 						</select>
 					</label>
 
@@ -176,7 +176,7 @@ function IncidentFields({ formControls: [ state, handleChange, form ] }) {
 						autoComplete="off"
 					/>
 				</label>
-				{ pathname !== '/ticket/new' ? (<>
+				{ pathname !== '/ticket/new' ? ( <>
 					<label htmlFor='log'>
 						<span>Work notes</span>
 						<textarea
@@ -188,7 +188,7 @@ function IncidentFields({ formControls: [ state, handleChange, form ] }) {
 							autoComplete="off"
 						/>
 					</label>
-				</>) : '' }
+				</> ) : '' }
 
 			</div>
 		</Form$>

@@ -61,7 +61,6 @@ function IncidentActions({ formControls: [ state, , form ] }) {
 			user,
 			date: Date.now()
 		};
-		console.log('SUBMITTING DATA', data);
 
 		http()
 			.post(baseURL + hist.location.pathname, data)
