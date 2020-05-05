@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Validate } from '../../utils';
@@ -7,8 +7,9 @@ import { UserCtx } from '../../Context';
 import { UploadFile } from './';
 import http from '../../utils/http';
 
-function IncidentActions({ formControls: [ state, , form ] }) {
+function IncidentActions({ formControls: [ state, setState, form, needToSave, setNeedToSave ] }) {
 
+	const shouldPost = useRef(false);
 	const user = useContext(UserCtx);
 	const hist = useHistory();
 
@@ -54,22 +55,30 @@ function IncidentActions({ formControls: [ state, , form ] }) {
 			return;
 		}
 		form.current.classList.add('disabled');
+		setNeedToSave(false);
+		shouldPost.current = true;
 
-		const data = {
+		setState({
 			...state,
 			...action,
 			user,
 			date: Date.now()
-		};
-
-		http()
-			.post(baseURL + hist.location.pathname, data)
-			.then(res => hist.push('/ticket/' + res.id))
-			.catch(error => {
-				console.error(error);
-				form.current.classList.remove('disabled');
-			});
+		});
 	};
+
+	useEffect(() => {
+		if (!needToSave && shouldPost.current) {
+			shouldPost.current = false;
+			http()
+				.post(baseURL + hist.location.pathname, state)
+				.then(res => hist.push('/ticket/' + res.id))
+				.catch(error => {
+					console.error(error);
+					form.current.classList.remove('disabled');
+				});
+		}
+	}, [ state, needToSave ]);
+
 
 	return (
 		<IncidentActions$>

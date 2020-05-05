@@ -1,7 +1,6 @@
 class Validate {
 
 	static setClassName(target, name, value) {
-		console.log(target);
 		if (name === 'description'
 			|| name === 'instructions'
 			|| name === 'category'

@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { NavLink, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, NavLink, Link, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { Dashboard, Settings } from './components';
 import { TicketGet } from './components/ticket';
 
-function App () {
+function App() {
 
-	const [ openSettings, setOpenSettings ] = useState( false );
+	const [ openSettings, setOpenSettings ] = useState(false);
 
 	return (
-		<>
+		<BrowserRouter>
 			<Navbar$ className='navbar'>
 				<NavLink className='navlink' to='/dashboard'>Dashboard</NavLink>
 				<NavLink className='navlink' to='/sdf'>Somewhere</NavLink>
 				<NavLink className='navlink' to='/sdfff'>Anywhere</NavLink>
 
-				<button className="settings" onClick={ () => setOpenSettings( true ) }>Settings</button>
+				<button className="settings" onClick={ () => setOpenSettings(true) }>Settings</button>
 			</Navbar$>
 
-			{ openSettings && ( <Settings closeSettings={ () => setOpenSettings( false ) } /> ) }
+			{ openSettings && (<Settings closeSettings={ () => setOpenSettings(false) } />) }
 
 			<Sidebar$ className='sidebar'>
 				<Link to='/ticket/new?type=INC'>Open Incident</Link>
@@ -33,7 +33,7 @@ function App () {
 					<Route path='/ticket/:id' render={ () => <TicketGet /> } />
 				</Switch>
 			</Main$>
-		</>
+		</BrowserRouter>
 	);
 }
 
