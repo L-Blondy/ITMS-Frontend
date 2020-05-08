@@ -13,7 +13,7 @@ function AttachmentBox({ state, setIsAttachOpened }) {
 	const handlePromptAnswer = (userAnswer) => {
 		togglePromptDelete(false);
 		setIsDeletionConfirmed(userAnswer);
-	};
+	};//test
 
 	return (<>
 		<UploadBox$ requestStatus={ requestStatus } isPrompting={ isPrompting }>
