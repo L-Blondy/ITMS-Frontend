@@ -1,16 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
+import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { useInputValidation, useSubscription } from '../../hooks';
-import { IncidentFields, IncidentActions, WorknotesHistory } from './';
+import { IncidentFields, IncidentControlBar, WorknotesHistory } from './';
+import { AttachmentView } from './AttachmentView';
+import { DisableBg$ } from '../styled';
 import { CustomPrompt } from '../';
-import { baseURL } from '../../../baseURL';
+import { BASE_URL } from '../../../BASE_URL';
 
 function TicketRender({ serverData }) {
-	const form = useRef();
-	const [ needToSave, setNeedToSave ] = useState(false);
-	let { worknotesHistory, ...formData } = serverData;
 	const location = useLocation();
-	const liveData = useSubscription(baseURL + location.pathname + '/subscribe');
+	let { worknotesHistory, ...formData } = serverData;
+	const [ isDisabled, setIsDisabled ] = useState(false);
+	const [ needToSave, setNeedToSave ] = useState(false);
+	const [ isAttachOpened, setIsAttachOpened ] = useState(false);
+	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
 	const [ worknotesHistoryData, setWorknotesHistoryData ] = useState(worknotesHistory);
 	const [ state, handleChange, setState ] = useInputValidation(formData, setNeedToSave);
 
@@ -24,25 +28,33 @@ function TicketRender({ serverData }) {
 	}, [ liveData ]);
 
 	return (
-		<>
+		<Ticket$ className={ isDisabled ? 'disabled' : '' }>
 			<CustomPrompt
 				when={ needToSave }
-				message={ 'Do you want to exit this page ?' }
-				reason={ 'Modifications may not be saved.' }
+				message={ 'Modifications may not be saved.' }
+				reason={ 'Do you want to exit this page ?' }
 			/>
+			{ isAttachOpened && (
+				<DisableBg$>
+					<AttachmentView state={ state } setIsAttachOpened={ setIsAttachOpened } />
+				</DisableBg$>
+			) }
 
-			<IncidentActions formControls={ [ state, setState, form, needToSave, setNeedToSave ] } />
+			<IncidentControlBar formControls={ [ state, setIsDisabled, needToSave, setNeedToSave, setIsAttachOpened ] } />
 
 			{ formData.id.slice(0, 3) === 'INC' ? (
-				<IncidentFields formControls={ [ state, handleChange, form ] } />
+				<IncidentFields formControls={ [ state, handleChange ] } />
 			) : formData.id.slice(0, 3) === 'REQ' ? (
-				<IncidentFields formControls={ [ state, handleChange, form ] } />
+				<IncidentFields formControls={ [ state, handleChange ] } />
 			) : formData.id.slice(0, 3) === 'CHG' ? (
-				<IncidentFields formControls={ [ state, handleChange, form ] } />
+				<IncidentFields formControls={ [ state, handleChange ] } />
 			) : '' }
 
-			<WorknotesHistory worknotesHistory={ worknotesHistoryData || worknotesHistory } />
-		</>
+			<WorknotesHistory
+				worknotesHistory={ worknotesHistoryData || worknotesHistory }
+				fileList={ state.fileList }
+			/>
+		</Ticket$>
 	);
 }
 
@@ -66,6 +78,11 @@ function compare(liveData, serverData) {
 		}
 	}
 }
+
+const Ticket$ = styled.div`
+	height: 100%;
+	width: 100%;
+`;
 
 
 

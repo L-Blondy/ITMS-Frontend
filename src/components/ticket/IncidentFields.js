@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-function IncidentFields({ formControls: [ state, handleChange, form ] }) {
+function IncidentFields({ formControls: [ state, handleChange ] }) {
 
 	const { pathname } = useLocation();
 
@@ -20,6 +20,7 @@ function IncidentFields({ formControls: [ state, handleChange, form ] }) {
 	};
 
 	const displayDate = (strDate, timezone = []) => {
+		if (!strDate) return '-';
 		const dateAndTime = new Date(strDate);
 		const date = dateAndTime.toLocaleDateString(timezone);
 		const time = dateAndTime.toLocaleTimeString(timezone, { hour: '2-digit', minute: '2-digit' });
@@ -27,7 +28,7 @@ function IncidentFields({ formControls: [ state, handleChange, form ] }) {
 	};
 
 	return (
-		<Form$ ref={ form } onSubmit={ (e) => e.preventDefault() }>
+		<Form$ onSubmit={ (e) => e.preventDefault() }>
 
 			<div className='main-fields'>
 				<div className='column'>
@@ -223,11 +224,6 @@ const Form$ = styled.form`
 	margin-bottom: 3rem;
 	width: 70%;
 	margin: auto;
-
-	&.disabled {
-		opacity: 0.5;
-		pointer-events: none;
-	}
 
 	.invalid{
 		background: rgba(255,0,0,0.020);

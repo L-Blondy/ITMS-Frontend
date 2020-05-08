@@ -1,14 +1,27 @@
 import { createGlobalStyle } from 'styled-components';
 
-const fontFam = {
-	prim: "'Nunito', sans-serif"
+const CLR = {
+	PRIMARY: '#4999a3',
+};
+
+const FONT_FAM = {
+	PRIMARY: "'Nunito', sans-serif"
+};
+
+const BTN_CLR = {
+	PRIMARY: CLR.PRIMARY,
+	SECONDARY: '#CCCCCC',
+	ALERT: {
+		PRIMARY: '#61a0d5',
+		SECONDARY: '#CCCCCC'
+	}
 };
 
 const GlobalStyles = createGlobalStyle`
 	* {
 		padding: 0;
 		margin: 0;
-		font-family: ${ fontFam.prim };
+		font-family: ${ FONT_FAM.PRIMARY };
 		box-sizing: border-box;
 	}
 
@@ -20,17 +33,6 @@ const GlobalStyles = createGlobalStyle`
 	#root {
 		display: flex;
 		flex-wrap: wrap;
-	}
-
-	button {
-		font-size: inherit;
-		padding: 0.35em 1.2em;
-		border-style: solid;
-		border-width: 1px;
-
-		&:hover {
-			cursor: pointer;
-		}
 	}
 
 	a {
@@ -54,9 +56,62 @@ const GlobalStyles = createGlobalStyle`
 		z-index: 10000;
 		color: red;
 	}
+
+	.disabled {
+		opacity: 0.35;
+		pointer-events: none;
+	}
+
+	button {
+		font-size: inherit;
+		border: none;
+		cursor: pointer;
+	}
+
+	[class*='btn-contained'],
+	[class*='btn-outlined'] {
+		padding: 0.35em 1em;
+		display: inline-block;
+		user-select: none;
+		/* border: none; */
+		border-width: 1px;
+		border-style: solid;
+		cursor: pointer;
+		border-collapse: separate;
+	}
+
+	.btn-contained {
+
+		&-prim {
+			background-color: ${ BTN_CLR.PRIMARY };
+			border-color: ${ BTN_CLR.PRIMARY };
+			color: white;
+		}
+
+		&-sec {
+			background-color: ${ BTN_CLR.SECONDARY };
+			border-color: ${ BTN_CLR.SECONDARY };
+			color: white;
+			font-weight: bold;
+		}
+
+		&-alert-prim {
+			background-color: ${ BTN_CLR.ALERT.PRIMARY };
+			border-color: ${ BTN_CLR.ALERT.PRIMARY };
+			color: white;
+		}
+
+		&-alert-sec {
+			background-color: ${ BTN_CLR.ALERT.SECONDARY };
+			border-color: ${ BTN_CLR.ALERT.SECONDARY };
+			color: white;
+			font-weight: bold;
+		}
+	}
 `;
 
 export {
-	fontFam,
+	CLR,
+	FONT_FAM,
 	GlobalStyles
 };

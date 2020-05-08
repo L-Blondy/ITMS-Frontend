@@ -1,4 +1,5 @@
 function toQuery(obj) {
+	console.log(obj);
 	let query = '';
 	recursion(obj);
 
@@ -6,7 +7,7 @@ function toQuery(obj) {
 		for (let key in obj) {
 			const val = obj[ key ];
 
-			if (typeof val !== 'object') {
+			if (typeof val === 'string' || typeof val === 'number') {
 				prefix
 					? (
 						query += prefix + '[' + key + ']=' + val + '&'

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TicketRender } from './';
-import { Error } from '../';
-import { baseURL } from '../../../baseURL';
+import { ErrorPage } from '../';
+import { BASE_URL } from '../../../BASE_URL';
 import http from '../../utils/http';
 
 function TicketGet() {
@@ -15,7 +15,7 @@ function TicketGet() {
 
 	useEffect(() => {
 		http()
-			.get(baseURL + hist.location.pathname, hist.location.search)
+			.get(BASE_URL + hist.location.pathname, hist.location.search)
 			.then(res => setServerData(res))
 			.catch(e => setError(e));
 	}, [ hist.location ]);
@@ -27,7 +27,7 @@ function TicketGet() {
 
 	if (error) {
 		return (
-			<Error error={ error } />
+			<ErrorPage error={ error } />
 		);
 	}
 	if (serverData) {

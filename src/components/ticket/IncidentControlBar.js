@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Validate } from '../../utils';
-import { baseURL } from '../../../baseURL';
+import { BASE_URL } from '../../../BASE_URL';
 import { UserCtx } from '../../Context';
-import { UploadFile } from './';
+import { PaperClipBtn } from './AttachmentView';
 import http from '../../utils/http';
 
-function IncidentActions({ formControls: [ state, setState, form, needToSave, setNeedToSave ] }) {
+function IncidentActions({ formControls: [ state, setIsDisabled, needToSave, setNeedToSave, setIsAttachOpened ] }) {
 
-	const shouldPost = useRef(false);
 	const user = useContext(UserCtx);
 	const hist = useHistory();
+	const [ dataToPost, setDataToPost ] = useState();
 
 	const save = (e) => {
 		const action = {};
@@ -27,7 +27,6 @@ function IncidentActions({ formControls: [ state, setState, form, needToSave, se
 		const action = { status: 'queued' };
 		handleSubmit(e, action);
 	};
-
 
 	const setInProgress = (e) => {
 		const action = { status: 'in progress' };
@@ -54,11 +53,9 @@ function IncidentActions({ formControls: [ state, setState, form, needToSave, se
 			console.error('CANNOT SUBMIT INCOMPLETE FORM');
 			return;
 		}
-		form.current.classList.add('disabled');
+		setIsDisabled(true);
 		setNeedToSave(false);
-		shouldPost.current = true;
-
-		setState({
+		setDataToPost({
 			...state,
 			...action,
 			user,
@@ -67,24 +64,22 @@ function IncidentActions({ formControls: [ state, setState, form, needToSave, se
 	};
 
 	useEffect(() => {
-		if (!needToSave && shouldPost.current) {
-			shouldPost.current = false;
+		if (dataToPost && !needToSave) {
 			http()
-				.post(baseURL + hist.location.pathname, state)
+				.post(BASE_URL + hist.location.pathname, dataToPost)
 				.then(res => hist.push('/ticket/' + res.id))
 				.catch(error => {
 					console.error(error);
-					form.current.classList.remove('disabled');
+					setIsDisabled(false);
 				});
 		}
-	}, [ state, needToSave ]);
-
+	}, [ dataToPost, needToSave ]);
 
 	return (
 		<IncidentActions$>
 
 			{ state.status === 'queued' || state.status === 'in progress' || state.status === 'on hold' ? (
-				<UploadFile />
+				<PaperClipBtn onClick={ () => setIsAttachOpened(true) } />
 			) : '' }
 
 			{ state.status === 'new' ? (

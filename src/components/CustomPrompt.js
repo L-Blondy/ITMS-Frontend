@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CustomPrompt = ({ when, message, reason }) => {
+const CustomPrompt = ({ when = false, message = '', reason = '' }) => {
 	const [ isVisible, setIsVisible ] = useState(false);
 	const [ nextLocation, setNextLocation ] = useState();
 	const [ isConfirmed, setIsConfirmed ] = useState(false);
@@ -47,15 +47,17 @@ function CustomAlert({ message, reason, handleConfirmation }) {
 			<div className='message'>{ message }</div>
 			<div className='reason'>{ reason }</div>
 			<div className='buttons'>
-				<button className='contained' onClick={ () => handleConfirmation(true) }>Exit</button>
-				<button className='outlined' onClick={ () => handleConfirmation(false) }>Cancel</button>
+				<button className='btn-contained-alert-prim' onClick={ () => handleConfirmation(true) }>
+					Exit
+				</button>
+				<button className='btn-contained-alert-sec' onClick={ () => handleConfirmation(false) }>
+					Cancel
+				</button>
 			</div>
 		</div>
 	</Alert$>;
 }
 export default CustomPrompt;
-
-const btnColor = '#61a0d5';
 
 const Alert$ = styled.div`
 	position: absolute;
@@ -93,21 +95,8 @@ const Alert$ = styled.div`
 	}
 
 	button {
-		margin: 0.2rem 0.35rem 0 0.35rem;
 		min-width: 6em;
-
-		&.contained {
-			background: ${ btnColor };
-			border-color: ${ btnColor };
-			color: white;
-		}
-
-		&.outlined {
-			background: #ccc;
-			border-color: #ccc;
-			color: white;
-			font-weight: bold;
-		}
+		margin: 0.2rem 0.35rem 0 0.35rem;
 	}
 `;
 

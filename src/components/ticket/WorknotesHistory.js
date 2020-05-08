@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { baseURL } from '../../../baseURL';
+import { BASE_URL } from '../../../BASE_URL';
 
-function WorknotesHistory({ worknotesHistory }) {
+function WorknotesHistory({ worknotesHistory, fileList }) {
 
 	const { pathname } = useLocation();
 
@@ -25,16 +25,25 @@ function WorknotesHistory({ worknotesHistory }) {
 		else if (note.type === "fileLog") {
 			const { mimetype, originalname } = note.file;
 
-			if (mimetype.indexOf('image') === 0)
+			if (!fileList.includes(originalname)) {
+				return (<>
+					<span>{ originalname } </span><i style={ { opacity: 0.75 } }>(deleted)</i>
+				</>);
+			}
+
+			if (mimetype.indexOf('image') === 0) {
+				console.log();
 				return (
-					<img src={ baseURL + pathname + '/' + originalname } alt={ originalname } />
+					<img src={ BASE_URL + pathname + '/' + originalname } alt={ originalname } />
 				);
-			else
+			}
+			else {
 				return (
-					<a href={ baseURL + pathname + '/' + originalname } target='_blank' rel='noopener noreferrer'>
+					<a href={ BASE_URL + pathname + '/' + originalname } target='_blank' rel='noopener noreferrer'>
 						{ originalname }
 					</a>
 				);
+			}
 		}
 		return 'Note type not recognized';;
 	}
