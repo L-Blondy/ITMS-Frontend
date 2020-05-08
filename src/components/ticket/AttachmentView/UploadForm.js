@@ -1,41 +1,42 @@
 import styled from 'styled-components';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import http from '../../../utils/http';
 import { BASE_URL } from '../../../../BASE_URL';
-import { UserCtx } from '../../../GlobalContext';
 import * as SRC from '../../../assets/icons';
 import { CLR } from '../../../GlobalStyles';
-import { XHR } from './Status';
+import { UserCtx } from '../../../GlobalContext';
+import { AttachmentCtx, XHR } from './AttachmentContext';
 
-function UploadForm({ method, encType, state, setRequestStatus }) {
+function UploadForm({ method, encType, state }) {
 
-	const [ file, setFile ] = useState('');
 	const user = useContext(UserCtx);
+	const Attachment = useContext(AttachmentCtx);
 
 	const uploadFile = (e) => {
 		e.preventDefault();
-		if (!file)
+		if (!Attachment.files.chosen)
 			return;
+
 		const formData = new FormData();
-		formData.append("file", file);
+		formData.append("file", Attachment.files.chosen);
 		formData.append("user", user);
-		setRequestStatus({ state: XHR.LOADING });
+		Attachment.request.setStatus({ state: XHR.LOADING });
 
 		setTimeout(() => {
 			http()
 				.post(BASE_URL + location.pathname + '/attach', formData)
 				.then(res => {
-					setRequestStatus({
+					Attachment.request.setStatus({
 						state: XHR.SUCCESS,
-						files: [ file.name ],
+						files: [ Attachment.files.chosen.name ],
 						message: '  was uploaded with success'
 					});
-					setFile('');
+					Attachment.files.setChosen('');
 				})
 				.catch(e => {
-					setRequestStatus({
+					Attachment.request.setStatus({
 						state: XHR.ERROR,
-						files: [ file.name ],
+						files: [ Attachment.files.chosen.name ],
 						message: `  could not be uploaded.\n${ e.message }`
 					});
 					console.error(e);
@@ -54,20 +55,25 @@ function UploadForm({ method, encType, state, setRequestStatus }) {
 					Choose file
 				</span>
 
-				{ file && file.name || 'No file chosen' }
+				{ Attachment.files.chosen && Attachment.files.chosen.name || 'No file chosen' }
 			</label>
 
-			<input id='file' name='file' type='file' onChange={ e => setFile(e.target.files[ 0 ]) } />
+			<input
+				id='file'
+				name='file'
+				type='file'
+				onChange={ e => Attachment.files.setChosen(e.target.files[ 0 ]) } />
 
-			<button className={ `btn-contained-prim upload-btn ${ setEnabledOrDisabled(file, state.fileList) }` } />
+			<button className={ `btn-contained-prim upload-btn ${ setEnabledOrDisabled(Attachment, state) }` } />
 		</Form$>
 	);
 }
 
 export default UploadForm;
 
-function setEnabledOrDisabled(file, fileList) {
-	if (file && !fileList.includes(file.name)) return 'enabled';
+function setEnabledOrDisabled(Attachment, state) {
+	if (Attachment.files.chosen && !state.fileList.includes(Attachment.files.chosen.name))
+		return 'enabled';
 	return 'disabled';
 }
 
@@ -115,7 +121,6 @@ const Form$ = styled.form`
 			background-color: #00c4ff;
 			border-color: #00c4ff;
 			outline: 1px solid #00c4ff;
-			/* box-shadow: 0 0 0 1px #00c4ff; */
 		}
 	}
 `;

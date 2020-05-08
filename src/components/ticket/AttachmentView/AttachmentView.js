@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import * as SRC from '../../../assets/icons';
-import { UploadForm, DeleteForm, DeletePrompt, Status } from './';
+import { UploadForm, DeleteForm, Warning, Status } from './';
 import { CLR } from '../../../GlobalStyles';
+import { AttachmentCtx, XHR } from './AttachmentContext';
 
-function AttachmentBox({ state, setIsAttachOpened }) {
+function AttachmentView({ state, setIsAttachOpened }) {
 
-	const [ requestStatus, setRequestStatus ] = useState('');
-	const [ isPrompting, togglePromptDelete ] = useState(false);
-	const [ isDeletionConfirmed, setIsDeletionConfirmed ] = useState(false);
-
-	const handlePromptAnswer = (userAnswer) => {
-		togglePromptDelete(false);
-		setIsDeletionConfirmed(userAnswer);
-	};
+	const Attachment = useContext(AttachmentCtx);
 
 	return (<>
-		<UploadBox$ requestStatus={ requestStatus } isPrompting={ isPrompting }>
+		<UploadBox$ requestStatus={ Attachment.request.status } isWarning={ Attachment.deletion.isWarning }>
 
 			<div className='header'>
 				<span>Attachments</span>
@@ -27,41 +21,29 @@ function AttachmentBox({ state, setIsAttachOpened }) {
 				method='POST'
 				encType='multipart/form-data'
 				state={ state }
-				setRequestStatus={ setRequestStatus }
 			/>
 
 			<DeleteForm
 				method='DELETE'
 				state={ state }
-				setRequestStatus={ setRequestStatus }
-				togglePromptDelete={ togglePromptDelete }
-				isDeletionConfirmed={ isDeletionConfirmed }
-				setIsDeletionConfirmed={ setIsDeletionConfirmed }
 			/>
 
 		</UploadBox$>
 
-		<Status
-			requestStatus={ requestStatus }
-			setRequestStatus={ setRequestStatus }
-		/>
+		<Status />
 
-		<DeletePrompt
-			message='Are you sure ?'
-			isPrompting={ isPrompting }
-			handlePromptAnswer={ handlePromptAnswer }
-		/>
+		<Warning message='Are you sure ?' />
 
 	</>);
 }
 
-export default AttachmentBox;
+export default AttachmentView;
 
 const UploadBox$ = styled.div`
 	background: white;
 	min-width: 450px;
 	${ props => {
-		if (props.requestStatus || props.isPrompting) {
+		if (props.requestStatus.state !== XHR.UNSENT || props.isWarning) {
 			return `
 				&::before {
 					content:'';

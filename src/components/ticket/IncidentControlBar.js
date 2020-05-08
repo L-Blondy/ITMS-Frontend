@@ -4,10 +4,10 @@ import { useHistory } from 'react-router-dom';
 import { Validate } from '../../utils';
 import { BASE_URL } from '../../../BASE_URL';
 import { UserCtx } from '../../GlobalContext';
-import { PaperClipBtn } from './AttachmentView';
+import * as SRC from '../../assets/icons';
 import http from '../../utils/http';
 
-function IncidentActions({ formControls: [ state, setIsDisabled, needToSave, setNeedToSave, setIsAttachOpened ] }) {
+function IncidentControlBar({ formControls: [ state, setIsDisabled, needToSave, setNeedToSave, setIsAttachOpened ] }) {
 
 	const user = useContext(UserCtx);
 	const hist = useHistory();
@@ -76,10 +76,10 @@ function IncidentActions({ formControls: [ state, setIsDisabled, needToSave, set
 	}, [ dataToPost, needToSave ]);
 
 	return (
-		<IncidentActions$>
+		<IncidentControlBar$>
 
 			{ state.status === 'queued' || state.status === 'in progress' || state.status === 'on hold' ? (
-				<PaperClipBtn onClick={ () => setIsAttachOpened(true) } />
+				<PaperclipBtn$ onClick={ () => setIsAttachOpened(true) } />
 			) : '' }
 
 			{ state.status === 'new' ? (
@@ -123,17 +123,25 @@ function IncidentActions({ formControls: [ state, setIsDisabled, needToSave, set
 			) : '' }
 
 
-		</IncidentActions$>
+		</IncidentControlBar$>
 	);
 }
 
-export default IncidentActions;
+export default IncidentControlBar;
 
-const IncidentActions$ = styled.div`
+const IncidentControlBar$ = styled.div`
 	display: flex;
 	justify-content: flex-end;
 
 	button {
 		margin-top: 0;
 	}
+`;
+
+const PaperclipBtn$ = styled.button`
+	width: 2.2rem;
+	background-image: ${ `url(${ SRC.paperclip })` };
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 25px;
 `;

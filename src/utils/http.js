@@ -13,22 +13,20 @@ const http = () => ({
 		this.req.setRequestHeader('Cache-Control', 'no-cache');
 		this.req.msCaching = 'disabled';
 		this.query = null;
-		this.req.onreadystatechange = (e) => {
 
-			if (this.req.readyState === 4) {
-				if (this.req.status >= 400) {
-					this.catch(this.catchCB({
-						status: this.req.status,
-						message: this.req.responseText
-					}));
+		this.req.onreadystatechange = (e) => {
+			if (this.req.readyState === 4 && (this.req.status === 0 || this.req.status >= 400)) {
+				this.catch(this.catchCB({
+					status: this.req.status,
+					message: this.req.responseText
+				}));
+			}
+			else if (this.req.readyState === 4) {
+				try {
+					this.then(this.thenCB(JSON.parse(this.req.response)));
 				}
-				else {
-					try {
-						this.then(this.thenCB(JSON.parse(this.req.response)));
-					}
-					catch (e) {
-						this.then(this.thenCB(this.req.response));
-					}
+				catch (e) {
+					this.then(this.thenCB(this.req.response));
 				}
 			}
 		};
@@ -58,21 +56,18 @@ const http = () => ({
 		this.query = query;
 
 		this.req.onreadystatechange = (e) => {
-
-			if (this.req.readyState === 4) {
-				if (this.req.status >= 400) {
-					this.catch(this.catchCB({
-						status: this.req.status,
-						message: this.req.responseText
-					}));
+			if (this.req.readyState === 4 && (this.req.status === 0 || this.req.status >= 400)) {
+				this.catch(this.catchCB({
+					status: this.req.status,
+					message: this.req.responseText
+				}));
+			}
+			else if (this.req.readyState === 4) {
+				try {
+					this.then(this.thenCB(JSON.parse(this.req.response)));
 				}
-				else {
-					try {
-						this.then(this.thenCB(JSON.parse(this.req.response)));
-					}
-					catch (e) {
-						this.then(this.thenCB(this.req.response));
-					}
+				catch (e) {
+					this.then(this.thenCB(this.req.response));
 				}
 			}
 		};
@@ -102,21 +97,18 @@ const http = () => ({
 		this.query = query;
 
 		this.req.onreadystatechange = (e) => {
-
-			if (this.req.readyState === 4) {
-				if (this.req.status >= 400) {
-					this.catch(this.catchCB({
-						status: this.req.status,
-						message: this.req.responseText
-					}));
+			if (this.req.readyState === 4 && (this.req.status === 0 || this.req.status >= 400)) {
+				this.catch(this.catchCB({
+					status: this.req.status,
+					message: this.req.responseText
+				}));
+			}
+			else if (this.req.readyState === 4) {
+				try {
+					this.then(this.thenCB(JSON.parse(this.req.response)));
 				}
-				else {
-					try {
-						this.then(this.thenCB(JSON.parse(this.req.response)));
-					}
-					catch (e) {
-						this.then(this.thenCB(this.req.response));
-					}
+				catch (e) {
+					this.then(this.thenCB(this.req.response));
 				}
 			}
 		};

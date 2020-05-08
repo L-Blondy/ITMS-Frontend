@@ -1,12 +1,22 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AttachmentCtx } from './AttachmentContext';
 
-function PromptDelete({ message, isPrompting, handlePromptAnswer }) {
-	if (!isPrompting)
+function Warning({ message }) {
+
+	const Attachment = useContext(AttachmentCtx);
+
+	const handleWarningChoice = (userAnswer) => {
+		Attachment.deletion.setIsWarning(false);
+		Attachment.deletion.setIsConfirmed(userAnswer);
+	};
+
+	if (!Attachment.deletion.isWarning)
 		return null;
+
 	else
 		return (
-			<PromptDelete$>
+			<Warning$>
 
 				<h3 className='header'> Warning ! </h3>
 
@@ -14,23 +24,23 @@ function PromptDelete({ message, isPrompting, handlePromptAnswer }) {
 
 				<button
 					className='btn-contained-alert-prim yes'
-					onClick={ () => handlePromptAnswer(true) }>
+					onClick={ () => handleWarningChoice(true) }>
 					Yes
 				</button>
 
 				<button
 					className='btn-contained-alert-sec'
-					onClick={ () => handlePromptAnswer(false) }>
+					onClick={ () => handleWarningChoice(false) }>
 					No
 				</button>
 
-			</PromptDelete$>
+			</Warning$>
 		);
 }
 
-export default PromptDelete;
+export default Warning;
 
-const PromptDelete$ = styled.div`
+const Warning$ = styled.div`
 	position: absolute;
 	top: 50%;
 	left: 50%;

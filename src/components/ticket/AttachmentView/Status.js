@@ -1,45 +1,45 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import * as SRC from '../../../assets/icons';
+import { AttachmentCtx, XHR } from './AttachmentContext';
 
-export const XHR = {
-	UNSENT: 'Unsent',
-	LOADING: 'Loading',
-	SUCCESS: 'Success',
-	ERROR: 'Error'
-};
+function Status() {
 
-function Status({ requestStatus, setRequestStatus }) {
-	console.log(requestStatus);
-	if (!requestStatus)
+	const Attachment = useContext(AttachmentCtx);
+
+	if (Attachment.request.status.state === XHR.UNSENT) {
 		return null;
+	}
 
-	if (requestStatus.state === XHR.LOADING)
+	if (Attachment.request.status.state === XHR.LOADING) {
 		return (
 			<Img$ src={ SRC.preloader } alt='Loading...' />
 		);
+	}
 
-	else
+	else {
+		console.log(Attachment.request.status);
 		return (
 			<Div$>
-				<h3 className={ 'state ' + requestStatus.state }>
-					{ requestStatus.state + ' !' }
+				<h3 className={ 'state ' + Attachment.request.status.state }>
+					{ Attachment.request.status.state + ' !' }
 				</h3>
 
 				<div className='message'>
 
-					{ (requestStatus.files.map(fileName => (
+					{ (Attachment.request.status.files.map(fileName => (
 						<div className='fileName' key={ fileName }>{ fileName }</div>
 					))) }
 
-					<div>{ requestStatus.message }</div>
+					<div>{ Attachment.request.status.message }</div>
 				</div>
 
-				<button className='btn-contained-alert-prim' onClick={ () => setRequestStatus('') }>
+				<button className='btn-contained-alert-prim' onClick={ () => Attachment.request.setStatus({ state: XHR.UNSENT }) }>
 					OK
 				</button>
 			</Div$>
 		);
+	}
 }
 
 export default Status;
@@ -88,5 +88,4 @@ const Img$ = styled.img`
 	transform: translate(-50%, -50%);
 	width: 100px;
 	height: 100px;
-	/* background: steelblue; */
 `;

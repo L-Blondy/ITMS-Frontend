@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { useInputValidation, useSubscription } from '../../hooks';
@@ -7,6 +7,7 @@ import { AttachmentView } from './AttachmentView';
 import { DisableBg$ } from '../styled';
 import { CustomPrompt } from '../';
 import { BASE_URL } from '../../../BASE_URL';
+import AttachmentContext from './AttachmentView/AttachmentContext';
 
 function TicketRender({ serverData }) {
 	const location = useLocation();
@@ -35,9 +36,11 @@ function TicketRender({ serverData }) {
 				reason={ 'Do you want to exit this page ?' }
 			/>
 			{ isAttachOpened && (
-				<DisableBg$>
-					<AttachmentView state={ state } setIsAttachOpened={ setIsAttachOpened } />
-				</DisableBg$>
+				<AttachmentContext>
+					<DisableBg$>
+						<AttachmentView state={ state } setIsAttachOpened={ setIsAttachOpened } />
+					</DisableBg$>
+				</AttachmentContext>
 			) }
 
 			<IncidentControlBar formControls={ [ state, setIsDisabled, needToSave, setNeedToSave, setIsAttachOpened ] } />

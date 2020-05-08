@@ -1,64 +1,46 @@
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
-import http from '../../../utils/http';
+import React, { useState, useEffect, useContext } from 'react';
 import { BASE_URL } from '../../../../BASE_URL';
 import { CLR } from '../../../GlobalStyles';
-import { XHR } from './Status';
+import { AttachmentCtx } from './AttachmentContext';
 
-function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDeletionConfirmed, setIsDeletionConfirmed }) {
+function DeleteForm({ method, state }) {
 
-	const [ selectedFiles, setSelectedFiles ] = useState([]);
+	const Attachment = useContext(AttachmentCtx);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		togglePromptDelete(true);
-	};
-
-	const deleteFiles = (e) => {
-		console.log('delete files');
-		setRequestStatus({ state: XHR.LOADING });
-
-		http()
-			.delete(BASE_URL + location.pathname + '/delete', { toDelete: selectedFiles })
-			.then(res => {
-				setRequestStatus({
-					state: XHR.SUCCESS,
-					files: selectedFiles,
-					message: selectedFiles.length > 1 ? '  were removed with success.' : '  was removed with success.'
-				});
-				setSelectedFiles([]);
-			})
-			.catch(e => {
-				setRequestStatus({
-					state: XHR.ERROR,
-					files: selectedFiles,
-					message: '  could not be removed, please try again.'
-				});
-			});
+		Attachment.deletion.setIsWarning(true);
 	};
 
 	const handleSelectFile = (e) => {
 		if (e.target.checked) {
-			setSelectedFiles([ ...selectedFiles, e.target.value ]);
+			Attachment.files.select(e.target.value);
 		}
 		else {
-			setSelectedFiles(selectedFiles.filter(fileName => fileName !== e.target.value));
+			Attachment.files.deselect(e.target.value);
 		}
 	};
 
 	useEffect(() => {
-		if (isDeletionConfirmed) {
-			deleteFiles();
-			setIsDeletionConfirmed(false);
+		if (Attachment.deletion.isConfirmed) {
+			Attachment.files.delete();
+			Attachment.deletion.setIsConfirmed(false);
 		}
-	}, [ isDeletionConfirmed ]);
+	}, [ Attachment.deletion.isConfirmed ]);
 
 	return (
 		<Form$ method={ method } onSubmit={ handleSubmit }>
 
 			<ul className='file-list'>
+
+				{ !state.fileList.length ? (
+					<li>No attachments</li>
+				) : '' }
+
 				{ state.fileList.length ? (
 					state.fileList.map((fileName, i) => (
+
 						<li key={ fileName + i }>
 							<input
 								type='checkbox'
@@ -75,12 +57,11 @@ function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDel
 								view
 							</a>
 						</li>
-					))) : (
-						<li>No attachments</li>
-					) }
+
+					))) : '' }
 			</ul>
 
-			<button className={ `btn-contained-alert-sec delete-btn ${ setDisabledOrNothing(selectedFiles) }` }>
+			<button className={ `btn-contained-alert-sec delete-btn ${ setDisabledOrNothing(Attachment) }` }>
 				Remove
 			</button>
 
@@ -90,8 +71,8 @@ function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDel
 
 export default DeleteForm;
 
-function setDisabledOrNothing(selectedFiles) {
-	selectedFiles.length ? '' : 'disabled';
+function setDisabledOrNothing(Attachment) {
+	Attachment.files.selected.length ? '' : 'disabled';
 }
 
 const Form$ = styled.form`

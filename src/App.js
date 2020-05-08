@@ -3,6 +3,7 @@ import { BrowserRouter, NavLink, Link, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { Dashboard, Settings } from './components';
 import { TicketGet } from './components/ticket';
+import { TicketCtx } from './components/ticket/TicketContext';
 
 function App() {
 
@@ -29,8 +30,8 @@ function App() {
 			<Main$>
 				<Switch>
 					<Route path='/dashboard' render={ () => <Dashboard /> } />
-					<Route path='/ticket/new' render={ () => <TicketGet /> } />
-					<Route path='/ticket/:id' render={ () => <TicketGet /> } />
+					<Route path='/ticket/new' render={ () => <TicketCtx><TicketGet /></TicketCtx> } />
+					<Route path='/ticket/:id' render={ () => <TicketCtx><TicketGet /></TicketCtx> } />
 				</Switch>
 			</Main$>
 		</BrowserRouter>
