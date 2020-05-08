@@ -55,11 +55,7 @@ const PromptDelete$ = styled.div`
 		margin: 1rem;
 		font-size: 1.15rem;
 	}
-
-	/* .yes {
-		background: #ffba12
-	} */
-
+	
 	button {
 		margin: 1rem 0.5rem;
 		font-size: 1.05rem;

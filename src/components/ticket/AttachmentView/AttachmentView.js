@@ -36,6 +36,7 @@ function AttachmentBox({ state, setIsAttachOpened }) {
 				setRequestStatus={ setRequestStatus }
 				togglePromptDelete={ togglePromptDelete }
 				isDeletionConfirmed={ isDeletionConfirmed }
+				setIsDeletionConfirmed={ setIsDeletionConfirmed }
 			/>
 
 		</UploadBox$>

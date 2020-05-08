@@ -4,7 +4,7 @@ import http from '../../../utils/http';
 import { BASE_URL } from '../../../../BASE_URL';
 import { CLR } from '../../../GlobalStyles';
 
-function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDeletionConfirmed }) {
+function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDeletionConfirmed, setIsDeletionConfirmed }) {
 
 	const [ selectedFiles, setSelectedFiles ] = useState([]);
 
@@ -45,7 +45,12 @@ function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDel
 		}
 	};
 
-	useEffect(() => { isDeletionConfirmed && deleteFiles(); }, [ isDeletionConfirmed ]);
+	useEffect(() => {
+		if (isDeletionConfirmed) {
+			deleteFiles();
+			setIsDeletionConfirmed(false);
+		}
+	}, [ isDeletionConfirmed ]);
 
 	return (
 		<Form$ method={ method } onSubmit={ handleSubmit }>
