@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import React, { useContext, useState, useEffect } from 'react';
 import http from '../../../utils/http';
 import { BASE_URL } from '../../../../BASE_URL';
-import { UserCtx } from '../../../Context';
+import { UserCtx } from '../../../GlobalContext';
 import * as SRC from '../../../assets/icons';
 import { CLR } from '../../../GlobalStyles';
+import { XHR } from './Status';
 
 function UploadForm({ method, encType, state, setRequestStatus }) {
 
@@ -18,14 +19,14 @@ function UploadForm({ method, encType, state, setRequestStatus }) {
 		const formData = new FormData();
 		formData.append("file", file);
 		formData.append("user", user);
-		setRequestStatus({ state: 'Loading' });
+		setRequestStatus({ state: XHR.LOADING });
 
 		setTimeout(() => {
 			http()
 				.post(BASE_URL + location.pathname + '/attach', formData)
 				.then(res => {
 					setRequestStatus({
-						state: 'Success',
+						state: XHR.SUCCESS,
 						files: [ file.name ],
 						message: '  was uploaded with success'
 					});
@@ -33,7 +34,7 @@ function UploadForm({ method, encType, state, setRequestStatus }) {
 				})
 				.catch(e => {
 					setRequestStatus({
-						state: 'Error',
+						state: XHR.ERROR,
 						files: [ file.name ],
 						message: `  could not be uploaded.\n${ e.message }`
 					});
@@ -58,12 +59,17 @@ function UploadForm({ method, encType, state, setRequestStatus }) {
 
 			<input id='file' name='file' type='file' onChange={ e => setFile(e.target.files[ 0 ]) } />
 
-			<button className={ `btn-contained-prim upload-btn ${ file && !state.fileList.includes(file.name) ? 'enabled' : 'disabled' }` } />
+			<button className={ `btn-contained-prim upload-btn ${ setEnabledOrDisabled(file, state.fileList) }` } />
 		</Form$>
 	);
 }
 
 export default UploadForm;
+
+function setEnabledOrDisabled(file, fileList) {
+	if (file && !fileList.includes(file.name)) return 'enabled';
+	return 'disabled';
+}
 
 const Form$ = styled.form`
 	display: flex;

@@ -1,3 +1,4 @@
+export { default as AttachmentContext } from './AttachmentContext';
 export { default as AttachmentView } from './AttachmentView';
 export { default as PaperClipBtn } from './PaperClipBtn';
 export { default as UploadForm } from './UploadForm';

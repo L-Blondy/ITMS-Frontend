@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { BASE_URL } from '../../../BASE_URL';
-import { UserCtx } from '../../Context';
+import { UserCtx } from '../../GlobalContext';
 import http from '../../utils/http';
 import SRC_paperclip from '../../assets/icons/paperclip.svg';
 import SRC_upload from '../../assets/icons/upload.svg';

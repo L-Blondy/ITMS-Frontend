@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 
 export const UserCtx = createContext();
 
-function Context({ children }) {
+function GlobalContext({ children }) {
 	return (
 		<UserCtx.Provider value={ 'Guest user' }>
 			{ children }
@@ -10,4 +10,4 @@ function Context({ children }) {
 	);
 }
 
-export default Context;
+export default GlobalContext;

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import http from '../../../utils/http';
 import { BASE_URL } from '../../../../BASE_URL';
 import { CLR } from '../../../GlobalStyles';
+import { XHR } from './Status';
 
 function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDeletionConfirmed, setIsDeletionConfirmed }) {
 
@@ -15,13 +16,13 @@ function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDel
 
 	const deleteFiles = (e) => {
 		console.log('delete files');
-		setRequestStatus({ state: 'Loading' });
+		setRequestStatus({ state: XHR.LOADING });
 
 		http()
 			.delete(BASE_URL + location.pathname + '/delete', { toDelete: selectedFiles })
 			.then(res => {
 				setRequestStatus({
-					state: 'Success',
+					state: XHR.SUCCESS,
 					files: selectedFiles,
 					message: selectedFiles.length > 1 ? '  were removed with success.' : '  was removed with success.'
 				});
@@ -29,7 +30,7 @@ function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDel
 			})
 			.catch(e => {
 				setRequestStatus({
-					state: 'Error',
+					state: XHR.ERROR,
 					files: selectedFiles,
 					message: '  could not be removed, please try again.'
 				});
@@ -79,7 +80,7 @@ function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDel
 					) }
 			</ul>
 
-			<button className={ `btn-contained-alert-sec delete-btn ${ !selectedFiles.length ? 'disabled' : '' }` }>
+			<button className={ `btn-contained-alert-sec delete-btn ${ setDisabledOrNothing(selectedFiles) }` }>
 				Remove
 			</button>
 
@@ -88,6 +89,10 @@ function DeleteForm({ method, state, setRequestStatus, togglePromptDelete, isDel
 }
 
 export default DeleteForm;
+
+function setDisabledOrNothing(selectedFiles) {
+	selectedFiles.length ? '' : 'disabled';
+}
 
 const Form$ = styled.form`
 	ul{

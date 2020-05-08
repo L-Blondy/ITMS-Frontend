@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Validate } from '../../utils';
 import { BASE_URL } from '../../../BASE_URL';
-import { UserCtx } from '../../Context';
+import { UserCtx } from '../../GlobalContext';
 import { PaperClipBtn } from './AttachmentView';
 import http from '../../utils/http';
 

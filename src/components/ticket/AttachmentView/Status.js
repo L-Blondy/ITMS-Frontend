@@ -2,12 +2,19 @@ import styled from 'styled-components';
 import React from 'react';
 import * as SRC from '../../../assets/icons';
 
-function Alert({ requestStatus, setRequestStatus }) {
+export const XHR = {
+	UNSENT: 'Unsent',
+	LOADING: 'Loading',
+	SUCCESS: 'Success',
+	ERROR: 'Error'
+};
+
+function Status({ requestStatus, setRequestStatus }) {
 	console.log(requestStatus);
 	if (!requestStatus)
 		return null;
 
-	if (requestStatus.state === 'Loading')
+	if (requestStatus.state === XHR.LOADING)
 		return (
 			<Img$ src={ SRC.preloader } alt='Loading...' />
 		);
@@ -35,7 +42,7 @@ function Alert({ requestStatus, setRequestStatus }) {
 		);
 }
 
-export default Alert;
+export default Status;
 
 const Div$ = styled.div`
 	position: absolute;

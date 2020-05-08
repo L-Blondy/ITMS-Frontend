@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../src/App.js';
-import Context from '../src/Context.js';
+import GlobalContext from '../src/GlobalContext.js';
 import { GlobalStyles } from '../src/GlobalStyles.js';
 
 if (!Array.prototype.includes) {
@@ -16,8 +16,8 @@ if (!Array.prototype.includes) {
 }
 
 ReactDOM.render((
-	<Context>
+	<GlobalContext>
 		<GlobalStyles />
 		<App />
-	</Context>
+	</GlobalContext>
 ), document.getElementById('root'));
