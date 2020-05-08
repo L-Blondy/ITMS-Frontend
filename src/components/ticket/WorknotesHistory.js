@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { BASE_URL } from '../../../BASE_URL';
+import { TicketCtx } from './TicketContext';
 
-function WorknotesHistory({ worknotesHistory, fileList }) {
+function WorknotesHistory() {
 
+	const Ticket = useContext(TicketCtx);
 	const { pathname } = useLocation();
 
 	function renderLog(note) {
@@ -25,7 +27,7 @@ function WorknotesHistory({ worknotesHistory, fileList }) {
 		else if (note.type === "fileLog") {
 			const { mimetype, originalname } = note.file;
 
-			if (!fileList.includes(originalname)) {
+			if (!Ticket.data.state.fileList.includes(originalname)) {
 				return (<>
 					<span>{ originalname } </span><i style={ { opacity: 0.75 } }>(deleted)</i>
 				</>);
@@ -48,10 +50,10 @@ function WorknotesHistory({ worknotesHistory, fileList }) {
 		return 'Note type not recognized';;
 	}
 
-	if (worknotesHistory.length)
+	if (Ticket.data.worknotesHistory.length)
 		return (
 			<WorknotesHistory$>
-				{ worknotesHistory.map((note, i) => (
+				{ Ticket.data.worknotesHistory.map((note, i) => (
 
 					<div className={ 'worknote ' + note.type } key={ note.type + i }>
 						<div className="header">

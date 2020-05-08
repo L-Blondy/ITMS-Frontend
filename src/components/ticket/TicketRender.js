@@ -8,55 +8,52 @@ import { DisableBg$ } from '../styled';
 import { CustomPrompt } from '../';
 import { BASE_URL } from '../../../BASE_URL';
 import AttachmentContext from './AttachmentView/AttachmentContext';
+import { TicketCtx } from './TicketContext';
 
 function TicketRender({ serverData }) {
-	const location = useLocation();
-	let { worknotesHistory, ...formData } = serverData;
-	const [ isDisabled, setIsDisabled ] = useState(false);
-	const [ needToSave, setNeedToSave ] = useState(false);
-	const [ isAttachOpened, setIsAttachOpened ] = useState(false);
+
+	const Ticket = useContext(TicketCtx);
+
+	useEffect(() => console.log('RE-MOUNT'), []);
+
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
-	const [ worknotesHistoryData, setWorknotesHistoryData ] = useState(worknotesHistory);
-	const [ state, handleChange, setState ] = useInputValidation(formData, setNeedToSave);
 
 	useEffect(() => {
 		if (liveData) {
-			let { worknotesHistory, ...formData } = liveData;
-			setWorknotesHistoryData(worknotesHistory);
-			setState({ ...state, ...formData });
+			let { worknotesHistory, ...newState } = liveData;
 			compare(liveData, serverData);
+
+			Ticket.data.setWorknotesHistory(worknotesHistory);
+			Ticket.data.setState({ ...Ticket.data.state, ...newState });
 		}
 	}, [ liveData ]);
 
 	return (
-		<Ticket$ className={ isDisabled ? 'disabled' : '' }>
+		<Ticket$ className={ Ticket.form.isDisabled ? 'disabled' : '' }>
 			<CustomPrompt
-				when={ needToSave }
+				when={ Ticket.needToSave }
 				message={ 'Modifications may not be saved.' }
 				reason={ 'Do you want to exit this page ?' }
 			/>
-			{ isAttachOpened && (
-				<AttachmentContext>
-					<DisableBg$>
-						<AttachmentView state={ state } setIsAttachOpened={ setIsAttachOpened } />
-					</DisableBg$>
-				</AttachmentContext>
-			) }
 
-			<IncidentControlBar formControls={ [ state, setIsDisabled, needToSave, setNeedToSave, setIsAttachOpened ] } />
+			<AttachmentContext isOpened={ Ticket.attachments.isOpened }>
+				<DisableBg$>
+					<AttachmentView />
+				</DisableBg$>
+			</AttachmentContext>
 
-			{ formData.id.slice(0, 3) === 'INC' ? (
-				<IncidentFields formControls={ [ state, handleChange ] } />
-			) : formData.id.slice(0, 3) === 'REQ' ? (
-				<IncidentFields formControls={ [ state, handleChange ] } />
-			) : formData.id.slice(0, 3) === 'CHG' ? (
-				<IncidentFields formControls={ [ state, handleChange ] } />
+			<IncidentControlBar />
+
+			{ Ticket.data.state.id.slice(0, 3) === 'INC' ? (
+				<IncidentFields />
+			) : Ticket.data.state.id.slice(0, 3) === 'REQ' ? (
+				<IncidentFields />
+			) : Ticket.data.state.id.slice(0, 3) === 'CHG' ? (
+				<IncidentFields />
 			) : '' }
 
-			<WorknotesHistory
-				worknotesHistory={ worknotesHistoryData || worknotesHistory }
-				fileList={ state.fileList }
-			/>
+			<WorknotesHistory />
+
 		</Ticket$>
 	);
 }

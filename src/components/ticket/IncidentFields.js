@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { TicketCtx } from './TicketContext';
 
-function IncidentFields({ formControls: [ state, handleChange ] }) {
+function IncidentFields() {
 
-	const { pathname } = useLocation();
+	const Ticket = useContext(TicketCtx);
 
 	const getPriority = () => {
-		switch (state.priority) {
+		switch (Ticket.data.state.priority) {
 			case 'P1':
 				return 'P1 - Critical';
 			case 'P2':
@@ -39,7 +40,7 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 							id='number'
 							name='number'
 							type='text'
-							value={ state.id }
+							value={ Ticket.data.state.id }
 							disabled
 						/>
 					</label>
@@ -50,7 +51,7 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 							id='createdOn'
 							name='createdOn'
 							type='text'
-							value={ displayDate(state.createdOn) }
+							value={ displayDate(Ticket.data.state.createdOn) }
 							disabled
 						/>
 					</label>
@@ -61,7 +62,7 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 							id='dueDate'
 							name='dueDate'
 							type='text'
-							value={ displayDate(state.dueDate) }
+							value={ displayDate(Ticket.data.state.dueDate) }
 							disabled
 						/>
 					</label>
@@ -72,16 +73,16 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 							id='escalation'
 							name='escalation'
 							type='text'
-							value={ state.escalation === 0 ? 'None' : state.escalation === 1 ? 'Uplift' : 'Overdue' }
+							value={ Ticket.data.state.escalation === 0 ? 'None' : Ticket.data.state.escalation === 1 ? 'Uplift' : 'Overdue' }
 							disabled
 						/>
 					</label>
 
 					<label htmlFor='category'>
 						<span>Category</span>
-						<select id='category' name='category' onChange={ handleChange } value={ state.category } >
+						<select id='category' name='category' onChange={ Ticket.data.handleChange } value={ Ticket.data.state.category } >
 							<option value=''>-none-</option>
-							{ state.staticData.category.map(cat => (
+							{ Ticket.data.state.staticData.category.map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
@@ -89,9 +90,9 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 
 					<label htmlFor='subCategory'>
 						<span>Sub category</span>
-						<select id='subCategory' name='subCategory' onChange={ handleChange } value={ state.subCategory } >
+						<select id='subCategory' name='subCategory' onChange={ Ticket.data.handleChange } value={ Ticket.data.state.subCategory } >
 							<option value=''>-none-</option>
-							{ state.staticData.subCategory.map(cat => (
+							{ Ticket.data.state.staticData.subCategory.map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
@@ -107,7 +108,7 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 							id='status'
 							name='status'
 							type='text'
-							value={ state.status }
+							value={ Ticket.data.state.status }
 							style={ { textTransform: 'capitalize' } }
 							disabled
 						/>
@@ -116,7 +117,7 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 
 					<label htmlFor='impact'>
 						<span>Impact</span>
-						<select id='impact' name='impact' onChange={ handleChange } value={ state.impact }>
+						<select id='impact' name='impact' onChange={ Ticket.data.handleChange } value={ Ticket.data.state.impact }>
 							<option value='1'> 1 - Extensive/Widespread </option>
 							<option value='2'> 2 - Significant/Large </option>
 							<option value='3'> 3 - Moderate/Limited </option>
@@ -126,7 +127,7 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 
 					<label htmlFor='urgency'>
 						<span>Urgency</span>
-						<select id='urgency' name='urgency' onChange={ handleChange } value={ state.urgency } >
+						<select id='urgency' name='urgency' onChange={ Ticket.data.handleChange } value={ Ticket.data.state.urgency } >
 							<option value="1"> 1 - Critical </option>
 							<option value="2"> 2 - High </option>
 							<option value="3"> 3 - Medium </option>
@@ -151,8 +152,8 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 							id='assignmentGroup'
 							name='assignmentGroup'
 							type='text'
-							onChange={ handleChange }
-							value={ state.assignmentGroup }
+							onChange={ Ticket.data.handleChange }
+							value={ Ticket.data.state.assignmentGroup }
 							autoComplete="off"
 						/>
 					</label>
@@ -163,8 +164,8 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 							id='assignedTo'
 							name='assignedTo'
 							type='text'
-							onChange={ handleChange }
-							value={ state.assignedTo }
+							onChange={ Ticket.data.handleChange }
+							value={ Ticket.data.state.assignedTo }
 							autoComplete="off"
 						/>
 					</label>
@@ -180,8 +181,8 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 						id='description'
 						name='description'
 						type='text'
-						onChange={ handleChange }
-						value={ state.description }
+						onChange={ Ticket.data.handleChange }
+						value={ Ticket.data.state.description }
 						autoComplete="off"
 					/>
 				</label>
@@ -192,20 +193,20 @@ function IncidentFields({ formControls: [ state, handleChange ] }) {
 						id='instructions'
 						name='instructions'
 						rows='5'
-						onChange={ handleChange }
-						value={ state.instructions }
+						onChange={ Ticket.data.handleChange }
+						value={ Ticket.data.state.instructions }
 						autoComplete="off"
 					/>
 				</label>
-				{ pathname !== '/ticket/new' ? (<>
+				{ location.pathname !== '/ticket/new' ? (<>
 					<label htmlFor='log'>
 						<span>Work notes</span>
 						<textarea
 							id='log'
 							name='log'
 							rows='5'
-							onChange={ handleChange }
-							value={ state.log }
+							onChange={ Ticket.data.handleChange }
+							value={ Ticket.data.state.log }
 							autoComplete="off"
 						/>
 					</label>

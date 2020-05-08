@@ -4,10 +4,11 @@ import { TicketRender } from './';
 import { ErrorPage } from '../';
 import { BASE_URL } from '../../../BASE_URL';
 import http from '../../utils/http';
+import TicketContext from './TicketContext';
 
-function TicketGet() {
+function GetTicket() {
 
-	const [ serverData, setServerData ] = useState();
+	const [ initialData, setInitialData ] = useState();
 	const [ error, setError ] = useState();
 	const [ key, setKey ] = useState(Math.random());
 	const hist = useHistory();
@@ -16,26 +17,24 @@ function TicketGet() {
 	useEffect(() => {
 		http()
 			.get(BASE_URL + hist.location.pathname, hist.location.search)
-			.then(res => setServerData(res))
+			.then(res => setInitialData(res))
 			.catch(e => setError(e));
 	}, [ hist.location ]);
 
 	useEffect(() => {
 		setKey(Math.random());
-		console.log(serverData);
-	}, [ serverData ]);
+	}, [ initialData ]);
 
 	if (error) {
 		return (
 			<ErrorPage error={ error } />
 		);
 	}
-	if (serverData) {
+	if (initialData) {
 		return (
-			<TicketRender
-				key={ key }
-				serverData={ serverData }
-			/>
+			<TicketContext key={ key } initialData={ initialData }>
+				<TicketRender serverData={ initialData } />
+			</TicketContext>
 		);
 	}
 	else {
@@ -45,4 +44,4 @@ function TicketGet() {
 	}
 }
 
-export default TicketGet;
+export default GetTicket;

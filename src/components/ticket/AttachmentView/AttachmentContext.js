@@ -10,7 +10,7 @@ export const XHR = {
 	ERROR: 'Error'
 };
 
-function AttachmentContext({ children }) {
+function AttachmentContext({ children, isOpened }) {
 
 	const [ status, setStatus ] = useState({ state: XHR.UNSENT });
 	const [ isWarning, setIsWarning ] = useState(false);
@@ -30,7 +30,7 @@ function AttachmentContext({ children }) {
 
 	return (
 		<AttachmentCtx.Provider value={ Attachment }>
-			{ children }
+			{ isOpened && children }
 		</AttachmentCtx.Provider>
 	);
 }

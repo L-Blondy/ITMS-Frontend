@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { BASE_URL } from '../../../../BASE_URL';
 import { CLR } from '../../../GlobalStyles';
 import { AttachmentCtx } from './AttachmentContext';
+import { TicketCtx } from '../TicketContext';
 
-function DeleteForm({ method, state }) {
+function DeleteForm({ method }) {
 
 	const Attachment = useContext(AttachmentCtx);
+	const Ticket = useContext(TicketCtx);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -34,12 +36,12 @@ function DeleteForm({ method, state }) {
 
 			<ul className='file-list'>
 
-				{ !state.fileList.length ? (
+				{ !Ticket.data.state.fileList.length ? (
 					<li>No attachments</li>
 				) : '' }
 
-				{ state.fileList.length ? (
-					state.fileList.map((fileName, i) => (
+				{ Ticket.data.state.fileList.length ? (
+					Ticket.data.state.fileList.map((fileName, i) => (
 
 						<li key={ fileName + i }>
 							<input
@@ -72,7 +74,7 @@ function DeleteForm({ method, state }) {
 export default DeleteForm;
 
 function setDisabledOrNothing(Attachment) {
-	Attachment.files.selected.length ? '' : 'disabled';
+	return !Attachment.files.selected.length ? 'disabled' : '';
 }
 
 const Form$ = styled.form`

@@ -6,10 +6,12 @@ import { BASE_URL } from '../../../BASE_URL';
 import { UserCtx } from '../../GlobalContext';
 import * as SRC from '../../assets/icons';
 import http from '../../utils/http';
+import { TicketCtx, STATUS } from './TicketContext';
 
-function IncidentControlBar({ formControls: [ state, setIsDisabled, needToSave, setNeedToSave, setIsAttachOpened ] }) {
+function IncidentControlBar() {
 
 	const user = useContext(UserCtx);
+	const Ticket = useContext(TicketCtx);
 	const hist = useHistory();
 	const [ dataToPost, setDataToPost ] = useState();
 
@@ -19,44 +21,44 @@ function IncidentControlBar({ formControls: [ state, setIsDisabled, needToSave, 
 	};
 
 	const escalate = (e) => {
-		const action = { escalation: state.escalation + 1 };
+		const action = { escalation: Ticket.data.state.escalation + 1 };
 		handleSubmit(e, action);
 	};
 
 	const submit = (e) => {
-		const action = { status: 'queued' };
+		const action = { status: STATUS.QUEUED };
 		handleSubmit(e, action);
 	};
 
 	const setInProgress = (e) => {
-		const action = { status: 'in progress' };
+		const action = { status: STATUS.IN_PROGRESS };
 		handleSubmit(e, action);
 	};
 
 	const placeOnHold = (e) => {
-		const action = { status: 'on hold' };
+		const action = { status: STATUS.ON_HOLD };
 		handleSubmit(e, action);
 	};
 
 	const resolve = (e) => {
-		const action = { status: 'resolved' };
+		const action = { status: STATUS.RESOLVED };
 		handleSubmit(e, action);
 	};
 
 	const reopen = (e) => {
-		const action = { status: 'in progress' };
+		const action = { status: STATUS.IN_PROGRESS };
 		handleSubmit(e, action);
 	};
 
 	const handleSubmit = (e, action) => {
-		if (!Validate.state(state)) {
+		if (!Validate.state(Ticket.data.state)) {
 			console.error('CANNOT SUBMIT INCOMPLETE FORM');
 			return;
 		}
-		setIsDisabled(true);
-		setNeedToSave(false);
+		Ticket.form.setIsDisabled(true);
+		Ticket.setNeedToSave(false);
 		setDataToPost({
-			...state,
+			...Ticket.data.state,
 			...action,
 			user,
 			date: Date.now()
@@ -64,49 +66,51 @@ function IncidentControlBar({ formControls: [ state, setIsDisabled, needToSave, 
 	};
 
 	useEffect(() => {
-		if (dataToPost && !needToSave) {
+		if (dataToPost && !Ticket.needToSave) {
 			http()
 				.post(BASE_URL + hist.location.pathname, dataToPost)
 				.then(res => hist.push('/ticket/' + res.id))
 				.catch(error => {
 					console.error(error);
-					setIsDisabled(false);
+					Ticket.form.setIsDisabled(false);
 				});
 		}
-	}, [ dataToPost, needToSave ]);
+	}, [ dataToPost, Ticket.needToSave ]);
+
+	const status = Ticket.data.state.status;
 
 	return (
 		<IncidentControlBar$>
 
-			{ state.status === 'queued' || state.status === 'in progress' || state.status === 'on hold' ? (
-				<PaperclipBtn$ onClick={ () => setIsAttachOpened(true) } />
+			{ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD ? (
+				<PaperclipBtn$ onClick={ () => Ticket.attachments.setIsOpened(true) } />
 			) : '' }
 
-			{ state.status === 'new' ? (
+			{ status === 'new' ? (
 				<button onClick={ submit }>
 					Submit
 				</button>
 			) : '' }
 
-			{ state.status === 'queued' || state.status === 'in progress' || state.status === 'on hold' ? (
+			{ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD ? (
 				<button onClick={ save }>
 					Save
 				</button>
 			) : '' }
 
-			{ state.status === 'queued' || state.status === 'in progress' || state.status === 'on hold' ? (
+			{ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD ? (
 				<button onClick={ escalate }>
 					Escalate
 				</button>
 			) : '' }
 
-			{ state.status === 'queued' || state.status === 'on hold' ? (
+			{ status === STATUS.QUEUED || status === STATUS.ON_HOLD ? (
 				<button onClick={ setInProgress }>
 					Set in progress
 				</button>
 			) : '' }
 
-			{ state.status === 'in progress' ? (<>
+			{ status === STATUS.IN_PROGRESS ? (<>
 				<button onClick={ placeOnHold }>
 					Place on hold
 				</button>
@@ -116,7 +120,7 @@ function IncidentControlBar({ formControls: [ state, setIsDisabled, needToSave, 
 				</button>
 			</>) : '' }
 
-			{ state.status === 'resolved' ? (
+			{ status === STATUS.RESOLVED ? (
 				<button onClick={ reopen }>
 					Reopen
 				</button>

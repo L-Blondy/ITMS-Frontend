@@ -6,10 +6,12 @@ import * as SRC from '../../../assets/icons';
 import { CLR } from '../../../GlobalStyles';
 import { UserCtx } from '../../../GlobalContext';
 import { AttachmentCtx, XHR } from './AttachmentContext';
+import { TicketCtx } from '../TicketContext';
 
-function UploadForm({ method, encType, state }) {
+function UploadForm({ method, encType }) {
 
 	const user = useContext(UserCtx);
+	const Ticket = useContext(TicketCtx);
 	const Attachment = useContext(AttachmentCtx);
 
 	const uploadFile = (e) => {
@@ -64,15 +66,15 @@ function UploadForm({ method, encType, state }) {
 				type='file'
 				onChange={ e => Attachment.files.setChosen(e.target.files[ 0 ]) } />
 
-			<button className={ `btn-contained-prim upload-btn ${ setEnabledOrDisabled(Attachment, state) }` } />
+			<button className={ `btn-contained-prim upload-btn ${ setEnabledOrDisabled(Attachment, Ticket) }` } />
 		</Form$>
 	);
 }
 
 export default UploadForm;
 
-function setEnabledOrDisabled(Attachment, state) {
-	if (Attachment.files.chosen && !state.fileList.includes(Attachment.files.chosen.name))
+function setEnabledOrDisabled(Attachment, Ticket) {
+	if (Attachment.files.chosen && !Ticket.data.state.fileList.includes(Attachment.files.chosen.name))
 		return 'enabled';
 	return 'disabled';
 }

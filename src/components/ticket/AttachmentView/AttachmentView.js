@@ -1,32 +1,27 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import * as SRC from '../../../assets/icons';
 import { UploadForm, DeleteForm, Warning, Status } from './';
 import { CLR } from '../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentContext';
+import { TicketCtx } from '../TicketContext';
 
-function AttachmentView({ state, setIsAttachOpened }) {
+function AttachmentView() {
 
 	const Attachment = useContext(AttachmentCtx);
+	const Ticket = useContext(TicketCtx);
 
 	return (<>
 		<UploadBox$ requestStatus={ Attachment.request.status } isWarning={ Attachment.deletion.isWarning }>
 
 			<div className='header'>
 				<span>Attachments</span>
-				<button className='close-btn' onClick={ () => setIsAttachOpened(false) }></button>
+				<button className='close-btn' onClick={ () => Ticket.attachments.setIsOpened(false) }></button>
 			</div>
 
-			<UploadForm
-				method='POST'
-				encType='multipart/form-data'
-				state={ state }
-			/>
+			<UploadForm method='POST' encType='multipart/form-data' />
 
-			<DeleteForm
-				method='DELETE'
-				state={ state }
-			/>
+			<DeleteForm method='DELETE' />
 
 		</UploadBox$>
 
