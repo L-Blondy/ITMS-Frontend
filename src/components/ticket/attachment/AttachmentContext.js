@@ -46,17 +46,22 @@ class AttachmentModel {
 	) {
 
 		this.request = {
-			status, setStatus,
+			status,
+			setStatus,
 		};
 
 		this.deletion = {
-			isWarning, setIsWarning,
-			isConfirmed, setIsConfirmed,
+			isWarning,
+			setIsWarning,
+			isConfirmed,
+			setIsConfirmed,
 		};
 
 		this.files = {
-			selected, setSelected,
-			chosen, setChosen,
+			selected,
+			setSelected,
+			chosen,
+			setChosen,
 
 			select: (selectedFileName) => {
 				this.files.setSelected([
@@ -117,3 +122,4 @@ class AttachmentModel {
 		};
 	}
 }
+

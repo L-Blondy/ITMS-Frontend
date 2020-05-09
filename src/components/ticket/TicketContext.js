@@ -1,7 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useInputValidation } from '../../hooks';
-// import http from '../../../utils/http';
-// import { BASE_URL } from '../../../../BASE_URL';
+import { useHistory } from 'react-router-dom';
+import http from '../../utils/http';
+import { BASE_URL } from '../../../BASE_URL';
 
 export const TicketCtx = createContext();
 export const STATUS = {
@@ -20,6 +21,8 @@ function TicketContext({ children, initialData: { worknotesHistory: initialWorkn
 	const [ state, handleChange, setState ] = useInputValidation(initialState, setNeedToSave);
 	const [ isDisabled, setIsDisabled ] = useState(false);
 	const [ isOpened, setIsOpened ] = useState(false);
+	const [ dataToPost, setDataToPost ] = useState();
+	const history = useHistory();
 
 	const Ticket = new TicketModel(
 		needToSave, setNeedToSave,
@@ -27,6 +30,8 @@ function TicketContext({ children, initialData: { worknotesHistory: initialWorkn
 		state, handleChange, setState,
 		isDisabled, setIsDisabled,
 		isOpened, setIsOpened,
+		dataToPost, setDataToPost,
+		history,
 	);
 
 	return (
@@ -46,21 +51,38 @@ class TicketModel {
 		state, handleChange, setState,
 		isDisabled, setIsDisabled,
 		isOpened, setIsOpened,
+		dataToPost, setDataToPost,
+		history,
 	) {
+
 		this.needToSave = needToSave;
 		this.setNeedToSave = setNeedToSave;
-
-		this.data = {
-			worknotesHistory, setWorknotesHistory,
-			state, handleChange, setState,
-		};
+		this.worknotesHistory = worknotesHistory;
+		this.setWorknotesHistory = setWorknotesHistory;
+		this.state = state;
+		this.handleChange = handleChange;
+		this.setState = setState;
+		this.dataToPost = dataToPost;
+		this.setDataToPost = setDataToPost;
 
 		this.form = {
-			isDisabled, setIsDisabled
+			isDisabled,
+			setIsDisabled
 		};
 
 		this.attachments = {
-			isOpened, setIsOpened
+			isOpened,
+			setIsOpened
+		};
+
+		this.post = () => {
+			http()
+				.post(BASE_URL + location.pathname, this.dataToPost)
+				.then(res => history.push('/ticket/' + res.id))
+				.catch(error => {
+					console.error(error);
+					this.form.setIsDisabled(false);
+				});
 		};
 	}
 }

@@ -36,12 +36,12 @@ function Delete({ method }) {
 
 			<ul className='file-list'>
 
-				{ !Ticket.data.state.fileList.length ? (
+				{ !Ticket.state.fileList.length ? (
 					<li>No attachments</li>
 				) : '' }
 
-				{ Ticket.data.state.fileList.length ? (
-					Ticket.data.state.fileList.map((fileName, i) => (
+				{ Ticket.state.fileList.length ? (
+					Ticket.state.fileList.map((fileName, i) => (
 
 						<li key={ fileName + i }>
 							<input

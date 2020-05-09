@@ -8,7 +8,7 @@ function IncidentFields() {
 	const Ticket = useContext(TicketCtx);
 
 	const getPriority = () => {
-		switch (Ticket.data.state.priority) {
+		switch (Ticket.state.priority) {
 			case 'P1':
 				return 'P1 - Critical';
 			case 'P2':
@@ -40,7 +40,7 @@ function IncidentFields() {
 							id='number'
 							name='number'
 							type='text'
-							value={ Ticket.data.state.id }
+							value={ Ticket.state.id }
 							disabled
 						/>
 					</label>
@@ -51,7 +51,7 @@ function IncidentFields() {
 							id='createdOn'
 							name='createdOn'
 							type='text'
-							value={ displayDate(Ticket.data.state.createdOn) }
+							value={ displayDate(Ticket.state.createdOn) }
 							disabled
 						/>
 					</label>
@@ -62,7 +62,7 @@ function IncidentFields() {
 							id='dueDate'
 							name='dueDate'
 							type='text'
-							value={ displayDate(Ticket.data.state.dueDate) }
+							value={ displayDate(Ticket.state.dueDate) }
 							disabled
 						/>
 					</label>
@@ -73,16 +73,16 @@ function IncidentFields() {
 							id='escalation'
 							name='escalation'
 							type='text'
-							value={ Ticket.data.state.escalation === 0 ? 'None' : Ticket.data.state.escalation === 1 ? 'Uplift' : 'Overdue' }
+							value={ Ticket.state.escalation === 0 ? 'None' : Ticket.state.escalation === 1 ? 'Uplift' : 'Overdue' }
 							disabled
 						/>
 					</label>
 
 					<label htmlFor='category'>
 						<span>Category</span>
-						<select id='category' name='category' onChange={ Ticket.data.handleChange } value={ Ticket.data.state.category } >
+						<select id='category' name='category' onChange={ Ticket.handleChange } value={ Ticket.state.category } >
 							<option value=''>-none-</option>
-							{ Ticket.data.state.staticData.category.map(cat => (
+							{ Ticket.state.staticData.category.map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
@@ -90,9 +90,9 @@ function IncidentFields() {
 
 					<label htmlFor='subCategory'>
 						<span>Sub category</span>
-						<select id='subCategory' name='subCategory' onChange={ Ticket.data.handleChange } value={ Ticket.data.state.subCategory } >
+						<select id='subCategory' name='subCategory' onChange={ Ticket.handleChange } value={ Ticket.state.subCategory } >
 							<option value=''>-none-</option>
-							{ Ticket.data.state.staticData.subCategory.map(cat => (
+							{ Ticket.state.staticData.subCategory.map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
@@ -108,7 +108,7 @@ function IncidentFields() {
 							id='status'
 							name='status'
 							type='text'
-							value={ Ticket.data.state.status }
+							value={ Ticket.state.status }
 							style={ { textTransform: 'capitalize' } }
 							disabled
 						/>
@@ -117,7 +117,7 @@ function IncidentFields() {
 
 					<label htmlFor='impact'>
 						<span>Impact</span>
-						<select id='impact' name='impact' onChange={ Ticket.data.handleChange } value={ Ticket.data.state.impact }>
+						<select id='impact' name='impact' onChange={ Ticket.handleChange } value={ Ticket.state.impact }>
 							<option value='1'> 1 - Extensive/Widespread </option>
 							<option value='2'> 2 - Significant/Large </option>
 							<option value='3'> 3 - Moderate/Limited </option>
@@ -127,7 +127,7 @@ function IncidentFields() {
 
 					<label htmlFor='urgency'>
 						<span>Urgency</span>
-						<select id='urgency' name='urgency' onChange={ Ticket.data.handleChange } value={ Ticket.data.state.urgency } >
+						<select id='urgency' name='urgency' onChange={ Ticket.handleChange } value={ Ticket.state.urgency } >
 							<option value="1"> 1 - Critical </option>
 							<option value="2"> 2 - High </option>
 							<option value="3"> 3 - Medium </option>
@@ -152,8 +152,8 @@ function IncidentFields() {
 							id='assignmentGroup'
 							name='assignmentGroup'
 							type='text'
-							onChange={ Ticket.data.handleChange }
-							value={ Ticket.data.state.assignmentGroup }
+							onChange={ Ticket.handleChange }
+							value={ Ticket.state.assignmentGroup }
 							autoComplete="off"
 						/>
 					</label>
@@ -164,8 +164,8 @@ function IncidentFields() {
 							id='assignedTo'
 							name='assignedTo'
 							type='text'
-							onChange={ Ticket.data.handleChange }
-							value={ Ticket.data.state.assignedTo }
+							onChange={ Ticket.handleChange }
+							value={ Ticket.state.assignedTo }
 							autoComplete="off"
 						/>
 					</label>
@@ -181,8 +181,8 @@ function IncidentFields() {
 						id='description'
 						name='description'
 						type='text'
-						onChange={ Ticket.data.handleChange }
-						value={ Ticket.data.state.description }
+						onChange={ Ticket.handleChange }
+						value={ Ticket.state.description }
 						autoComplete="off"
 					/>
 				</label>
@@ -193,8 +193,8 @@ function IncidentFields() {
 						id='instructions'
 						name='instructions'
 						rows='5'
-						onChange={ Ticket.data.handleChange }
-						value={ Ticket.data.state.instructions }
+						onChange={ Ticket.handleChange }
+						value={ Ticket.state.instructions }
 						autoComplete="off"
 					/>
 				</label>
@@ -205,8 +205,8 @@ function IncidentFields() {
 							id='log'
 							name='log'
 							rows='5'
-							onChange={ Ticket.data.handleChange }
-							value={ Ticket.data.state.log }
+							onChange={ Ticket.handleChange }
+							value={ Ticket.state.log }
 							autoComplete="off"
 						/>
 					</label>

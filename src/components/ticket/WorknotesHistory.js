@@ -27,7 +27,7 @@ function WorknotesHistory() {
 		else if (note.type === "fileLog") {
 			const { mimetype, originalname } = note.file;
 
-			if (!Ticket.data.state.fileList.includes(originalname)) {
+			if (!Ticket.state.fileList.includes(originalname)) {
 				return (<>
 					<span>{ originalname } </span><i style={ { opacity: 0.75 } }>(deleted)</i>
 				</>);
@@ -50,10 +50,10 @@ function WorknotesHistory() {
 		return 'Note type not recognized';;
 	}
 
-	if (Ticket.data.worknotesHistory.length)
+	if (Ticket.worknotesHistory.length)
 		return (
 			<WorknotesHistory$>
-				{ Ticket.data.worknotesHistory.map((note, i) => (
+				{ Ticket.worknotesHistory.map((note, i) => (
 
 					<div className={ 'worknote ' + note.type } key={ note.type + i }>
 						<div className="header">

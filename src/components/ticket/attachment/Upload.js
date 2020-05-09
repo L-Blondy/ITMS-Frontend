@@ -55,7 +55,7 @@ function UploadForm({ method, encType }) {
 export default UploadForm;
 
 function setEnabledOrDisabled(Attachment, Ticket) {
-	if (Attachment.files.chosen && !Ticket.data.state.fileList.includes(Attachment.files.chosen.name))
+	if (Attachment.files.chosen && !Ticket.state.fileList.includes(Attachment.files.chosen.name))
 		return 'enabled';
 	return 'disabled';
 }

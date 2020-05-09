@@ -1,19 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { Validate } from '../../utils';
-import { BASE_URL } from '../../../BASE_URL';
 import { UserCtx } from '../../GlobalContext';
 import * as SRC from '../../assets/icons';
-import http from '../../utils/http';
 import { TicketCtx, STATUS } from './TicketContext';
 
 function IncidentControlBar() {
 
 	const user = useContext(UserCtx);
 	const Ticket = useContext(TicketCtx);
-	const hist = useHistory();
-	const [ dataToPost, setDataToPost ] = useState();
 
 	const save = (e) => {
 		const action = {};
@@ -21,7 +16,7 @@ function IncidentControlBar() {
 	};
 
 	const escalate = (e) => {
-		const action = { escalation: Ticket.data.state.escalation + 1 };
+		const action = { escalation: Ticket.state.escalation + 1 };
 		handleSubmit(e, action);
 	};
 
@@ -51,14 +46,14 @@ function IncidentControlBar() {
 	};
 
 	const handleSubmit = (e, action) => {
-		if (!Validate.state(Ticket.data.state)) {
+		if (!Validate.state(Ticket.state)) {
 			console.error('CANNOT SUBMIT INCOMPLETE FORM');
 			return;
 		}
 		Ticket.form.setIsDisabled(true);
 		Ticket.setNeedToSave(false);
-		setDataToPost({
-			...Ticket.data.state,
+		Ticket.setDataToPost({
+			...Ticket.state,
 			...action,
 			user,
 			date: Date.now()
@@ -66,18 +61,13 @@ function IncidentControlBar() {
 	};
 
 	useEffect(() => {
-		if (dataToPost && !Ticket.needToSave) {
-			http()
-				.post(BASE_URL + hist.location.pathname, dataToPost)
-				.then(res => hist.push('/ticket/' + res.id))
-				.catch(error => {
-					console.error(error);
-					Ticket.form.setIsDisabled(false);
-				});
+		if (!Ticket.needToSave && Ticket.dataToPost) {
+			console.log('Posting');
+			Ticket.post();
 		}
-	}, [ dataToPost, Ticket.needToSave ]);
+	}, [ Ticket.needToSave, Ticket.dataToPost ]);
 
-	const status = Ticket.data.state.status;
+	const status = Ticket.state.status;
 
 	return (
 		<IncidentControlBar$>

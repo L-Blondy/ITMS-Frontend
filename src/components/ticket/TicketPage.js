@@ -19,8 +19,8 @@ function TicketPage({ serverData }) {
 	useEffect(() => {
 		if (liveData) {
 			let { worknotesHistory, ...newState } = liveData;
-			Ticket.data.setWorknotesHistory(worknotesHistory);
-			Ticket.data.setState({ ...Ticket.data.state, ...newState });
+			Ticket.setWorknotesHistory(worknotesHistory);
+			Ticket.setState({ ...Ticket.state, ...newState });
 
 			compare(liveData, serverData);
 		}
@@ -42,11 +42,11 @@ function TicketPage({ serverData }) {
 
 			<IncidentControlBar />
 
-			{ Ticket.data.state.id.slice(0, 3) === 'INC' ? (
+			{ Ticket.state.id.slice(0, 3) === 'INC' ? (
 				<IncidentFields />
-			) : Ticket.data.state.id.slice(0, 3) === 'REQ' ? (
+			) : Ticket.state.id.slice(0, 3) === 'REQ' ? (
 				<IncidentFields />
-			) : Ticket.data.state.id.slice(0, 3) === 'CHG' ? (
+			) : Ticket.state.id.slice(0, 3) === 'CHG' ? (
 				<IncidentFields />
 			) : '' }
 
