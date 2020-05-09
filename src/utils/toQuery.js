@@ -1,5 +1,4 @@
 function toQuery(obj) {
-	console.log(obj);
 	let query = '';
 	recursion(obj);
 
