@@ -2,29 +2,27 @@ import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { useInputValidation, useSubscription } from '../../hooks';
-import { IncidentFields, IncidentControlBar, WorknotesHistory } from './';
-import { AttachmentView } from './AttachmentView';
+import { IncidentFields, IncidentControlBar, WorknotesHistory } from '.';
+import { AttachmentBox } from './attachment';
 import { DisableBg$ } from '../styled';
-import { CustomPrompt } from '../';
+import { CustomPrompt } from '..';
 import { BASE_URL } from '../../../BASE_URL';
-import AttachmentContext from './AttachmentView/AttachmentContext';
+import AttachmentContext from './attachment/AttachmentContext';
 import { TicketCtx } from './TicketContext';
 
-function TicketRender({ serverData }) {
+function TicketPage({ serverData }) {
 
 	const Ticket = useContext(TicketCtx);
-
-	useEffect(() => console.log('RE-MOUNT'), []);
 
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
 
 	useEffect(() => {
 		if (liveData) {
 			let { worknotesHistory, ...newState } = liveData;
-			compare(liveData, serverData);
-
 			Ticket.data.setWorknotesHistory(worknotesHistory);
 			Ticket.data.setState({ ...Ticket.data.state, ...newState });
+
+			compare(liveData, serverData);
 		}
 	}, [ liveData ]);
 
@@ -38,7 +36,7 @@ function TicketRender({ serverData }) {
 
 			<AttachmentContext isOpened={ Ticket.attachments.isOpened }>
 				<DisableBg$>
-					<AttachmentView />
+					<AttachmentBox />
 				</DisableBg$>
 			</AttachmentContext>
 
@@ -58,7 +56,7 @@ function TicketRender({ serverData }) {
 	);
 }
 
-export default TicketRender;
+export default TicketPage;
 
 function compare(liveData, serverData) {
 	for (let prop in serverData) {

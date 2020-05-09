@@ -5,7 +5,7 @@ import { CLR } from '../../../GlobalStyles';
 import { AttachmentCtx } from './AttachmentContext';
 import { TicketCtx } from '../TicketContext';
 
-function DeleteForm({ method }) {
+function Delete({ method }) {
 
 	const Attachment = useContext(AttachmentCtx);
 	const Ticket = useContext(TicketCtx);
@@ -71,7 +71,7 @@ function DeleteForm({ method }) {
 	);
 }
 
-export default DeleteForm;
+export default Delete;
 
 function setDisabledOrNothing(Attachment) {
 	return !Attachment.files.selected.length ? 'disabled' : '';

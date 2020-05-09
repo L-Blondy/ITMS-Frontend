@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import React, { useContext } from 'react';
-import http from '../../../utils/http';
-import { BASE_URL } from '../../../../BASE_URL';
 import * as SRC from '../../../assets/icons';
 import { CLR } from '../../../GlobalStyles';
 import { UserCtx } from '../../../GlobalContext';
@@ -25,24 +23,7 @@ function UploadForm({ method, encType }) {
 		Attachment.request.setStatus({ state: XHR.LOADING });
 
 		setTimeout(() => {
-			http()
-				.post(BASE_URL + location.pathname + '/attach', formData)
-				.then(res => {
-					Attachment.request.setStatus({
-						state: XHR.SUCCESS,
-						files: [ Attachment.files.chosen.name ],
-						message: '  was uploaded with success'
-					});
-					Attachment.files.setChosen('');
-				})
-				.catch(e => {
-					Attachment.request.setStatus({
-						state: XHR.ERROR,
-						files: [ Attachment.files.chosen.name ],
-						message: `  could not be uploaded.\n${ e.message }`
-					});
-					console.error(e);
-				});
+			Attachment.files.upload(formData);
 		}, 500);
 	};
 

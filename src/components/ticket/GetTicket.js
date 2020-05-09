@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { TicketRender } from './';
+import { TicketPage } from './';
 import { ErrorPage } from '../';
 import { BASE_URL } from '../../../BASE_URL';
 import http from '../../utils/http';
@@ -33,7 +33,7 @@ function GetTicket() {
 	if (initialData) {
 		return (
 			<TicketContext key={ key } initialData={ initialData }>
-				<TicketRender serverData={ initialData } />
+				<TicketPage serverData={ initialData } />
 			</TicketContext>
 		);
 	}

@@ -1,29 +1,29 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import * as SRC from '../../../assets/icons';
-import { UploadForm, DeleteForm, Warning, Status } from './';
+import { Upload, Delete, Warning, Status } from '.';
 import { CLR } from '../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentContext';
 import { TicketCtx } from '../TicketContext';
 
-function AttachmentView() {
+function AttachmentBox() {
 
 	const Attachment = useContext(AttachmentCtx);
 	const Ticket = useContext(TicketCtx);
 
 	return (<>
-		<UploadBox$ requestStatus={ Attachment.request.status } isWarning={ Attachment.deletion.isWarning }>
+		<AttachmentBox$ requestStatus={ Attachment.request.status } isWarning={ Attachment.deletion.isWarning }>
 
 			<div className='header'>
 				<span>Attachments</span>
 				<button className='close-btn' onClick={ () => Ticket.attachments.setIsOpened(false) }></button>
 			</div>
 
-			<UploadForm method='POST' encType='multipart/form-data' />
+			<Upload method='POST' encType='multipart/form-data' />
 
-			<DeleteForm method='DELETE' />
+			<Delete method='DELETE' />
 
-		</UploadBox$>
+		</AttachmentBox$>
 
 		<Status />
 
@@ -32,9 +32,9 @@ function AttachmentView() {
 	</>);
 }
 
-export default AttachmentView;
+export default AttachmentBox;
 
-const UploadBox$ = styled.div`
+const AttachmentBox$ = styled.div`
 	background: white;
 	min-width: 450px;
 	${ props => {

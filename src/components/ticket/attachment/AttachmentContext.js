@@ -18,8 +18,6 @@ function AttachmentContext({ children, isOpened }) {
 	const [ selected, setSelected ] = useState([]);
 	const [ chosen, setChosen ] = useState();
 
-	useEffect(() => console.log(isConfirmed), [ isConfirmed ]);
-
 	const Attachment = new AttachmentModel(
 		status, setStatus,
 		isWarning, setIsWarning,
@@ -36,7 +34,6 @@ function AttachmentContext({ children, isOpened }) {
 }
 
 export default AttachmentContext;
-
 
 class AttachmentModel {
 
@@ -93,6 +90,28 @@ class AttachmentModel {
 							files: this.files.selected,
 							message: '  could not be removed, please try again.'
 						});
+					});
+			},
+
+			upload: (formData) => {
+				http()
+					.post(BASE_URL + location.pathname + '/attach', formData)
+					.then(res => {
+						console.log(res, this);
+						this.request.setStatus({
+							state: XHR.SUCCESS,
+							files: [ this.files.chosen.name ],
+							message: '  was uploaded with success'
+						});
+						this.files.setChosen('');
+					})
+					.catch(e => {
+						this.request.setStatus({
+							state: XHR.ERROR,
+							files: [ this.files.chosen.name ],
+							message: `  could not be uploaded.\n${ e.message }`
+						});
+						console.error(e);
 					});
 			}
 		};
