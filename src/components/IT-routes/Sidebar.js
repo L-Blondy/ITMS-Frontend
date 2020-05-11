@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 function Sidebar() {
 	return (
 		<Sidebar$ className='sidebar'>
-			<Link to='/it/ticket/new?type=INC'>Open Incident</Link>
-			<Link to='/it/ticket/new?type=REQ'>Open Request</Link>
-			<Link to='/it/ticket/new?type=CHG'>Open Change</Link>
+			<Link to='/it/ticket/INC/new'>Open Incident</Link>
+			<Link to='/it/ticket/REQ/new'>Open Request</Link>
+			<Link to='/it/ticket/CHG/new'>Open Change</Link>
 		</Sidebar$>
 	);
 }

@@ -8,7 +8,7 @@ import { TicketCtx, STATUS } from './TicketPageWithContext';
 function IncidentControlBar() {
 
 	const user = useContext(UserCtx);
-	const Ticket = useContext(TicketCtx);
+	const ticketCtx = useContext(TicketCtx);
 
 	const save = (e) => {
 		const action = {};
@@ -16,7 +16,7 @@ function IncidentControlBar() {
 	};
 
 	const escalate = (e) => {
-		const action = { escalation: Ticket.state.escalation + 1 };
+		const action = { escalation: ticketCtx.state.escalation + 1 };
 		handleSubmit(e, action);
 	};
 
@@ -46,14 +46,14 @@ function IncidentControlBar() {
 	};
 
 	const handleSubmit = (e, action) => {
-		if (!Validate.state(Ticket.state)) {
+		if (!Validate.state(ticketCtx.state)) {
 			console.error('CANNOT SUBMIT INCOMPLETE FORM');
 			return;
 		}
-		Ticket.form.setIsDisabled(true);
-		Ticket.setNeedToSave(false);
-		Ticket.setDataToPost({
-			...Ticket.state,
+		ticketCtx.form.setIsDisabled(true);
+		ticketCtx.setNeedToSave(false);
+		ticketCtx.setDataToPost({
+			...ticketCtx.state,
 			...action,
 			user,
 			date: Date.now()
@@ -61,18 +61,18 @@ function IncidentControlBar() {
 	};
 
 	useEffect(() => {
-		if (!Ticket.needToSave && Ticket.dataToPost) {
-			Ticket.post();
+		if (!ticketCtx.needToSave && ticketCtx.dataToPost) {
+			ticketCtx.post();
 		}
-	}, [ Ticket.needToSave, Ticket.dataToPost ]);
+	}, [ ticketCtx.needToSave, ticketCtx.dataToPost ]);
 
-	const status = Ticket.state.status;
+	const status = ticketCtx.state.status;
 
 	return (
 		<IncidentControlBar$>
 
 			{ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD ? (
-				<PaperclipBtn$ onClick={ () => Ticket.attachments.setIsOpened(true) } />
+				<PaperclipBtn$ onClick={ () => ticketCtx.attachments.setIsOpened(true) } />
 			) : '' }
 
 			{ status === 'new' ? (

@@ -3,36 +3,51 @@ import styled from 'styled-components';
 import * as SRC from '../../../../assets/icons';
 import { Upload, Delete, Warning, Status } from '.';
 import { CLR } from '../../../../GlobalStyles';
-import { AttachmentCtx, XHR } from './AttachmentContext';
+import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { TicketCtx } from '../TicketPageWithContext';
 
 function AttachmentBox() {
 
-	const Attachment = useContext(AttachmentCtx);
-	const Ticket = useContext(TicketCtx);
+	const attachmentCtx = useContext(AttachmentCtx);
+	const ticketCtx = useContext(TicketCtx);
 
-	return (<>
-		<AttachmentBox$ requestStatus={ Attachment.request.status } isWarning={ Attachment.deletion.isWarning }>
+	return (
+		<DisableBg$>
+			<AttachmentBox$ requestStatus={ attachmentCtx.request.status } isWarning={ attachmentCtx.deletion.isWarning }>
 
-			<div className='header'>
-				<span>Attachments</span>
-				<button className='close-btn' onClick={ () => Ticket.attachments.setIsOpened(false) }></button>
-			</div>
+				<div className='header'>
+					<span>Attachments</span>
+					<button className='close-btn' onClick={ () => ticketCtx.attachments.setIsOpened(false) }></button>
+				</div>
 
-			<Upload method='POST' encType='multipart/form-data' />
+				<Upload method='POST' encType='multipart/form-data' />
 
-			<Delete method='DELETE' />
+				<Delete method='DELETE' />
 
-		</AttachmentBox$>
+			</AttachmentBox$>
 
-		<Status />
+			<Status />
 
-		<Warning message='Are you sure ?' />
+			<Warning message='Are you sure ?' />
 
-	</>);
+		</DisableBg$>
+	);
 }
 
 export default AttachmentBox;
+
+const DisableBg$ = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1002;
+	background: rgba(0,0,0,0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
 
 const AttachmentBox$ = styled.div`
 	background: white;

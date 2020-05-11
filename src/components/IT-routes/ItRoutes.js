@@ -10,23 +10,25 @@ import http from '../../utils/http';
 
 function ItRoutes() {
 
-	const it = useContext(ItRoutesCtx);
+	const itCtx = useContext(ItRoutesCtx);
 	const [ key, setKey ] = useState(Math.random());
 	const history = useHistory();
 
 	useEffect(() => {
+		itCtx.setError(null);
 		http()
-			.get(it.BASE_URL + location.pathname, location.search)
-			.then(res => setTimeout(() => it.setInitialData(res), 500))
-			.catch(e => it.setError(e));
+			.get(itCtx.BASE_URL + location.pathname, location.search)
+			.then(res => setTimeout(() => itCtx.setInitialData(res), 500))
+			.catch(e => itCtx.setError(e));
 	}, [ history.location ]);
 
 	useEffect(() => {
+		console.log(itCtx.initialData);
 		setKey(Math.random());
-	}, [ it.initialData ]);
+	}, [ itCtx.initialData ]);
 
 	return (<>
-		{ it.settings.areOpened && (<Settings closeSettings={ () => it.settings.setAreOpened(false) } />) }
+		{ itCtx.settings.areOpened && (<Settings closeSettings={ () => itCtx.settings.setAreOpened(false) } />) }
 
 		<Navbar />
 
@@ -35,22 +37,22 @@ function ItRoutes() {
 			<Sidebar />
 
 			<Main$>
-				{ it.error ? (
+				{ itCtx.error ? (
 
-					<ErrorPage error={ it.error } />
+					<ErrorPage error={ itCtx.error } />
 
-				) : !it.initialData ? (
+				) : !itCtx.initialData ? (
 
 					<LoadingPage />
 
-				) : it.initialData ? (
+				) : itCtx.initialData ? (
 
 					<Switch>
 						<Route path='/it/dashboard' render={ () => (
-							<DashboardWithContext key={ key } initialData={ it.initialData } />
+							<DashboardWithContext key={ key } initialData={ itCtx.initialData } />
 						) } />
-						<Route path='/it/:ticketType/:ticketId' render={ () => (
-							<TicketPageWithContext key={ key } initialData={ it.initialData } />
+						<Route path='/it/ticket/:ticketType/:ticketId' render={ () => (
+							<TicketPageWithContext key={ key } initialData={ itCtx.initialData } />
 						) } />
 					</Switch>
 

@@ -1,52 +1,48 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useInputValidation, useSubscription } from '../../../hooks';
-import { IncidentFields, IncidentControlBar, WorknotesHistory } from '.';
-import { AttachmentBox } from './attachment';
-import { DisableBg$ } from '../../styled';
+import { Fields, ControlBar, WorknotesHistory } from '.';
 import { CustomPrompt } from '..';
 import { BASE_URL } from '../../../../BASE_URL';
-import AttachmentContext from './attachment/AttachmentContext';
+import AttachmentWithContext from './attachment/AttachmentWithContext';
 import { TicketCtx } from './TicketPageWithContext';
 
 function TicketPage({ serverData }) {
 
-	const Ticket = useContext(TicketCtx);
+	const ticketCtx = useContext(TicketCtx);
+	const { ticketType } = useParams();
 
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
 
 	useEffect(() => {
 		if (liveData) {
 			let { worknotesHistory, ...newState } = liveData;
-			Ticket.setWorknotesHistory(worknotesHistory);
-			Ticket.setState({ ...Ticket.state, ...newState });
+			ticketCtx.setWorknotesHistory(worknotesHistory);
+			ticketCtx.setState({ ...ticketCtx.state, ...newState });
 
 			compare(liveData, serverData);
 		}
 	}, [ liveData ]);
 
 	return (
-		<Ticket$ className={ Ticket.form.isDisabled ? 'disabled' : '' }>
+		<Ticket$ className={ ticketCtx.form.isDisabled ? 'disabled' : '' }>
 			<CustomPrompt
-				when={ Ticket.needToSave }
+				when={ ticketCtx.needToSave }
 				message={ 'Modifications may not be saved.' }
 				reason={ 'Do you want to exit this page ?' }
 			/>
 
-			<AttachmentContext isOpened={ Ticket.attachments.isOpened }>
-				<DisableBg$>
-					<AttachmentBox />
-				</DisableBg$>
-			</AttachmentContext>
+			<AttachmentWithContext isOpened={ ticketCtx.attachments.isOpened } />
 
-			<IncidentControlBar />
+			<ControlBar />
 
-			{ Ticket.state.id.slice(0, 3) === 'INC' ? (
-				<IncidentFields />
-			) : Ticket.state.id.slice(0, 3) === 'REQ' ? (
-				<IncidentFields />
-			) : Ticket.state.id.slice(0, 3) === 'CHG' ? (
-				<IncidentFields />
+			{ ticketType === 'INC' ? (
+				<Fields />
+			) : ticketType === 'REQ' ? (
+				<Fields />
+			) : ticketType === 'CHG' ? (
+				<Fields />
 			) : '' }
 
 			<WorknotesHistory />

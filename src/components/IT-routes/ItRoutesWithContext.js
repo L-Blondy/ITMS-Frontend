@@ -11,7 +11,7 @@ function ItRoutesWithContext() {
 	const [ initialData, setInitialData ] = useState();
 	const [ error, setError ] = useState();
 	const [ areOpened, setAreOpened ] = useState(false);
-	const ItCtxValue = {
+	const itCtx = {
 		BASE_URL,
 		initialData,
 		setInitialData,
@@ -25,7 +25,7 @@ function ItRoutesWithContext() {
 	};
 
 	return (
-		<ItRoutesCtx.Provider value={ ItCtxValue }>
+		<ItRoutesCtx.Provider value={ itCtx }>
 			<ItRoutes />
 		</ItRoutesCtx.Provider>
 	);

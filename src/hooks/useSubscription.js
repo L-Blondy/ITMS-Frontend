@@ -3,40 +3,42 @@ import { toQuery, setHeaders } from '../utils';
 
 XMLHttpRequest.prototype.setHeaders = setHeaders;
 
-function useSubscription ( URL, params = {}, headers = {} ) {
+function useSubscription(URL, params = {}, headers = {}) {
 
-	const req = useRef( new XMLHttpRequest() ).current;
-	const [ res, setRes ] = useState( '' );
+	const req = useRef(new XMLHttpRequest()).current;
+	const [ res, setRes ] = useState('');
 
-	const subscribe = useCallback( () => {
-		const query = typeof params === 'string' ? params : toQuery( params );
-		req.open( "GET", URL + query, true );
-		req.setHeaders( headers );
-		req.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
-		req.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' );
-		req.setRequestHeader( 'Cache-Control', 'no-cache' );
+	const subscribe = useCallback(() => {
+		console.log('SUBSCRIBING');
+		const query = typeof params === 'string' ? params : toQuery(params);
+		req.open("GET", URL + query, true);
+		req.setHeaders(headers);
+		req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		req.setRequestHeader('Cache-Control', 'no-cache');
 		req.msCaching = 'disabled';
 		req.send();
 
-	}, [ res ] );
+	}, [ res ]);
 
-	useEffect( () => {
+	useEffect(() => {
+		console.log('subscription response', res);
 		subscribe();
-	}, [ res ] );
+	}, [ res ]);
 
-	useEffect( () => {
+	useEffect(() => {
 		req.onreadystatechange = () => {
-			if ( req.readyState === 4 ) {
-				if ( req.status >= 400 ) {
-					setTimeout( () => subscribe(), 3000 );
-				}
-				else {
-					setRes( JSON.parse( req.response || '[]' ) );
-				}
+			if (req.readyState === 4 && req.status === 0)
+				return;
+			if (req.readyState === 4 && req.status >= 400) {
+				setTimeout(() => subscribe(), 3000);
+			}
+			else if (req.readyState === 4) {
+				setRes(JSON.parse(req.response || '[]'));
 			}
 		};
 		return () => req.abort();
-	}, [] );
+	}, []);
 
 	return res;
 }

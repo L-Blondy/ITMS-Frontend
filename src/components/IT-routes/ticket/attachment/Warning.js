@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import React, { useContext } from 'react';
-import { AttachmentCtx } from './AttachmentContext';
+import { AttachmentCtx } from './AttachmentWithContext';
 
 function Warning({ message }) {
 
-	const Attachment = useContext(AttachmentCtx);
+	const attachmentCtx = useContext(AttachmentCtx);
 
 	const handleWarningChoice = (userAnswer) => {
-		Attachment.deletion.setIsWarning(false);
-		Attachment.deletion.setIsConfirmed(userAnswer);
+		attachmentCtx.deletion.setIsWarning(false);
+		attachmentCtx.deletion.setIsConfirmed(userAnswer);
 	};
 
-	if (!Attachment.deletion.isWarning)
+	if (!attachmentCtx.deletion.isWarning)
 		return null;
 
 	else

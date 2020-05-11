@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useInputValidation } from '../../../hooks';
 import http from '../../../utils/http';
 import { BASE_URL } from '../../../../BASE_URL';
@@ -24,19 +24,20 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 	const [ isOpened, setIsOpened ] = useState(false);
 	const [ dataToPost, setDataToPost ] = useState();
 	const history = useHistory();
+	const params = useParams();
 
-	const Ticket = new TicketModel(
+	const ticketCtx = new TicketCtxModel(
 		needToSave, setNeedToSave,
 		worknotesHistory, setWorknotesHistory,
 		state, handleChange, setState,
 		isDisabled, setIsDisabled,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
-		history,
+		history, params,
 	);
 
 	return (
-		<TicketCtx.Provider value={ Ticket }>
+		<TicketCtx.Provider value={ ticketCtx }>
 			<TicketPage />
 		</TicketCtx.Provider>
 	);
@@ -44,7 +45,7 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 
 export default TicketPageWithContext;
 
-class TicketModel {
+class TicketCtxModel {
 
 	constructor(
 		needToSave, setNeedToSave,
@@ -53,7 +54,7 @@ class TicketModel {
 		isDisabled, setIsDisabled,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
-		history,
+		history, params,
 	) {
 
 		this.needToSave = needToSave;
@@ -79,7 +80,7 @@ class TicketModel {
 		this.post = () => {
 			http()
 				.post(BASE_URL + location.pathname, this.dataToPost)
-				.then(res => history.push(location.pathname))
+				.then(res => history.push(`/it/ticket/${ params.ticketType }/${ res.id }`))
 				.catch(error => {
 					console.error(error);
 					this.form.setIsDisabled(false);

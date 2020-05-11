@@ -2,46 +2,46 @@ import styled from 'styled-components';
 import React, { useEffect, useContext } from 'react';
 import { BASE_URL } from '../../../../../BASE_URL';
 import { CLR } from '../../../../GlobalStyles';
-import { AttachmentCtx } from './AttachmentContext';
+import { AttachmentCtx } from './AttachmentWithContext';
 import { TicketCtx } from '../TicketPageWithContext';
 
 function Delete({ method }) {
 
-	const Attachment = useContext(AttachmentCtx);
-	const Ticket = useContext(TicketCtx);
+	const attachmentCtx = useContext(AttachmentCtx);
+	const ticketCtx = useContext(TicketCtx);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		Attachment.deletion.setIsWarning(true);
+		attachmentCtx.deletion.setIsWarning(true);
 	};
 
 	const handleSelectFile = (e) => {
 		if (e.target.checked) {
-			Attachment.files.select(e.target.value);
+			attachmentCtx.files.select(e.target.value);
 		}
 		else {
-			Attachment.files.deselect(e.target.value);
+			attachmentCtx.files.deselect(e.target.value);
 		}
 	};
 
 	useEffect(() => {
-		if (Attachment.deletion.isConfirmed) {
-			Attachment.files.delete();
-			Attachment.deletion.setIsConfirmed(false);
+		if (attachmentCtx.deletion.isConfirmed) {
+			attachmentCtx.files.delete();
+			attachmentCtx.deletion.setIsConfirmed(false);
 		}
-	}, [ Attachment.deletion.isConfirmed ]);
+	}, [ attachmentCtx.deletion.isConfirmed ]);
 
 	return (
 		<Form$ method={ method } onSubmit={ handleSubmit }>
 
 			<ul className='file-list'>
 
-				{ !Ticket.state.fileList.length ? (
+				{ !ticketCtx.state.fileList.length ? (
 					<li>No attachments</li>
 				) : '' }
 
-				{ Ticket.state.fileList.length ? (
-					Ticket.state.fileList.map((fileName, i) => (
+				{ ticketCtx.state.fileList.length ? (
+					ticketCtx.state.fileList.map((fileName, i) => (
 
 						<li key={ fileName + i }>
 							<input
@@ -63,7 +63,7 @@ function Delete({ method }) {
 					))) : '' }
 			</ul>
 
-			<button className={ `btn-contained-alert-sec delete-btn ${ setDisabledOrNothing(Attachment) }` }>
+			<button className={ `btn-contained-alert-sec delete-btn ${ setDisabledOrNothing(attachmentCtx) }` }>
 				Remove
 			</button>
 
@@ -73,8 +73,8 @@ function Delete({ method }) {
 
 export default Delete;
 
-function setDisabledOrNothing(Attachment) {
-	return !Attachment.files.selected.length ? 'disabled' : '';
+function setDisabledOrNothing(attachmentCtx) {
+	return !attachmentCtx.files.selected.length ? 'disabled' : '';
 }
 
 const Form$ = styled.form`

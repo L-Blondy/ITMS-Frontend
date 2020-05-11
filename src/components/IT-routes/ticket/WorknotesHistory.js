@@ -6,7 +6,7 @@ import { TicketCtx } from './TicketPageWithContext';
 
 function WorknotesHistory() {
 
-	const Ticket = useContext(TicketCtx);
+	const ticketCtx = useContext(TicketCtx);
 	const { pathname } = useLocation();
 
 	function renderLog(note) {
@@ -27,7 +27,7 @@ function WorknotesHistory() {
 		else if (note.type === "fileLog") {
 			const { mimetype, originalname } = note.file;
 
-			if (!Ticket.state.fileList.includes(originalname)) {
+			if (!ticketCtx.state.fileList.includes(originalname)) {
 				return (<>
 					<span>{ originalname } </span><i style={ { opacity: 0.75 } }>(deleted)</i>
 				</>);
@@ -50,10 +50,10 @@ function WorknotesHistory() {
 		return 'Note type not recognized';;
 	}
 
-	if (Ticket.worknotesHistory.length)
+	if (ticketCtx.worknotesHistory.length)
 		return (
 			<WorknotesHistory$>
-				{ Ticket.worknotesHistory.map((note, i) => (
+				{ ticketCtx.worknotesHistory.map((note, i) => (
 
 					<div className={ 'worknote ' + note.type } key={ note.type + i }>
 						<div className="header">

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import http from '../../../../utils/http';
 import { BASE_URL } from '../../../../../BASE_URL';
+import { AttachmentBox } from '.';
 
 export const AttachmentCtx = createContext();
 export const XHR = {
@@ -10,7 +11,7 @@ export const XHR = {
 	ERROR: 'Error'
 };
 
-function AttachmentContext({ children, isOpened }) {
+function AttachmentWithContext({ children, isOpened }) {
 
 	const [ status, setStatus ] = useState({ state: XHR.UNSENT });
 	const [ isWarning, setIsWarning ] = useState(false);
@@ -28,12 +29,12 @@ function AttachmentContext({ children, isOpened }) {
 
 	return (
 		<AttachmentCtx.Provider value={ Attachment }>
-			{ isOpened && children }
+			{ isOpened && <AttachmentBox /> }
 		</AttachmentCtx.Provider>
 	);
 }
 
-export default AttachmentContext;
+export default AttachmentWithContext;
 
 class AttachmentModel {
 

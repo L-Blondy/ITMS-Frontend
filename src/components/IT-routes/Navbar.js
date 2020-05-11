@@ -5,7 +5,7 @@ import { ItRoutesCtx } from './ItRoutesWithContext';
 
 function Navbar() {
 
-	const it = useContext(ItRoutesCtx);
+	const itCtx = useContext(ItRoutesCtx);
 
 	return (
 		<Navbar$ className='navbar'>
@@ -13,7 +13,7 @@ function Navbar() {
 			<NavLink className='navlink' to='/it/sdf'>Somewhere</NavLink>
 			<NavLink className='navlink' to='/it/sdfff'>Anywhere</NavLink>
 
-			<button className="settings" onClick={ () => it.settings.setAreOpened(true) }>Settings</button>
+			<button className="settings" onClick={ () => itCtx.settings.setAreOpened(true) }>Settings</button>
 		</Navbar$>
 	);
 }

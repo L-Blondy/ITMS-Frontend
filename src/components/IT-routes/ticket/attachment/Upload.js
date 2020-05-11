@@ -3,27 +3,27 @@ import React, { useContext } from 'react';
 import * as SRC from '../../../../assets/icons';
 import { CLR } from '../../../../GlobalStyles';
 import { UserCtx } from '../../../../GlobalContext';
-import { AttachmentCtx, XHR } from './AttachmentContext';
+import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { TicketCtx } from '../TicketPageWithContext';
 
 function UploadForm({ method, encType }) {
 
 	const user = useContext(UserCtx);
-	const Ticket = useContext(TicketCtx);
-	const Attachment = useContext(AttachmentCtx);
+	const ticketCtx = useContext(TicketCtx);
+	const attachmentCtx = useContext(AttachmentCtx);
 
 	const uploadFile = (e) => {
 		e.preventDefault();
-		if (!Attachment.files.chosen)
+		if (!attachmentCtx.files.chosen)
 			return;
 
 		const formData = new FormData();
-		formData.append("file", Attachment.files.chosen);
+		formData.append("file", attachmentCtx.files.chosen);
 		formData.append("user", user);
-		Attachment.request.setStatus({ state: XHR.LOADING });
+		attachmentCtx.request.setStatus({ state: XHR.LOADING });
 
 		setTimeout(() => {
-			Attachment.files.upload(formData);
+			attachmentCtx.files.upload(formData);
 		}, 500);
 	};
 
@@ -38,24 +38,24 @@ function UploadForm({ method, encType }) {
 					Choose file
 				</span>
 
-				{ Attachment.files.chosen && Attachment.files.chosen.name || 'No file chosen' }
+				{ attachmentCtx.files.chosen && attachmentCtx.files.chosen.name || 'No file chosen' }
 			</label>
 
 			<input
 				id='file'
 				name='file'
 				type='file'
-				onChange={ e => Attachment.files.setChosen(e.target.files[ 0 ]) } />
+				onChange={ e => attachmentCtx.files.setChosen(e.target.files[ 0 ]) } />
 
-			<button className={ `btn-contained-prim upload-btn ${ setEnabledOrDisabled(Attachment, Ticket) }` } />
+			<button className={ `btn-contained-prim upload-btn ${ setEnabledOrDisabled(attachmentCtx, ticketCtx) }` } />
 		</Form$>
 	);
 }
 
 export default UploadForm;
 
-function setEnabledOrDisabled(Attachment, Ticket) {
-	if (Attachment.files.chosen && !Ticket.state.fileList.includes(Attachment.files.chosen.name))
+function setEnabledOrDisabled(attachmentCtx, ticketCtx) {
+	if (attachmentCtx.files.chosen && !ticketCtx.state.fileList.includes(attachmentCtx.files.chosen.name))
 		return 'enabled';
 	return 'disabled';
 }
