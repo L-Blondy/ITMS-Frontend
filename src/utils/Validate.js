@@ -13,6 +13,9 @@ class Validate {
 			else
 				target.classList.add('invalid');
 		}
+		if (name === 'log') {
+			target.classList.remove('invalid');
+		}
 	}
 
 	static state(state) {

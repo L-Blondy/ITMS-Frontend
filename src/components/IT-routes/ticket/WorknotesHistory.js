@@ -26,6 +26,7 @@ function WorknotesHistory() {
 		}
 		else if (note.type === "fileLog") {
 			const { mimetype, originalname } = note.file;
+			console.log(note.file);
 
 			if (!ticketCtx.state.fileList.includes(originalname)) {
 				return (<>
@@ -34,17 +35,18 @@ function WorknotesHistory() {
 			}
 
 			if (mimetype.indexOf('image') === 0) {
-				console.log();
 				return (
 					<img src={ BASE_URL + pathname + '/' + originalname } alt={ originalname } />
 				);
 			}
 			else {
-				return (
+				const size = note.file.size < 1000 ? `  (${ note.file.size }kb)` : `  (${ (note.file.size / 1000).toFixed(1) }mb)`;
+				return (<>
 					<a href={ BASE_URL + pathname + '/' + originalname } target='_blank' rel='noopener noreferrer'>
 						{ originalname }
 					</a>
-				);
+					<span>{ `  (${ (note.file.size / 1000).toFixed(1) }mb)` }</span>
+				</>);
 			}
 		}
 		return 'Note type not recognized';;
@@ -124,6 +126,10 @@ const WorknotesHistory$ = styled.div`
 		color: #3582a2;
 		font-weight: bold;
 		text-decoration: underline;
+
+		&+span {
+			color: #999;
+		}
 	}
 `;
 

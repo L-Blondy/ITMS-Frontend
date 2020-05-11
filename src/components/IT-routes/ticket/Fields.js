@@ -209,6 +209,7 @@ function IncidentFields() {
 							value={ ticketCtx.state.log }
 							autoComplete="off"
 						/>
+						<div>Required for resolution</div>
 					</label>
 				</>) : '' }
 
@@ -284,4 +285,11 @@ const Form$ = styled.form`
 		margin-top: 1.5rem;
 		align-self: flex-start;	
 	} 
+
+	#log + div {
+		color: transparent;
+	}
+	#log.invalid + div {
+		color: red;
+	}
 `;

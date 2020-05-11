@@ -19,6 +19,15 @@ function IncidentControlBar() {
 		handleSubmit({ escalation: ticketCtx.state.escalation + 1 });
 	}, [ ticketCtx.escalation.isConfirmed ]);
 
+	const forceWorknote = () => {
+		const noteInput = document.querySelector('#log');
+		if (!noteInput.value) {
+			noteInput.classList.add('invalid');
+			return;
+		}
+		handleSubmit({ status: STATUS.RESOLVED });
+	};
+
 	const handleSubmit = (action = {}) => {
 		if (!Validate.state(ticketCtx.state)) {
 			console.error('CANNOT SUBMIT INCOMPLETE FORM');
@@ -85,7 +94,7 @@ function IncidentControlBar() {
 			<Button
 				name='Resolve'
 				when={ status === STATUS.IN_PROGRESS }
-				onClick={ () => handleSubmit({ status: STATUS.RESOLVED }) }
+				onClick={ () => forceWorknote() }
 			/>
 
 			<Button

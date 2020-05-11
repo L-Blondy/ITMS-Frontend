@@ -27,13 +27,10 @@ function useSubscription(URL, params = {}, headers = {}) {
 	useEffect(() => {
 		req.onreadystatechange = () => {
 			if (req.readyState === 4 && req.status >= 400) {
-				setTimeout(() => subscribe(), 3000);
+				setTimeout(() => subscribe(), 1000);
 			}
 			else if (req.readyState === 4) {
 				setRes(JSON.parse(req.response || '[]'));
-			}
-			else {
-				console.log('Unhandled request state', req.readyState, req.status);
 			}
 		};
 		return () => req.abort();
