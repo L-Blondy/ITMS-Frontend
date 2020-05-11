@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
-import { useInputValidation, useSubscription } from '../../hooks';
+import { useInputValidation, useSubscription } from '../../../hooks';
 import { IncidentFields, IncidentControlBar, WorknotesHistory } from '.';
 import { AttachmentBox } from './attachment';
-import { DisableBg$ } from '../styled';
+import { DisableBg$ } from '../../styled';
 import { CustomPrompt } from '..';
-import { BASE_URL } from '../../../BASE_URL';
+import { BASE_URL } from '../../../../BASE_URL';
 import AttachmentContext from './attachment/AttachmentContext';
-import { TicketCtx } from './TicketContext';
+import { TicketCtx } from './TicketPageWithContext';
 
 function TicketPage({ serverData }) {
 

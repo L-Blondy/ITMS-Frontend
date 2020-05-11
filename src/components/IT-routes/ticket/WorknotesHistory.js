@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { BASE_URL } from '../../../BASE_URL';
-import { TicketCtx } from './TicketContext';
+import { BASE_URL } from '../../../../BASE_URL';
+import { TicketCtx } from './TicketPageWithContext';
 
 function WorknotesHistory() {
 

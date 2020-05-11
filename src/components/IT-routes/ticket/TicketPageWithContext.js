@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { useInputValidation } from '../../hooks';
 import { useHistory } from 'react-router-dom';
-import http from '../../utils/http';
-import { BASE_URL } from '../../../BASE_URL';
+import { useInputValidation } from '../../../hooks';
+import http from '../../../utils/http';
+import { BASE_URL } from '../../../../BASE_URL';
+import { TicketPage } from '.';
 
 export const TicketCtx = createContext();
 export const STATUS = {
@@ -14,7 +15,7 @@ export const STATUS = {
 	CLOSED: 'closed'
 };
 
-function TicketContext({ children, initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
+function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 
 	const [ needToSave, setNeedToSave ] = useState(false);
 	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
@@ -36,12 +37,12 @@ function TicketContext({ children, initialData: { worknotesHistory: initialWorkn
 
 	return (
 		<TicketCtx.Provider value={ Ticket }>
-			{ children }
+			<TicketPage />
 		</TicketCtx.Provider>
 	);
 }
 
-export default TicketContext;
+export default TicketPageWithContext;
 
 class TicketModel {
 
@@ -78,7 +79,7 @@ class TicketModel {
 		this.post = () => {
 			http()
 				.post(BASE_URL + location.pathname, this.dataToPost)
-				.then(res => history.push('/ticket/' + res.id))
+				.then(res => history.push(location.pathname))
 				.catch(error => {
 					console.error(error);
 					this.form.setIsDisabled(false);

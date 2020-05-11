@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { useEffect, useContext } from 'react';
-import { BASE_URL } from '../../../../BASE_URL';
-import { CLR } from '../../../GlobalStyles';
+import { BASE_URL } from '../../../../../BASE_URL';
+import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx } from './AttachmentContext';
-import { TicketCtx } from '../TicketContext';
+import { TicketCtx } from '../TicketPageWithContext';
 
 function Delete({ method }) {
 

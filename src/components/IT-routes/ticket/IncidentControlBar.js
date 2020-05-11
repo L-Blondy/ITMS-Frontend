@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Validate } from '../../utils';
-import { UserCtx } from '../../GlobalContext';
-import * as SRC from '../../assets/icons';
-import { TicketCtx, STATUS } from './TicketContext';
+import { Validate } from '../../../utils';
+import { UserCtx } from '../../../GlobalContext';
+import * as SRC from '../../../assets/icons';
+import { TicketCtx, STATUS } from './TicketPageWithContext';
 
 function IncidentControlBar() {
 

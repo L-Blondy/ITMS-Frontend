@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import React, { useContext } from 'react';
-import * as SRC from '../../../assets/icons';
-import { CLR } from '../../../GlobalStyles';
-import { UserCtx } from '../../../GlobalContext';
+import * as SRC from '../../../../assets/icons';
+import { CLR } from '../../../../GlobalStyles';
+import { UserCtx } from '../../../../GlobalContext';
 import { AttachmentCtx, XHR } from './AttachmentContext';
-import { TicketCtx } from '../TicketContext';
+import { TicketCtx } from '../TicketPageWithContext';
 
 function UploadForm({ method, encType }) {
 

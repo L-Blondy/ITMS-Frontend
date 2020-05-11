@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import * as SRC from '../../../assets/icons';
+import * as SRC from '../../../../assets/icons';
 import { Upload, Delete, Warning, Status } from '.';
-import { CLR } from '../../../GlobalStyles';
+import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentContext';
-import { TicketCtx } from '../TicketContext';
+import { TicketCtx } from '../TicketPageWithContext';
 
 function AttachmentBox() {
 

@@ -27,12 +27,13 @@ const GlobalStyles = createGlobalStyle`
 
 	html,body,#root {
 		height: 100%;
+		max-height: 100%;
 		width: 100%;
 	}
 
 	#root {
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: column;
 	}
 
 	a {
