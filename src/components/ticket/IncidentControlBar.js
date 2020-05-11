@@ -62,7 +62,6 @@ function IncidentControlBar() {
 
 	useEffect(() => {
 		if (!Ticket.needToSave && Ticket.dataToPost) {
-			console.log('Posting');
 			Ticket.post();
 		}
 	}, [ Ticket.needToSave, Ticket.dataToPost ]);
