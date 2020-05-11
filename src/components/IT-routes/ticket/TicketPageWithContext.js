@@ -23,6 +23,8 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 	const [ isDisabled, setIsDisabled ] = useState(false);
 	const [ isOpened, setIsOpened ] = useState(false);
 	const [ dataToPost, setDataToPost ] = useState();
+	const [ isWarning, setIsWarning ] = useState(false);
+	const [ isConfirmed, setIsConfirmed ] = useState(false);
 	const history = useHistory();
 	const params = useParams();
 
@@ -33,6 +35,8 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 		isDisabled, setIsDisabled,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
+		isWarning, setIsWarning,
+		isConfirmed, setIsConfirmed,
 		history, params,
 	);
 
@@ -54,6 +58,8 @@ class TicketCtxModel {
 		isDisabled, setIsDisabled,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
+		isWarning, setIsWarning,
+		isConfirmed, setIsConfirmed,
 		history, params,
 	) {
 
@@ -66,6 +72,15 @@ class TicketCtxModel {
 		this.setState = setState;
 		this.dataToPost = dataToPost;
 		this.setDataToPost = setDataToPost;
+
+		this.escalation = {
+			isWarning,
+			setIsWarning,
+			isConfirmed,
+			setIsConfirmed
+		};
+		this.isWarning = isWarning;
+		this.setIsWarning = setIsWarning;
 
 		this.form = {
 			isDisabled,

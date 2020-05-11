@@ -9,7 +9,6 @@ function useSubscription(URL, params = {}, headers = {}) {
 	const [ res, setRes ] = useState('');
 
 	const subscribe = useCallback(() => {
-		console.log('SUBSCRIBING');
 		const query = typeof params === 'string' ? params : toQuery(params);
 		req.open("GET", URL + query, true);
 		req.setHeaders(headers);
@@ -22,19 +21,19 @@ function useSubscription(URL, params = {}, headers = {}) {
 	}, [ res ]);
 
 	useEffect(() => {
-		console.log('subscription response', res);
 		subscribe();
 	}, [ res ]);
 
 	useEffect(() => {
 		req.onreadystatechange = () => {
-			if (req.readyState === 4 && req.status === 0)
-				return;
 			if (req.readyState === 4 && req.status >= 400) {
 				setTimeout(() => subscribe(), 3000);
 			}
 			else if (req.readyState === 4) {
 				setRes(JSON.parse(req.response || '[]'));
+			}
+			else {
+				console.log('Unhandled request state', req.readyState, req.status);
 			}
 		};
 		return () => req.abort();

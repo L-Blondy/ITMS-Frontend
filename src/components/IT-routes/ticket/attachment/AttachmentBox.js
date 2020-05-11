@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import * as SRC from '../../../../assets/icons';
-import { Upload, Delete, Warning, Status } from '.';
+import { Upload, Delete, Status } from '.';
+import { Warning, DisableBg } from '../../../';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { TicketCtx } from '../TicketPageWithContext';
@@ -11,13 +12,20 @@ function AttachmentBox() {
 	const attachmentCtx = useContext(AttachmentCtx);
 	const ticketCtx = useContext(TicketCtx);
 
+	const handleWarningChoice = (choice) => {
+		attachmentCtx.deletion.setIsWarning(false);
+		attachmentCtx.deletion.setIsConfirmed(choice);
+	};
+
 	return (
-		<DisableBg$>
+		<>
+			<DisableBg />
+
 			<AttachmentBox$ requestStatus={ attachmentCtx.request.status } isWarning={ attachmentCtx.deletion.isWarning }>
 
 				<div className='header'>
 					<span>Attachments</span>
-					<button className='close-btn' onClick={ () => ticketCtx.attachments.setIsOpened(false) }></button>
+					<button className='close-btn' onClick={ () => ticketCtx.attachments.setIsOpened(false) } />
 				</div>
 
 				<Upload method='POST' encType='multipart/form-data' />
@@ -28,30 +36,25 @@ function AttachmentBox() {
 
 			<Status />
 
-			<Warning message='Are you sure ?' />
-
-		</DisableBg$>
+			<Warning
+				when={ attachmentCtx.deletion.isWarning }
+				message='Are you sure ?'
+				handleChoice={ handleWarningChoice }
+			/>
+		</>
 	);
 }
 
 export default AttachmentBox;
 
-const DisableBg$ = styled.div`
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 1002;
-	background: rgba(0,0,0,0.4);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
-
 const AttachmentBox$ = styled.div`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	background: white;
 	min-width: 450px;
+	z-index: 1003;
 	${ props => {
 		if (props.requestStatus.state !== XHR.UNSENT || props.isWarning) {
 			return `

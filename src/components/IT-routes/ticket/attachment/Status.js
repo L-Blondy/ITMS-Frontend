@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useContext } from 'react';
-import * as SRC from '../../../../assets/icons';
+import { preloader } from '../../../../assets/icons';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 
 function Status() {
@@ -13,7 +13,7 @@ function Status() {
 
 	if (attachmentCtx.request.status.state === XHR.LOADING) {
 		return (
-			<Img$ src={ SRC.preloader } alt='Loading...' />
+			<Img$ src={ preloader } alt='Loading...' />
 		);
 	}
 

@@ -2,13 +2,11 @@ import styled from 'styled-components';
 import React, { useEffect, useContext } from 'react';
 import { BASE_URL } from '../../../../../BASE_URL';
 import { CLR } from '../../../../GlobalStyles';
-import { AttachmentCtx } from './AttachmentWithContext';
-import { TicketCtx } from '../TicketPageWithContext';
+import { AttachmentCtx, XHR } from './AttachmentWithContext';
 
 function Delete({ method }) {
 
 	const attachmentCtx = useContext(AttachmentCtx);
-	const ticketCtx = useContext(TicketCtx);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -26,8 +24,9 @@ function Delete({ method }) {
 
 	useEffect(() => {
 		if (attachmentCtx.deletion.isConfirmed) {
-			attachmentCtx.files.delete();
+			attachmentCtx.request.setStatus({ state: XHR.LOADING });
 			attachmentCtx.deletion.setIsConfirmed(false);
+			setTimeout(() => attachmentCtx.files.delete(), 500);
 		}
 	}, [ attachmentCtx.deletion.isConfirmed ]);
 
@@ -36,12 +35,12 @@ function Delete({ method }) {
 
 			<ul className='file-list'>
 
-				{ !ticketCtx.state.fileList.length ? (
+				{ !attachmentCtx.files.list.length ? (
 					<li>No attachments</li>
 				) : '' }
 
-				{ ticketCtx.state.fileList.length ? (
-					ticketCtx.state.fileList.map((fileName, i) => (
+				{ attachmentCtx.files.list.length ? (
+					attachmentCtx.files.list.map((fileName, i) => (
 
 						<li key={ fileName + i }>
 							<input

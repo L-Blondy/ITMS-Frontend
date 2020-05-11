@@ -11,7 +11,7 @@ export const XHR = {
 	ERROR: 'Error'
 };
 
-function AttachmentWithContext({ children, isOpened }) {
+function AttachmentWithContext({ fileList, isOpened }) {
 
 	const [ status, setStatus ] = useState({ state: XHR.UNSENT });
 	const [ isWarning, setIsWarning ] = useState(false);
@@ -24,7 +24,8 @@ function AttachmentWithContext({ children, isOpened }) {
 		isWarning, setIsWarning,
 		isConfirmed, setIsConfirmed,
 		selected, setSelected,
-		chosen, setChosen
+		chosen, setChosen,
+		fileList,
 	);
 
 	return (
@@ -43,7 +44,8 @@ class AttachmentModel {
 		isWarning, setIsWarning,
 		isConfirmed, setIsConfirmed,
 		selected, setSelected,
-		chosen, setChosen
+		chosen, setChosen,
+		fileList
 	) {
 
 		this.request = {
@@ -63,6 +65,7 @@ class AttachmentModel {
 			setSelected,
 			chosen,
 			setChosen,
+			list: fileList,
 
 			select: (selectedFileName) => {
 				this.files.setSelected([

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CustomPrompt = ({ when = false, message = '', reason = '' }) => {
+function LocationPrompt({ when = false, message = '', reason = '' }) {
+
 	const [ isVisible, setIsVisible ] = useState(false);
 	const [ nextLocation, setNextLocation ] = useState();
 	const [ isConfirmed, setIsConfirmed ] = useState(false);
@@ -57,7 +58,7 @@ function CustomAlert({ message, reason, handleConfirmation }) {
 		</div>
 	</Alert$>;
 }
-export default CustomPrompt;
+export default LocationPrompt;
 
 const Alert$ = styled.div`
 	position: absolute;

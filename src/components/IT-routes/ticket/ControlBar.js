@@ -10,46 +10,21 @@ function IncidentControlBar() {
 	const user = useContext(UserCtx);
 	const ticketCtx = useContext(TicketCtx);
 
-	const save = (e) => {
-		const action = {};
-		handleSubmit(e, action);
-	};
+	const promptUser = () => ticketCtx.escalation.setIsWarning(true);
 
-	const escalate = (e) => {
-		const action = { escalation: ticketCtx.state.escalation + 1 };
-		handleSubmit(e, action);
-	};
+	useEffect(() => {
+		if (!ticketCtx.escalation.isConfirmed)
+			return;
 
-	const submit = (e) => {
-		const action = { status: STATUS.QUEUED };
-		handleSubmit(e, action);
-	};
+		handleSubmit({ escalation: ticketCtx.state.escalation + 1 });
+	}, [ ticketCtx.escalation.isConfirmed ]);
 
-	const setInProgress = (e) => {
-		const action = { status: STATUS.IN_PROGRESS };
-		handleSubmit(e, action);
-	};
-
-	const placeOnHold = (e) => {
-		const action = { status: STATUS.ON_HOLD };
-		handleSubmit(e, action);
-	};
-
-	const resolve = (e) => {
-		const action = { status: STATUS.RESOLVED };
-		handleSubmit(e, action);
-	};
-
-	const reopen = (e) => {
-		const action = { status: STATUS.IN_PROGRESS };
-		handleSubmit(e, action);
-	};
-
-	const handleSubmit = (e, action) => {
+	const handleSubmit = (action = {}) => {
 		if (!Validate.state(ticketCtx.state)) {
 			console.error('CANNOT SUBMIT INCOMPLETE FORM');
 			return;
 		}
+		ticketCtx.escalation.setIsConfirmed(false);
 		ticketCtx.form.setIsDisabled(true);
 		ticketCtx.setNeedToSave(false);
 		ticketCtx.setDataToPost({
@@ -71,56 +46,73 @@ function IncidentControlBar() {
 	return (
 		<IncidentControlBar$>
 
-			{ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD ? (
-				<PaperclipBtn$ onClick={ () => ticketCtx.attachments.setIsOpened(true) } />
-			) : '' }
+			<Button
+				as={ PaperclipBtn$ }
+				when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+				onClick={ () => ticketCtx.attachments.setIsOpened(true) }
+			/>
 
-			{ status === 'new' ? (
-				<button onClick={ submit }>
-					Submit
-				</button>
-			) : '' }
+			<Button
+				name='Save'
+				when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+				onClick={ () => handleSubmit() }
+			/>
 
-			{ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD ? (
-				<button onClick={ save }>
-					Save
-				</button>
-			) : '' }
+			<Button
+				name='Submit'
+				when={ status === STATUS.NEW }
+				onClick={ () => handleSubmit({ status: STATUS.QUEUED }) }
+			/>
 
-			{ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD ? (
-				<button onClick={ escalate }>
-					Escalate
-				</button>
-			) : '' }
+			<Button
+				name='Escalate'
+				when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+				onClick={ () => promptUser() }
+			/>
 
-			{ status === STATUS.QUEUED || status === STATUS.ON_HOLD ? (
-				<button onClick={ setInProgress }>
-					Set in progress
-				</button>
-			) : '' }
+			<Button
+				name='Set in progress'
+				when={ status === STATUS.QUEUED || status === STATUS.ON_HOLD }
+				onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
+			/>
 
-			{ status === STATUS.IN_PROGRESS ? (<>
-				<button onClick={ placeOnHold }>
-					Place on hold
-				</button>
+			<Button
+				name='Place on hold'
+				when={ status === STATUS.IN_PROGRESS }
+				onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) }
+			/>
 
-				<button onClick={ resolve }>
-					Resolve
-				</button>
-			</>) : '' }
+			<Button
+				name='Resolve'
+				when={ status === STATUS.IN_PROGRESS }
+				onClick={ () => handleSubmit({ status: STATUS.RESOLVED }) }
+			/>
 
-			{ status === STATUS.RESOLVED ? (
-				<button onClick={ reopen }>
-					Reopen
-				</button>
-			) : '' }
-
+			<Button
+				name='Reopen'
+				when={ status === STATUS.RESOLVED }
+				onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
+			/>
 
 		</IncidentControlBar$>
 	);
 }
 
 export default IncidentControlBar;
+
+function Button({ onClick, name = '', when, as }) {
+
+	const Style = as || 'button';
+
+	if (!when)
+		return null;
+
+	return (
+		<Style onClick={ onClick }>
+			{ name }
+		</Style>
+	);
+}
 
 const IncidentControlBar$ = styled.div`
 	display: flex;

@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useInputValidation, useSubscription } from '../../../hooks';
+import { useSubscription } from '../../../hooks';
 import { Fields, ControlBar, WorknotesHistory } from '.';
-import { CustomPrompt } from '..';
+import { LocationPrompt } from '../';
+import { Warning, DisableBg } from '../../';
 import { BASE_URL } from '../../../../BASE_URL';
 import AttachmentWithContext from './attachment/AttachmentWithContext';
 import { TicketCtx } from './TicketPageWithContext';
@@ -12,13 +13,17 @@ function TicketPage({ serverData }) {
 
 	const ticketCtx = useContext(TicketCtx);
 	const { ticketType } = useParams();
-
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
+
+	const handleWarningChoice = (choice) => {
+		ticketCtx.escalation.setIsWarning(false);
+		ticketCtx.escalation.setIsConfirmed(choice);
+	};
 
 	useEffect(() => {
 		if (liveData) {
 			let { worknotesHistory, ...newState } = liveData;
-			ticketCtx.setWorknotesHistory(worknotesHistory);
+			worknotesHistory && ticketCtx.setWorknotesHistory(worknotesHistory);
 			ticketCtx.setState({ ...ticketCtx.state, ...newState });
 
 			compare(liveData, serverData);
@@ -27,13 +32,25 @@ function TicketPage({ serverData }) {
 
 	return (
 		<Ticket$ className={ ticketCtx.form.isDisabled ? 'disabled' : '' }>
-			<CustomPrompt
+
+			<LocationPrompt
 				when={ ticketCtx.needToSave }
 				message={ 'Modifications may not be saved.' }
 				reason={ 'Do you want to exit this page ?' }
 			/>
 
-			<AttachmentWithContext isOpened={ ticketCtx.attachments.isOpened } />
+			<Warning
+				when={ ticketCtx.escalation.isWarning }
+				message='Are you sure you want to escalate this Ticket ?'
+				handleChoice={ handleWarningChoice }
+			/>
+
+			<DisableBg when={ ticketCtx.escalation.isWarning } />
+
+			<AttachmentWithContext
+				fileList={ ticketCtx.state.fileList }
+				isOpened={ ticketCtx.attachments.isOpened }
+			/>
 
 			<ControlBar />
 
