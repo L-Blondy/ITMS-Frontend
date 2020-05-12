@@ -2,8 +2,6 @@ import React, { createContext, useState, useEffect } from 'react';
 import { BASE_URL } from '../../../BASE_URL';
 import { ItRoutes } from './';
 
-console.log(BASE_URL);
-
 export const ItRoutesCtx = createContext();
 
 function ItRoutesWithContext() {

@@ -26,11 +26,10 @@ function WorknotesHistory() {
 		}
 		else if (note.type === "fileLog") {
 			const { mimetype, originalname } = note.file;
-			console.log(note.file);
 
-			if (!ticketCtx.state.fileList.includes(originalname)) {
+			if (!ticketCtx.state.fileList.filter(fileData => fileData.name === originalname).length) {
 				return (<>
-					<span>{ originalname } </span><i style={ { opacity: 0.75 } }>(deleted)</i>
+					<span>{ originalname } </span ><i className='light-font'>(deleted)</i>
 				</>);
 			}
 
@@ -45,7 +44,7 @@ function WorknotesHistory() {
 					<a href={ BASE_URL + pathname + '/' + originalname } target='_blank' rel='noopener noreferrer'>
 						{ originalname }
 					</a>
-					<span>{ `  (${ (note.file.size / 1000).toFixed(1) }mb)` }</span>
+					<span className='light-font'>{ size }</span>
 				</>);
 			}
 		}
@@ -126,10 +125,6 @@ const WorknotesHistory$ = styled.div`
 		color: #3582a2;
 		font-weight: bold;
 		text-decoration: underline;
-
-		&+span {
-			color: #999;
-		}
 	}
 `;
 

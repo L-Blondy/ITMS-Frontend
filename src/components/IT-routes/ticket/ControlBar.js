@@ -4,6 +4,7 @@ import { Validate } from '../../../utils';
 import { UserCtx } from '../../../GlobalContext';
 import * as SRC from '../../../assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
+import { DeleteTicket } from './';
 
 function IncidentControlBar() {
 
@@ -34,7 +35,7 @@ function IncidentControlBar() {
 			return;
 		}
 		ticketCtx.escalation.setIsConfirmed(false);
-		ticketCtx.form.setIsDisabled(true);
+		ticketCtx.page.setIsDisabled(true);
 		ticketCtx.setNeedToSave(false);
 		ticketCtx.setDataToPost({
 			...ticketCtx.state,
@@ -53,7 +54,9 @@ function IncidentControlBar() {
 	const status = ticketCtx.state.status;
 
 	return (
-		<IncidentControlBar$>
+		<ControlBar$>
+
+			<DeleteTicket />
 
 			<Button
 				as={ PaperclipBtn$ }
@@ -103,32 +106,44 @@ function IncidentControlBar() {
 				onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
 			/>
 
-		</IncidentControlBar$>
+		</ControlBar$>
 	);
 }
 
 export default IncidentControlBar;
 
 function Button({ onClick, name = '', when, as }) {
-
-	const Style = as || 'button';
-
 	if (!when)
 		return null;
 
+	const Style = as || 'button';
+
 	return (
-		<Style onClick={ onClick }>
+		<Style onClick={ onClick } className='control-button'>
 			{ name }
 		</Style>
 	);
 }
 
-const IncidentControlBar$ = styled.div`
+const ControlBar$ = styled.div`
 	display: flex;
 	justify-content: flex-end;
+	background-color: #d9dcdd;
+	padding: 0.35rem 1rem 0.35rem 0.8rem;
 
-	button {
-		margin-top: 0;
+	.control-button {
+		margin-left: 0.5rem;
+		padding: 0.2rem 0.8rem;
+		background-color: #f4f4f4;
+		border-radius: 3px;
+		color: #444;
+		font-size: 0.95em;
+		box-shadow: 0 0 0 1px  #bababa;
+
+		&:hover{
+			background-color: white;
+			color: #666;
+		}
 	}
 `;
 
@@ -138,4 +153,13 @@ const PaperclipBtn$ = styled.button`
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 25px;
+	background-color: transparent !important;
+	margin: 0 0.5rem !important;
+	padding: 0 1.5rem !important;
+	box-shadow: none !important;
+	
+	&:hover {
+		filter: blur(0.5px);
+		opacity: 0.65;
+	}
 `;

@@ -74,9 +74,9 @@ class AttachmentModel {
 				]);
 			},
 
-			deselect: (deselectedFileName) => {
+			deselect: (selectedFileName) => {
 				this.files.setSelected(
-					this.files.selected.filter(fileName => fileName !== deselectedFileName)
+					this.files.selected.filter(fileName => fileName !== selectedFileName)
 				);
 			},
 
@@ -106,7 +106,6 @@ class AttachmentModel {
 				http()
 					.post(BASE_URL + location.pathname + '/attach', formData)
 					.then(res => {
-						console.log(res, this);
 						this.request.setStatus({
 							state: XHR.SUCCESS,
 							files: [ this.files.chosen.name ],

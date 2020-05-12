@@ -39,6 +39,7 @@ const GlobalStyles = createGlobalStyle`
 	a {
 		color: white;
 		text-decoration: none;
+		cursor: pointer;
 
 		&:hover {
 			opacity: 0.7;
@@ -74,7 +75,6 @@ const GlobalStyles = createGlobalStyle`
 		padding: 0.35em 1em;
 		display: inline-block;
 		user-select: none;
-		/* border: none; */
 		border-width: 1px;
 		border-style: solid;
 		cursor: pointer;
@@ -108,6 +108,10 @@ const GlobalStyles = createGlobalStyle`
 			color: white;
 			font-weight: bold;
 		}
+	}
+
+	.light-font {
+		color: #777;
 	}
 `;
 

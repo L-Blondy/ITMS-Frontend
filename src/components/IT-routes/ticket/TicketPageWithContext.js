@@ -82,7 +82,7 @@ class TicketCtxModel {
 		this.isWarning = isWarning;
 		this.setIsWarning = setIsWarning;
 
-		this.form = {
+		this.page = {
 			isDisabled,
 			setIsDisabled
 		};

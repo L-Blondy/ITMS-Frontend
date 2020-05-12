@@ -3,6 +3,7 @@ import React, { useEffect, useContext } from 'react';
 import { BASE_URL } from '../../../../../BASE_URL';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
+import { formatFileSize, getAttachmentIconSRC } from '../../../../utils';
 
 function Delete({ method }) {
 
@@ -40,19 +41,22 @@ function Delete({ method }) {
 				) : '' }
 
 				{ attachmentCtx.files.list.length ? (
-					attachmentCtx.files.list.map((fileName, i) => (
-
-						<li key={ fileName + i }>
+					attachmentCtx.files.list.map((fileData, i) => (
+						<li key={ fileData.name + i }>
 							<input
 								type='checkbox'
 								name='file'
-								id={ fileName + i }
-								value={ fileName }
+								id={ fileData.name + i }
+								value={ fileData.name }
 								onChange={ handleSelectFile }
 							/>
-							<label htmlFor={ fileName + i }>{ fileName }</label>
+							<label htmlFor={ fileData.name + i }>
+								<img className='icon' src={ getAttachmentIconSRC(fileData) } alt='' />
+								<span className='name'>{ fileData.name }</span>
+								<span className='light-font'>{ formatFileSize(fileData.size) }</span>
+							</label>
 
-							<a href={ BASE_URL + location.pathname + '/' + fileName }
+							<a href={ BASE_URL + location.pathname + '/' + fileData.name }
 								target='_blank'
 								rel='noopener noreferrer'>
 								view
@@ -101,6 +105,22 @@ const Form$ = styled.form`
 		label {
 			padding-left: 0.5rem;
 			flex-grow: 1;
+			display: flex;
+			align-items: center;
+		}
+
+		img {
+			height: 1.1rem;
+			margin-right: 0.4rem;
+			margin-left: 0.2rem;
+			margin-top: -1px;
+		}
+
+		.light-font {
+			padding: 0 0.5rem 0 0.7rem;
+			font-size: 0.9em;
+			user-select: none;
+			margin-left: auto;
 		}
 
 		a {

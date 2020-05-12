@@ -18,7 +18,6 @@ function Status() {
 	}
 
 	else {
-		console.log(attachmentCtx.request.status);
 		return (
 			<Div$>
 				<h3 className={ 'state ' + attachmentCtx.request.status.state }>
@@ -88,4 +87,5 @@ const Img$ = styled.img`
 	transform: translate(-50%, -50%);
 	width: 100px;
 	height: 100px;
+	z-index: 1004;
 `;

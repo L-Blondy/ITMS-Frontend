@@ -23,7 +23,6 @@ function ItRoutes() {
 	}, [ history.location ]);
 
 	useEffect(() => {
-		console.log(itCtx.initialData);
 		setKey(Math.random());
 	}, [ itCtx.initialData ]);
 
@@ -73,6 +72,9 @@ const Flex$ = styled.div`
 
 const Main$ = styled.div`
 	flex-grow: 1;
-	overflow-x: hidden;
-	overflow-y: auto;
+	/* overflow-x: hidden;
+	overflow-y: auto; */
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 `;

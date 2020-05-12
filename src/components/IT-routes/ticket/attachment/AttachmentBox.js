@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import * as SRC from '../../../../assets/icons';
 import { Upload, Delete, Status } from '.';

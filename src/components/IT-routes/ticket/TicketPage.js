@@ -1,8 +1,8 @@
+import styled from 'styled-components';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { useSubscription } from '../../../hooks';
-import { Fields, ControlBar, WorknotesHistory } from '.';
+import { Fields, ControlBar, WorknotesHistory, FileList } from '.';
 import { LocationPrompt } from '../';
 import { Warning, DisableBg } from '../../';
 import { BASE_URL } from '../../../../BASE_URL';
@@ -12,6 +12,7 @@ import { TicketCtx } from './TicketPageWithContext';
 function TicketPage({ serverData }) {
 
 	const ticketCtx = useContext(TicketCtx);
+
 	const { ticketType } = useParams();
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
 
@@ -30,8 +31,17 @@ function TicketPage({ serverData }) {
 		}
 	}, [ liveData ]);
 
-	return (
-		<Ticket$ className={ ticketCtx.form.isDisabled ? 'disabled' : '' }>
+	if (!ticketCtx.state.id)
+		return null;
+	return (<>
+		<ControlBar />
+
+		<Ticket$ className={ ticketCtx.page.isDisabled ? 'disabled' : '' }>
+
+			<FileList
+				when={ ticketCtx.state.fileList.length }
+				fileList={ ticketCtx.state.fileList }
+			/>
 
 			<LocationPrompt
 				when={ ticketCtx.needToSave }
@@ -52,7 +62,9 @@ function TicketPage({ serverData }) {
 				isOpened={ ticketCtx.attachments.isOpened }
 			/>
 
-			<ControlBar />
+			{/* <Fixed$> */ }
+
+			{/* </Fixed$> */ }
 
 			{ ticketType === 'INC' ? (
 				<Fields />
@@ -65,7 +77,7 @@ function TicketPage({ serverData }) {
 			<WorknotesHistory />
 
 		</Ticket$>
-	);
+	</>);
 }
 
 export default TicketPage;
@@ -90,9 +102,12 @@ function compare(liveData, serverData) {
 }
 
 const Ticket$ = styled.div`
-	height: 100%;
 	width: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	flex-grow: 1;
 `;
+
 
 
 

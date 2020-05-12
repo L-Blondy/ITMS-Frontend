@@ -29,7 +29,7 @@ const Navbar$ = styled.nav`
 	align-items: center;
 	background: #3e4449;
 	flex-shrink: 0;
-	border-bottom: 5px solid steelblue;
+	border-bottom: 5px solid #149aab;
 	color: white;
 
 	.navlink {
