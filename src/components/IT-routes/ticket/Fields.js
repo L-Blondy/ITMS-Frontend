@@ -82,7 +82,7 @@ function IncidentFields() {
 						<span>Category</span>
 						<select id='category' name='category' onChange={ ticketCtx.handleChange } value={ ticketCtx.state.category } >
 							<option value=''>-none-</option>
-							{ ticketCtx.state.staticData.category.map(cat => (
+							{ Object.keys(ticketCtx.state.categories).map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
@@ -92,7 +92,7 @@ function IncidentFields() {
 						<span>Sub category</span>
 						<select id='subCategory' name='subCategory' onChange={ ticketCtx.handleChange } value={ ticketCtx.state.subCategory } >
 							<option value=''>-none-</option>
-							{ ticketCtx.state.staticData.subCategory.map(cat => (
+							{ ticketCtx.state.category && ticketCtx.state.categories[ ticketCtx.state.category ].map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
@@ -224,6 +224,7 @@ const Form$ = styled.form`
 	position: relative;
 	font-size: 14px;
 	margin-bottom: 3rem;
+	padding-top:1rem;
 	width: 70%;
 	margin: auto;
 
@@ -268,12 +269,16 @@ const Form$ = styled.form`
 		width: 100%;
 		font-size: inherit;
 		border-radius: 3px;
-		border: 1px solid #bbb;
+		border: 1px solid #a3bec2;
 		padding-left: 0.45rem;
 	}
 
 	input, select {
 		height: 1.6em;
+	}
+
+	input:disabled {
+		background-color: #e7eded;
 	}
 
 	textarea {

@@ -96,7 +96,7 @@ const Alert$ = styled.div`
 	}
 
 	button {
-		min-width: 6em;
+		min-width: 5em;
 		margin: 0.2rem 0.35rem 0 0.35rem;
 	}
 `;

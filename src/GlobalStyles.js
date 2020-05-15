@@ -2,6 +2,9 @@ import { createGlobalStyle } from 'styled-components';
 
 const CLR = {
 	PRIMARY: '#4999a3',
+	FONT: {
+		PRIMARY: '#2a4a4f',
+	}
 };
 
 const FONT_FAM = {
@@ -23,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
 		margin: 0;
 		font-family: ${ FONT_FAM.PRIMARY };
 		box-sizing: border-box;
+		color: ${ CLR.FONT.PRIMARY };
 	}
 
 	html,body,#root {
@@ -72,7 +76,7 @@ const GlobalStyles = createGlobalStyle`
 
 	[class*='btn-contained'],
 	[class*='btn-outlined'] {
-		padding: 0.35em 1em;
+		padding: 0.25em 0.8em;
 		display: inline-block;
 		user-select: none;
 		border-width: 1px;

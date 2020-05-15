@@ -56,7 +56,9 @@ function IncidentControlBar() {
 	return (
 		<ControlBar$>
 
-			<DeleteTicket />
+			<DeleteTicket
+				when={ status !== STATUS.NEW }
+			/>
 
 			<Button
 				as={ PaperclipBtn$ }
@@ -128,17 +130,17 @@ function Button({ onClick, name = '', when, as }) {
 const ControlBar$ = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	background-color: #d9dcdd;
-	padding: 0.35rem 1rem 0.35rem 0.8rem;
+	background-color: #c6d2d3;
+	padding: 0.5rem 1rem 0.5rem 0.8rem;
 
 	.control-button {
 		margin-left: 0.5rem;
-		padding: 0.2rem 0.8rem;
+		padding: 0.15rem 0.8rem;
 		background-color: #f4f4f4;
-		border-radius: 3px;
-		color: #444;
+		border-radius: 2px;
+		color: #295257;
 		font-size: 0.95em;
-		box-shadow: 0 0 0 1px  #bababa;
+		box-shadow: 0 0 0 1px #a6c3c6;
 
 		&:hover{
 			background-color: white;

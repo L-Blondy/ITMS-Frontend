@@ -8,6 +8,9 @@ function Sidebar() {
 			<Link to='/it/ticket/INC/new'>Open Incident</Link>
 			<Link to='/it/ticket/REQ/new'>Open Request</Link>
 			<Link to='/it/ticket/CHG/new'>Open Change</Link>
+			<Link to='/it/modify/INC/categories'>Incident Cat</Link>
+			<Link to='/it/modify/REQ/categories'>Request Cat</Link>
+			<Link to='/it/modify/CHG/categories'>Change Cat</Link>
 		</Sidebar$>
 	);
 }
@@ -21,6 +24,7 @@ const Sidebar$ = styled.nav`
 	background: #3e4449;
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 
 	a {
 		padding: 0.5rem;

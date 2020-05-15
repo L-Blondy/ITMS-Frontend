@@ -6,6 +6,7 @@ import { ItRoutesWithContext } from './components/IT-routes';
 import { CommonRoutes } from './components/Common-routes';
 
 function App() {
+
 	return (
 		<GlobalContext >
 			<GlobalStyles />

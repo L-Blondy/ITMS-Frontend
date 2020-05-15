@@ -9,7 +9,8 @@ function ItRoutesWithContext() {
 	const [ initialData, setInitialData ] = useState();
 	const [ error, setError ] = useState();
 	const [ areOpened, setAreOpened ] = useState(false);
-	const itCtx = {
+
+	const itRoutesCtx = {
 		BASE_URL,
 		initialData,
 		setInitialData,
@@ -19,11 +20,10 @@ function ItRoutesWithContext() {
 			areOpened,
 			setAreOpened
 		}
-
 	};
 
 	return (
-		<ItRoutesCtx.Provider value={ itCtx }>
+		<ItRoutesCtx.Provider value={ itRoutesCtx }>
 			<ItRoutes />
 		</ItRoutesCtx.Provider>
 	);

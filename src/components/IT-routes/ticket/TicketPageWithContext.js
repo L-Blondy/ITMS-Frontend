@@ -101,5 +101,20 @@ class TicketCtxModel {
 					this.form.setIsDisabled(false);
 				});
 		};
+
+		this.deleteTicket = () => {
+			this.page.setIsDisabled(true);
+
+			setTimeout(() => {
+				http()
+					.delete(BASE_URL + location.pathname, '')
+					.then(res => {
+						if (!res.deletedCount)
+							throw new Error('Could not delete');
+						history.push('/it/dashboard');
+					})
+					.catch(err => console.log(err));
+			}, 500);
+		};
 	}
 }

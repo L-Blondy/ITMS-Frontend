@@ -33,7 +33,6 @@ const FileList$ = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	padding: 0.2rem;
-	margin-bottom: 0.5rem;
 
 	.file {
 		display: flex;

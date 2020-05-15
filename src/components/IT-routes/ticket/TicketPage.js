@@ -31,8 +31,6 @@ function TicketPage({ serverData }) {
 		}
 	}, [ liveData ]);
 
-	if (!ticketCtx.state.id)
-		return null;
 	return (<>
 		<ControlBar />
 
@@ -61,10 +59,6 @@ function TicketPage({ serverData }) {
 				fileList={ ticketCtx.state.fileList }
 				isOpened={ ticketCtx.attachments.isOpened }
 			/>
-
-			{/* <Fixed$> */ }
-
-			{/* </Fixed$> */ }
 
 			{ ticketType === 'INC' ? (
 				<Fields />
@@ -106,6 +100,13 @@ const Ticket$ = styled.div`
 	overflow-x: hidden;
 	overflow-y: scroll;
 	flex-grow: 1;
+
+	input,
+	textarea,
+	select,
+	.worknote {
+		border: 1px solid #aec0c3;
+	}
 `;
 
 

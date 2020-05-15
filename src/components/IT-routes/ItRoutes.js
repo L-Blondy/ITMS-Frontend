@@ -4,30 +4,33 @@ import { Switch, Route, useHistory } from 'react-router-dom';
 import { Navbar, Settings, Sidebar } from './';
 import { DashboardWithContext } from './dashboard';
 import { TicketPageWithContext } from './ticket';
+import { ModifyWithContext } from './modify';
 import { LoadingPage, ErrorPage } from '../';
 import { ItRoutesCtx } from './ItRoutesWithContext';
+import { usePathnameChangeCallback } from '../../hooks';
 import http from '../../utils/http';
 
 function ItRoutes() {
 
-	const itCtx = useContext(ItRoutesCtx);
+	const itRoutesCtx = useContext(ItRoutesCtx);
 	const [ key, setKey ] = useState(Math.random());
 	const history = useHistory();
+	usePathnameChangeCallback(() => itRoutesCtx.setInitialData(null));
 
 	useEffect(() => {
-		itCtx.setError(null);
+		itRoutesCtx.setError(null);
 		http()
-			.get(itCtx.BASE_URL + location.pathname, location.search)
-			.then(res => setTimeout(() => itCtx.setInitialData(res), 500))
-			.catch(e => itCtx.setError(e));
+			.get(itRoutesCtx.BASE_URL + location.pathname, location.search)
+			.then(res => setTimeout(() => itRoutesCtx.setInitialData(res), 500))
+			.catch(e => itRoutesCtx.setError(e));
 	}, [ history.location ]);
 
 	useEffect(() => {
 		setKey(Math.random());
-	}, [ itCtx.initialData ]);
+	}, [ itRoutesCtx.initialData ]);
 
 	return (<>
-		{ itCtx.settings.areOpened && (<Settings closeSettings={ () => itCtx.settings.setAreOpened(false) } />) }
+		{ itRoutesCtx.settings.areOpened && (<Settings closeSettings={ () => itRoutesCtx.settings.setAreOpened(false) } />) }
 
 		<Navbar />
 
@@ -36,23 +39,33 @@ function ItRoutes() {
 			<Sidebar />
 
 			<Main$>
-				{ itCtx.error ? (
+				{ itRoutesCtx.error ? (
 
-					<ErrorPage error={ itCtx.error } />
+					<ErrorPage error={ itRoutesCtx.error } />
 
-				) : !itCtx.initialData ? (
+				) : !itRoutesCtx.initialData ? (
 
 					<LoadingPage />
 
-				) : itCtx.initialData ? (
+				) : itRoutesCtx.initialData ? (
 
 					<Switch>
 						<Route path='/it/dashboard' render={ () => (
-							<DashboardWithContext key={ key } initialData={ itCtx.initialData } />
+							<DashboardWithContext key={ 'a' + key } initialData={ itRoutesCtx.initialData } />
 						) } />
-						<Route path='/it/ticket/:ticketType/:ticketId' render={ () => (
-							<TicketPageWithContext key={ key } initialData={ itCtx.initialData } />
-						) } />
+						<Route path='/it/modify/:type/:other' render={ () => itRoutesCtx.initialData.modify ?
+							(
+								<ModifyWithContext key={ 'b' + key } initialData={ itRoutesCtx.initialData } />
+							) : (
+								<LoadingPage />
+							) } />
+						<Route path='/it/ticket/:ticketType/:ticketId' render={ () => itRoutesCtx.initialData.id ?
+							(
+								<TicketPageWithContext key={ 'c' + key } initialData={ itRoutesCtx.initialData } />
+							) : (
+								<LoadingPage />
+							)
+						} />
 					</Switch>
 
 				) : '' }

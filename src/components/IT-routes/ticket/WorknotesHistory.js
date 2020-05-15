@@ -29,7 +29,7 @@ function WorknotesHistory() {
 
 			if (!ticketCtx.state.fileList.filter(fileData => fileData.name === originalname).length) {
 				return (<>
-					<span>{ originalname } </span ><i className='light-font'>(deleted)</i>
+					<span>{ originalname } </span><i className='light-font'>(deleted)</i>
 				</>);
 			}
 
@@ -48,7 +48,7 @@ function WorknotesHistory() {
 				</>);
 			}
 		}
-		return 'Note type not recognized';;
+		return 'Note type not recognized';
 	}
 
 	if (ticketCtx.worknotesHistory.length)
@@ -85,7 +85,6 @@ const WorknotesHistory$ = styled.div`
 		position: relative;
 		padding: 0.8rem 1.5rem;
 		border-radius: 3px;
-		box-shadow: inset 0 0 3px #777;
 		margin: 0.5rem 0;
 		overflow: hidden;
 
