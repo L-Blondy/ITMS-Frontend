@@ -9,6 +9,7 @@ function ItRoutesWithContext() {
 	const [ initialData, setInitialData ] = useState();
 	const [ error, setError ] = useState();
 	const [ areOpened, setAreOpened ] = useState(false);
+	const [ isLoading, setIsLoading ] = useState(false);
 
 	const itRoutesCtx = {
 		BASE_URL,
@@ -18,7 +19,11 @@ function ItRoutesWithContext() {
 		setError,
 		settings: {
 			areOpened,
-			setAreOpened
+			setAreOpened,
+		},
+		page: {
+			isLoading,
+			setIsLoading
 		}
 	};
 

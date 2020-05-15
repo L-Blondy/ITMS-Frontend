@@ -1,8 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
 import { useInputValidation } from '../../../hooks';
-import http from '../../../utils/http';
-import { BASE_URL } from '../../../../BASE_URL';
 import { TicketPage } from '.';
 
 export const TicketCtx = createContext();
@@ -16,28 +13,18 @@ export const STATUS = {
 };
 
 function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
-
 	const [ needToSave, setNeedToSave ] = useState(false);
 	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
 	const [ state, handleChange, setState ] = useInputValidation(initialState, setNeedToSave);
-	const [ isDisabled, setIsDisabled ] = useState(false);
 	const [ isOpened, setIsOpened ] = useState(false);
 	const [ dataToPost, setDataToPost ] = useState();
-	const [ isWarning, setIsWarning ] = useState(false);
-	const [ isConfirmed, setIsConfirmed ] = useState(false);
-	const history = useHistory();
-	const params = useParams();
 
 	const ticketCtx = new TicketCtxModel(
 		needToSave, setNeedToSave,
 		worknotesHistory, setWorknotesHistory,
 		state, handleChange, setState,
-		isDisabled, setIsDisabled,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
-		isWarning, setIsWarning,
-		isConfirmed, setIsConfirmed,
-		history, params,
 	);
 
 	return (
@@ -55,12 +42,8 @@ class TicketCtxModel {
 		needToSave, setNeedToSave,
 		worknotesHistory, setWorknotesHistory,
 		state, handleChange, setState,
-		isDisabled, setIsDisabled,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
-		isWarning, setIsWarning,
-		isConfirmed, setIsConfirmed,
-		history, params,
 	) {
 
 		this.needToSave = needToSave;
@@ -73,48 +56,9 @@ class TicketCtxModel {
 		this.dataToPost = dataToPost;
 		this.setDataToPost = setDataToPost;
 
-		this.escalation = {
-			isWarning,
-			setIsWarning,
-			isConfirmed,
-			setIsConfirmed
-		};
-		this.isWarning = isWarning;
-		this.setIsWarning = setIsWarning;
-
-		this.page = {
-			isDisabled,
-			setIsDisabled
-		};
-
 		this.attachments = {
 			isOpened,
 			setIsOpened
-		};
-
-		this.post = () => {
-			http()
-				.post(BASE_URL + location.pathname, this.dataToPost)
-				.then(res => history.push(`/it/ticket/${ params.ticketType }/${ res.id }`))
-				.catch(error => {
-					console.error(error);
-					this.form.setIsDisabled(false);
-				});
-		};
-
-		this.deleteTicket = () => {
-			this.page.setIsDisabled(true);
-
-			setTimeout(() => {
-				http()
-					.delete(BASE_URL + location.pathname, '')
-					.then(res => {
-						if (!res.deletedCount)
-							throw new Error('Could not delete');
-						history.push('/it/dashboard');
-					})
-					.catch(err => console.log(err));
-			}, 500);
 		};
 	}
 }

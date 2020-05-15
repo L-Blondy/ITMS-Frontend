@@ -4,11 +4,12 @@ import { Switch, Route, useHistory } from 'react-router-dom';
 import { Navbar, Settings, Sidebar } from './';
 import { DashboardWithContext } from './dashboard';
 import { TicketPageWithContext } from './ticket';
-import { ModifyWithContext } from './modify';
-import { LoadingPage, ErrorPage } from '../';
+import { AdministrationPage } from './administration';
+import { ErrorPage } from '../';
 import { ItRoutesCtx } from './ItRoutesWithContext';
 import { usePathnameChangeCallback } from '../../hooks';
 import http from '../../utils/http';
+import { preloader } from '../../assets/icons';
 
 function ItRoutes() {
 
@@ -18,15 +19,20 @@ function ItRoutes() {
 	usePathnameChangeCallback(() => itRoutesCtx.setInitialData(null));
 
 	useEffect(() => {
+		itRoutesCtx.page.setIsLoading(true);
 		itRoutesCtx.setError(null);
 		http()
 			.get(itRoutesCtx.BASE_URL + location.pathname, location.search)
-			.then(res => setTimeout(() => itRoutesCtx.setInitialData(res), 500))
+			.then(res => setTimeout(() => {
+				console.log(res);
+				itRoutesCtx.setInitialData(res);
+			}, 500))
 			.catch(e => itRoutesCtx.setError(e));
 	}, [ history.location ]);
 
 	useEffect(() => {
 		setKey(Math.random());
+		itRoutesCtx.initialData && itRoutesCtx.page.setIsLoading(false);
 	}, [ itRoutesCtx.initialData ]);
 
 	return (<>
@@ -38,14 +44,10 @@ function ItRoutes() {
 
 			<Sidebar />
 
-			<Main$>
+			<Main$ className={ itRoutesCtx.page.isLoading ? 'is-loading' : '' }>
 				{ itRoutesCtx.error ? (
 
 					<ErrorPage error={ itRoutesCtx.error } />
-
-				) : !itRoutesCtx.initialData ? (
-
-					<LoadingPage />
 
 				) : itRoutesCtx.initialData ? (
 
@@ -53,19 +55,12 @@ function ItRoutes() {
 						<Route path='/it/dashboard' render={ () => (
 							<DashboardWithContext key={ 'a' + key } initialData={ itRoutesCtx.initialData } />
 						) } />
-						<Route path='/it/modify/:type/:other' render={ () => itRoutesCtx.initialData.modify ?
-							(
-								<ModifyWithContext key={ 'b' + key } initialData={ itRoutesCtx.initialData } />
-							) : (
-								<LoadingPage />
-							) } />
-						<Route path='/it/ticket/:ticketType/:ticketId' render={ () => itRoutesCtx.initialData.id ?
-							(
-								<TicketPageWithContext key={ 'c' + key } initialData={ itRoutesCtx.initialData } />
-							) : (
-								<LoadingPage />
-							)
-						} />
+						<Route path='/it/administration/:type/:other' render={ () => itRoutesCtx.initialData.administrationData && (
+							<AdministrationPage key={ 'b' + key } initialData={ itRoutesCtx.initialData } />
+						) } />
+						<Route path='/it/ticket/:ticketType/:ticketId' render={ () => itRoutesCtx.initialData.id && (
+							<TicketPageWithContext key={ 'c' + key } initialData={ itRoutesCtx.initialData } />
+						) } />
 					</Switch>
 
 				) : '' }
@@ -81,13 +76,45 @@ const Flex$ = styled.div`
 	display: flex;
 	flex-grow: 1;
 	max-height: calc(100% - 80px);
+	max-width: 100vw;
+	overflow: hidden;
 `;
 
 const Main$ = styled.div`
 	flex-grow: 1;
-	/* overflow-x: hidden;
-	overflow-y: auto; */
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+
+	&.is-loading {
+		/* opacity: 0.35; */
+		pointer-events: none;
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top:0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0,0,0,0.25);
+			z-index: 1005;
+		}
+		
+		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			height: 100px;
+			width:100px;
+			background-image: url(${ preloader });
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			z-index: 1006;
+		}
+	}
 `;

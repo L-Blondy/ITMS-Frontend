@@ -269,7 +269,6 @@ const Form$ = styled.form`
 		width: 100%;
 		font-size: inherit;
 		border-radius: 3px;
-		border: 1px solid #a3bec2;
 		padding-left: 0.45rem;
 	}
 

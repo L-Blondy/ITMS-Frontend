@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import http from '../../../../utils/http';
 import { BASE_URL } from '../../../../../BASE_URL';
 import { AttachmentBox } from '.';
@@ -85,7 +85,7 @@ class AttachmentModel {
 
 				http()
 					.delete(BASE_URL + location.pathname + '/delete', { toDelete: this.files.selected })
-					.then(res => {
+					.then(() => {
 						this.request.setStatus({
 							state: XHR.SUCCESS,
 							files: this.files.selected,
@@ -105,7 +105,7 @@ class AttachmentModel {
 			upload: (formData) => {
 				http()
 					.post(BASE_URL + location.pathname + '/attach', formData)
-					.then(res => {
+					.then(() => {
 						this.request.setStatus({
 							state: XHR.SUCCESS,
 							files: [ this.files.chosen.name ],

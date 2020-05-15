@@ -8,9 +8,9 @@ function Sidebar() {
 			<Link to='/it/ticket/INC/new'>Open Incident</Link>
 			<Link to='/it/ticket/REQ/new'>Open Request</Link>
 			<Link to='/it/ticket/CHG/new'>Open Change</Link>
-			<Link to='/it/modify/INC/categories'>Incident Cat</Link>
-			<Link to='/it/modify/REQ/categories'>Request Cat</Link>
-			<Link to='/it/modify/CHG/categories'>Change Cat</Link>
+			<Link to='/it/administration/INC/categories'>Incident Cat</Link>
+			<Link to='/it/administration/REQ/categories'>Request Cat</Link>
+			<Link to='/it/administration/CHG/categories'>Change Cat</Link>
 		</Sidebar$>
 	);
 }

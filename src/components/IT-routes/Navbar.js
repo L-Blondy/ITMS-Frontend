@@ -10,7 +10,7 @@ function Navbar() {
 	return (
 		<Navbar$ className='navbar'>
 			<NavLink className='navlink' to='/it/dashboard'>Dashboard</NavLink>
-			<NavLink className='navlink' to='/it/modify'>Modify</NavLink>
+			<NavLink className='navlink' to='/it/administration'>Administration</NavLink>
 			<NavLink className='navlink' to='/it/sdfff'>Anywhere</NavLink>
 
 			<button className="settings" onClick={ () => itRoutesCtx.settings.setAreOpened(true) }>Settings</button>

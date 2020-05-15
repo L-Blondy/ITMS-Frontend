@@ -1,24 +1,23 @@
-import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import React, { useContext, useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { Validate } from '../../../utils';
 import { UserCtx } from '../../../GlobalContext';
 import * as SRC from '../../../assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
-import { DeleteTicket } from './';
+import { ItRoutesCtx } from '../ItRoutesWithContext';
+import { DeleteTicket, EscalateTicket } from './';
+import { Warning } from '../../';
+import { http } from '../../../utils';
+import { BASE_URL } from '../../../../BASE_URL';
 
 function IncidentControlBar() {
 
 	const user = useContext(UserCtx);
 	const ticketCtx = useContext(TicketCtx);
-
-	const promptUser = () => ticketCtx.escalation.setIsWarning(true);
-
-	useEffect(() => {
-		if (!ticketCtx.escalation.isConfirmed)
-			return;
-
-		handleSubmit({ escalation: ticketCtx.state.escalation + 1 });
-	}, [ ticketCtx.escalation.isConfirmed ]);
+	const itRoutesCtx = useContext(ItRoutesCtx);
+	const params = useParams();
+	const history = useHistory();
 
 	const forceWorknote = () => {
 		const noteInput = document.querySelector('#log');
@@ -34,8 +33,7 @@ function IncidentControlBar() {
 			console.error('CANNOT SUBMIT INCOMPLETE FORM');
 			return;
 		}
-		ticketCtx.escalation.setIsConfirmed(false);
-		ticketCtx.page.setIsDisabled(true);
+		itRoutesCtx.page.setIsLoading(true);
 		ticketCtx.setNeedToSave(false);
 		ticketCtx.setDataToPost({
 			...ticketCtx.state,
@@ -47,7 +45,15 @@ function IncidentControlBar() {
 
 	useEffect(() => {
 		if (!ticketCtx.needToSave && ticketCtx.dataToPost) {
-			ticketCtx.post();
+			http()
+				.post(BASE_URL + location.pathname, ticketCtx.dataToPost)
+				.then(res => {
+					history.push(`/it/ticket/${ params.ticketType }/${ res.id }`);
+				})
+				.catch(error => {
+					console.error(error);
+					itRoutesCtx.page.setIsLoading(false);
+				});
 		}
 	}, [ ticketCtx.needToSave, ticketCtx.dataToPost ]);
 
@@ -56,58 +62,59 @@ function IncidentControlBar() {
 	return (
 		<ControlBar$>
 
-			<DeleteTicket
-				when={ status !== STATUS.NEW }
-			/>
+			<DeleteTicket when={ status !== STATUS.NEW } />
 
-			<Button
-				as={ PaperclipBtn$ }
-				when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
-				onClick={ () => ticketCtx.attachments.setIsOpened(true) }
-			/>
+			<div className='controls'>
 
-			<Button
-				name='Save'
-				when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
-				onClick={ () => handleSubmit() }
-			/>
+				<Button
+					as={ PaperclipBtn$ }
+					when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					onClick={ () => ticketCtx.attachments.setIsOpened(true) }
+				/>
 
-			<Button
-				name='Submit'
-				when={ status === STATUS.NEW }
-				onClick={ () => handleSubmit({ status: STATUS.QUEUED }) }
-			/>
+				<Button
+					name='Save'
+					when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					onClick={ () => handleSubmit() }
+				/>
 
-			<Button
-				name='Escalate'
-				when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
-				onClick={ () => promptUser() }
-			/>
+				<Button
+					name='Submit'
+					when={ status === STATUS.NEW }
+					onClick={ () => handleSubmit({ status: STATUS.QUEUED }) }
+				/>
 
-			<Button
-				name='Set in progress'
-				when={ status === STATUS.QUEUED || status === STATUS.ON_HOLD }
-				onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
-			/>
+				<EscalateTicket
+					renderAs={ Button }
+					name='Escalate'
+					when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					handleSubmit={ handleSubmit }
+				/>
 
-			<Button
-				name='Place on hold'
-				when={ status === STATUS.IN_PROGRESS }
-				onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) }
-			/>
+				<Button
+					name='Set in progress'
+					when={ status === STATUS.QUEUED || status === STATUS.ON_HOLD }
+					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
+				/>
 
-			<Button
-				name='Resolve'
-				when={ status === STATUS.IN_PROGRESS }
-				onClick={ () => forceWorknote() }
-			/>
+				<Button
+					name='Place on hold'
+					when={ status === STATUS.IN_PROGRESS }
+					onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) }
+				/>
 
-			<Button
-				name='Reopen'
-				when={ status === STATUS.RESOLVED }
-				onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
-			/>
+				<Button
+					name='Resolve'
+					when={ status === STATUS.IN_PROGRESS }
+					onClick={ () => forceWorknote() }
+				/>
 
+				<Button
+					name='Reopen'
+					when={ status === STATUS.RESOLVED }
+					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
+				/>
+			</div>
 		</ControlBar$>
 	);
 }
@@ -129,9 +136,14 @@ function Button({ onClick, name = '', when, as }) {
 
 const ControlBar$ = styled.div`
 	display: flex;
-	justify-content: flex-end;
+	justify-content:space-between;
 	background-color: #c6d2d3;
 	padding: 0.5rem 1rem 0.5rem 0.8rem;
+
+	.controls {
+		height: 100%;
+		display: flex;
+	}
 
 	.control-button {
 		margin-left: 0.5rem;
@@ -140,7 +152,8 @@ const ControlBar$ = styled.div`
 		border-radius: 2px;
 		color: #295257;
 		font-size: 0.95em;
-		box-shadow: 0 0 0 1px #a6c3c6;
+		box-shadow: 0 0 0 1px #acbec0;
+		font-weight: bold;
 
 		&:hover{
 			background-color: white;
@@ -154,8 +167,9 @@ const PaperclipBtn$ = styled.button`
 	background-image: ${ `url(${ SRC.paperclip })` };
 	background-repeat: no-repeat;
 	background-position: center;
-	background-size: 25px;
+	background-size: contain;
 	background-color: transparent !important;
+	height: 100%;
 	margin: 0 0.5rem !important;
 	padding: 0 1.5rem !important;
 	box-shadow: none !important;

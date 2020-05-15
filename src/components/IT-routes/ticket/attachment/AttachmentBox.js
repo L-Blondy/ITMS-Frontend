@@ -90,6 +90,10 @@ const AttachmentBox$ = styled.div`
 		display: flex;
 		justify-content: space-between;
 
+		&>span {
+			color: inherit;
+		}
+
 		.close-btn {
 			font-size: 2rem;
 			background: none;

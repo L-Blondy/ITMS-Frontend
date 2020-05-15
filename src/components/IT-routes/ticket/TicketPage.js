@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useSubscription } from '../../../hooks';
 import { Fields, ControlBar, WorknotesHistory, FileList } from '.';
 import { LocationPrompt } from '../';
-import { Warning, DisableBg } from '../../';
 import { BASE_URL } from '../../../../BASE_URL';
 import AttachmentWithContext from './attachment/AttachmentWithContext';
 import { TicketCtx } from './TicketPageWithContext';
@@ -15,11 +14,6 @@ function TicketPage({ serverData }) {
 
 	const { ticketType } = useParams();
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
-
-	const handleWarningChoice = (choice) => {
-		ticketCtx.escalation.setIsWarning(false);
-		ticketCtx.escalation.setIsConfirmed(choice);
-	};
 
 	useEffect(() => {
 		if (liveData) {
@@ -34,7 +28,7 @@ function TicketPage({ serverData }) {
 	return (<>
 		<ControlBar />
 
-		<Ticket$ className={ ticketCtx.page.isDisabled ? 'disabled' : '' }>
+		<Ticket$>
 
 			<FileList
 				when={ ticketCtx.state.fileList.length }
@@ -46,14 +40,6 @@ function TicketPage({ serverData }) {
 				message={ 'Modifications may not be saved.' }
 				reason={ 'Do you want to exit this page ?' }
 			/>
-
-			<Warning
-				when={ ticketCtx.escalation.isWarning }
-				message='Are you sure you want to escalate this Ticket ?'
-				handleChoice={ handleWarningChoice }
-			/>
-
-			<DisableBg when={ ticketCtx.escalation.isWarning } />
 
 			<AttachmentWithContext
 				fileList={ ticketCtx.state.fileList }
@@ -105,7 +91,7 @@ const Ticket$ = styled.div`
 	textarea,
 	select,
 	.worknote {
-		border: 1px solid #aec0c3;
+		border: 1px solid #9eb3b6;
 	}
 `;
 

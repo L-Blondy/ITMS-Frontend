@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
-import { CLR } from '../../../GlobalStyles';
 import { plus, plusRed, chevron } from '../../../assets/icons';
 
 function Column({ items = [], name, selectedItem, setSelectedItem, updateState }) {
 
+	useEffect(() => {
+		if (name === 'sub-categories' && selectedItem)
+			document.querySelector('#sub-categories').focus();
+	}, []);
 
 	const selectItem = (category) => {
 		if (!setSelectedItem)
@@ -171,7 +174,7 @@ const Column$ = styled.div`
 		background: #f3f5f5;
 
 		&:focus-within {
-			box-shadow: 0 0 0 2px  lightblue;
+			box-shadow: 0 0 0 2px lightblue;
 			background: white;
 		}
 	}
@@ -181,13 +184,18 @@ const Column$ = styled.div`
 		border-radius: 3px;
 		font-size: inherit;
 		line-height: 2em;
+		height: 2em;
 		padding-left: 0.7rem;
 		border: none;
 		border-radius: 30px;
-		background: inherit;
+		background: #f3f5f5;
 
 		&:focus {
 			outline: none;
+
+			@supports(filter: brightness(0)){
+				background: white;	
+			}
 		}
 
 		&::placeholder {

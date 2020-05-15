@@ -1,23 +1,23 @@
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { Column } from './';
+import { Column } from '.';
 import { bigArrow } from '../../../assets/icons';
+import { http } from '../../../utils';
+import { BASE_URL } from '../../../../BASE_URL';
+import { ItRoutesCtx } from '../ItRoutesWithContext';
 
 function Categories({ categories }) {
 
+	const itRoutesCtx = useContext(ItRoutesCtx);
 	const [ selectedItem, setSelectedItem ] = useState();
 	const [ state, setState ] = useState(categories);
 	const [ key, setKey ] = useState(Math.random());
 	const params = useParams();
 
-	useEffect(() => {
-		console.log(state[ selectedItem ]);
-	}, [ selectedItem ]);
 
 	useEffect(() => {
 		setKey(Math.random());
-		console.log(state);
 	}, [ state ]);
 
 	const pageTitle = () => {
@@ -38,11 +38,6 @@ function Categories({ categories }) {
 			return result;
 		}, {});
 		setState(nextState);
-		const input = document.querySelector('.add-item-input#categories');
-		setTimeout(() => {
-			console.log(input);
-			input.focus();
-		}, 500);
 	};
 
 	const updateSubCat = (subCatState) => {
@@ -50,6 +45,24 @@ function Categories({ categories }) {
 			...state,
 			[ selectedItem ]: subCatState
 		});
+	};
+
+	const saveChanges = () => {
+		console.log('saving');
+		itRoutesCtx.page.setIsLoading(true);
+
+		setTimeout(() => {
+			http()
+				.post(BASE_URL + location.pathname, state)
+				.then(res => {
+					console.log(res);
+					itRoutesCtx.page.setIsLoading(false);
+				})
+				.catch(err => {
+					console.log(err);
+					itRoutesCtx.page.setIsLoading(false);
+				});
+		}, 500);
 	};
 
 	return (
@@ -78,7 +91,7 @@ function Categories({ categories }) {
 				</div>
 
 				<span className='controls'>
-					<button className='btn-contained-prim'>Save</button>
+					<button className='btn-contained-prim' onClick={ saveChanges }>Save</button>
 					<button className='btn-contained-sec'>Cancel</button>
 				</span>
 			</div>
@@ -119,11 +132,11 @@ const Categories$ = styled.div`
 	}
 
 	.controls {
-		margin: 0 auto 2rem auto;
+		margin: 2rem auto;
 		
 		button {
 			margin: 0.3em;
-			min-width: 6em;
+			min-width: 5.5em;
 			font-size: 1.05rem;
 			border-radius: 3px;
 		}

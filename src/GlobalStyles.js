@@ -54,6 +54,10 @@ const GlobalStyles = createGlobalStyle`
 		}
 	}
 
+	input, textarea, select, button {
+		font-size: inherit;
+	}
+
 	.alert-container {
 		position: absolute;
 		top:50%;
@@ -69,7 +73,6 @@ const GlobalStyles = createGlobalStyle`
 	}
 
 	button {
-		font-size: inherit;
 		border: none;
 		cursor: pointer;
 	}

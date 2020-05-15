@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import { DisableBg } from './';
 
 function Warning({ message, handleChoice, when }) {
 
@@ -7,7 +8,9 @@ function Warning({ message, handleChoice, when }) {
 		return null;
 
 	else
-		return (
+		return (<>
+			<DisableBg when={ when } />
+
 			<Warning$>
 
 				<h3 className='header'> Warning ! </h3>
@@ -27,7 +30,7 @@ function Warning({ message, handleChoice, when }) {
 				</button>
 
 			</Warning$>
-		);
+		</>);
 }
 
 export default Warning;
@@ -60,6 +63,7 @@ const Warning$ = styled.div`
 	
 	button {
 		margin: 1rem 0.5rem;
+		margin-bottom: 1.5rem;
 		font-size: 1.05rem;
 		min-width: 4em;
 	}
