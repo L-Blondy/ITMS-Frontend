@@ -6,10 +6,9 @@ import { UserCtx } from '../../../GlobalContext';
 import * as SRC from '../../../assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
-import { DeleteTicket, EscalateTicket } from './';
-import { Warning } from '../../';
+import { Button } from '../../';
 import { http } from '../../../utils';
-import { BASE_URL } from '../../../../BASE_URL';
+import { BASE_URL } from '/BASE_URL';
 
 function IncidentControlBar() {
 
@@ -26,6 +25,20 @@ function IncidentControlBar() {
 			return;
 		}
 		handleSubmit({ status: STATUS.RESOLVED });
+	};
+
+	const deleteTicket = () => {
+		itRoutesCtx.page.setIsLoading(true);
+		setTimeout(() => {
+			http()
+				.delete(BASE_URL + location.pathname, '')
+				.then(res => {
+					if (!res.deletedCount)
+						throw new Error('Could not delete');
+					history.push('/it/dashboard');
+				})
+				.catch(err => console.log(err));
+		}, 500);
 	};
 
 	const handleSubmit = (action = {}) => {
@@ -62,58 +75,64 @@ function IncidentControlBar() {
 	return (
 		<ControlBar$>
 
-			<DeleteTicket when={ status !== STATUS.NEW } />
+			<Button
+				isVisible={ status !== STATUS.NEW }
+				Render$={ Delete$ }
+				warning={ { message: 'Do you want to delete this ticket ?' } }
+				onConfirm={ deleteTicket } >
+				Delete
+			</Button>
 
 			<div className='controls'>
 
 				<Button
-					as={ PaperclipBtn$ }
-					when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					Render$={ PaperclipBtn$ }
+					isVisible={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
 					onClick={ () => ticketCtx.attachments.setIsOpened(true) }
 				/>
 
 				<Button
-					name='Save'
-					when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
-					onClick={ () => handleSubmit() }
-				/>
+					isVisible={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					onClick={ () => handleSubmit() } >
+					Save
+				</Button>
 
 				<Button
-					name='Submit'
-					when={ status === STATUS.NEW }
-					onClick={ () => handleSubmit({ status: STATUS.QUEUED }) }
-				/>
-
-				<EscalateTicket
-					renderAs={ Button }
-					name='Escalate'
-					when={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
-					handleSubmit={ handleSubmit }
-				/>
+					isVisible={ status === STATUS.NEW }
+					onClick={ () => handleSubmit({ status: STATUS.QUEUED }) } >
+					Submit
+				</Button>
 
 				<Button
-					name='Set in progress'
-					when={ status === STATUS.QUEUED || status === STATUS.ON_HOLD }
-					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
-				/>
+					isVisible={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					warning={ { message: 'Do you want to escalate this ticket ?' } }
+					onConfirm={ () => handleSubmit({ escalation: ticketCtx.state.escalation + 1 }) } >
+					Escalate
+				</Button>
 
 				<Button
-					name='Place on hold'
-					when={ status === STATUS.IN_PROGRESS }
-					onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) }
-				/>
+					isVisible={ status === STATUS.QUEUED || status === STATUS.ON_HOLD }
+					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
+					Set in progress
+				</Button>
 
 				<Button
-					name='Resolve'
-					when={ status === STATUS.IN_PROGRESS }
-					onClick={ () => forceWorknote() }
-				/>
+					isVisible={ status === STATUS.IN_PROGRESS }
+					onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) } >
+					Place on hold
+				</Button>
 
 				<Button
-					name='Reopen'
-					when={ status === STATUS.RESOLVED }
-					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) }
-				/>
+					isVisible={ status === STATUS.IN_PROGRESS }
+					onClick={ () => forceWorknote() } >
+					Resolve
+				</Button>
+
+				<Button
+					isVisible={ status === STATUS.RESOLVED }
+					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
+					Reopen
+				</Button>
 			</div>
 		</ControlBar$>
 	);
@@ -121,18 +140,6 @@ function IncidentControlBar() {
 
 export default IncidentControlBar;
 
-function Button({ onClick, name = '', when, as }) {
-	if (!when)
-		return null;
-
-	const Style = as || 'button';
-
-	return (
-		<Style onClick={ onClick } className='control-button'>
-			{ name }
-		</Style>
-	);
-}
 
 const ControlBar$ = styled.div`
 	display: flex;
@@ -144,23 +151,9 @@ const ControlBar$ = styled.div`
 		height: 100%;
 		display: flex;
 	}
-
-	.control-button {
-		margin-left: 0.5rem;
-		padding: 0.15rem 0.8rem;
-		background-color: #f4f4f4;
-		border-radius: 2px;
-		color: #295257;
-		font-size: 0.95em;
-		box-shadow: 0 0 0 1px #acbec0;
-		font-weight: bold;
-
-		&:hover{
-			background-color: white;
-			color: #666;
-		}
-	}
 `;
+
+
 
 const PaperclipBtn$ = styled.button`
 	width: 2.2rem;
@@ -178,4 +171,14 @@ const PaperclipBtn$ = styled.button`
 		filter: blur(0.5px);
 		opacity: 0.65;
 	}
+`;
+
+const Delete$ = styled.button`
+	box-shadow: none;
+	background: #904b9d;
+	box-shadow: 0 0 0 1px #904b9d;
+	color: white;
+	padding: 0 0.8rem;
+	border-radius: 2px;
+	font-weight: bold;
 `;

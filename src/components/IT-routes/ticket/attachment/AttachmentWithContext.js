@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import http from '../../../../utils/http';
-import { BASE_URL } from '../../../../../BASE_URL';
+import { BASE_URL } from '/BASE_URL';
 import { AttachmentBox } from '.';
 
 export const AttachmentCtx = createContext();

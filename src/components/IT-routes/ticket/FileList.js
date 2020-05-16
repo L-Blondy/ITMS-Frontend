@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { formatFileSize, getAttachmentIconSRC } from '../../../utils';
-import { BASE_URL } from '../../../../BASE_URL';
+import { BASE_URL } from '/BASE_URL';
 
 function FileList({ when, fileList }) {
 	if (!when)

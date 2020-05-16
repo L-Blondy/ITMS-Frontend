@@ -10,6 +10,7 @@ import { ItRoutesCtx } from './ItRoutesWithContext';
 import { usePathnameChangeCallback } from '../../hooks';
 import http from '../../utils/http';
 import { preloader } from '../../assets/icons';
+import { BASE_URL } from '/BASE_URL';
 
 function ItRoutes() {
 
@@ -21,13 +22,18 @@ function ItRoutes() {
 	useEffect(() => {
 		itRoutesCtx.page.setIsLoading(true);
 		itRoutesCtx.setError(null);
-		http()
-			.get(itRoutesCtx.BASE_URL + location.pathname, location.search)
-			.then(res => setTimeout(() => {
-				console.log(res);
-				itRoutesCtx.setInitialData(res);
-			}, 500))
-			.catch(e => itRoutesCtx.setError(e));
+		setTimeout(() => {
+			http()
+				.get(BASE_URL + location.pathname, location.search)
+				.then(res => {
+					console.log(res);
+					itRoutesCtx.setInitialData(res);
+				})
+				.catch(e => {
+					itRoutesCtx.page.setIsLoading(false);
+					itRoutesCtx.setError(e);
+				});
+		}, 500);
 	}, [ history.location ]);
 
 	useEffect(() => {

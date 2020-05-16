@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { BASE_URL } from '../../../BASE_URL';
 import { ItRoutes } from './';
 
 export const ItRoutesCtx = createContext();
@@ -12,7 +11,6 @@ function ItRoutesWithContext() {
 	const [ isLoading, setIsLoading ] = useState(false);
 
 	const itRoutesCtx = {
-		BASE_URL,
 		initialData,
 		setInitialData,
 		error,

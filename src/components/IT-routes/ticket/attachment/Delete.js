@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 import React, { useEffect, useContext } from 'react';
-import { BASE_URL } from '../../../../../BASE_URL';
+import { BASE_URL } from '/BASE_URL';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { formatFileSize, getAttachmentIconSRC } from '../../../../utils';
+import { Button } from '../../../';
 
 function Delete({ method }) {
 
 	const attachmentCtx = useContext(AttachmentCtx);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		attachmentCtx.deletion.setIsWarning(true);
-	};
 
 	const handleSelectFile = (e) => {
 		if (e.target.checked) {
@@ -23,16 +19,13 @@ function Delete({ method }) {
 		}
 	};
 
-	useEffect(() => {
-		if (attachmentCtx.deletion.isConfirmed) {
-			attachmentCtx.request.setStatus({ state: XHR.LOADING });
-			attachmentCtx.deletion.setIsConfirmed(false);
-			setTimeout(() => attachmentCtx.files.delete(), 500);
-		}
-	}, [ attachmentCtx.deletion.isConfirmed ]);
+	const handleConfirmDelete = () => {
+		attachmentCtx.request.setStatus({ state: XHR.LOADING });
+		setTimeout(() => attachmentCtx.files.delete(), 500);
+	};
 
 	return (
-		<Form$ method={ method } onSubmit={ handleSubmit }>
+		<Form$ method={ method } onSubmit={ e => e.preventDefault() }>
 
 			<ul className='file-list'>
 
@@ -66,9 +59,12 @@ function Delete({ method }) {
 					))) : '' }
 			</ul>
 
-			<button className={ `btn-contained-alert-sec delete-btn ${ setDisabledOrNothing(attachmentCtx) }` }>
+			<Button
+				Render$={ DeleteBtn$ }
+				className={ `btn-contained-alert-sec ${ setDisabledOrNothing(attachmentCtx) }` }
+				onConfirm={ handleConfirmDelete }>
 				Remove
-			</button>
+			</Button>
 
 		</Form$>
 	);
@@ -134,15 +130,15 @@ const Form$ = styled.form`
 			}
 		}
 	}
+`;
 
-	button {
-		background-color: #ff5043;
-		border-color: #ff5043;
-		box-shadow: none;
-		margin: 1rem;
+const DeleteBtn$ = styled.div`
+	background-color: #ff5043 !important;
+	border-color: #ff5043 !important;
+	box-shadow: none;
+	margin: 1rem;
 
-		&.disabled {
-			filter: grayscale(1)
-		}
+	&.disabled {
+		filter: grayscale(1)
 	}
 `;

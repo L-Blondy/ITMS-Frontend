@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Column } from '.';
 import { bigArrow } from '../../../assets/icons';
 import { http } from '../../../utils';
-import { BASE_URL } from '../../../../BASE_URL';
+import { BASE_URL } from '/BASE_URL';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
 
 function Categories({ categories }) {

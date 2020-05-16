@@ -10,9 +10,9 @@ function Warning({ message, handleChoice, when }) {
 		return (
 			<Warning$>
 
-				<h3 className='header'> Warning ! </h3>
+				<h3 className='warning-header'> Warning ! </h3>
 
-				<div className='message'>{ message }</div>
+				<div className='warning-message'>{ message }</div>
 
 				<button
 					className='btn-contained-alert-prim yes'
@@ -42,7 +42,7 @@ const Warning$ = styled.div`
 	text-align: center;
 	min-width: 250px;
 
-	.header{
+	.warning-header{
 		line-height: 50px;
 		background: #ffba12;
 		color: white;
@@ -53,7 +53,7 @@ const Warning$ = styled.div`
 		margin-bottom: 2rem;
 	}
 
-	.message {
+	.warning-message {
 		margin: 1rem;
 		font-size: 1.15rem;
 	}

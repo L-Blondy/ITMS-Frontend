@@ -2,7 +2,14 @@ import styled from 'styled-components';
 import React from 'react';
 import { DisableBg } from './';
 
-function Warning({ message, handleChoice, when }) {
+function Warning({
+	title = 'Warning !',
+	message = 'Are you sure ?',
+	confirm = 'Yes',
+	cancel = 'No',
+	handleChoice,
+	when
+}) {
 
 	if (!when)
 		return null;
@@ -13,20 +20,20 @@ function Warning({ message, handleChoice, when }) {
 
 			<Warning$>
 
-				<h3 className='header'> Warning ! </h3>
+				<h3 className='warning-header'> { title } </h3>
 
-				<div className='message'>{ message }</div>
+				<div className='warning-message'>{ message }</div>
 
 				<button
 					className='btn-contained-alert-prim yes'
 					onClick={ () => handleChoice(true) }>
-					Yes
+					{ confirm }
 				</button>
 
 				<button
 					className='btn-contained-alert-sec'
 					onClick={ () => handleChoice(false) }>
-					No
+					{ cancel }
 				</button>
 
 			</Warning$>
@@ -45,7 +52,7 @@ const Warning$ = styled.div`
 	text-align: center;
 	min-width: 250px;
 
-	.header{
+	.warning-header{
 		line-height: 50px;
 		background: #ffba12;
 		color: white;
@@ -56,7 +63,7 @@ const Warning$ = styled.div`
 		margin-bottom: 2rem;
 	}
 
-	.message {
+	.warning-message {
 		margin: 1rem;
 		font-size: 1.15rem;
 	}
