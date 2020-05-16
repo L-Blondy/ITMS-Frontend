@@ -12,16 +12,11 @@ function AttachmentBox() {
 	const attachmentCtx = useContext(AttachmentCtx);
 	const ticketCtx = useContext(TicketCtx);
 
-	const handleWarningChoice = (choice) => {
-		attachmentCtx.deletion.setIsWarning(false);
-		attachmentCtx.deletion.setIsConfirmed(choice);
-	};
-
 	return (
 		<>
 			<DisableBg />
 
-			<AttachmentBox$ requestStatus={ attachmentCtx.request.status } isWarning={ attachmentCtx.deletion.isWarning }>
+			<AttachmentBox$ requestStatus={ attachmentCtx.request.status }>
 
 				<div className='header'>
 					<span>Attachments</span>
@@ -35,12 +30,6 @@ function AttachmentBox() {
 			</AttachmentBox$>
 
 			<Status />
-
-			<Warning
-				when={ attachmentCtx.deletion.isWarning }
-				message='Are you sure ?'
-				handleChoice={ handleWarningChoice }
-			/>
 		</>
 	);
 }
@@ -56,7 +45,7 @@ const AttachmentBox$ = styled.div`
 	min-width: 450px;
 	z-index: 1003;
 	${ props => {
-		if (props.requestStatus.state !== XHR.UNSENT || props.isWarning) {
+		if (props.requestStatus.state !== XHR.UNSENT) {
 			return `
 				&::before {
 					content:'';

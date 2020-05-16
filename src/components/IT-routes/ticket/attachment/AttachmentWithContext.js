@@ -14,15 +14,11 @@ export const XHR = {
 function AttachmentWithContext({ fileList, isOpened }) {
 
 	const [ status, setStatus ] = useState({ state: XHR.UNSENT });
-	const [ isWarning, setIsWarning ] = useState(false);
-	const [ isConfirmed, setIsConfirmed ] = useState(false);
 	const [ selected, setSelected ] = useState([]);
 	const [ chosen, setChosen ] = useState();
 
 	const Attachment = new AttachmentModel(
 		status, setStatus,
-		isWarning, setIsWarning,
-		isConfirmed, setIsConfirmed,
 		selected, setSelected,
 		chosen, setChosen,
 		fileList,
@@ -41,23 +37,13 @@ class AttachmentModel {
 
 	constructor(
 		status, setStatus,
-		isWarning, setIsWarning,
-		isConfirmed, setIsConfirmed,
 		selected, setSelected,
 		chosen, setChosen,
 		fileList
 	) {
-
 		this.request = {
 			status,
 			setStatus,
-		};
-
-		this.deletion = {
-			isWarning,
-			setIsWarning,
-			isConfirmed,
-			setIsConfirmed,
 		};
 
 		this.files = {

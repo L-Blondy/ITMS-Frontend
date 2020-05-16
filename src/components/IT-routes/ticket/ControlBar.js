@@ -92,18 +92,21 @@ function IncidentControlBar() {
 				/>
 
 				<Button
+					Render$={ Button$ }
 					isVisible={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
 					onClick={ () => handleSubmit() } >
 					Save
 				</Button>
 
 				<Button
+					Render$={ Button$ }
 					isVisible={ status === STATUS.NEW }
 					onClick={ () => handleSubmit({ status: STATUS.QUEUED }) } >
 					Submit
 				</Button>
 
 				<Button
+					Render$={ Button$ }
 					isVisible={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
 					warning={ { message: 'Do you want to escalate this ticket ?' } }
 					onConfirm={ () => handleSubmit({ escalation: ticketCtx.state.escalation + 1 }) } >
@@ -111,24 +114,28 @@ function IncidentControlBar() {
 				</Button>
 
 				<Button
+					Render$={ Button$ }
 					isVisible={ status === STATUS.QUEUED || status === STATUS.ON_HOLD }
 					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
 					Set in progress
 				</Button>
 
 				<Button
+					Render$={ Button$ }
 					isVisible={ status === STATUS.IN_PROGRESS }
 					onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) } >
 					Place on hold
 				</Button>
 
 				<Button
+					Render$={ Button$ }
 					isVisible={ status === STATUS.IN_PROGRESS }
 					onClick={ () => forceWorknote() } >
 					Resolve
 				</Button>
 
 				<Button
+					Render$={ Button$ }
 					isVisible={ status === STATUS.RESOLVED }
 					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
 					Reopen
@@ -153,8 +160,6 @@ const ControlBar$ = styled.div`
 	}
 `;
 
-
-
 const PaperclipBtn$ = styled.button`
 	width: 2.2rem;
 	background-image: ${ `url(${ SRC.paperclip })` };
@@ -175,10 +180,30 @@ const PaperclipBtn$ = styled.button`
 
 const Delete$ = styled.button`
 	box-shadow: none;
-	background: #904b9d;
-	box-shadow: 0 0 0 1px #904b9d;
+	background: #dd3131;
+	box-shadow: 0 0 0 1px #dd3131;
 	color: white;
 	padding: 0 0.8rem;
-	border-radius: 2px;
+	border-radius: 1px;
 	font-weight: bold;
+
+	&:hover {
+		opacity: 0.66;
+	}
+`;
+
+const Button$ = styled.button`
+	margin-left: 0.5rem;
+	padding: 0.15rem 0.8rem;
+	background-color: #f4f4f4;
+	border-radius: 2px;
+	color: #52676a;
+	font-size: 0.95em;
+	box-shadow: 0 0 0 1px #acc2c4;
+	/* font-weight: bold; */
+
+	&:hover{
+		background-color: white;
+		color: #666;
+	}
 `;

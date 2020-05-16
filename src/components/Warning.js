@@ -8,7 +8,8 @@ function Warning({
 	confirm = 'Yes',
 	cancel = 'No',
 	handleChoice,
-	when
+	when,
+	disableBg = true
 }) {
 
 	if (!when)
@@ -16,7 +17,7 @@ function Warning({
 
 	else
 		return (<>
-			<DisableBg when={ when } />
+			<DisableBg when={ when && disableBg } />
 
 			<Warning$>
 
@@ -69,7 +70,7 @@ const Warning$ = styled.div`
 	}
 	
 	button {
-		margin: 1rem 0.5rem;
+		margin: 1rem 0.4rem;
 		margin-bottom: 1.5rem;
 		font-size: 1.05rem;
 		min-width: 4em;

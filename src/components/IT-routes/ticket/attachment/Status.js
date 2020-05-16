@@ -34,7 +34,7 @@ function Status() {
 				</div>
 
 				<button className='btn-contained-alert-prim' onClick={ () => attachmentCtx.request.setStatus({ state: XHR.UNSENT }) }>
-					OK
+					ok
 				</button>
 			</Div$>
 		);

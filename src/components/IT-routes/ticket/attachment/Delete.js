@@ -60,13 +60,13 @@ function Delete({ method }) {
 			</ul>
 
 			<Button
-				Render$={ DeleteBtn$ }
-				className={ `btn-contained-alert-sec ${ setDisabledOrNothing(attachmentCtx) }` }
+				className={ `btn-contained-alert-sec delete-btn ${ setDisabledOrNothing(attachmentCtx) }` }
+				warning={ { disableBg: true } }
 				onConfirm={ handleConfirmDelete }>
 				Remove
 			</Button>
 
-		</Form$>
+		</Form$ >
 	);
 }
 
@@ -130,15 +130,14 @@ const Form$ = styled.form`
 			}
 		}
 	}
-`;
+	.delete-btn {
+		background-color: #ff5043 !important;
+		border-color: #ff5043 !important;
+		box-shadow: none;
+		margin: 1rem;
 
-const DeleteBtn$ = styled.div`
-	background-color: #ff5043 !important;
-	border-color: #ff5043 !important;
-	box-shadow: none;
-	margin: 1rem;
-
-	&.disabled {
-		filter: grayscale(1)
+		&.disabled {
+			filter: grayscale(1)
+		}
 	}
 `;

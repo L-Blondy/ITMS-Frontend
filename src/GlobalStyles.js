@@ -86,6 +86,10 @@ const GlobalStyles = createGlobalStyle`
 		border-style: solid;
 		cursor: pointer;
 		border-collapse: separate;
+
+		&:hover {
+			opacity: 0.66;
+		}
 	}
 
 	.btn-contained {

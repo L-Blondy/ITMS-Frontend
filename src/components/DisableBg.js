@@ -24,6 +24,7 @@ const DisableBg$ = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	border:1px solid rgba(0,0,0,0.05);
 `;
 
 export default DisableBg;
