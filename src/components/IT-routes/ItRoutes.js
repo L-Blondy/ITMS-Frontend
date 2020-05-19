@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { Navbar, Settings, Sidebar } from './';
+import { ErrorPage } from '../';
 import { DashboardWithContext } from './dashboard';
+import { ItRoutesCtx } from './ItRoutesWithContext';
 import { TicketPageWithContext } from './ticket';
 import { AdministrationPage } from './administration';
-import { ErrorPage } from '../';
-import { ItRoutesCtx } from './ItRoutesWithContext';
+import { SearchPage } from './search';
 import { usePathnameChangeCallback } from '../../hooks';
 import http from '../../utils/http';
 import { preloader } from '../../assets/icons';
@@ -22,18 +23,15 @@ function ItRoutes() {
 	useEffect(() => {
 		itRoutesCtx.page.setIsLoading(true);
 		itRoutesCtx.setError(null);
-		setTimeout(() => {
-			http()
-				.get(BASE_URL + location.pathname, location.search)
-				.then(res => {
-					console.log(res);
-					itRoutesCtx.setInitialData(res);
-				})
-				.catch(e => {
-					itRoutesCtx.page.setIsLoading(false);
-					itRoutesCtx.setError(e);
-				});
-		}, 500);
+		http()
+			.get(BASE_URL + location.pathname, location.search)
+			.then(res => {
+				itRoutesCtx.setInitialData(res);
+			})
+			.catch(e => {
+				itRoutesCtx.page.setIsLoading(false);
+				itRoutesCtx.setError(e);
+			});
 	}, [ history.location ]);
 
 	useEffect(() => {
@@ -64,8 +62,11 @@ function ItRoutes() {
 						<Route path='/it/administration/:type/:other' render={ () => itRoutesCtx.initialData.administrationData && (
 							<AdministrationPage key={ 'b' + key } initialData={ itRoutesCtx.initialData } />
 						) } />
-						<Route path='/it/ticket/:ticketType/:ticketId' render={ () => itRoutesCtx.initialData.id && (
+						<Route path='/it/ticket/:type/:id' render={ () => itRoutesCtx.initialData.id && (
 							<TicketPageWithContext key={ 'c' + key } initialData={ itRoutesCtx.initialData } />
+						) } />
+						<Route path='/it/ticket/:type' render={ () => itRoutesCtx.initialData.searchData && (
+							<SearchPage key={ 'd' + key } results={ itRoutesCtx.initialData.searchData } />
 						) } />
 					</Switch>
 

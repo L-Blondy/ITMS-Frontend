@@ -19,10 +19,7 @@ function UploadForm({ method, encType }) {
 		formData.append("file", attachmentCtx.files.chosen);
 		formData.append("user", user);
 		attachmentCtx.request.setStatus({ state: XHR.LOADING });
-
-		setTimeout(() => {
-			attachmentCtx.files.upload(formData);
-		}, 500);
+		attachmentCtx.files.upload(formData);
 	};
 
 	return (

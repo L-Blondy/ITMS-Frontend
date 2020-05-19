@@ -18,6 +18,9 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 	const [ state, handleChange, setState ] = useInputValidation(initialState, setNeedToSave);
 	const [ isOpened, setIsOpened ] = useState(false);
 	const [ dataToPost, setDataToPost ] = useState();
+	const [ key, setKey ] = useState(Math.random());
+
+	useEffect(() => setKey(Math.random()), []);
 
 	const ticketCtx = new TicketCtxModel(
 		needToSave, setNeedToSave,
@@ -29,7 +32,7 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 
 	return (
 		<TicketCtx.Provider value={ ticketCtx }>
-			<TicketPage />
+			<TicketPage key={ key } />
 		</TicketCtx.Provider>
 	);
 }

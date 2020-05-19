@@ -4,6 +4,9 @@ const CLR = {
 	PRIMARY: '#4999a3',
 	FONT: {
 		PRIMARY: '#2a4a4f',
+	},
+	BORDER: {
+		PRIMARY: '#9eb3b6'
 	}
 };
 

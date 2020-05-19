@@ -51,18 +51,16 @@ function Categories({ categories }) {
 		console.log('saving');
 		itRoutesCtx.page.setIsLoading(true);
 
-		setTimeout(() => {
-			http()
-				.post(BASE_URL + location.pathname, state)
-				.then(res => {
-					console.log(res);
-					itRoutesCtx.page.setIsLoading(false);
-				})
-				.catch(err => {
-					console.log(err);
-					itRoutesCtx.page.setIsLoading(false);
-				});
-		}, 500);
+		http()
+			.post(BASE_URL + location.pathname, state)
+			.then(res => {
+				console.log(res);
+				itRoutesCtx.page.setIsLoading(false);
+			})
+			.catch(err => {
+				console.log(err);
+				itRoutesCtx.page.setIsLoading(false);
+			});
 	};
 
 	return (

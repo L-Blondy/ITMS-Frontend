@@ -72,6 +72,12 @@ function WorknotesHistory() {
 
 export default WorknotesHistory;
 
+function WorkLog(log) {
+	return (
+		<div className="log">{ log }</div>
+	);
+}
+
 const WorknotesHistory$ = styled.div`
 	display: flex;
 	flex-direction: column-reverse;

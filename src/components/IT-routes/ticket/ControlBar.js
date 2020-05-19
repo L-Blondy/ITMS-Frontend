@@ -29,16 +29,14 @@ function IncidentControlBar() {
 
 	const deleteTicket = () => {
 		itRoutesCtx.page.setIsLoading(true);
-		setTimeout(() => {
-			http()
-				.delete(BASE_URL + location.pathname, '')
-				.then(res => {
-					if (!res.deletedCount)
-						throw new Error('Could not delete');
-					history.push('/it/dashboard');
-				})
-				.catch(err => console.log(err));
-		}, 500);
+		http()
+			.delete(BASE_URL + location.pathname, '')
+			.then(res => {
+				if (!res.deletedCount)
+					throw new Error('Could not delete');
+				history.push('/it/dashboard');
+			})
+			.catch(err => console.log(err));
 	};
 
 	const handleSubmit = (action = {}) => {
@@ -52,7 +50,8 @@ function IncidentControlBar() {
 			...ticketCtx.state,
 			...action,
 			user,
-			date: Date.now()
+			date: Date.now(),
+			updatedOn: Date.now()
 		});
 	};
 
@@ -61,7 +60,7 @@ function IncidentControlBar() {
 			http()
 				.post(BASE_URL + location.pathname, ticketCtx.dataToPost)
 				.then(res => {
-					history.push(`/it/ticket/${ params.ticketType }/${ res.id }`);
+					history.push(`/it/ticket/${ params.type }/${ res.id }`);
 				})
 				.catch(error => {
 					console.error(error);

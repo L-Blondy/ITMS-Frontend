@@ -189,13 +189,13 @@ const Column$ = styled.div`
 		border: none;
 		border-radius: 30px;
 		background: #f3f5f5;
+		
+		@supports(filter: brightness(0)){
+			background: inherit;	
+		}
 
 		&:focus {
 			outline: none;
-
-			@supports(filter: brightness(0)){
-				background: white;	
-			}
 		}
 
 		&::placeholder {

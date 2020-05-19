@@ -21,7 +21,7 @@ function Delete({ method }) {
 
 	const handleConfirmDelete = () => {
 		attachmentCtx.request.setStatus({ state: XHR.LOADING });
-		setTimeout(() => attachmentCtx.files.delete(), 500);
+		attachmentCtx.files.delete();
 	};
 
 	return (

@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
+import { formatDate } from '../../../utils';
 
 function IncidentFields() {
 
@@ -20,13 +20,17 @@ function IncidentFields() {
 		}
 	};
 
-	const displayDate = (strDate, timezone = []) => {
-		if (!strDate) return '-';
-		const dateAndTime = new Date(strDate);
-		const date = dateAndTime.toLocaleDateString(timezone);
-		const time = dateAndTime.toLocaleTimeString(timezone, { hour: '2-digit', minute: '2-digit' });
-		return date + '  ' + time;
-	};
+	useEffect(() => {
+		const { categories, category, subCategory } = ticketCtx.state;
+
+		if (!categories[ category ])
+			ticketCtx.setState({ ...ticketCtx.state, category: '', subCategory: '' });
+		console.log;
+		if (categories[ category ] && !categories[ category ].includes(subCategory))
+			ticketCtx.setState({ ...ticketCtx.state, subCategory: '' });
+	}, []);
+
+	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, priority, status, subCategory, updatedOn, urgency } = ticketCtx.state;
 
 	return (
 		<Form$ onSubmit={ (e) => e.preventDefault() }>
@@ -40,7 +44,7 @@ function IncidentFields() {
 							id='number'
 							name='number'
 							type='text'
-							value={ ticketCtx.state.id }
+							value={ id }
 							disabled
 						/>
 					</label>
@@ -51,7 +55,7 @@ function IncidentFields() {
 							id='createdOn'
 							name='createdOn'
 							type='text'
-							value={ displayDate(ticketCtx.state.createdOn) }
+							value={ formatDate(createdOn) }
 							disabled
 						/>
 					</label>
@@ -62,7 +66,7 @@ function IncidentFields() {
 							id='dueDate'
 							name='dueDate'
 							type='text'
-							value={ displayDate(ticketCtx.state.dueDate) }
+							value={ formatDate(dueDate) }
 							disabled
 						/>
 					</label>
@@ -73,16 +77,16 @@ function IncidentFields() {
 							id='escalation'
 							name='escalation'
 							type='text'
-							value={ ticketCtx.state.escalation === 0 ? 'None' : ticketCtx.state.escalation === 1 ? 'Uplift' : 'Overdue' }
+							value={ escalation === 0 ? 'None' : escalation === 1 ? 'Uplift' : 'Overdue' }
 							disabled
 						/>
 					</label>
 
 					<label htmlFor='category'>
 						<span>Category</span>
-						<select id='category' name='category' onChange={ ticketCtx.handleChange } value={ ticketCtx.state.category } >
+						<select id='category' name='category' onChange={ ticketCtx.handleChange } value={ category } >
 							<option value=''>-none-</option>
-							{ Object.keys(ticketCtx.state.categories).map(cat => (
+							{ Object.keys(categories).map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
@@ -90,9 +94,9 @@ function IncidentFields() {
 
 					<label htmlFor='subCategory'>
 						<span>Sub category</span>
-						<select id='subCategory' name='subCategory' onChange={ ticketCtx.handleChange } value={ ticketCtx.state.subCategory } >
+						<select id='subCategory' name='subCategory' onChange={ ticketCtx.handleChange } value={ subCategory } >
 							<option value=''>-none-</option>
-							{ ticketCtx.state.category && ticketCtx.state.categories[ ticketCtx.state.category ].map(cat => (
+							{ (categories[ category ] || []).map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
@@ -108,7 +112,7 @@ function IncidentFields() {
 							id='status'
 							name='status'
 							type='text'
-							value={ ticketCtx.state.status }
+							value={ status }
 							style={ { textTransform: 'capitalize' } }
 							disabled
 						/>
@@ -117,7 +121,7 @@ function IncidentFields() {
 
 					<label htmlFor='impact'>
 						<span>Impact</span>
-						<select id='impact' name='impact' onChange={ ticketCtx.handleChange } value={ ticketCtx.state.impact }>
+						<select id='impact' name='impact' onChange={ ticketCtx.handleChange } value={ impact }>
 							<option value='1'> 1 - Extensive/Widespread </option>
 							<option value='2'> 2 - Significant/Large </option>
 							<option value='3'> 3 - Moderate/Limited </option>
@@ -127,7 +131,7 @@ function IncidentFields() {
 
 					<label htmlFor='urgency'>
 						<span>Urgency</span>
-						<select id='urgency' name='urgency' onChange={ ticketCtx.handleChange } value={ ticketCtx.state.urgency } >
+						<select id='urgency' name='urgency' onChange={ ticketCtx.handleChange } value={ urgency } >
 							<option value="1"> 1 - Critical </option>
 							<option value="2"> 2 - High </option>
 							<option value="3"> 3 - Medium </option>
@@ -153,19 +157,19 @@ function IncidentFields() {
 							name='assignmentGroup'
 							type='text'
 							onChange={ ticketCtx.handleChange }
-							value={ ticketCtx.state.assignmentGroup }
+							value={ assignmentGroup }
 							autoComplete="off"
 						/>
 					</label>
 
 					<label htmlFor='assignedTo'>
-						<span>assignedTo</span>
+						<span>Assigned to</span>
 						<input
 							id='assignedTo'
 							name='assignedTo'
 							type='text'
 							onChange={ ticketCtx.handleChange }
-							value={ ticketCtx.state.assignedTo }
+							value={ assignedTo }
 							autoComplete="off"
 						/>
 					</label>
@@ -182,7 +186,7 @@ function IncidentFields() {
 						name='description'
 						type='text'
 						onChange={ ticketCtx.handleChange }
-						value={ ticketCtx.state.description }
+						value={ description }
 						autoComplete="off"
 					/>
 				</label>
@@ -194,7 +198,7 @@ function IncidentFields() {
 						name='instructions'
 						rows='5'
 						onChange={ ticketCtx.handleChange }
-						value={ ticketCtx.state.instructions }
+						value={ instructions }
 						autoComplete="off"
 					/>
 				</label>
@@ -206,7 +210,7 @@ function IncidentFields() {
 							name='log'
 							rows='5'
 							onChange={ ticketCtx.handleChange }
-							value={ ticketCtx.state.log }
+							value={ log }
 							autoComplete="off"
 						/>
 						<div>Required for resolution</div>

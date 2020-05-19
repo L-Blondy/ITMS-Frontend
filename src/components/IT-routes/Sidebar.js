@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 function Sidebar() {
 	return (
 		<Sidebar$ className='sidebar'>
-			<Link to='/it/ticket/INC/new'>Open Incident</Link>
-			<Link to='/it/ticket/REQ/new'>Open Request</Link>
-			<Link to='/it/ticket/CHG/new'>Open Change</Link>
-			<Link to='/it/administration/INC/categories'>Incident Cat</Link>
-			<Link to='/it/administration/REQ/categories'>Request Cat</Link>
-			<Link to='/it/administration/CHG/categories'>Change Cat</Link>
+			<Link to='/it/ticket/incidents/new'>Open Incident</Link>
+			<Link to='/it/ticket/requests/new'>Open Request</Link>
+			<Link to='/it/ticket/changes/new'>Open Change</Link>
+			<Link to='/it/administration/incidents/categories'>Incident Cat</Link>
+			<Link to='/it/administration/requests/categories'>Request Cat</Link>
+			<Link to='/it/administration/changes/categories'>Change Cat</Link>
+			<Link to='/it/ticket/incidents'>Incidents Search </Link>
+			<Link to='/it/ticket/requests'>Change Search</Link>
+			<Link to='/it/ticket/changes'>Change Search</Link>
 		</Sidebar$>
 	);
 }

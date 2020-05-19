@@ -7,12 +7,13 @@ import { LocationPrompt } from '../';
 import { BASE_URL } from '/BASE_URL';
 import AttachmentWithContext from './attachment/AttachmentWithContext';
 import { TicketCtx } from './TicketPageWithContext';
+import { CLR } from '../../../GlobalStyles';
 
 function TicketPage({ serverData }) {
 
 	const ticketCtx = useContext(TicketCtx);
 
-	const { ticketType } = useParams();
+	const { type } = useParams();
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
 
 	useEffect(() => {
@@ -20,7 +21,7 @@ function TicketPage({ serverData }) {
 			let { worknotesHistory, ...newState } = liveData;
 			worknotesHistory && ticketCtx.setWorknotesHistory(worknotesHistory);
 			ticketCtx.setState({ ...ticketCtx.state, ...newState });
-
+			console.log('from livedata update');
 			compare(liveData, serverData);
 		}
 	}, [ liveData ]);
@@ -46,11 +47,11 @@ function TicketPage({ serverData }) {
 				isOpened={ ticketCtx.attachments.isOpened }
 			/>
 
-			{ ticketType === 'INC' ? (
+			{ type === 'incidents' ? (
 				<Fields />
-			) : ticketType === 'REQ' ? (
+			) : type === 'requests' ? (
 				<Fields />
-			) : ticketType === 'CHG' ? (
+			) : type === 'changes' ? (
 				<Fields />
 			) : '' }
 
@@ -91,7 +92,7 @@ const Ticket$ = styled.div`
 	textarea,
 	select,
 	.worknote {
-		border: 1px solid #9eb3b6;
+		border: 1px solid ${CLR.BORDER.PRIMARY };
 	}
 `;
 
