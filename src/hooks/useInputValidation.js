@@ -17,8 +17,6 @@ function useFormValidation(formData, setNeedToSave) {
 		});
 	};
 
-	useEffect(() => console.log(state), [ state ]);
-
 	useEffect(() => {
 		setState({
 			...state,

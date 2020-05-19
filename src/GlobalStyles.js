@@ -4,6 +4,7 @@ const CLR = {
 	PRIMARY: '#4999a3',
 	FONT: {
 		PRIMARY: '#2a4a4f',
+		LIGHT: '#828c8d'
 	},
 	BORDER: {
 		PRIMARY: '#9eb3b6'
@@ -125,7 +126,7 @@ const GlobalStyles = createGlobalStyle`
 	}
 
 	.light-font {
-		color: #777;
+		color: ${ CLR.FONT.LIGHT }
 	}
 `;
 

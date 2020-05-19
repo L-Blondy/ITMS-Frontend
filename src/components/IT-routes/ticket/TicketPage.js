@@ -21,7 +21,7 @@ function TicketPage({ serverData }) {
 			let { worknotesHistory, ...newState } = liveData;
 			worknotesHistory && ticketCtx.setWorknotesHistory(worknotesHistory);
 			ticketCtx.setState({ ...ticketCtx.state, ...newState });
-			console.log('from livedata update');
+
 			compare(liveData, serverData);
 		}
 	}, [ liveData ]);

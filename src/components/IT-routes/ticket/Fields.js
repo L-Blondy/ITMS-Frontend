@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatDate } from '../../../utils';
+import TextareaAutosize from 'react-textarea-autosize';
 
 function IncidentFields() {
 
@@ -25,7 +26,6 @@ function IncidentFields() {
 
 		if (!categories[ category ])
 			ticketCtx.setState({ ...ticketCtx.state, category: '', subCategory: '' });
-		console.log;
 		if (categories[ category ] && !categories[ category ].includes(subCategory))
 			ticketCtx.setState({ ...ticketCtx.state, subCategory: '' });
 	}, []);
@@ -193,24 +193,26 @@ function IncidentFields() {
 
 				<label htmlFor='instructions'>
 					<span>Instructions</span>
-					<textarea
+					<TextareaAutosize
 						id='instructions'
 						name='instructions'
-						rows='5'
 						onChange={ ticketCtx.handleChange }
 						value={ instructions }
+						minRows={ 5 }
+						maxRows={ 20 }
 						autoComplete="off"
 					/>
 				</label>
 				{ !/new$/.test(location.pathname) ? (<>
 					<label htmlFor='log'>
 						<span>Work notes</span>
-						<textarea
+						<TextareaAutosize
 							id='log'
 							name='log'
-							rows='5'
 							onChange={ ticketCtx.handleChange }
 							value={ log }
+							minRows={ 5 }
+							maxRows={ 20 }
 							autoComplete="off"
 						/>
 						<div>Required for resolution</div>
@@ -274,6 +276,7 @@ const Form$ = styled.form`
 		font-size: inherit;
 		border-radius: 3px;
 		padding-left: 0.45rem;
+		padding-right: 0.45rem;
 	}
 
 	input, select {
@@ -285,7 +288,8 @@ const Form$ = styled.form`
 	}
 
 	textarea {
-		padding-top: 0.12rem;
+		padding-top: 0.13rem;
+		padding-bottom: 0.13rem;
 		resize: none;
 	}
 

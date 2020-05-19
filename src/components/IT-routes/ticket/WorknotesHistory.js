@@ -1,55 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { BASE_URL } from '/BASE_URL';
 import { TicketCtx } from './TicketPageWithContext';
+import { formatFileSize, formatDate } from '../../../utils';
+import { TruncateLongText } from '../../';
+import { CLR } from '../../../GlobalStyles';
 
 function WorknotesHistory() {
 
 	const ticketCtx = useContext(TicketCtx);
-	const { pathname } = useLocation();
-
-	function renderLog(note) {
-		if (note.type === "workLog") {
-			return note.log;
-		}
-		else if (note.type === "changeLog") {
-			const logParts = note.log.split('/').filter(part => part);
-			return logParts.map((part, i) => {
-				if (i % 6 === 0)
-					return <Prop$ key={ part + i }>{ part + ' :' }</Prop$>;
-				if (i % 2 === 0)
-					return <Value$ key={ part + i }>{ part }</Value$>;
-				else
-					return <I$ key={ part + i }>{ part }</I$>;
-			});
-		}
-		else if (note.type === "fileLog") {
-			const { mimetype, originalname } = note.file;
-
-			if (!ticketCtx.state.fileList.filter(fileData => fileData.name === originalname).length) {
-				return (<>
-					<span>{ originalname } </span><i className='light-font'>(deleted)</i>
-				</>);
-			}
-
-			if (mimetype.indexOf('image') === 0) {
-				return (
-					<img src={ BASE_URL + pathname + '/' + originalname } alt={ originalname } />
-				);
-			}
-			else {
-				const size = note.file.size < 1000 ? `  (${ note.file.size }kb)` : `  (${ (note.file.size / 1000).toFixed(1) }mb)`;
-				return (<>
-					<a href={ BASE_URL + pathname + '/' + originalname } target='_blank' rel='noopener noreferrer'>
-						{ originalname }
-					</a>
-					<span className='light-font'>{ size }</span>
-				</>);
-			}
-		}
-		return 'Note type not recognized';
-	}
 
 	if (ticketCtx.worknotesHistory.length)
 		return (
@@ -59,9 +19,19 @@ function WorknotesHistory() {
 					<div className={ 'worknote ' + note.type } key={ note.type + i }>
 						<div className="header">
 							<div className="user">{ note.user }</div>
-							<div className="date">{ note.date }</div>
+							<div className="date">{ formatDate(note.date) }</div>
 						</div>
-						<div className="log">{ renderLog(note) }</div>
+						{ note.type === "workLog" && (
+							<WorkLog>{ note.log }</WorkLog>
+						) }
+
+						{ note.type === "changeLog" && (
+							<ChangeLog>{ note.log }</ChangeLog>
+						) }
+
+						{ note.type === "fileLog" && (
+							<FileLog>{ note.file }</FileLog>
+						) }
 					</div>
 
 				)) }
@@ -72,10 +42,65 @@ function WorknotesHistory() {
 
 export default WorknotesHistory;
 
-function WorkLog(log) {
+function WorkLog({ children: log }) {
 	return (
-		<div className="log">{ log }</div>
+		<div className="log">
+			{ log }
+		</div>
 	);
+}
+
+function ChangeLog({ children: log }) {
+	const logParts = log.split('/').filter(part => part);
+	return (
+		<div className="log">
+			{ logParts.map((part, i) => {
+				if (i % 6 === 0)
+					return <Prop$ key={ part + i }>{ part + ' :' }</Prop$>;
+				if (i % 2 === 0) {
+					return <TruncateLongText limit={ 20 } key={ part + i }>{ part }</TruncateLongText>;
+				}
+				else
+					return <I$ key={ part + i }>{ part }</I$>;
+			}) }
+		</div>
+	);
+}
+
+function FileLog({ children: file }) {
+	const ticketCtx = useContext(TicketCtx);
+	const { pathname } = useLocation();
+
+	const { mimetype, originalname } = file;
+	const wasDeleted = ticketCtx.state.fileList.filter(fileData => fileData.name === originalname).length === 0;
+	const isImage = mimetype.indexOf('image') === 0;
+
+	if (wasDeleted) {
+		return (
+			<div className="log">
+				<span>{ originalname } </span>
+				<i className='light-font'>(deleted)</i>
+			</div>
+		);
+	}
+
+	if (isImage) {
+		return (
+			<div className="log">
+				<img src={ BASE_URL + pathname + '/' + originalname } alt={ originalname } />
+			</div>
+		);
+	}
+	else { //is not an image
+		return (
+			<div className="log">
+				<a href={ BASE_URL + pathname + '/' + originalname } target='_blank' rel='noopener noreferrer'>
+					{ originalname }
+				</a>
+				<span className='light-font'>{ formatFileSize(file.size) }</span>
+			</div>
+		);
+	}
 }
 
 const WorknotesHistory$ = styled.div`
@@ -86,6 +111,10 @@ const WorknotesHistory$ = styled.div`
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 2rem;
+
+	.user, .date {
+		color: ${ CLR.FONT.LIGHT };
+	}
 
 	.worknote{
 		position: relative;
@@ -131,6 +160,11 @@ const WorknotesHistory$ = styled.div`
 		font-weight: bold;
 		text-decoration: underline;
 	}
+
+	.light-font {
+		font-size: 0.9em;
+		margin-left: 0.5rem;
+	}
 `;
 
 const Prop$ = styled.span`
@@ -145,6 +179,6 @@ const Prop$ = styled.span`
 const Value$ = styled.span``;
 
 const I$ = styled.i`
-	color: #999;
+	color: ${ CLR.FONT.LIGHT };
 	margin: 0 0.3rem;
 `;

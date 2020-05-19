@@ -48,13 +48,11 @@ function Categories({ categories }) {
 	};
 
 	const saveChanges = () => {
-		console.log('saving');
 		itRoutesCtx.page.setIsLoading(true);
 
 		http()
 			.post(BASE_URL + location.pathname, state)
 			.then(res => {
-				console.log(res);
 				itRoutesCtx.page.setIsLoading(false);
 			})
 			.catch(err => {
