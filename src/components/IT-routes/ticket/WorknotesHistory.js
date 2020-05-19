@@ -111,6 +111,7 @@ const WorknotesHistory$ = styled.div`
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 2rem;
+	font-size: 15px;
 
 	.user, .date {
 		color: ${ CLR.FONT.LIGHT };
@@ -138,6 +139,10 @@ const WorknotesHistory$ = styled.div`
 
 		&.changeLog::before {
 			background: #bbb;
+		}
+
+		&.fileLog::before {
+			background: ${ CLR.PRIMARY_VIBRANT };
 		}
 	}
 
@@ -170,7 +175,7 @@ const WorknotesHistory$ = styled.div`
 const Prop$ = styled.span`
 	display: inline-block;
 	text-align: right;
-	width: 150px;
+	min-width: calc(50px + 5vw);
 	margin-right: 0.6rem;
 	text-transform: capitalize;
 	line-height: 2rem;

@@ -7,7 +7,7 @@ import { AttachmentCtx, XHR } from './AttachmentWithContext';
 
 function UploadForm({ method, encType }) {
 
-	const user = useContext(UserCtx);
+	const userCtx = useContext(UserCtx);
 	const attachmentCtx = useContext(AttachmentCtx);
 
 	const uploadFile = (e) => {
@@ -17,7 +17,7 @@ function UploadForm({ method, encType }) {
 
 		const formData = new FormData();
 		formData.append("file", attachmentCtx.files.chosen);
-		formData.append("user", user);
+		formData.append("user", userCtx.name);
 		attachmentCtx.request.setStatus({ state: XHR.LOADING });
 		attachmentCtx.files.upload(formData);
 	};

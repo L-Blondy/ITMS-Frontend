@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ItRoutesCtx } from './ItRoutesWithContext';
+import { CLR } from '../../GlobalStyles';
 
 function Navbar() {
 
@@ -29,7 +30,7 @@ const Navbar$ = styled.nav`
 	align-items: center;
 	background: #3e4449;
 	flex-shrink: 0;
-	border-bottom: 5px solid #149aab;
+	border-bottom: 5px solid ${ CLR.PRIMARY_VIBRANT };
 	color: white;
 
 	.navlink {

@@ -1,89 +1,86 @@
 import styled from 'styled-components';
-import React, { useEffect } from 'react';
-import { formatDate } from '../../../utils';
+import React, { useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { CLR } from '../../../GlobalStyles';
-
-const ticketProps = [
-	'id',
-	'status',
-	'priority',
-	'createdOn',
-	'updatedOn',
-	'dueDate',
-	'description',
-	'escalation',
-	'category',
-	'subCategory',
-	'assignmentGroup',
-	'assignedTo',
-	'__v'
-];
+import { UserCtx } from '../../../GlobalContext';
+import { Tickets } from './';
 
 function SearchPage({ results }) {
 
-	function ticketMap(tickets) {
-		return ticketProps.reduce((componentMap, prop) => {
-			const column = [
-				<span
-					className='column-name'
-					key={ Math.random() } >
-					{ prop }
-				</span>
-			];
-			tickets.forEach((ticket, i) => {
-				let value = ticket[ prop ];
-				if (typeof value === 'number' && value > 10 ** 12)
-					value = formatDate(value);
+	const { incidentSearchProps } = useContext(UserCtx);
+	const { type: searchType } = useParams();
 
-				column.push(
-					<span
-						className={ `column-item ${ prop }-item` }
-						key={ i + Math.random() }>
-						{ value }
-					</span>
-				);
-			});
-			componentMap.push(
-				<span
-					className='column'
-					key={ Math.random() }>
-					{ column }
-				</span>
-			);
-			return componentMap;
-		}, []);
-	}
+	const handleSubmitSearch = (e) => {
+		e.preventDefault();
+		console.log(e.target.elements);
+	};
 
 	return (
-		<SearchPage$>
-			{ ticketMap(results) }
-		</SearchPage$>
+		<Form$ onSubmit={ handleSubmitSearch }>
+			<Tickets
+				when={ searchType === 'incidents' || searchType === 'requests' || searchType === 'changes' }
+				tickets={ results }
+				searchProps={ incidentSearchProps }
+			/>
+			<button></button>
+		</Form$>
 	);
 }
 
 export default SearchPage;
 
-const SearchPage$ = styled.div`
+const Form$ = styled.form`
 	height: 100%;
 	overflow-y: scroll;
 	display: flex;
+	font-size: 15px;
 
 	.column {
 		flex-shrink: 0;
 		display: flex;
 		flex-direction: column;
-		outline: 1px solid ${ CLR.BORDER.PRIMARY };
+		align-items: stretch;
 		background: white;
 
-	}
+		&-name,
+		&-item {
+			overflow: hidden;
+			min-height: 2.5em;
+			line-height: 2.5em;
+			max-width: 10em;
+			white-space: nowrap;
+			padding: 0 1em 0 0.5em;
+		}
 
-	.column-name,
-	.column-item {
-		overflow: hidden;
-		height: 2em;
-		line-height: 2em;
-		max-width: 9em;
-		padding: 0 0.5rem;
+		&-name {
+			font-weight: bold;
+			position: relative;
+			
+		}
+
+		&-search-label {
+			max-width: 10em;
+			padding: 0.5em;
+			background:  ${ CLR.BACKGROUND.LIGHT };
+			border-right: 1px solid #e5e5e5;
+		}
+
+		&-search-input {
+			width: 100%;
+			line-height: 1.5em;
+			padding: 0 0.35em;
+			border: none;
+			border-radius: 3px;
+		}
+
+		&-item {
+			border-bottom: 1px solid ${ CLR.BORDER.PRIMARY };
+		}
+
+		a {
+			color: inherit;
+			text-decoration: underline;
+		}
 	}
 `;
 

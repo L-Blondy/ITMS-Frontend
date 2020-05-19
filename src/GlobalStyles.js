@@ -2,6 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 
 const CLR = {
 	PRIMARY: '#4999a3',
+	PRIMARY_VIBRANT: '#149aab',
+	BACKGROUND: {
+		LIGHT: '#cad4d5',
+	},
 	FONT: {
 		PRIMARY: '#2a4a4f',
 		LIGHT: '#828c8d'

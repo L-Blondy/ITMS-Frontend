@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Validate } from '../../../utils';
 import { UserCtx } from '../../../GlobalContext';
+import { CLR } from '../../../GlobalStyles';
 import * as SRC from '../../../assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
@@ -12,7 +13,7 @@ import { BASE_URL } from '/BASE_URL';
 
 function IncidentControlBar() {
 
-	const user = useContext(UserCtx);
+	const userCtx = useContext(UserCtx);
 	const ticketCtx = useContext(TicketCtx);
 	const itRoutesCtx = useContext(ItRoutesCtx);
 	const params = useParams();
@@ -49,7 +50,7 @@ function IncidentControlBar() {
 		ticketCtx.setDataToPost({
 			...ticketCtx.state,
 			...action,
-			user,
+			user: userCtx.name,
 			date: Date.now(),
 			updatedOn: Date.now()
 		});
@@ -150,7 +151,7 @@ export default IncidentControlBar;
 const ControlBar$ = styled.div`
 	display: flex;
 	justify-content:space-between;
-	background-color: #c6d2d3;
+	background-color: ${ CLR.BACKGROUND.LIGHT };
 	padding: 0.5rem 1rem 0.5rem 0.8rem;
 
 	.controls {
