@@ -66,7 +66,7 @@ function ItRoutes() {
 							<TicketPageWithContext key={ 'c' + key } initialData={ itRoutesCtx.initialData } />
 						) } />
 						<Route path='/it/ticket/:type' render={ () => itRoutesCtx.initialData.searchData && (
-							<SearchPage key={ 'd' + key } results={ itRoutesCtx.initialData.searchData } />
+							<SearchPage key={ 'd' + key } initialData={ itRoutesCtx.initialData.searchData } />
 						) } />
 					</Switch>
 
