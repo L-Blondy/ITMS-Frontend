@@ -1,22 +1,46 @@
 import styled from 'styled-components';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { CLR } from '../../../GlobalStyles';
 import { UserCtx } from '../../../GlobalContext';
 import { Tickets } from './';
+import { http, dateToNum } from '../../../utils';
+import { BASE_URL } from '/BASE_URL';
+import { ControlBar$ } from '../';
 
 function SearchPage({ results }) {
 
 	const { incidentSearchProps } = useContext(UserCtx);
 	const { type: searchType } = useParams();
+	const form = useRef();
 
 	const handleSubmitSearch = (e) => {
 		e.preventDefault();
-		console.log(e.target.elements);
+		const elements = Array.prototype.slice.call(e.target.elements);
+
+		const params = elements.reduce((params, el) => {
+			if (!el.value)
+				return params;
+			let value = el.value;
+			if (el.name === 'createdOn' || el.name === 'updatedOn' || el.name === 'dueDate') {
+				value = dateToNum(value);
+			};
+			params[ el.name ] = value;
+			return params;
+		}, {});
+
+		http()
+			.get(BASE_URL + location.pathname, params)
+			.then(res => console.log(res))
+			.catch(err => console.log(err));
 	};
 
 	return (
-		<Form$ onSubmit={ handleSubmitSearch }>
+		<Form$ onSubmit={ handleSubmitSearch } ref={ form }>
+			<ControlBar$>
+				<div></div>
+				<input type='number' name='page' min="1" defaultValue={ 1 } />
+			</ControlBar$>
 			<Tickets
 				when={ searchType === 'incidents' || searchType === 'requests' || searchType === 'changes' }
 				tickets={ results }
@@ -30,57 +54,6 @@ function SearchPage({ results }) {
 export default SearchPage;
 
 const Form$ = styled.form`
-	height: 100%;
-	overflow-y: scroll;
-	display: flex;
-	font-size: 15px;
-
-	.column {
-		flex-shrink: 0;
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		background: white;
-
-		&-name,
-		&-item {
-			overflow: hidden;
-			min-height: 2.5em;
-			line-height: 2.5em;
-			max-width: 10em;
-			white-space: nowrap;
-			padding: 0 1em 0 0.5em;
-		}
-
-		&-name {
-			font-weight: bold;
-			position: relative;
-			
-		}
-
-		&-search-label {
-			max-width: 10em;
-			padding: 0.5em;
-			background:  ${ CLR.BACKGROUND.LIGHT };
-			border-right: 1px solid #e5e5e5;
-		}
-
-		&-search-input {
-			width: 100%;
-			line-height: 1.5em;
-			padding: 0 0.35em;
-			border: none;
-			border-radius: 3px;
-		}
-
-		&-item {
-			border-bottom: 1px solid ${ CLR.BORDER.PRIMARY };
-		}
-
-		a {
-			color: inherit;
-			text-decoration: underline;
-		}
-	}
+	
 `;
 

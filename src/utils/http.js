@@ -3,7 +3,7 @@ import toQuery from './toQuery';
 const http = () => ({
 
 	get(URL, params) {
-		const query = typeof params === 'string' ? params : toQuery(params);
+		const query = typeof params === 'string' ? params : '?' + toQuery(params);
 		this.method = 'GET';
 		this.thenCB = () => { };
 		this.catchCB = () => { };

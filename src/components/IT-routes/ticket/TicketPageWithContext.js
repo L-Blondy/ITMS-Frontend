@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { useInputValidation } from '../../../hooks';
+import { useTicketInputValidation } from '../../../hooks';
 import { TicketPage } from '.';
 
 export const TicketCtx = createContext();
@@ -15,7 +15,7 @@ export const STATUS = {
 function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 	const [ needToSave, setNeedToSave ] = useState(false);
 	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
-	const [ state, handleChange, setState ] = useInputValidation(initialState, setNeedToSave);
+	const [ state, handleChange, setState ] = useTicketInputValidation(initialState, setNeedToSave);
 	const [ isOpened, setIsOpened ] = useState(false);
 	const [ dataToPost, setDataToPost ] = useState();
 	const [ key, setKey ] = useState(Math.random());

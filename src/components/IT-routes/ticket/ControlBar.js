@@ -8,10 +8,11 @@ import * as SRC from '../../../assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
 import { Button } from '../../';
+import { ControlBar$ } from '../';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
 
-function IncidentControlBar() {
+function ControlBar() {
 
 	const userCtx = useContext(UserCtx);
 	const ticketCtx = useContext(TicketCtx);
@@ -145,20 +146,7 @@ function IncidentControlBar() {
 	);
 }
 
-export default IncidentControlBar;
-
-
-const ControlBar$ = styled.div`
-	display: flex;
-	justify-content:space-between;
-	background-color: ${ CLR.BACKGROUND.LIGHT };
-	padding: 0.5rem 1rem 0.5rem 0.8rem;
-
-	.controls {
-		height: 100%;
-		display: flex;
-	}
-`;
+export default ControlBar;
 
 const PaperclipBtn$ = styled.button`
 	width: 2.2rem;

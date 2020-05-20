@@ -11,8 +11,8 @@ function Sidebar() {
 			<Link to='/it/administration/incidents/categories'>Incident Cat</Link>
 			<Link to='/it/administration/requests/categories'>Request Cat</Link>
 			<Link to='/it/administration/changes/categories'>Change Cat</Link>
-			<Link to='/it/ticket/incidents'>Incidents Search </Link>
-			<Link to='/it/ticket/requests'>Change Search</Link>
+			<Link to='/it/ticket/incidents'>Incident Search </Link>
+			<Link to='/it/ticket/requests'>Request Search</Link>
 			<Link to='/it/ticket/changes'>Change Search</Link>
 		</Sidebar$>
 	);
