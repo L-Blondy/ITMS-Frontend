@@ -5,7 +5,7 @@ export const UserCtx = createContext();
 const user = {
 	name: 'Guest user',
 	timezone: 'some timezone here',
-	searchLimit: 5,
+	searchLimit: 10,
 	incidentSearchProps: [
 		'id',
 		'status',
@@ -13,6 +13,7 @@ const user = {
 		'createdOn',
 		'updatedOn',
 		'description',
+		'instructions',
 		'escalation',
 		'category',
 		'subCategory',

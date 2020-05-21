@@ -8,8 +8,6 @@ function Tickets({ when, tickets, searchProps }) {
 
 	if (!when) return null;
 
-	useEffect(() => console.log('MOUNT TICKETS'), []);
-
 	return (
 		<Tickets$>
 			{
@@ -50,7 +48,7 @@ function Tickets({ when, tickets, searchProps }) {
 								<span
 									className={ `column-item ${ prop }-item` }
 									key={ i + Math.random() }>
-									{ value }
+									<div>{ value }</div>
 								</span>
 							);
 					});
@@ -71,11 +69,11 @@ function Tickets({ when, tickets, searchProps }) {
 export default Tickets;
 
 const Tickets$ = styled.div`
-	height: 100%;
+	flex-grow: 1;
 	width: 100%;
 	display: flex;
-	overflow-x: scroll;
 	font-size: 15px;
+	justify-content: stretch;
 
 	.column {
 		flex-shrink: 0;
@@ -83,25 +81,24 @@ const Tickets$ = styled.div`
 		flex-direction: column;
 		align-items: stretch;
 		background: white;
+		flex-grow: 1;
 
 		&-name,
 		&-item {
 			overflow: hidden;
 			min-height: 2.5em;
 			line-height: 2.5em;
-			max-width: 12em;
 			white-space: nowrap;
 			padding: 0 1em 0 0.5em;
+			max-width: 15vw;
 		}
 
 		&-name {
 			font-weight: bold;
 			position: relative;
-			
 		}
 
 		&-search-label {
-			max-width: 12em;
 			padding: 0.5em;
 			background:  ${ CLR.BACKGROUND.LIGHT };
 			border-right: 1px solid #e5e5e5;
@@ -118,6 +115,11 @@ const Tickets$ = styled.div`
 
 		&-item {
 			border-bottom: 1px solid ${ CLR.BORDER.PRIMARY };
+
+			div {
+				width: 100%;
+				overflow: hidden;
+			}
 		}
 
 		a {

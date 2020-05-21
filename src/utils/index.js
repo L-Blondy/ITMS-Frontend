@@ -5,4 +5,3 @@ export { default as Validate } from './Validate';
 export { default as formatFileSize } from './formatFileSize';
 export { default as getAttachmentIconSRC } from './getAttachmentIconSRC';
 export { default as formatDate } from './formatDate';
-export { default as dateToNum } from './dateToNum';

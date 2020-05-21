@@ -1,13 +1,7 @@
 class Validate {
 
 	static setClassName(target, name, value) {
-		if (name === 'description'
-			|| name === 'instructions'
-			|| name === 'category'
-			|| name === 'subCategory'
-			|| name === 'assignmentGroup'
-			|| name === 'assignedTo'
-		) {
+		if (name.isOneOf([ 'description', 'instructions', 'category', 'subCategory', 'assignmentGroup', 'assignedTo' ])) {
 			if (value)
 				target.classList.remove('invalid');
 			else

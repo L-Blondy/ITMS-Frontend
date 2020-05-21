@@ -88,27 +88,27 @@ function ControlBar() {
 
 				<Button
 					Render$={ PaperclipBtn$ }
-					isVisible={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					onClick={ () => ticketCtx.attachments.setIsOpened(true) }
 				/>
 
 				<Button
 					Render$={ Button$ }
-					isVisible={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					onClick={ () => handleSubmit() } >
 					Save
 				</Button>
 
 				<Button
 					Render$={ Button$ }
-					isVisible={ status === STATUS.NEW }
+					isVisible={ status.isOneOf([ STATUS.NEW ]) }
 					onClick={ () => handleSubmit({ status: STATUS.QUEUED }) } >
 					Submit
 				</Button>
 
 				<Button
 					Render$={ Button$ }
-					isVisible={ status === STATUS.QUEUED || status === STATUS.IN_PROGRESS || status === STATUS.ON_HOLD }
+					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					warning={ { message: 'Do you want to escalate this ticket ?' } }
 					onConfirm={ () => handleSubmit({ escalation: ticketCtx.state.escalation + 1 }) } >
 					Escalate
@@ -116,28 +116,28 @@ function ControlBar() {
 
 				<Button
 					Render$={ Button$ }
-					isVisible={ status === STATUS.QUEUED || status === STATUS.ON_HOLD }
+					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.ON_HOLD ]) }
 					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
 					Set in progress
 				</Button>
 
 				<Button
 					Render$={ Button$ }
-					isVisible={ status === STATUS.IN_PROGRESS }
+					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) } >
 					Place on hold
 				</Button>
 
 				<Button
 					Render$={ Button$ }
-					isVisible={ status === STATUS.IN_PROGRESS }
+					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					onClick={ () => forceWorknote() } >
 					Resolve
 				</Button>
 
 				<Button
 					Render$={ Button$ }
-					isVisible={ status === STATUS.RESOLVED }
+					isVisible={ status.isOneOf([ STATUS.RESOLVED ]) }
 					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
 					Reopen
 				</Button>
