@@ -1,8 +1,12 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserCtx } from '../../GlobalContext';
 
 function Sidebar() {
+
+	const { incidentSearchProps, searchLimit } = useContext(UserCtx);
+
 	return (
 		<Sidebar$ className='sidebar'>
 			<Link to='/it/ticket/incidents/new'>Open Incident</Link>
@@ -11,9 +15,9 @@ function Sidebar() {
 			<Link to='/it/administration/incidents/categories'>Incident Cat</Link>
 			<Link to='/it/administration/requests/categories'>Request Cat</Link>
 			<Link to='/it/administration/changes/categories'>Change Cat</Link>
-			<Link to='/it/ticket/incidents'>Incident Search </Link>
-			<Link to='/it/ticket/requests'>Request Search</Link>
-			<Link to='/it/ticket/changes'>Change Search</Link>
+			<Link to={ `/it/ticket/incidents?limit=${ searchLimit }` }>Incident Search </Link>
+			<Link to={ `/it/ticket/requests?limit=${ searchLimit }` }>Request Search</Link>
+			<Link to={ `/it/ticket/changes?limit=${ searchLimit }` }>Change Search</Link>
 		</Sidebar$>
 	);
 }

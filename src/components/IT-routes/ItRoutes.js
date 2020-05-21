@@ -23,15 +23,18 @@ function ItRoutes() {
 	useEffect(() => {
 		itRoutesCtx.page.setIsLoading(true);
 		itRoutesCtx.setError(null);
-		http()
-			.get(BASE_URL + location.pathname, location.search)
-			.then(res => {
-				itRoutesCtx.setInitialData(res);
-			})
-			.catch(e => {
-				itRoutesCtx.page.setIsLoading(false);
-				itRoutesCtx.setError(e);
-			});
+		setTimeout(() => {
+			http()
+				.get(BASE_URL + location.pathname, location.search)
+				.then(res => {
+					itRoutesCtx.setInitialData(res);
+				})
+				.catch(e => {
+					itRoutesCtx.page.setIsLoading(false);
+					itRoutesCtx.setError(e);
+				});
+		}, 300);
+
 	}, [ history.location ]);
 
 	useEffect(() => {

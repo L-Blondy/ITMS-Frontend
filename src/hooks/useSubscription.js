@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { toQuery, setHeaders } from '../utils';
+import { toQueryString, setHeaders } from '../utils';
 
 XMLHttpRequest.prototype.setHeaders = setHeaders;
 
@@ -9,7 +9,7 @@ function useSubscription(URL, params = {}, headers = {}) {
 	const [ res, setRes ] = useState('');
 
 	const subscribe = useCallback(() => {
-		const query = typeof params === 'string' ? params : toQuery(params);
+		const query = typeof params === 'string' ? params : toQueryString(params);
 		req.open("GET", URL + query, true);
 		req.setHeaders(headers);
 		req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

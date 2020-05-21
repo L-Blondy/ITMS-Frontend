@@ -1,4 +1,4 @@
-function toQuery(obj) {
+function toQueryString(obj) {
 	let query = '';
 	recursion(obj);
 
@@ -27,4 +27,4 @@ function toQuery(obj) {
 	}
 	return query.slice(0, -1);
 }
-export default toQuery;
+export default toQueryString;

@@ -89,7 +89,7 @@ const Tickets$ = styled.div`
 			overflow: hidden;
 			min-height: 2.5em;
 			line-height: 2.5em;
-			max-width: 10em;
+			max-width: 12em;
 			white-space: nowrap;
 			padding: 0 1em 0 0.5em;
 		}
@@ -101,7 +101,7 @@ const Tickets$ = styled.div`
 		}
 
 		&-search-label {
-			max-width: 10em;
+			max-width: 12em;
 			padding: 0.5em;
 			background:  ${ CLR.BACKGROUND.LIGHT };
 			border-right: 1px solid #e5e5e5;

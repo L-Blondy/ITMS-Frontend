@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { toQuery, setHeaders } from '../utils';
+import { toQueryString, setHeaders } from '../utils';
 
 XMLHttpRequest.prototype.setHeaders = setHeaders;
 
@@ -10,7 +10,7 @@ function useGet(defaultResponse = '', headers = {}) {
 	const [ error, setError ] = useState(null);
 
 	const get = useCallback((url, params = {}) => {
-		const query = typeof params === 'string' ? params : toQuery(params);
+		const query = typeof params === 'string' ? params : toQueryString(params);
 		req.open("GET", url + query, true);
 		req.setHeaders(headers);
 		req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

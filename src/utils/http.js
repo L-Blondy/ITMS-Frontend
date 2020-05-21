@@ -1,9 +1,14 @@
-import toQuery from './toQuery';
+import toQueryString from './toQueryString';
 
 const http = () => ({
 
+
 	get(URL, params) {
-		const query = typeof params === 'string' ? params : '?' + toQuery(params);
+		let query = typeof params === 'string' ? params : toQueryString(params);
+		if (query[ 0 ] && query[ 0 ] !== '?')
+			query = '?' + query;
+
+		console.log(query);
 		this.method = 'GET';
 		this.thenCB = () => { };
 		this.catchCB = () => { };
@@ -43,7 +48,7 @@ const http = () => ({
 			query = params;
 		}
 		else {
-			query = toQuery(params);
+			query = toQueryString(params);
 		}
 		this.method = 'POST';
 		this.thenCB = () => { };
@@ -84,7 +89,7 @@ const http = () => ({
 			query = params;
 		}
 		else {
-			query = toQuery(params);
+			query = toQueryString(params);
 		}
 		this.method = 'DELETE';
 		this.thenCB = () => { };

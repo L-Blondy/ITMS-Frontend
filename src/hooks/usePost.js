@@ -9,7 +9,7 @@ export default function usePost(defaultResponse = '', headers = {}) {
 	const [ error, setError ] = useState(null);
 
 	const post = useCallback((url, params) => {
-		const query = typeof params === 'string' ? params : toQuery(params);
+		const query = typeof params === 'string' ? params : toQueryString(params);
 		req.open("POST", url, true);
 		req.setHeaders(headers);
 		req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -41,7 +41,7 @@ export default function usePost(defaultResponse = '', headers = {}) {
 	return [ res, post, error ];
 }
 
-function toQuery(obj) {
+function toQueryString(obj) {
 	let query = '';
 	recursion(obj);
 
