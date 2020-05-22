@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils';
 import { CLR } from '../../../GlobalStyles';
 import { Input } from '../../';
-import { propNameMap } from './';
+import { propToName } from './';
 
 function Tickets({ when, tickets, searchProps }) {
 
@@ -15,7 +15,7 @@ function Tickets({ when, tickets, searchProps }) {
 			<span
 				className='column-name'
 				key={ 'a' + prop } >
-				{ propNameMap(prop) }
+				{ propToName(prop) }
 			</span>,
 			<label className='column-search-label' htmlFor={ prop } key={ 'b' + prop }>
 				<Input
@@ -32,8 +32,13 @@ function Tickets({ when, tickets, searchProps }) {
 		tickets.forEach((ticket, i) => {
 			let value = ticket[ prop ];
 			const isDate = typeof value === 'number' && value > 10 ** 12;
+			const isObject = typeof value === 'object';
+
 			if (isDate)
 				value = formatDate(value);
+			else if (isObject)
+				value = JSON.stringify(value);
+
 			if (prop === 'id')
 				column.push(
 					<Link
@@ -48,7 +53,7 @@ function Tickets({ when, tickets, searchProps }) {
 					<span
 						className={ `column-item ${ prop }-item` }
 						key={ 'd' + prop + i }>
-						<div>{ JSON.stringify(value) }</div>
+						<div>{ value }</div>
 					</span>
 				);
 		});
@@ -86,14 +91,20 @@ const Tickets$ = styled.div`
 		background: white;
 		flex-grow: 1;
 
+		&,
+		&-search-label,
 		&-name,
 		&-item {
-			overflow: hidden;
+			max-width: 15vw;
+		}
+
+		&-name,
+		&-item {
 			height: 2.5em;
 			line-height: 2.5em;
 			white-space: nowrap;
 			padding: 0 1em 0 0.5em;
-			max-width: 15vw;
+			
 		}
 
 		&-name {
@@ -118,10 +129,28 @@ const Tickets$ = styled.div`
 
 		&-item {
 			border-bottom: 1px solid ${ CLR.BORDER.PRIMARY };
+			position: relative;
 
 			div {
-				width: 100%;
 				overflow: hidden;
+				min-width: 100%;
+				max-width: 100%;
+				cursor: help;
+			}
+
+			&:hover div {
+				position: absolute;
+				z-index: 1;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				padding: 0 2em 0 0.5em;
+				background: linear-gradient(90deg, #f0f0f0 calc(100% - 2em), transparent 100%);
+				animation: toTooltip 1000ms forwards;
+
+				@keyframes toTooltip {
+					to { max-width: 300%; }
+				}
 			}
 		}
 

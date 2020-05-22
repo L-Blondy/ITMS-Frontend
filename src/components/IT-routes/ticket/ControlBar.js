@@ -36,7 +36,8 @@ function ControlBar() {
 			.then(res => {
 				if (!res.deletedCount)
 					throw new Error('Could not delete');
-				history.push('/it/dashboard');
+				const redirectURL = location.pathname.split('/').slice(0, -1).join('/');
+				history.push(redirectURL);
 			})
 			.catch(err => console.log(err));
 	};
