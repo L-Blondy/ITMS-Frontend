@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatDate } from '../../../utils';
 import TextareaAutosize from 'react-textarea-autosize';
+import { CLR } from '../../../GlobalStyles';
 
 function IncidentFields() {
 
@@ -33,7 +34,7 @@ function IncidentFields() {
 	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, priority, status, subCategory, updatedOn, urgency } = ticketCtx.state;
 
 	return (
-		<Form$ onSubmit={ (e) => e.preventDefault() }>
+		<Form$ onSubmit={ (e) => e.preventDefault() } spellCheck='false'>
 
 			<div className='main-fields'>
 				<div className='column'>
@@ -284,7 +285,7 @@ const Form$ = styled.form`
 	}
 
 	input:disabled {
-		background-color: #e7eded;
+		background-color: #eaf0f1;
 	}
 
 	textarea {

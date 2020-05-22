@@ -22,12 +22,13 @@ function Categories({ categories }) {
 
 	const pageTitle = () => {
 		const { type } = params;
+		console.log(type);
 		switch (type) {
-			case 'INC':
+			case 'incidents':
 				return 'Incident categories';
-			case 'REQ':
+			case 'requests':
 				return 'Request categories';
-			case 'CHG':
+			case 'changes':
 				return 'Change categories';
 		}
 	};

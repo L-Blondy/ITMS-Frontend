@@ -13,7 +13,6 @@ const user = {
 		'createdOn',
 		'updatedOn',
 		'description',
-		'instructions',
 		'escalation',
 		'category',
 		'subCategory',

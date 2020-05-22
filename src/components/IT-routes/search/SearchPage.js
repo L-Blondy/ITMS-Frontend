@@ -3,17 +3,18 @@ import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { CLR } from '../../../GlobalStyles';
 import { UserCtx } from '../../../GlobalContext';
+import { ItRoutesCtx } from '../ItRoutesWithContext';
 import { Tickets } from './';
 import { http } from '../../../utils';
 import { ControlBar$ } from '../';
 import { BASE_URL } from '/BASE_URL';
-const { min, max } = Math;
 
 function SearchPage({ initialData }) {
 
 	const { incidentSearchProps, searchLimit } = useContext(UserCtx);
+	const itRoutesCtx = useContext(ItRoutesCtx);
+	const [ skip, setSkip ] = useState(1);
 	const { type: searchType } = useParams();
-	const wrapper = useRef();
 	const form = useRef();
 	const [ state, setState ] = useState({
 		...initialData,
@@ -21,20 +22,21 @@ function SearchPage({ initialData }) {
 		previousQuery: { skip: 0, limit: searchLimit }
 	});
 
+	useEffect(() => console.log('MOUNT SEARCHPAGE'), []);
+
 	const handleSendQuery = (query) => {
-		wrapper.current.classList.add('is-loading');
+		itRoutesCtx.page.setIsLoading(true);
 
 		setTimeout(() => {
 			http()
 				.get(BASE_URL + location.pathname, query)
 				.then(res => {
 					setState({ ...res.searchData, previousQuery: query });
-					restoreFormValues(form, query);
-					wrapper.current.classList.remove('is-loading');
+					itRoutesCtx.page.setIsLoading(false);
 				})
 				.catch(err => {
 					console.log(err);
-					wrapper.current.classList.remove('is-loading');
+					itRoutesCtx.page.setIsLoading(false);
 				});
 		}, 500);
 	};
@@ -47,57 +49,56 @@ function SearchPage({ initialData }) {
 
 	const handleChangePage = (e) => {
 		e.preventDefault();
-		const currentSkip = state.skipped;
-		const additionalSkip = parseInt(e.target.value) || 0;
-		const totalSkip = min(state.resultsCount - 1, max(currentSkip + additionalSkip, 0));
-		const query = { ...state.previousQuery, skip: totalSkip, limit: searchLimit };
+		const toDisplay = skip + parseInt(e.target.value || 0);
+		const toSkip = toDisplay - 1;
+		const query = { ...state.previousQuery, skip: toSkip, limit: searchLimit };
+		setSkip(toDisplay);
 		handleSendQuery(query);
 	};
 
-	return (
-		<Wrapper$ ref={ wrapper }>
-			<ControlBar$>
-				<div />
-				<SkipForm$ onSubmit={ handleChangePage }>
-					<button
-						type='button'
-						name='previous'
-						className='previous'
-						value={ - searchLimit }
-						onClick={ handleChangePage }
-						disabled={ state.skipped === 0 }
-					/>
-					<input
-						type='text'
-						name='skip'
-						id='skip'
-						defaultValue='1'
-						min="1"
-						max={ state.resultsCount }
-					/>
-					<label htmlFor='skip'>
-						{ `- ${ min(state.skipped + searchLimit, state.resultsCount) } of ${ state.resultsCount }` }
-					</label>
-					<button
-						type='button'
-						name='next'
-						className='next'
-						value={ searchLimit }
-						onClick={ handleChangePage }
-						disabled={ state.skipped + searchLimit >= state.resultsCount - 1 }
-					/>
-				</SkipForm$>
-			</ControlBar$>
-			<Form$ onSubmit={ handleSubmitSearch } ref={ form }>
-				<Tickets
-					when={ searchType.isOneOf([ 'incidents', 'requests', 'changes' ]) }
-					tickets={ state.results }
-					searchProps={ incidentSearchProps }
+	return (<>
+		<ControlBar$>
+			<div />
+			<SkipForm$ onSubmit={ handleChangePage }>
+				<button
+					type='button'
+					name='previous'
+					className='previous'
+					value={ - searchLimit }
+					onClick={ handleChangePage }
+					disabled={ state.skipped === 0 }
 				/>
-				<button></button>
-			</Form$>
-		</Wrapper$>
-	);
+				<input
+					type='number'
+					name='skip'
+					id='skip'
+					value={ skip }
+					onChange={ e => setSkip(parseInt(e.target.value)) }
+					min="1"
+					max={ state.resultsCount }
+				/>
+				<label htmlFor='skip'>
+					{ `- ${ Math.min(state.skipped + searchLimit, state.resultsCount) } of ${ state.resultsCount }` }
+				</label>
+				<button
+					type='button'
+					name='next'
+					className='next'
+					value={ searchLimit }
+					onClick={ handleChangePage }
+					disabled={ state.skipped + searchLimit >= state.resultsCount - 1 }
+				/>
+			</SkipForm$>
+		</ControlBar$>
+		<Form$ onSubmit={ handleSubmitSearch } ref={ form }>
+			<Tickets
+				when={ searchType.isOneOf([ 'incidents', 'requests', 'changes' ]) }
+				tickets={ state.results }
+				searchProps={ incidentSearchProps }
+			/>
+			<button></button>
+		</Form$>
+	</>);
 }
 
 export default SearchPage;
@@ -120,11 +121,6 @@ function restoreFormValues(form, query) {
 	document.querySelector('input#skip').value = query.skip + 1;
 }
 
-const Wrapper$ = styled.div`
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-`;
 
 const Form$ = styled.form`
 	height: 100%;

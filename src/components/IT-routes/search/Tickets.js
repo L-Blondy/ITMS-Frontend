@@ -3,65 +3,68 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils';
 import { CLR } from '../../../GlobalStyles';
+import { Input } from '../../';
+import { propNameMap } from './';
 
 function Tickets({ when, tickets, searchProps }) {
 
 	if (!when) return null;
 
+	const MAP = searchProps.reduce((componentMap, prop) => {
+		const column = [
+			<span
+				className='column-name'
+				key={ 'a' + prop } >
+				{ propNameMap(prop) }
+			</span>,
+			<label className='column-search-label' htmlFor={ prop } key={ 'b' + prop }>
+				<Input
+					className='column-search-input'
+					type='text'
+					name={ prop }
+					placeholder='Search'
+					size='4'
+					id={ prop }
+					autoComplete='off'
+				/>
+			</label>
+		];
+		tickets.forEach((ticket, i) => {
+			let value = ticket[ prop ];
+			const isDate = typeof value === 'number' && value > 10 ** 12;
+			if (isDate)
+				value = formatDate(value);
+			if (prop === 'id')
+				column.push(
+					<Link
+						className={ `column-item ${ prop }-item` }
+						key={ 'c' + prop + i }
+						to={ location.pathname + '/' + value }>
+						{ value }
+					</Link>
+				);
+			else
+				column.push(
+					<span
+						className={ `column-item ${ prop }-item` }
+						key={ 'd' + prop + i }>
+						<div>{ JSON.stringify(value) }</div>
+					</span>
+				);
+		});
+		componentMap.push(
+			<span
+				className='column'
+				key={ 'e' + prop }>
+				{ column }
+			</span>
+		);
+		return componentMap;
+	}, []);
+
 	return (
 		<Tickets$>
-			{
-				searchProps.reduce((componentMap, prop) => {
-					const column = [
-						<span
-							className='column-name'
-							key={ 'a' + Math.random() } >
-							{ prop }
-						</span>,
-						<label className='column-search-label' htmlFor={ prop } key={ 'b' + Math.random() }>
-							<input
-								className='column-search-input'
-								type='text'
-								name={ prop }
-								placeholder='Search'
-								size='4'
-								id={ prop }
-							/>
-						</label>
-					];
-					tickets.forEach((ticket, i) => {
-						let value = ticket[ prop ];
-						const isDate = typeof value === 'number' && value > 10 ** 12;
-						if (isDate)
-							value = formatDate(value);
-						if (prop === 'id')
-							column.push(
-								<Link
-									className={ `column-item ${ prop }-item` }
-									key={ i + Math.random() }
-									to={ location.pathname + '/' + value }>
-									{ value }
-								</Link>
-							);
-						else
-							column.push(
-								<span
-									className={ `column-item ${ prop }-item` }
-									key={ i + Math.random() }>
-									<div>{ value }</div>
-								</span>
-							);
-					});
-					componentMap.push(
-						<span
-							className='column'
-							key={ Math.random() }>
-							{ column }
-						</span>
-					);
-					return componentMap;
-				}, [])
-			}
+			{ MAP }
 		</Tickets$>
 	);
 }
@@ -86,7 +89,7 @@ const Tickets$ = styled.div`
 		&-name,
 		&-item {
 			overflow: hidden;
-			min-height: 2.5em;
+			height: 2.5em;
 			line-height: 2.5em;
 			white-space: nowrap;
 			padding: 0 1em 0 0.5em;

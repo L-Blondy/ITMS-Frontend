@@ -86,9 +86,9 @@ function FileLog({ children: file }) {
 
 	if (isImage) {
 		return (
-			<div className="log">
+			<a className="log" href={ BASE_URL + pathname + '/' + originalname } target='_blank' rel='noopener noreferrer'>
 				<img src={ BASE_URL + pathname + '/' + originalname } alt={ originalname } />
-			</div>
+			</a>
 		);
 	}
 	else { //is not an image
@@ -143,6 +143,14 @@ const WorknotesHistory$ = styled.div`
 
 		&.fileLog::before {
 			background: ${ CLR.PRIMARY_VIBRANT };
+		}
+
+		&.fileLog img {
+			max-width: 100%;
+			max-height: calc(20vh + 100px);
+			display: block;
+			margin: auto;
+			box-shadow: 0 0 5px 0 #ddd;
 		}
 	}
 
