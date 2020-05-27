@@ -33,6 +33,7 @@ function IncidentFields() {
 	}, []);
 
 	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, status, subCategory, updatedOn, urgency } = ticketCtx.state;
+
 	return (
 		<Form$ onSubmit={ (e) => e.preventDefault() } spellCheck='false'>
 
@@ -85,7 +86,7 @@ function IncidentFields() {
 
 					<label htmlFor='category' className={ ticketCtx.changedProps.has('category') ? 'live-updated' : '' }>
 						<span>Category</span>
-						<select id='category' name='category' onChange={ ticketCtx.handleChange } value={ category } >
+						<select id='category' name='category' onChange={ e => ticketCtx.handleChange(e) } value={ category } >
 							<option value=''>-none-</option>
 							{ Object.keys(categories).map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
@@ -95,7 +96,7 @@ function IncidentFields() {
 
 					<label htmlFor='subCategory' className={ ticketCtx.changedProps.has('subCategory') ? 'live-updated' : '' }>
 						<span>Sub category</span>
-						<select id='subCategory' name='subCategory' onChange={ ticketCtx.handleChange } value={ subCategory } >
+						<select id='subCategory' name='subCategory' onChange={ e => ticketCtx.handleChange(e) } value={ subCategory } >
 							<option value=''>-none-</option>
 							{ (categories[ category ] || []).map(cat => (
 								<option value={ cat } key={ cat }>{ cat }</option>
@@ -120,9 +121,9 @@ function IncidentFields() {
 					</label>
 
 
-					<label htmlFor='impact' className={ ticketCtx.changedProps.has('impact') ? 'live-updated' : '' }>
+					<label htmlFor='impact'>
 						<span>Impact</span>
-						<select id='impact' name='impact' onChange={ ticketCtx.handleChange } value={ impact }>
+						<select id='impact' name='impact' onChange={ e => ticketCtx.handleChange(e) } value={ impact }>
 							<option value='1'> 1 - Extensive/Widespread </option>
 							<option value='2'> 2 - Significant/Large </option>
 							<option value='3'> 3 - Moderate/Limited </option>
@@ -130,9 +131,9 @@ function IncidentFields() {
 						</select>
 					</label>
 
-					<label htmlFor='urgency' className={ ticketCtx.changedProps.has('urgency') ? 'live-updated' : '' }>
+					<label htmlFor='urgency'>
 						<span>Urgency</span>
-						<select id='urgency' name='urgency' onChange={ ticketCtx.handleChange } value={ urgency } >
+						<select id='urgency' name='urgency' onChange={ e => ticketCtx.handleChange(e) } value={ urgency } >
 							<option value="1"> 1 - Critical </option>
 							<option value="2"> 2 - High </option>
 							<option value="3"> 3 - Medium </option>
@@ -157,7 +158,7 @@ function IncidentFields() {
 							id='assignmentGroup'
 							name='assignmentGroup'
 							type='text'
-							onChange={ ticketCtx.handleChange }
+							onChange={ e => ticketCtx.handleChange(e) }
 							value={ assignmentGroup }
 							autoComplete="off"
 						/>
@@ -169,7 +170,7 @@ function IncidentFields() {
 							id='assignedTo'
 							name='assignedTo'
 							type='text'
-							onChange={ ticketCtx.handleChange }
+							onChange={ e => ticketCtx.handleChange(e) }
 							value={ assignedTo }
 							autoComplete="off"
 						/>
@@ -186,7 +187,7 @@ function IncidentFields() {
 						id='description'
 						name='description'
 						type='text'
-						onChange={ ticketCtx.handleChange }
+						onChange={ e => ticketCtx.handleChange(e) }
 						value={ description }
 						autoComplete="off"
 					/>
@@ -197,7 +198,7 @@ function IncidentFields() {
 					<TextareaAutosize
 						id='instructions'
 						name='instructions'
-						onChange={ ticketCtx.handleChange }
+						onChange={ e => ticketCtx.handleChange(e) }
 						value={ instructions }
 						minRows={ 5 }
 						maxRows={ 20 }
@@ -210,7 +211,7 @@ function IncidentFields() {
 						<TextareaAutosize
 							id='log'
 							name='log'
-							onChange={ ticketCtx.handleChange }
+							onChange={ e => ticketCtx.handleChange(e) }
 							value={ log }
 							minRows={ 5 }
 							maxRows={ 20 }

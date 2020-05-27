@@ -183,13 +183,13 @@ const WorknotesHistory$ = styled.div`
 const Prop$ = styled.span`
 	display: inline-block;
 	text-align: right;
-	min-width: calc(50px + 5vw);
+	min-width: 150px;
+	margin-left: 2vw;
 	margin-right: 0.6rem;
 	text-transform: capitalize;
 	line-height: 2rem;
+	flex-shrink: 0;
 `;
-
-const Value$ = styled.span``;
 
 const I$ = styled.i`
 	color: ${ CLR.FONT.LIGHT };

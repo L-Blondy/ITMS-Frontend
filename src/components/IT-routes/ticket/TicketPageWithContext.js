@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { useTicketPageInputs } from '../../../hooks';
 import { TicketPage } from '.';
+import { Validate } from '../../../utils';
 
 export const TicketCtx = createContext();
 export const STATUS = {
@@ -15,7 +15,7 @@ export const STATUS = {
 function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 	const [ needToSave, setNeedToSave ] = useState(false);
 	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
-	const [ state, handleChange, setState ] = useTicketPageInputs(initialState, setNeedToSave);
+	const [ state, setState ] = useState(initialState);
 	const [ isOpened, setIsOpened ] = useState(false);
 	const [ dataToPost, setDataToPost ] = useState();
 	const [ key, setKey ] = useState(Math.random());
@@ -26,7 +26,7 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 	const ticketCtx = new TicketCtxModel(
 		needToSave, setNeedToSave,
 		worknotesHistory, setWorknotesHistory,
-		state, handleChange, setState,
+		state, setState,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
 		changedProps, setChangedProps,
@@ -47,7 +47,7 @@ class TicketCtxModel {
 	constructor(
 		needToSave, setNeedToSave,
 		worknotesHistory, setWorknotesHistory,
-		state, handleChange, setState,
+		state, setState,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
 		changedProps, setChangedProps,
@@ -59,7 +59,6 @@ class TicketCtxModel {
 		this.worknotesHistory = worknotesHistory;
 		this.setWorknotesHistory = setWorknotesHistory;
 		this.state = state;
-		this.handleChange = handleChange;
 		this.setState = setState;
 		this.dataToPost = dataToPost;
 		this.setDataToPost = setDataToPost;
@@ -71,5 +70,28 @@ class TicketCtxModel {
 			isOpened,
 			setIsOpened
 		};
+	}
+
+	handleChange(e) {
+		console.log(this);
+		const { name, value } = e.target;
+		this.setNeedToSave(true);
+
+		const changes = {
+			[ name ]: value
+		};
+		if (name === 'category')
+			changes.subCategory = '';
+		else if (name === 'impact')
+			changes.priority = 'P' + Math.floor((parseInt(this.state.urgency) + parseInt(value)) / 2);
+		else if (name === 'urgency')
+			changes.priority = 'P' + Math.floor((parseInt(value) + parseInt(this.state.impact)) / 2);
+
+		Validate.setClassName(e.target, name, value);
+
+		this.setState({
+			...this.state,
+			...changes
+		});
 	}
 }
