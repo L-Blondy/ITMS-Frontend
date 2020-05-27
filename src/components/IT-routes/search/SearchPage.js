@@ -19,8 +19,6 @@ function SearchPage({ initialData }) {
 		previousQuery: { skip: 0, limit: searchLimit }
 	});
 
-	useEffect(() => console.log('MOUNT SEARCHPAGE'), []);
-
 	const handleSendQuery = (query) => {
 		itRoutesCtx.page.setIsLoading(true);
 		setTimeout(() => {
