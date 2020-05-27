@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import React, { useEffect } from 'react';
-import { ColumnName, ColumnSearchInput, ColumnData } from './';
+import React from 'react';
+import { ColumnName, ColumnSearchInput, ColumnData } from '.';
 
-function Tickets({ when, tickets, propNames, handleSort, sortBy, sortOrder }) {
+function TicketsGrid({ tickets, propNames, handleSort, onSubmit }) {
 
-	if (!when) return null;
+	const sortBy = localStorage.getItem('sortBy');
+	const sortOrder = localStorage.getItem('sortOrder');
 
 	return (
-		<Tickets$>
+		<Form$ onSubmit={ onSubmit }>
 			{ propNames.map(propName => (
 				<span className='column' key={ 'a' + propName }>
 					<ColumnName
@@ -24,19 +25,22 @@ function Tickets({ when, tickets, propNames, handleSort, sortBy, sortOrder }) {
 					/>
 				</span>
 			)) }
-		</Tickets$>
+			<button />
+		</Form$>
 	);
 }
 
 
-export default Tickets;
+export default TicketsGrid;
 
-const Tickets$ = styled.div`
+const Form$ = styled.form`
 	flex-grow: 1;
 	width: 100%;
+	height: 100%;
 	display: flex;
 	font-size: 15px;
 	justify-content: stretch;
+	overflow: auto;
 
 	.column {
 		flex-shrink: 0;
