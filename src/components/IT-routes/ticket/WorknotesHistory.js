@@ -21,17 +21,17 @@ function WorknotesHistory() {
 							<div className="user">{ note.user }</div>
 							<div className="date">{ formatDate(note.date) }</div>
 						</div>
-						{ note.type === "workLog" && (
-							<WorkLog>{ note.log }</WorkLog>
-						) }
+						<WorkLog when={ note.type === "workLog" }>
+							{ note.log }
+						</WorkLog>
 
-						{ note.type === "changeLog" && (
-							<ChangeLog>{ note.log }</ChangeLog>
-						) }
+						<ChangeLog when={ note.type === "changeLog" }>
+							{ note.log }
+						</ChangeLog>
 
-						{ note.type === "fileLog" && (
-							<FileLog>{ note.file }</FileLog>
-						) }
+						<FileLog when={ note.type === "fileLog" }>
+							{ note.file }
+						</FileLog>
 					</div>
 
 				)) }
@@ -42,7 +42,9 @@ function WorknotesHistory() {
 
 export default WorknotesHistory;
 
-function WorkLog({ children: log }) {
+function WorkLog({ children: log, when }) {
+	if (!when) return null;
+
 	return (
 		<div className="log">
 			{ log }
@@ -50,7 +52,9 @@ function WorkLog({ children: log }) {
 	);
 }
 
-function ChangeLog({ children: log }) {
+function ChangeLog({ children: log, when }) {
+	if (!when) return null;
+
 	const logParts = log.split('§§').filter(part => part);
 	return (
 		<div className="log">
@@ -67,7 +71,9 @@ function ChangeLog({ children: log }) {
 	);
 }
 
-function FileLog({ children: file }) {
+function FileLog({ children: file, when }) {
+	if (!when) return null;
+
 	const ticketCtx = useContext(TicketCtx);
 	const { pathname } = useLocation();
 
