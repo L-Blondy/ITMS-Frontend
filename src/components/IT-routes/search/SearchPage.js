@@ -26,7 +26,6 @@ function SearchPage({ initialData }) {
 
 	const handleSendQuery = (query) => {
 		itRoutesCtx.page.setIsLoading(true);
-
 		setTimeout(() => {
 			http()
 				.get(BASE_URL + location.pathname, query)
@@ -41,18 +40,33 @@ function SearchPage({ initialData }) {
 		}, 500);
 	};
 
+	const handleSort = (e) => {
+		e.preventDefault();
+		const sortBy = e.target.dataset.sortby;
+		const prevSortBy = localStorage.getItem('sortBy');
+		const prevSortOrder = localStorage.getItem('sortOrder');
+		if (sortBy === prevSortBy)
+			localStorage.setItem('sortOrder', - prevSortOrder);
+		localStorage.setItem('sortBy', sortBy);
+		const sortOrder = localStorage.getItem('sortOrder');
+		const query = { ...state.previousQuery, skip: 0, limit: searchLimit, sort: { sortBy, sortOrder } };
+		handleSendQuery(query);
+	};
+
 	const handleSubmitSearch = (e) => {
 		e.preventDefault();
-		const query = toQueryObject(e.target.elements, { skip: 0, limit: searchLimit });
+		const sortBy = localStorage.getItem('sortBy');
+		const sortOrder = localStorage.getItem('sortOrder');
+		const query = toQueryObject(e.target.elements, { skip: 0, limit: searchLimit, sort: { sortBy, sortOrder } });
 		handleSendQuery(query);
 	};
 
 	const handleChangePage = (e) => {
 		e.preventDefault();
-		const toDisplay = skip + parseInt(e.target.value || 0);
-		const toSkip = toDisplay - 1;
-		const query = { ...state.previousQuery, skip: toSkip, limit: searchLimit };
-		setSkip(toDisplay);
+		const nextSkipt = Math.min(state.resultsCount, Math.max(1, skip + parseInt(e.target.value || 0)));
+		const skipQuery = nextSkipt - 1;
+		const query = { ...state.previousQuery, skip: skipQuery, limit: searchLimit };
+		setSkip(nextSkipt);
 		handleSendQuery(query);
 	};
 
@@ -94,7 +108,10 @@ function SearchPage({ initialData }) {
 			<Tickets
 				when={ searchType.isOneOf([ 'incidents', 'requests', 'changes' ]) }
 				tickets={ state.results }
-				searchProps={ incidentSearchProps }
+				propNames={ incidentSearchProps }
+				handleSort={ handleSort }
+				sortBy={ localStorage.getItem('sortBy') }
+				sortOrder={ localStorage.getItem('sortOrder') }
 			/>
 			<button></button>
 		</Form$>
