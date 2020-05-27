@@ -18,12 +18,12 @@ function ColumnData({ tickets, propName }) {
 
 		if (propName === 'id')
 			columnData.push(
-				<Link$
-					as={ Span$ }
+				<Span$
+					as={ Link$ }
 					to={ location.pathname + '/' + value }
 					key={ 'b' + propName + i }>
 					{ value }
-				</Link$>
+				</Span$>
 			);
 		else
 			columnData.push(

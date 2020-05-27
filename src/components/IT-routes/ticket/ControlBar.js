@@ -31,11 +31,12 @@ function ControlBar() {
 
 	const deleteTicket = () => {
 		itRoutesCtx.page.setIsLoading(true);
+		ticketCtx.setNeedToSave(false);
 		http()
 			.delete(BASE_URL + location.pathname, '')
 			.then(res => {
 				if (!res.deletedCount)
-					throw new Error('Could not delete');
+					console.error('Could not delete the ticket');
 				const redirectURL = location.pathname.split('/').slice(0, -1).join('/');
 				history.push(redirectURL);
 			})

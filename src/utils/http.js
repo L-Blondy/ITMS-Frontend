@@ -8,7 +8,6 @@ const http = () => ({
 		if (query[ 0 ] && query[ 0 ] !== '?')
 			query = '?' + query;
 
-		console.log(query);
 		this.method = 'GET';
 		this.thenCB = () => { };
 		this.catchCB = () => { };

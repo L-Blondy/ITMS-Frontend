@@ -51,7 +51,7 @@ function WorkLog({ children: log }) {
 }
 
 function ChangeLog({ children: log }) {
-	const logParts = log.split('/').filter(part => part);
+	const logParts = log.split('§§').filter(part => part);
 	return (
 		<div className="log">
 			{ logParts.map((part, i) => {

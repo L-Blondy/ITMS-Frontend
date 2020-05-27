@@ -95,21 +95,6 @@ function getSearch(searchLimit) {
 	}
 	return location.search;
 }
-// function getSearch(searchLimit) {
-// 	if (!location.pathname.isOneOf([ '/it/ticket/incidents', '/it/ticket/requests', '/it/ticket/changes' ])) {
-// 		localStorage.removeItem('lastSearch');
-// 		return location.search;
-// 	}
-
-// 	const sortBy = localStorage.getItem('sortBy');
-// 	const sortOrder = localStorage.getItem('sortOrder');
-// 	const defaultSearch = `?limit=${ searchLimit }&sort[sortBy]=${ sortBy }&sort[sortOrder]=${ sortOrder }`;
-
-// 	if (localStorage.getItem('lastSearch')) {
-// 		return JSON.parse(localStorage.getItem('lastSearch'));
-// 	}
-// 	return defaultSearch;
-// }
 
 export default ItRoutes;
 

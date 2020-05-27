@@ -28,6 +28,7 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 		state, handleChange, setState,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
+		initialState
 	);
 
 	return (
@@ -47,6 +48,7 @@ class TicketCtxModel {
 		state, handleChange, setState,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
+		initialState
 	) {
 
 		this.needToSave = needToSave;
@@ -58,6 +60,7 @@ class TicketCtxModel {
 		this.setState = setState;
 		this.dataToPost = dataToPost;
 		this.setDataToPost = setDataToPost;
+		this.initialState = initialState;
 
 		this.attachments = {
 			isOpened,

@@ -9,7 +9,7 @@ import AttachmentWithContext from './attachment/AttachmentWithContext';
 import { TicketCtx } from './TicketPageWithContext';
 import { CLR } from '../../../GlobalStyles';
 
-function TicketPage({ serverData }) {
+function TicketPage() {
 
 	const ticketCtx = useContext(TicketCtx);
 
@@ -22,7 +22,8 @@ function TicketPage({ serverData }) {
 			worknotesHistory && ticketCtx.setWorknotesHistory(worknotesHistory);
 			ticketCtx.setState({ ...ticketCtx.state, ...newState });
 
-			compare(liveData, serverData);
+			const changedProps = compare(liveData, ticketCtx.initialState);
+			console.log(changedProps);
 		}
 	}, [ liveData ]);
 
@@ -64,11 +65,12 @@ function TicketPage({ serverData }) {
 export default TicketPage;
 
 function compare(liveData, serverData) {
+	let changedProps = [];
 	for (let prop in serverData) {
 		const servVal = serverData[ prop ];
 		const liveVal = liveData[ prop ];
 
-		if (prop[ 0 ] === '_')
+		if (prop.isOneOf([ '_id', '__v', 'updatedOn', 'fileList' ]))
 			continue;
 
 		if (liveVal && prop === 'worknotesHistory') {
@@ -78,8 +80,10 @@ function compare(liveData, serverData) {
 		}
 		else if (liveVal && servVal !== liveVal) {
 			console.log('%c' + prop + ': changed from ' + servVal + ' to ' + liveVal, 'background: #222; color: #bada55');
+			changedProps.push(prop);
 		}
 	}
+	return changedProps;
 }
 
 const Ticket$ = styled.div`
