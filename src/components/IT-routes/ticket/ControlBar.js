@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Validate } from '../../../utils';
 import { UserCtx } from '../../../GlobalContext';
 import { CLR } from '../../../GlobalStyles';
-import * as SRC from '../../../assets/icons';
+import * as SRC from '/assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
 import { Button } from '../../';

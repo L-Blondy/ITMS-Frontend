@@ -1,4 +1,4 @@
-import * as SRC from '../assets/icons/fileTypes';
+import * as SRC from '/assets/icons/fileTypes';
 
 function getAttachmentIconSRC(file) {
 	const { mimetype, name } = file;

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import * as SRC from '../../../../assets/icons';
+import * as SRC from '/assets/icons';
 import { Upload, Delete, Status } from '.';
 import { Warning, DisableBg } from '../../../';
 import { CLR } from '../../../../GlobalStyles';

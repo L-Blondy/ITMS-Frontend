@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useContext } from 'react';
-import * as SRC from '../../../../assets/icons';
+import * as SRC from '/assets/icons';
 import { CLR } from '../../../../GlobalStyles';
 import { UserCtx } from '../../../../GlobalContext';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';

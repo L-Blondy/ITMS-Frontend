@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
-import { plus, plusRed, chevron } from '../../../assets/icons';
+import { plus, plusRed, chevron } from '/assets/icons';
 
 function Column({ items = [], name, selectedItem, setSelectedItem, updateState }) {
 

@@ -23,7 +23,7 @@ function TicketPage() {
 			ticketCtx.setState({ ...ticketCtx.state, ...newState });
 
 			const changedProps = compare(liveData, ticketCtx.initialState);
-			console.log(changedProps);
+			ticketCtx.setChangedProps(changedProps);
 		}
 	}, [ liveData ]);
 
@@ -65,7 +65,7 @@ function TicketPage() {
 export default TicketPage;
 
 function compare(liveData, serverData) {
-	let changedProps = [];
+	let changedProps = new Set();
 	for (let prop in serverData) {
 		const servVal = serverData[ prop ];
 		const liveVal = liveData[ prop ];
@@ -80,7 +80,7 @@ function compare(liveData, serverData) {
 		}
 		else if (liveVal && servVal !== liveVal) {
 			console.log('%c' + prop + ': changed from ' + servVal + ' to ' + liveVal, 'background: #222; color: #bada55');
-			changedProps.push(prop);
+			changedProps.add(prop);
 		}
 	}
 	return changedProps;

@@ -4,6 +4,7 @@ import { TicketCtx } from './TicketPageWithContext';
 import { formatDate } from '../../../utils';
 import TextareaAutosize from 'react-textarea-autosize';
 import { CLR } from '../../../GlobalStyles';
+import { activityCircle } from '/assets/icons';
 
 function IncidentFields() {
 
@@ -31,19 +32,18 @@ function IncidentFields() {
 			ticketCtx.setState({ ...ticketCtx.state, subCategory: '' });
 	}, []);
 
-	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, priority, status, subCategory, updatedOn, urgency } = ticketCtx.state;
-
+	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, status, subCategory, updatedOn, urgency } = ticketCtx.state;
 	return (
 		<Form$ onSubmit={ (e) => e.preventDefault() } spellCheck='false'>
 
 			<div className='main-fields'>
 				<div className='column'>
 
-					<label htmlFor='number'>
+					<label htmlFor='id'>
 						<span>Number</span>
 						<input
-							id='number'
-							name='number'
+							id='id'
+							name='id'
 							type='text'
 							value={ id }
 							disabled
@@ -72,7 +72,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='escalation'>
+					<label htmlFor='escalation' className={ ticketCtx.changedProps.has('escalation') ? 'live-updated' : '' }>
 						<span>Escalation</span>
 						<input
 							id='escalation'
@@ -83,7 +83,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='category'>
+					<label htmlFor='category' className={ ticketCtx.changedProps.has('category') ? 'live-updated' : '' }>
 						<span>Category</span>
 						<select id='category' name='category' onChange={ ticketCtx.handleChange } value={ category } >
 							<option value=''>-none-</option>
@@ -93,7 +93,7 @@ function IncidentFields() {
 						</select>
 					</label>
 
-					<label htmlFor='subCategory'>
+					<label htmlFor='subCategory' className={ ticketCtx.changedProps.has('subCategory') ? 'live-updated' : '' }>
 						<span>Sub category</span>
 						<select id='subCategory' name='subCategory' onChange={ ticketCtx.handleChange } value={ subCategory } >
 							<option value=''>-none-</option>
@@ -107,7 +107,7 @@ function IncidentFields() {
 
 				<div className='column'>
 
-					<label htmlFor='status'>
+					<label htmlFor='status' className={ ticketCtx.changedProps.has('status') ? 'live-updated' : '' }>
 						<span>Status</span>
 						<input
 							id='status'
@@ -120,7 +120,7 @@ function IncidentFields() {
 					</label>
 
 
-					<label htmlFor='impact'>
+					<label htmlFor='impact' className={ ticketCtx.changedProps.has('impact') ? 'live-updated' : '' }>
 						<span>Impact</span>
 						<select id='impact' name='impact' onChange={ ticketCtx.handleChange } value={ impact }>
 							<option value='1'> 1 - Extensive/Widespread </option>
@@ -130,7 +130,7 @@ function IncidentFields() {
 						</select>
 					</label>
 
-					<label htmlFor='urgency'>
+					<label htmlFor='urgency' className={ ticketCtx.changedProps.has('urgency') ? 'live-updated' : '' }>
 						<span>Urgency</span>
 						<select id='urgency' name='urgency' onChange={ ticketCtx.handleChange } value={ urgency } >
 							<option value="1"> 1 - Critical </option>
@@ -140,7 +140,7 @@ function IncidentFields() {
 						</select>
 					</label>
 
-					<label htmlFor='priority'>
+					<label htmlFor='priority' className={ ticketCtx.changedProps.has('priority') ? 'live-updated' : '' }>
 						<span>Priority</span>
 						<input
 							id='priority'
@@ -151,7 +151,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='assignmentGroup'>
+					<label htmlFor='assignmentGroup' className={ ticketCtx.changedProps.has('assignmentGroup') ? 'live-updated' : '' }>
 						<span>Assignment group</span>
 						<input
 							id='assignmentGroup'
@@ -163,7 +163,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='assignedTo'>
+					<label htmlFor='assignedTo' className={ ticketCtx.changedProps.has('assignedTo') ? 'live-updated' : '' }>
 						<span>Assigned to</span>
 						<input
 							id='assignedTo'
@@ -180,7 +180,7 @@ function IncidentFields() {
 
 			<div className='text-fields'>
 
-				<label htmlFor='description'>
+				<label htmlFor='description' className={ ticketCtx.changedProps.has('description') ? 'live-updated' : '' }>
 					<span>Description</span>
 					<input
 						id='description'
@@ -192,7 +192,7 @@ function IncidentFields() {
 					/>
 				</label>
 
-				<label htmlFor='instructions'>
+				<label htmlFor='instructions' className={ ticketCtx.changedProps.has('instructions') ? 'live-updated' : '' }>
 					<span>Instructions</span>
 					<TextareaAutosize
 						id='instructions'
@@ -221,7 +221,7 @@ function IncidentFields() {
 				</>) : '' }
 
 			</div>
-		</Form$>
+		</Form$ >
 	);
 }
 
@@ -234,6 +234,18 @@ const Form$ = styled.form`
 	padding-top:1rem;
 	width: 70%;
 	margin: auto;
+
+	.live-updated::before{
+		content: '';
+		position: absolute;
+		right: 100%;
+		height: 1.6em;
+		width: 1.7em;
+		background-image: url(${activityCircle });
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 60%;
+	}
 
 	.invalid{
 		background: rgba(255,0,0,0.020);

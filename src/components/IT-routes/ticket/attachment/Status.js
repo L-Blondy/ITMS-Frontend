@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useContext } from 'react';
-import { preloader } from '../../../../assets/icons';
+import { preloader } from '/assets/icons';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 
 function Status() {

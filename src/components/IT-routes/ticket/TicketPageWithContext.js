@@ -19,6 +19,7 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 	const [ isOpened, setIsOpened ] = useState(false);
 	const [ dataToPost, setDataToPost ] = useState();
 	const [ key, setKey ] = useState(Math.random());
+	const [ changedProps, setChangedProps ] = useState(new Set());
 
 	useEffect(() => setKey(Math.random()), []);
 
@@ -28,6 +29,7 @@ function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknot
 		state, handleChange, setState,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
+		changedProps, setChangedProps,
 		initialState
 	);
 
@@ -48,6 +50,7 @@ class TicketCtxModel {
 		state, handleChange, setState,
 		isOpened, setIsOpened,
 		dataToPost, setDataToPost,
+		changedProps, setChangedProps,
 		initialState
 	) {
 
@@ -61,6 +64,8 @@ class TicketCtxModel {
 		this.dataToPost = dataToPost;
 		this.setDataToPost = setDataToPost;
 		this.initialState = initialState;
+		this.changedProps = changedProps;
+		this.setChangedProps = setChangedProps;
 
 		this.attachments = {
 			isOpened,

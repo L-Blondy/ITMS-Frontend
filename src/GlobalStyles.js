@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { preloader } from './assets/icons';
+import { preloader } from '/assets/icons';
 
 const CLR = {
 	PRIMARY: '#4999a3',

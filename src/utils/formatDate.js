@@ -1,4 +1,4 @@
-import timeZones from '../assets/data/timeZones.json';
+import timeZones from '/assets/data/timeZones.json';
 
 const formatDate = (rawDate, timeZone) => {
 	if (!rawDate) return '-';
