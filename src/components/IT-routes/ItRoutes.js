@@ -6,6 +6,7 @@ import { ErrorPage } from '../';
 import { DashboardWithContext } from './dashboard';
 import { ItRoutesCtx } from './ItRoutesWithContext';
 import { TicketPageWithContext } from './ticket';
+import { ReportPage } from './report';
 import { AdministrationPage } from './administration';
 import { SearchPage } from './search';
 import { usePathnameChangeCallback } from '../../hooks';
@@ -41,7 +42,6 @@ function ItRoutes() {
 					itRoutesCtx.setError(e);
 				});
 		}, 300);
-
 	}, [ history.location ]);
 
 	useEffect(() => {
@@ -69,8 +69,11 @@ function ItRoutes() {
 						<Route path='/it/dashboard' render={ () => (
 							<DashboardWithContext key={ 'a' + key } initialData={ itRoutesCtx.initialData } />
 						) } />
+						<Route path='/it/report' render={ () => itRoutesCtx.initialData.reportData && (
+							<ReportPage key={ 'a' + key } initialData={ itRoutesCtx.initialData.reportData } />
+						) } />
 						<Route path='/it/administration/:type/:other' render={ () => itRoutesCtx.initialData.administrationData && (
-							<AdministrationPage key={ 'b' + key } initialData={ itRoutesCtx.initialData } />
+							<AdministrationPage key={ 'b' + key } initialData={ itRoutesCtx.initialData.administrationData } />
 						) } />
 						<Route path='/it/ticket/:type/:id' render={ () => itRoutesCtx.initialData.id && (
 							<TicketPageWithContext key={ 'c' + key } initialData={ itRoutesCtx.initialData } />

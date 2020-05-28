@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatDate } from '../../../utils';
 import TextareaAutosize from 'react-textarea-autosize';
-import { CLR } from '../../../GlobalStyles';
+import { Form$ } from '../';
 import { activityCircle } from '/assets/icons';
 
 function IncidentFields() {
@@ -35,12 +35,12 @@ function IncidentFields() {
 	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, status, subCategory, updatedOn, urgency } = ticketCtx.state;
 
 	return (
-		<Form$ onSubmit={ (e) => e.preventDefault() } spellCheck='false'>
+		<Form$$ onSubmit={ (e) => e.preventDefault() } spellCheck='false'>
 
-			<div className='main-fields'>
+			<div className='columns-container'>
 				<div className='column'>
 
-					<label htmlFor='id'>
+					<label htmlFor='id' className='label'>
 						<span>Number</span>
 						<input
 							id='id'
@@ -51,7 +51,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='createdOn'>
+					<label htmlFor='createdOn' className='label'>
 						<span>Created on</span>
 						<input
 							id='createdOn'
@@ -62,7 +62,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='dueDate'>
+					<label htmlFor='dueDate' className='label'>
 						<span>Due date</span>
 						<input
 							id='dueDate'
@@ -73,7 +73,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='escalation' className={ ticketCtx.changedProps.has('escalation') ? 'live-updated' : '' }>
+					<label htmlFor='escalation' className={ ticketCtx.changedProps.has('escalation') ? 'label live-updated' : 'label' }>
 						<span>Escalation</span>
 						<input
 							id='escalation'
@@ -84,7 +84,13 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='category' className={ ticketCtx.changedProps.has('category') ? 'live-updated' : '' }>
+					<Select label='Category' name='category' value={ category } onChange={ e => ticketCtx.handleChange(e) }>
+						<option value=''>-none-</option>
+						{ Object.keys(categories).map(cat => (
+							<option value={ cat } key={ cat }>{ cat }</option>
+						)) }
+					</Select>
+					{/* <label htmlFor='category' className={ ticketCtx.changedProps.has('category') ? 'label live-updated' : 'label' }>
 						<span>Category</span>
 						<select id='category' name='category' onChange={ e => ticketCtx.handleChange(e) } value={ category } >
 							<option value=''>-none-</option>
@@ -92,9 +98,9 @@ function IncidentFields() {
 								<option value={ cat } key={ cat }>{ cat }</option>
 							)) }
 						</select>
-					</label>
+					</label> */}
 
-					<label htmlFor='subCategory' className={ ticketCtx.changedProps.has('subCategory') ? 'live-updated' : '' }>
+					<label htmlFor='subCategory' className={ ticketCtx.changedProps.has('subCategory') ? 'label live-updated' : 'label' }>
 						<span>Sub category</span>
 						<select id='subCategory' name='subCategory' onChange={ e => ticketCtx.handleChange(e) } value={ subCategory } >
 							<option value=''>-none-</option>
@@ -108,7 +114,7 @@ function IncidentFields() {
 
 				<div className='column'>
 
-					<label htmlFor='status' className={ ticketCtx.changedProps.has('status') ? 'live-updated' : '' }>
+					<label htmlFor='status' className={ ticketCtx.changedProps.has('status') ? 'label live-updated' : 'label' }>
 						<span>Status</span>
 						<input
 							id='status'
@@ -121,7 +127,7 @@ function IncidentFields() {
 					</label>
 
 
-					<label htmlFor='impact'>
+					<label htmlFor='impact' className='label'>
 						<span>Impact</span>
 						<select id='impact' name='impact' onChange={ e => ticketCtx.handleChange(e) } value={ impact }>
 							<option value='1'> 1 - Extensive/Widespread </option>
@@ -131,7 +137,7 @@ function IncidentFields() {
 						</select>
 					</label>
 
-					<label htmlFor='urgency'>
+					<label htmlFor='urgency' className='label'>
 						<span>Urgency</span>
 						<select id='urgency' name='urgency' onChange={ e => ticketCtx.handleChange(e) } value={ urgency } >
 							<option value="1"> 1 - Critical </option>
@@ -141,7 +147,7 @@ function IncidentFields() {
 						</select>
 					</label>
 
-					<label htmlFor='priority' className={ ticketCtx.changedProps.has('priority') ? 'live-updated' : '' }>
+					<label htmlFor='priority' className={ ticketCtx.changedProps.has('priority') ? 'label live-updated' : 'label' }>
 						<span>Priority</span>
 						<input
 							id='priority'
@@ -152,7 +158,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='assignmentGroup' className={ ticketCtx.changedProps.has('assignmentGroup') ? 'live-updated' : '' }>
+					<label htmlFor='assignmentGroup' className={ ticketCtx.changedProps.has('assignmentGroup') ? 'label live-updated' : 'label' }>
 						<span>Assignment group</span>
 						<input
 							id='assignmentGroup'
@@ -164,7 +170,7 @@ function IncidentFields() {
 						/>
 					</label>
 
-					<label htmlFor='assignedTo' className={ ticketCtx.changedProps.has('assignedTo') ? 'live-updated' : '' }>
+					<label htmlFor='assignedTo' className={ ticketCtx.changedProps.has('assignedTo') ? 'label live-updated' : 'label' }>
 						<span>Assigned to</span>
 						<input
 							id='assignedTo'
@@ -179,9 +185,9 @@ function IncidentFields() {
 				</div>
 			</div>
 
-			<div className='text-fields'>
+			<div className='full-width'>
 
-				<label htmlFor='description' className={ ticketCtx.changedProps.has('description') ? 'live-updated' : '' }>
+				<label htmlFor='description' className={ ticketCtx.changedProps.has('description') ? 'label live-updated' : 'label' }>
 					<span>Description</span>
 					<input
 						id='description'
@@ -193,7 +199,7 @@ function IncidentFields() {
 					/>
 				</label>
 
-				<label htmlFor='instructions' className={ ticketCtx.changedProps.has('instructions') ? 'live-updated' : '' }>
+				<label htmlFor='instructions' className={ ticketCtx.changedProps.has('instructions') ? 'label live-updated' : 'label' }>
 					<span>Instructions</span>
 					<TextareaAutosize
 						id='instructions'
@@ -206,7 +212,7 @@ function IncidentFields() {
 					/>
 				</label>
 				{ !/new$/.test(location.pathname) ? (<>
-					<label htmlFor='log'>
+					<label htmlFor='log' className='label'>
 						<span>Work notes</span>
 						<TextareaAutosize
 							id='log'
@@ -222,19 +228,13 @@ function IncidentFields() {
 				</>) : '' }
 
 			</div>
-		</Form$ >
+		</Form$$>
 	);
 }
 
 export default IncidentFields;
 
-const Form$ = styled.form`
-	position: relative;
-	font-size: 14px;
-	margin-bottom: 3rem;
-	padding-top:1rem;
-	width: 70%;
-	margin: auto;
+const Form$$ = styled(Form$)`
 
 	.live-updated::before{
 		content: '';
@@ -242,75 +242,11 @@ const Form$ = styled.form`
 		right: 100%;
 		height: 1.6em;
 		width: 1.7em;
-		background-image: url(${activityCircle });
+		background-image: url(${ activityCircle });
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 60%;
 	}
-
-	.invalid{
-		background: rgba(255,0,0,0.020);
-		outline-color: rgba(255,0,0,0.53);
-		border-color: rgba(255,0,0,0.53);
-	}
-
-	.main-fields {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
-
-	.text-fields {
-		display: flex;
-		flex-direction: column;
-		margin-top: 1.5rem;
-	}
-
-	.column {
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		width: calc(100px + 20% )
-	}
-
-	label {
-		position: relative;
-		margin-top: 1rem;
-		margin-bottom: 0.3rem;
-	}
-
-	span {
-		position: absolute;
-		right: calc(100% + 1.5rem);
-		white-space: nowrap;
-	}
-
-	input, textarea, select {
-		width: 100%;
-		font-size: inherit;
-		border-radius: 3px;
-		padding-left: 0.45rem;
-		padding-right: 0.45rem;
-	}
-
-	input, select {
-		height: 1.6em;
-	}
-
-	input:disabled {
-		background-color: #eaf0f1;
-	}
-
-	textarea {
-		padding-top: 0.13rem;
-		padding-bottom: 0.13rem;
-		resize: none;
-	}
-
-	button {
-		margin-top: 1.5rem;
-		align-self: flex-start;	
-	} 
 
 	#log + div {
 		color: transparent;
@@ -319,3 +255,15 @@ const Form$ = styled.form`
 		color: red;
 	}
 `;
+
+
+function Select({ label, name, onChange, value, children }) {
+	return (
+		<label className='label'>
+			<span>{ label }</span>
+			<select id={ name } name={ name } onChange={ onChange } value={ value } >
+				{ children }
+			</select>
+		</label>
+	);
+}

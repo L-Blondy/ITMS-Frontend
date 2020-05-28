@@ -47,4 +47,19 @@ function Button({
 
 export default Button;
 
+export const Button$ = styled.button`
+margin-left: 0.5rem;
+padding: 0.15rem 0.8rem;
+background-color: #f4f4f4;
+border-radius: 2px;
+color: #52676a;
+font-size: 0.95em;
+box-shadow: 0 0 0 1px #acc2c4;
+
+&:hover{
+	background-color: white;
+	color: #666;
+}
+`;
+
 
