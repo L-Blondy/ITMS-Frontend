@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function Input({ defaultValue, ...props }) {
-
-	const [ value, setValue ] = useState(defaultValue || '');
-
-	const bindValue = e => setValue(e.target.value);
-
+function Input({ as = 'input', errorMessage, label, name, className, ...props }) {
+	const RenderAs = as;
 	return (
-		<input { ...props } value={ value } onChange={ bindValue } />
+		<label htmlFor={ name } className={ 'form-element ' + className }>
+			<span>{ label }</span>
+			<RenderAs
+				id={ name }
+				name={ name }
+				{ ...props }
+			/>
+			{ errorMessage && <div>{ errorMessage }</div> }
+		</label>
 	);
 }
 
-export default React.memo(Input);
+export default Input;

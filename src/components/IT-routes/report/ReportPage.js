@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { ControlBar$, Form$ } from '../';
 import Button, { Button$ } from '../../Button';
+import { Select } from '../../';
 
 function ReportPage() {
 	return (<>
@@ -39,14 +40,3 @@ export default ReportPage;
 const Form$$ = styled(Form$)`
 	flex-grow: 1;
 `;
-
-function Select({ label, name, onChange, value, children }) {
-	return (
-		<label className='label'>
-			<span>{ label }</span>
-			<select id={ name } name={ name } onChange={ onChange } value={ value } >
-				{ children }
-			</select>
-		</label>
-	);
-}

@@ -165,7 +165,7 @@ const GlobalStyles = createGlobalStyle`
 		}
 	}
 
-	.label {
+	.form-element {
 		position: relative;
 		margin-top: 1rem;
 		margin-bottom: 0.3rem;

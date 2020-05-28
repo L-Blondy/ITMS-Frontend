@@ -4,6 +4,7 @@ import { TicketCtx } from './TicketPageWithContext';
 import { formatDate } from '../../../utils';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Form$ } from '../';
+import { Input, Select } from '../../';
 import { activityCircle } from '/assets/icons';
 
 function IncidentFields() {
@@ -40,191 +41,166 @@ function IncidentFields() {
 			<div className='columns-container'>
 				<div className='column'>
 
-					<label htmlFor='id' className='label'>
-						<span>Number</span>
-						<input
-							id='id'
-							name='id'
-							type='text'
-							value={ id }
-							disabled
-						/>
-					</label>
+					<Input
+						label='Number'
+						name='id'
+						type='text'
+						value={ id }
+						disabled
+					/>
 
-					<label htmlFor='createdOn' className='label'>
-						<span>Created on</span>
-						<input
-							id='createdOn'
-							name='createdOn'
-							type='text'
-							value={ formatDate(createdOn) }
-							disabled
-						/>
-					</label>
+					<Input
+						label='Created on'
+						name='createdOn'
+						type='text'
+						value={ formatDate(createdOn) }
+						disabled
+					/>
 
-					<label htmlFor='dueDate' className='label'>
-						<span>Due date</span>
-						<input
-							id='dueDate'
-							name='dueDate'
-							type='text'
-							value={ formatDate(dueDate) }
-							disabled
-						/>
-					</label>
+					<Input
+						label='Due date'
+						name='dueDate'
+						type='text'
+						value={ formatDate(dueDate) }
+						disabled
+					/>
 
-					<label htmlFor='escalation' className={ ticketCtx.changedProps.has('escalation') ? 'label live-updated' : 'label' }>
-						<span>Escalation</span>
-						<input
-							id='escalation'
-							name='escalation'
-							type='text'
-							value={ escalation === 0 ? 'None' : escalation === 1 ? 'Uplift' : 'Overdue' }
-							disabled
-						/>
-					</label>
+					<Input
+						label='Escalation'
+						name='escalation'
+						type='text'
+						value={ escalation === 0 ? 'None' : escalation === 1 ? 'Uplift' : 'Overdue' }
+						className={ ticketCtx.changedProps.has('escalation') ? 'live-updated' : '' }
+						disabled
+					/>
 
-					<Select label='Category' name='category' value={ category } onChange={ e => ticketCtx.handleChange(e) }>
+					<Select
+						label='Category'
+						name='category'
+						value={ category }
+						onChange={ e => ticketCtx.handleChange(e) }>
 						<option value=''>-none-</option>
 						{ Object.keys(categories).map(cat => (
 							<option value={ cat } key={ cat }>{ cat }</option>
 						)) }
 					</Select>
-					{/* <label htmlFor='category' className={ ticketCtx.changedProps.has('category') ? 'label live-updated' : 'label' }>
-						<span>Category</span>
-						<select id='category' name='category' onChange={ e => ticketCtx.handleChange(e) } value={ category } >
-							<option value=''>-none-</option>
-							{ Object.keys(categories).map(cat => (
-								<option value={ cat } key={ cat }>{ cat }</option>
-							)) }
-						</select>
-					</label> */}
 
-					<label htmlFor='subCategory' className={ ticketCtx.changedProps.has('subCategory') ? 'label live-updated' : 'label' }>
-						<span>Sub category</span>
-						<select id='subCategory' name='subCategory' onChange={ e => ticketCtx.handleChange(e) } value={ subCategory } >
-							<option value=''>-none-</option>
-							{ (categories[ category ] || []).map(cat => (
-								<option value={ cat } key={ cat }>{ cat }</option>
-							)) }
-						</select>
-					</label>
+					<Select
+						label='Sub category'
+						name='subCategory'
+						value={ subCategory }
+						onChange={ e => ticketCtx.handleChange(e) }
+						className={ ticketCtx.changedProps.has('subCategory') ? 'live-updated' : '' }>
+						<option value=''>-none-</option>
+						{ (categories[ category ] || []).map(cat => (
+							<option value={ cat } key={ cat }>{ cat }</option>
+						)) }
+					</Select>
 
 				</div>
 
 				<div className='column'>
 
-					<label htmlFor='status' className={ ticketCtx.changedProps.has('status') ? 'label live-updated' : 'label' }>
-						<span>Status</span>
-						<input
-							id='status'
-							name='status'
-							type='text'
-							value={ status }
-							style={ { textTransform: 'capitalize' } }
-							disabled
-						/>
-					</label>
+					<Input
+						label='Status'
+						name='status'
+						type='text'
+						value={ status }
+						style={ { textTransform: 'capitalize' } }
+						disabled
+					/>
 
+					<Select
+						label='Impact'
+						name='impact'
+						value={ impact }
+						onChange={ e => ticketCtx.handleChange(e) }>
+						<option value='1'> 1 - Extensive/Widespread </option>
+						<option value='2'> 2 - Significant/Large </option>
+						<option value='3'> 3 - Moderate/Limited </option>
+						<option value='4'> 4 - Minor/localized </option>
+					</Select>
 
-					<label htmlFor='impact' className='label'>
-						<span>Impact</span>
-						<select id='impact' name='impact' onChange={ e => ticketCtx.handleChange(e) } value={ impact }>
-							<option value='1'> 1 - Extensive/Widespread </option>
-							<option value='2'> 2 - Significant/Large </option>
-							<option value='3'> 3 - Moderate/Limited </option>
-							<option value='4'> 4 - Minor/localized </option>
-						</select>
-					</label>
+					<Select
+						label='Urgency'
+						name='urgency'
+						value={ urgency }
+						onChange={ e => ticketCtx.handleChange(e) }>
+						<option value="1"> 1 - Critical </option>
+						<option value="2"> 2 - High </option>
+						<option value="3"> 3 - Medium </option>
+						<option value="4"> 4 - Non critical </option>
+					</Select>
 
-					<label htmlFor='urgency' className='label'>
-						<span>Urgency</span>
-						<select id='urgency' name='urgency' onChange={ e => ticketCtx.handleChange(e) } value={ urgency } >
-							<option value="1"> 1 - Critical </option>
-							<option value="2"> 2 - High </option>
-							<option value="3"> 3 - Medium </option>
-							<option value="4"> 4 - Non critical </option>
-						</select>
-					</label>
+					<Input
+						label='Priority'
+						name='priority'
+						type='text'
+						value={ getPriority() }
+						className={ ticketCtx.changedProps.has('priority') ? 'live-updated' : '' }
+						disabled
+					/>
 
-					<label htmlFor='priority' className={ ticketCtx.changedProps.has('priority') ? 'label live-updated' : 'label' }>
-						<span>Priority</span>
-						<input
-							id='priority'
-							name='priority'
-							type='text'
-							value={ getPriority() }
-							disabled
-						/>
-					</label>
+					<Input
+						label='Assignment group'
+						name='assignmentGroup'
+						type='text'
+						value={ assignmentGroup }
+						onChange={ e => ticketCtx.handleChange(e) }
+						className={ ticketCtx.changedProps.has('assignmentGroup') ? 'live-updated' : '' }
+						autoComplete="off"
+					/>
 
-					<label htmlFor='assignmentGroup' className={ ticketCtx.changedProps.has('assignmentGroup') ? 'label live-updated' : 'label' }>
-						<span>Assignment group</span>
-						<input
-							id='assignmentGroup'
-							name='assignmentGroup'
-							type='text'
-							onChange={ e => ticketCtx.handleChange(e) }
-							value={ assignmentGroup }
-							autoComplete="off"
-						/>
-					</label>
-
-					<label htmlFor='assignedTo' className={ ticketCtx.changedProps.has('assignedTo') ? 'label live-updated' : 'label' }>
-						<span>Assigned to</span>
-						<input
-							id='assignedTo'
-							name='assignedTo'
-							type='text'
-							onChange={ e => ticketCtx.handleChange(e) }
-							value={ assignedTo }
-							autoComplete="off"
-						/>
-					</label>
+					<Input
+						label='Assigned to'
+						name='assignedTo'
+						type='text'
+						value={ assignedTo }
+						onChange={ e => ticketCtx.handleChange(e) }
+						className={ ticketCtx.changedProps.has('assignedTo') ? 'live-updated' : '' }
+						autoComplete="off"
+					/>
 
 				</div>
 			</div>
 
 			<div className='full-width'>
 
-				<label htmlFor='description' className={ ticketCtx.changedProps.has('description') ? 'label live-updated' : 'label' }>
-					<span>Description</span>
-					<input
-						id='description'
-						name='description'
-						type='text'
-						onChange={ e => ticketCtx.handleChange(e) }
-						value={ description }
-						autoComplete="off"
-					/>
-				</label>
+				<Input
+					label='Description'
+					name='description'
+					type='text'
+					value={ description }
+					onChange={ e => ticketCtx.handleChange(e) }
+					className={ ticketCtx.changedProps.has('description') ? 'live-updated' : '' }
+					autoComplete="off"
+				/>
 
-				<label htmlFor='instructions' className={ ticketCtx.changedProps.has('instructions') ? 'label live-updated' : 'label' }>
-					<span>Instructions</span>
-					<TextareaAutosize
-						id='instructions'
-						name='instructions'
+				<Input Render$={ TextareaAutosize }
+					label='Instructions'
+					name='instructions'
+					type='text'
+					value={ instructions }
+					onChange={ e => ticketCtx.handleChange(e) }
+					className={ ticketCtx.changedProps.has('instructions') ? 'live-updated' : '' }
+					minRows={ 5 }
+					maxRows={ 20 }
+					autoComplete="off"
+				/>
+
+				{ !/new$/.test(location.pathname) ? (<>
+					<Input Render$={ TextareaAutosize }
+						label='Work notes'
+						name='log'
+						type='text'
+						value={ log }
 						onChange={ e => ticketCtx.handleChange(e) }
-						value={ instructions }
 						minRows={ 5 }
 						maxRows={ 20 }
 						autoComplete="off"
+						errorMessage='Required for resolution'
 					/>
-				</label>
-				{ !/new$/.test(location.pathname) ? (<>
-					<label htmlFor='log' className='label'>
-						<span>Work notes</span>
-						<TextareaAutosize
-							id='log'
-							name='log'
-							onChange={ e => ticketCtx.handleChange(e) }
-							value={ log }
-							minRows={ 5 }
-							maxRows={ 20 }
-							autoComplete="off"
-						/>
-						<div>Required for resolution</div>
-					</label>
+
 				</>) : '' }
 
 			</div>
@@ -257,13 +233,5 @@ const Form$$ = styled(Form$)`
 `;
 
 
-function Select({ label, name, onChange, value, children }) {
-	return (
-		<label className='label'>
-			<span>{ label }</span>
-			<select id={ name } name={ name } onChange={ onChange } value={ value } >
-				{ children }
-			</select>
-		</label>
-	);
-}
+
+

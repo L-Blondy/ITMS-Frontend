@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import React from 'react';
-import { Input } from '../..';
+import { InputWithState } from '../..';
 import { CLR } from '../../../GlobalStyles';
 
 function SearchInput({ propName }) {
 
 	return (
 		<Label$ className='column-search-label' htmlFor={ propName } >
-			<Input
+			<InputWithState
 				className='column-search-input'
 				type='text'
 				name={ propName }
