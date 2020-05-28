@@ -1,28 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
-import { formatDate } from '../../../utils';
-import TextareaAutosize from 'react-textarea-autosize';
+import { formatDate, formatPriority } from '../../../utils';
 import { Form$ } from '../';
-import { Input, Select } from '../../';
+import * as Input from '../../inputs';
 import { activityCircle } from '/assets/icons';
 
 function IncidentFields() {
 
 	const ticketCtx = useContext(TicketCtx);
-
-	const getPriority = () => {
-		switch (ticketCtx.state.priority) {
-			case 'P1':
-				return 'P1 - Critical';
-			case 'P2':
-				return 'P2 - High';
-			case 'P3':
-				return 'P3 - Medium';
-			case 'P4':
-				return 'P4 - Non critical';
-		}
-	};
 
 	useEffect(() => {
 		const { categories, category, subCategory } = ticketCtx.state;
@@ -33,7 +19,7 @@ function IncidentFields() {
 			ticketCtx.setState({ ...ticketCtx.state, subCategory: '' });
 	}, []);
 
-	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, status, subCategory, updatedOn, urgency } = ticketCtx.state;
+	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, priority, status, subCategory, updatedOn, urgency } = ticketCtx.state;
 
 	return (
 		<Form$$ onSubmit={ (e) => e.preventDefault() } spellCheck='false'>
@@ -41,7 +27,8 @@ function IncidentFields() {
 			<div className='columns-container'>
 				<div className='column'>
 
-					<Input
+					<Input.Input
+						styleAs={ Input.Simple$ }
 						label='Number'
 						name='id'
 						type='text'
@@ -49,7 +36,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input
+					<Input.Input
+						styleAs={ Input.Simple$ }
 						label='Created on'
 						name='createdOn'
 						type='text'
@@ -57,7 +45,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input
+					<Input.Input
+						styleAs={ Input.Simple$ }
 						label='Due date'
 						name='dueDate'
 						type='text'
@@ -65,7 +54,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input
+					<Input.Input
+						styleAs={ Input.Simple$ }
 						label='Escalation'
 						name='escalation'
 						type='text'
@@ -74,7 +64,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Select
+					<Input.Select
+						styleAs={ Input.Simple$ }
 						label='Category'
 						name='category'
 						value={ category }
@@ -84,9 +75,10 @@ function IncidentFields() {
 						{ Object.keys(categories).map(cat => (
 							<option value={ cat } key={ cat }>{ cat }</option>
 						)) }
-					</Select>
+					</Input.Select>
 
-					<Select
+					<Input.Select
+						styleAs={ Input.Simple$ }
 						label='Sub category'
 						name='subCategory'
 						value={ subCategory }
@@ -96,13 +88,14 @@ function IncidentFields() {
 						{ (categories[ category ] || []).map(cat => (
 							<option value={ cat } key={ cat }>{ cat }</option>
 						)) }
-					</Select>
+					</Input.Select>
 
 				</div>
 
 				<div className='column'>
 
-					<Input
+					<Input.Input
+						styleAs={ Input.Simple$ }
 						label='Status'
 						name='status'
 						type='text'
@@ -111,7 +104,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Select
+					<Input.Select
+						styleAs={ Input.Simple$ }
 						label='Impact'
 						name='impact'
 						value={ impact }
@@ -120,9 +114,10 @@ function IncidentFields() {
 						<option value='2'> 2 - Significant/Large </option>
 						<option value='3'> 3 - Moderate/Limited </option>
 						<option value='4'> 4 - Minor/localized </option>
-					</Select>
+					</Input.Select>
 
-					<Select
+					<Input.Select
+						styleAs={ Input.Simple$ }
 						label='Urgency'
 						name='urgency'
 						value={ urgency }
@@ -131,18 +126,20 @@ function IncidentFields() {
 						<option value="2"> 2 - High </option>
 						<option value="3"> 3 - Medium </option>
 						<option value="4"> 4 - Non critical </option>
-					</Select>
+					</Input.Select>
 
-					<Input
+					<Input.Input
+						styleAs={ Input.Simple$ }
 						label='Priority'
 						name='priority'
 						type='text'
-						value={ getPriority() }
+						value={ formatPriority(priority) }
 						className={ ticketCtx.changedProps.has('priority') ? 'live-updated' : '' }
 						disabled
 					/>
 
-					<Input
+					<Input.Input
+						styleAs={ Input.Simple$ }
 						label='Assignment group'
 						name='assignmentGroup'
 						type='text'
@@ -152,7 +149,8 @@ function IncidentFields() {
 						autoComplete="off"
 					/>
 
-					<Input
+					<Input.Input
+						styleAs={ Input.Simple$ }
 						label='Assigned to'
 						name='assignedTo'
 						type='text'
@@ -167,7 +165,8 @@ function IncidentFields() {
 
 			<div className='full-width'>
 
-				<Input
+				<Input.Input
+					styleAs={ Input.Simple$ }
 					label='Description'
 					name='description'
 					type='text'
@@ -177,7 +176,8 @@ function IncidentFields() {
 					autoComplete="off"
 				/>
 
-				<Input as={ TextareaAutosize }
+				<Input.Textarea
+					styleAs={ Input.Simple$ }
 					label='Instructions'
 					name='instructions'
 					type='text'
@@ -190,7 +190,8 @@ function IncidentFields() {
 				/>
 
 				{ !/new$/.test(location.pathname) ? (<>
-					<Input as={ TextareaAutosize }
+					<Input.Textarea
+						styleAs={ Input.Simple$ }
 						label='Work notes'
 						name='log'
 						type='text'

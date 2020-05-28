@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { plus, plusRed, chevron } from '/assets/icons';
+import * as Button from '../../buttons';
 
 function Column({ items = [], name, selectedItem, setSelectedItem, updateState }) {
 
@@ -57,16 +58,17 @@ function Column({ items = [], name, selectedItem, setSelectedItem, updateState }
 								onClick={ () => selectItem(category) }>
 								{ category }
 							</span>
-							<button
-								className='item-control up'
+							<Button.Button
+								styleAs={ Button.ItemControl$.Up$ }
 								onClick={ () => handleUp(index) }
 							/>
-							<button
-								className='item-control down'
+							<Button.Button
+								styleAs={ Button.ItemControl$.Down$ }
 								onClick={ () => handleDown(index) }
 							/>
-							<button
-								className='item-control delete'
+							<Button.Button
+								styleAs={ Button.ItemControl$.Delete$ }
+								className='delete-btn'
 								onClick={ () => handleDelete(index) }
 							/>
 						</div>
@@ -82,7 +84,7 @@ function Column({ items = [], name, selectedItem, setSelectedItem, updateState }
 							placeholder='Add item'
 							autoComplete='off'
 						/>
-						<button className='add-item-button' />
+						<Button.Button styleAs={ Button.ItemControl$.Add$ } className='add-item-button' />
 					</form>
 				) }
 			</Column$>
@@ -134,35 +136,10 @@ const Column$ = styled.div`
 			align-items: center;
 			padding-left: 0.7rem;
 		}
+	}
 
-		&-control {
-			background-color: transparent;
-			width: 25px;
-			background-size: 1.2rem;
-			background-repeat: no-repeat;
-			background-position: center;
-			opacity: 0.3;
-
-			&:hover,
-			&:focus {
-				opacity: 1;
-			}
-
-			&.up {
-				background-image: url(${ chevron });
-			}
-
-			&.down {
-				background-image: url(${ chevron });
-				transform: rotate(180deg);
-			}
-
-			&.delete {
-				background-image: url(${ plusRed });
-				margin: 0 0.7rem 0 0rem;
-				background-size: 1.1rem;
-			}
-		}
+	.delete-btn {
+		margin: 0 0.7rem 0 0rem;
 	}
 
 	.add-item-form {
@@ -200,25 +177,6 @@ const Column$ = styled.div`
 
 		&::placeholder {
 			color: #4dadb9;
-		}
-	}
-
-	.add-item-button {
-		color: white;
-		border: none;
-		border-radius: 50px;
-		background: #0096ac;
-		width: 32px; 
-		position: relative;
-		background-image: ${`url(${ plus })` };
-		background-size: 1rem;
-		background-repeat: no-repeat;
-		background-position: center;
-
-		&:hover,
-		&:focus {
-			filter: brightness(1.2);
-			outline: none;
 		}
 	}
 `;

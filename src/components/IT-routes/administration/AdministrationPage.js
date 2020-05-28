@@ -3,7 +3,7 @@ import { Categories } from '.';
 
 function AdministrationPage({ initialData }) {
 
-	const [ state, setState ] = useState(initialData.administrationData);
+	const [ state, setState ] = useState(initialData);
 
 	return (<>
 		<Categories

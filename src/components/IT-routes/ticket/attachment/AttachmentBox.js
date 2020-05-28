@@ -6,6 +6,7 @@ import { Warning, DisableBg } from '../../../';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { TicketCtx } from '../TicketPageWithContext';
+import * as Button from '../../../buttons';
 
 function AttachmentBox() {
 
@@ -20,7 +21,10 @@ function AttachmentBox() {
 
 				<div className='header'>
 					<span>Attachments</span>
-					<button className='close-btn' onClick={ () => ticketCtx.attachments.setIsOpened(false) } />
+					<Button.Button
+						styleAs={ Button.Close$ }
+						onClick={ () => ticketCtx.attachments.setIsOpened(false) }
+					/>
 				</div>
 
 				<Upload method='POST' encType='multipart/form-data' />
@@ -78,38 +82,10 @@ const AttachmentBox$ = styled.div`
 		color: white;
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 
 		&>span {
 			color: inherit;
-		}
-
-		.close-btn {
-			font-size: 2rem;
-			background: none;
-			box-shadow: none;
-			color: white;
-			font-weight: bold;
-			cursor: pointer;
-			width: 20px;
-			background-image: ${ `url(${ SRC.close })` };
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: 20px;
-			position: relative;
-
-			&::after {
-				content: '';
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				width: 40px;
-				height: 40px;
-			}
-
-			&:hover {
-				opacity: 0.7;
-			}
 		}
 	}
 `;

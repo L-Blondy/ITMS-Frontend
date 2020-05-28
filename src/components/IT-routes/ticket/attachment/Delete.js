@@ -4,7 +4,8 @@ import { BASE_URL } from '/BASE_URL';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { formatFileSize, getAttachmentIconSRC } from '../../../../utils';
-import { Button } from '../../../';
+// import { Button } from '../../../';
+import * as Button from '../../../buttons';
 
 function Delete({ method }) {
 
@@ -59,12 +60,13 @@ function Delete({ method }) {
 					))) : '' }
 			</ul>
 
-			<Button
-				className={ `btn-contained-alert-sec delete-btn ${ setDisabledOrNothing(attachmentCtx) }` }
+			<Button.Button
+				styleAs={ Button.Danger$ }
+				className={ 'delete-btn ' + disabledOrNothing(attachmentCtx) }
 				warning={ { disableBg: true } }
 				onConfirm={ handleConfirmDelete }>
 				Remove
-			</Button>
+			</Button.Button>
 
 		</Form$ >
 	);
@@ -72,7 +74,7 @@ function Delete({ method }) {
 
 export default Delete;
 
-function setDisabledOrNothing(attachmentCtx) {
+function disabledOrNothing(attachmentCtx) {
 	return !attachmentCtx.files.selected.length ? 'disabled' : '';
 }
 
@@ -131,13 +133,6 @@ const Form$ = styled.form`
 		}
 	}
 	.delete-btn {
-		background-color: #ff5043 !important;
-		border-color: #ff5043 !important;
-		box-shadow: none;
 		margin: 1rem;
-
-		&.disabled {
-			filter: grayscale(1)
-		}
 	}
 `;

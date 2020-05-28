@@ -11,6 +11,18 @@ const ControlBar$ = styled.div`
 		height: 100%;
 		display: flex;
 	}
+
+	button {
+		margin-left: 0.5rem;
+	}
+
+	.paperclip-btn {
+		margin: 0 0.5rem;
+	}
+
+	.delete-btn {
+		margin: 0
+	}
 `;
 
 export default ControlBar$;

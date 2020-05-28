@@ -35,6 +35,7 @@ function ItRoutes() {
 			http()
 				.get(BASE_URL + location.pathname, search)
 				.then(res => {
+					console.log(res);
 					itRoutesCtx.setInitialData(res);
 				})
 				.catch(e => {

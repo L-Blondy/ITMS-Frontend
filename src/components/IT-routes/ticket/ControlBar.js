@@ -7,10 +7,13 @@ import { CLR } from '../../../GlobalStyles';
 import * as SRC from '/assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
-import Button, { Button$ } from '../../Button';
+// import Button, { Button$ } from '../../Button';
+import * as Button from '../../buttons';
 import { ControlBar$ } from '../';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
+
+console.log(typeof Button.Button);
 
 function ControlBar() {
 
@@ -78,71 +81,73 @@ function ControlBar() {
 	return (
 		<ControlBar$>
 
-			<Button
+			<Button.Button
+				styleAs={ Button.Danger$ }
+				className='delete-btn'
 				isVisible={ status !== STATUS.NEW }
-				Render$={ Delete$ }
 				warning={ { message: 'Do you want to delete this ticket ?' } }
 				onConfirm={ deleteTicket } >
 				Delete
-			</Button>
+			</Button.Button>
 
 			<div className='controls'>
 
-				<Button
-					Render$={ PaperclipBtn$ }
+				<Button.Button
+					styleAs={ Button.Paperclip$ }
+					className='paperclip-btn'
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					onClick={ () => ticketCtx.attachments.setIsOpened(true) }
 				/>
 
-				<Button
-					Render$={ Button$ }
+				<Button.Button
+					styleAs={ Button.ControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					onClick={ () => handleSubmit() } >
 					Save
-				</Button>
+				</Button.Button>
 
-				<Button
-					Render$={ Button$ }
+				<Button.Button
+					styleAs={ Button.ControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.NEW ]) }
 					onClick={ () => handleSubmit({ status: STATUS.QUEUED }) } >
 					Submit
-				</Button>
+				</Button.Button>
 
-				<Button
-					Render$={ Button$ }
+				<Button.Button
+					styleAs={ Button.ControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					warning={ { message: 'Do you want to escalate this ticket ?' } }
 					onConfirm={ () => handleSubmit({ escalation: ticketCtx.state.escalation + 1 }) } >
 					Escalate
-				</Button>
+				</Button.Button>
 
-				<Button
-					Render$={ Button$ }
+				<Button.Button
+					styleAs={ Button.ControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.ON_HOLD ]) }
 					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
 					Set in progress
-				</Button>
+				</Button.Button>
 
-				<Button
-					Render$={ Button$ }
+				<Button.Button
+					styleAs={ Button.ControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) } >
 					Place on hold
-				</Button>
+				</Button.Button>
 
-				<Button
-					Render$={ Button$ }
+				<Button.Button
+					styleAs={ Button.ControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					onClick={ () => forceWorknote() } >
 					Resolve
-				</Button>
+				</Button.Button>
 
-				<Button
-					Render$={ Button$ }
+				<Button.Button
+					styleAs={ Button.ControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.RESOLVED ]) }
 					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
 					Reopen
-				</Button>
+				</Button.Button>
 			</div>
 		</ControlBar$>
 	);

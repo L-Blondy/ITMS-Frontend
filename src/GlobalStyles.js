@@ -6,6 +6,7 @@ const CLR = {
 	PRIMARY_VIBRANT: '#149aab',
 	BACKGROUND: {
 		LIGHT: '#d8e1e2',
+		DANGER: '#dd3131'
 	},
 	FONT: {
 		PRIMARY: '#2a4a4f',
@@ -81,53 +82,9 @@ const GlobalStyles = createGlobalStyle`
 		pointer-events: none;
 	}
 
-	button {
+	 button {
 		border: none;
 		cursor: pointer;
-	}
-
-	[class*='btn-contained'],
-	[class*='btn-outlined'] {
-		padding: 0.25em 0.8em;
-		display: inline-block;
-		user-select: none;
-		border-width: 1px;
-		border-style: solid;
-		cursor: pointer;
-		border-collapse: separate;
-
-		&:hover {
-			opacity: 0.66;
-		}
-	}
-
-	.btn-contained {
-
-		&-prim {
-			background-color: ${ BTN_CLR.PRIMARY };
-			border-color: ${ BTN_CLR.PRIMARY };
-			color: white;
-		}
-
-		&-sec {
-			background-color: ${ BTN_CLR.SECONDARY };
-			border-color: ${ BTN_CLR.SECONDARY };
-			color: white;
-			font-weight: bold;
-		}
-
-		&-alert-prim {
-			background-color: ${ BTN_CLR.ALERT.PRIMARY };
-			border-color: ${ BTN_CLR.ALERT.PRIMARY };
-			color: white;
-		}
-
-		&-alert-sec {
-			background-color: ${ BTN_CLR.ALERT.SECONDARY };
-			border-color: ${ BTN_CLR.ALERT.SECONDARY };
-			color: white;
-			font-weight: bold;
-		}
 	}
 
 	.light-font {
@@ -202,6 +159,7 @@ const GlobalStyles = createGlobalStyle`
 
 export {
 	CLR,
+	BTN_CLR,
 	FONT_FAM,
 	GlobalStyles
 };

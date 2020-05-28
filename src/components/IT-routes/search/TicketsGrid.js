@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
-import { ColumnName, ColumnSearchInput, ColumnData } from '.';
+import { ColumnName, ColumnData } from '.';
+import * as Input from '../../inputs';
 
 function TicketsGrid({ tickets, propNames, handleSort, onSubmit }) {
 
@@ -16,8 +17,13 @@ function TicketsGrid({ tickets, propNames, handleSort, onSubmit }) {
 						propName={ propName }
 						sorting={ propName !== sortBy ? '' : sortOrder > 0 ? 'ascending' : 'descending' }
 					/>
-					<ColumnSearchInput
-						propName={ propName }
+					<Input.Input
+						styleAs={ Input.Search$ }
+						name={ propName }
+						type='text'
+						placeholder='Search'
+						size='4'
+						autoComplete='off'
 					/>
 					<ColumnData
 						tickets={ tickets }

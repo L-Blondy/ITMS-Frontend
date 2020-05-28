@@ -4,6 +4,7 @@ import * as SRC from '/assets/icons';
 import { CLR } from '../../../../GlobalStyles';
 import { UserCtx } from '../../../../GlobalContext';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
+import * as Button from '../../../buttons';
 
 function UploadForm({ method, encType }) {
 
@@ -29,9 +30,12 @@ function UploadForm({ method, encType }) {
 			encType={ encType }>
 
 			<label htmlFor="file">
-				<span className='btn-contained-prim choose-btn'>
+				<Button.Button
+					styleAs={ Button.Primary$ }
+					tag='span'
+					className='choose-btn'>
 					Choose file
-				</span>
+				</Button.Button>
 
 				{ attachmentCtx.files.chosen && attachmentCtx.files.chosen.name || 'No file chosen' }
 			</label>
@@ -42,14 +46,17 @@ function UploadForm({ method, encType }) {
 				type='file'
 				onChange={ e => attachmentCtx.files.setChosen(e.target.files[ 0 ]) } />
 
-			<button className={ `btn-contained-prim upload-btn ${ setEnabledOrDisabled(attachmentCtx) }` } />
+			<Button.Button
+				styleAs={ Button.Upload$ }
+				className={ enabledOrDisabled(attachmentCtx) }
+			/>
 		</Form$>
 	);
 }
 
 export default UploadForm;
 
-function setEnabledOrDisabled(attachmentCtx) {
+function enabledOrDisabled(attachmentCtx) {
 	if (attachmentCtx.files.chosen && !attachmentCtx.files.list.includes(attachmentCtx.files.chosen.name))
 		return 'enabled';
 	return 'disabled';

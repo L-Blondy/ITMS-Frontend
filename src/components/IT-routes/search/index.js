@@ -1,5 +1,4 @@
 export { default as ColumnName } from './ColumnName';
-export { default as ColumnSearchInput } from './ColumnSearchInput';
 export { default as ColumnData } from './ColumnData';
 export { default as SkipController } from './SkipController';
 export { default as TicketsGrid } from './TicketsGrid';

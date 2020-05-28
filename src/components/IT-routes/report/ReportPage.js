@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 import React from 'react';
 import { ControlBar$, Form$ } from '../';
-import Button, { Button$ } from '../../Button';
+// import Button, { Button$ } from '../../Button';
+import * as Button from '../../buttons';
 import { Select } from '../../';
 
 function ReportPage() {
 	return (<>
 		<ControlBar$>
 			<div />
-			<Button
-				Render$={ Button$ }
+			<Button.Button
+				styleAs={ Button.ControlBar$ }
 				onClick={ e => console.log(e.target) } >
 				Run
-			</Button>
+			</Button.Button>
 		</ControlBar$>
 		<Form$$>
 
