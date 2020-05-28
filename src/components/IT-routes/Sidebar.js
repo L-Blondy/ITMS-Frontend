@@ -6,6 +6,7 @@ function Sidebar() {
 
 	return (
 		<Sidebar$ className='sidebar'>
+			<Link to='/it/report'>Report</Link>
 			<Link to='/it/ticket/incidents/new'>Open Incident</Link>
 			<Link to='/it/ticket/requests/new'>Open Request</Link>
 			<Link to='/it/ticket/changes/new'>Open Change</Link>

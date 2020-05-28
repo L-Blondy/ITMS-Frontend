@@ -78,7 +78,8 @@ function IncidentFields() {
 						label='Category'
 						name='category'
 						value={ category }
-						onChange={ e => ticketCtx.handleChange(e) }>
+						onChange={ e => ticketCtx.handleChange(e) }
+						className={ ticketCtx.changedProps.has('category') ? 'live-updated' : '' }>
 						<option value=''>-none-</option>
 						{ Object.keys(categories).map(cat => (
 							<option value={ cat } key={ cat }>{ cat }</option>
@@ -176,7 +177,7 @@ function IncidentFields() {
 					autoComplete="off"
 				/>
 
-				<Input Render$={ TextareaAutosize }
+				<Input as={ TextareaAutosize }
 					label='Instructions'
 					name='instructions'
 					type='text'
@@ -189,7 +190,7 @@ function IncidentFields() {
 				/>
 
 				{ !/new$/.test(location.pathname) ? (<>
-					<Input Render$={ TextareaAutosize }
+					<Input as={ TextareaAutosize }
 						label='Work notes'
 						name='log'
 						type='text'

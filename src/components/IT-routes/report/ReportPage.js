@@ -7,6 +7,7 @@ import { Select } from '../../';
 function ReportPage() {
 	return (<>
 		<ControlBar$>
+			<div />
 			<Button
 				Render$={ Button$ }
 				onClick={ e => console.log(e.target) } >
@@ -18,15 +19,12 @@ function ReportPage() {
 			<div className='columns-container'>
 				<div className='column'>
 
-					<label className='label'>
-						<span>Type</span>
-						<select id='urgency' name='urgency' onChange={ e => '' } value={ '' } >
-							<option value="1"> 1 - Critical </option>
-							<option value="2"> 2 - High </option>
-							<option value="3"> 3 - Medium </option>
-							<option value="4"> 4 - Non critical </option>
-						</select>
-					</label>
+					<Select label='Type' name='type'>
+						<option value=""> -none- </option>
+						<option value="incidents"> Incident </option>
+						<option value="requests"> Request </option>
+						<option value="changes"> Change </option>
+					</Select>
 
 				</div>
 			</div>
@@ -35,7 +33,6 @@ function ReportPage() {
 }
 
 export default ReportPage;
-
 
 const Form$$ = styled(Form$)`
 	flex-grow: 1;

@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function Select({ label, name, onChange, value, children, className }) {
+function Select({ label, name, children, className, ...props }) {
+
+	const [ value, setValue ] = useState(props.defaultValue || '');
+
 	return (
 		<label className={ 'form-element ' + className }>
 			<span>{ label }</span>
-			<select id={ name } name={ name } onChange={ onChange } value={ value } >
+			<select
+				id={ name }
+				name={ name }
+				value={ value }
+				onChange={ e => setValue(e.target.value) }
+				{ ...props }>
 				{ children }
 			</select>
 		</label>
