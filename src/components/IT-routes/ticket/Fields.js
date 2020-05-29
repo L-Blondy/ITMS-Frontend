@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatDate, formatPriority } from '../../../utils';
 import { Form$ } from '../';
-import { Input, Select, Textarea, InputSimple$ } from '../../inputs';
+import { Input, Select, Textarea, InputAbsolute$ } from '../../inputs';
 import { activityCircle } from '/assets/icons';
 
 function Fields() {
@@ -28,7 +28,7 @@ function Fields() {
 				<div className='column'>
 
 					<Input
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Number'
 						name='id'
 						type='text'
@@ -37,7 +37,7 @@ function Fields() {
 					/>
 
 					<Input
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Created on'
 						name='createdOn'
 						type='text'
@@ -46,7 +46,7 @@ function Fields() {
 					/>
 
 					<Input
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Due date'
 						name='dueDate'
 						type='text'
@@ -55,7 +55,7 @@ function Fields() {
 					/>
 
 					<Input
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Escalation'
 						name='escalation'
 						type='text'
@@ -65,7 +65,7 @@ function Fields() {
 					/>
 
 					<Select
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Category'
 						name='category'
 						value={ category }
@@ -78,7 +78,7 @@ function Fields() {
 					</Select>
 
 					<Select
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Sub category'
 						name='subCategory'
 						value={ subCategory }
@@ -95,7 +95,7 @@ function Fields() {
 				<div className='column'>
 
 					<Input
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Status'
 						name='status'
 						type='text'
@@ -105,7 +105,7 @@ function Fields() {
 					/>
 
 					<Select
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Impact'
 						name='impact'
 						value={ impact }
@@ -117,7 +117,7 @@ function Fields() {
 					</Select>
 
 					<Select
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Urgency'
 						name='urgency'
 						value={ urgency }
@@ -129,7 +129,7 @@ function Fields() {
 					</Select>
 
 					<Input
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Priority'
 						name='priority'
 						type='text'
@@ -139,7 +139,7 @@ function Fields() {
 					/>
 
 					<Input
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Assignment group'
 						name='assignmentGroup'
 						type='text'
@@ -150,7 +150,7 @@ function Fields() {
 					/>
 
 					<Input
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Assigned to'
 						name='assignedTo'
 						type='text'
@@ -166,7 +166,7 @@ function Fields() {
 			<div className='full-width'>
 
 				<Input
-					styleAs={ InputSimple$ }
+					styleAs={ InputAbsolute$ }
 					label='Description'
 					name='description'
 					type='text'
@@ -177,7 +177,7 @@ function Fields() {
 				/>
 
 				<Textarea
-					styleAs={ InputSimple$ }
+					styleAs={ InputAbsolute$ }
 					label='Instructions'
 					name='instructions'
 					type='text'
@@ -191,7 +191,7 @@ function Fields() {
 
 				{ !/new$/.test(location.pathname) ? (
 					<Textarea
-						styleAs={ InputSimple$ }
+						styleAs={ InputAbsolute$ }
 						label='Work notes'
 						name='log'
 						type='text'
@@ -223,6 +223,11 @@ const Form$$ = styled(Form$)`
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 60%;
+	}
+
+	label {
+		margin-top: 1rem;
+		margin-bottom: 0.3rem;
 	}
 
 	#log + div {

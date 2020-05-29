@@ -8,5 +8,6 @@ export { default as ButtonItemControl$ } from './ButtonItemControl$';
 export { default as ButtonPaperclip$ } from './ButtonPaperclip$';
 export { default as ButtonPrimary$ } from './ButtonPrimary$';
 export { default as ButtonSecondary$ } from './ButtonSecondary$';
+export { default as ButtonSortBy$ } from './ButtonSortBy$';
 export { default as ButtonText$ } from './ButtonText$';
 export { default as ButtonUpload$ } from './ButtonUpload$';

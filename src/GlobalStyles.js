@@ -68,6 +68,11 @@ const GlobalStyles = createGlobalStyle`
 		font-size: inherit;
 	}
 
+	input[type=checkbox] {
+		height: 1em;
+		width: 1em;
+	}
+
 	.alert-container {
 		position: absolute;
 		top:50%;

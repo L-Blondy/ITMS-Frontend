@@ -1,7 +1,10 @@
 export { default as Input } from './Input';
 export { default as Textarea } from './Textarea';
 export { default as Select } from './Select';
-export { default as InputSimple$ } from './InputSimple$';
+export { default as InputCommon$ } from './InputCommon$';
+export { default as InputAbsolute$ } from './InputAbsolute$';
 export { default as InputSearch$ } from './InputSearch$';
 export { default as InputAddItem$ } from './InputAddItem$';
-export { default as InputSkip$ } from './InputSkip$'; 
+export { default as InputSkip$ } from './InputSkip$';
+export { default as InputFlex$ } from './InputFlex$';
+export { default as InputFlexReverse$ } from './InputFlexReverse$';

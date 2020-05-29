@@ -1,17 +1,9 @@
 import styled from 'styled-components';
 import { CLR } from '../../GlobalStyles';
 
-const Simple$ = styled.label`
+const InputCommon$ = styled.label`
 	position: relative;
-	margin-top: 1rem;
-	margin-bottom: 0.3rem;
-
-	span {
-		position: absolute;
-		right: calc(100% + 1.5rem);
-		white-space: nowrap;
-	}
-
+	
 	input, textarea, select {
 		width: 100%;
 		font-size: inherit;
@@ -36,4 +28,4 @@ const Simple$ = styled.label`
 	}
 `;
 
-export default Simple$;
+export default InputCommon$;

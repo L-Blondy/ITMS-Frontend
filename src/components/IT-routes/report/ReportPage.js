@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { ControlBar$$, Form$ } from '../';
 import { Button, ButtonControlBar$ } from '../../buttons';
-import { Select, InputSimple$ } from '../../inputs';
+import { Select, InputAbsolute$ } from '../../inputs';
 
 function ReportPage() {
 	return (<>
@@ -19,7 +19,7 @@ function ReportPage() {
 			<div className='columns-container'>
 				<div className='column'>
 
-					<Select styleAs={ InputSimple$ } label='Type' name='type'>
+					<Select styleAs={ InputAbsolute$ } label='Type' name='type'>
 						<option value=""> -none- </option>
 						<option value="incidents"> Incident </option>
 						<option value="requests"> Request </option>

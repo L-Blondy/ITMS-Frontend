@@ -10,9 +10,9 @@ import { ReportPage } from './report';
 import { AdministrationPage } from './administration';
 import { SearchPage } from './search';
 import { usePathnameChangeCallback } from '../../hooks';
-import http from '../../utils/http';
-import { BASE_URL } from '/BASE_URL';
 import { UserCtx } from '../../GlobalContext';
+import { BASE_URL } from '/BASE_URL';
+import http from '../../utils/http';
 
 !localStorage.getItem('sortBy') && localStorage.setItem('sortBy', 'id');
 !localStorage.getItem('sortOrder') && localStorage.setItem('sortOrder', -1);
@@ -20,7 +20,7 @@ import { UserCtx } from '../../GlobalContext';
 function ItRoutes() {
 
 	const itRoutesCtx = useContext(ItRoutesCtx);
-	const { searchLimit } = useContext(UserCtx);
+	const { pageSize } = useContext(UserCtx);
 	const [ key, setKey ] = useState(Math.random());
 	const history = useHistory();
 	usePathnameChangeCallback(() => itRoutesCtx.setInitialData(null));
@@ -29,11 +29,9 @@ function ItRoutes() {
 		itRoutesCtx.page.setIsLoading(true);
 		itRoutesCtx.setError(null);
 
-		const search = getSearch(searchLimit);
-
 		setTimeout(() => {
 			http()
-				.get(BASE_URL + location.pathname, search)
+				.get(BASE_URL + location.pathname, getQuery(pageSize))
 				.then(res => {
 					console.log(res);
 					itRoutesCtx.setInitialData(res);
@@ -91,7 +89,7 @@ function ItRoutes() {
 	</>);
 }
 
-function getSearch(searchLimit) {
+function getQuery(searchLimit) {
 	if (location.pathname.isOneOf([ '/it/ticket/incidents', '/it/ticket/requests', '/it/ticket/changes' ])) {
 		const sortBy = localStorage.getItem('sortBy');
 		const sortOrder = localStorage.getItem('sortOrder');

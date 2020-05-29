@@ -3,8 +3,9 @@ import React, { useEffect, useContext } from 'react';
 import { BASE_URL } from '/BASE_URL';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
-import { formatFileSize, getAttachmentIconSRC } from '../../../../utils';
 import { Button, ButtonDanger$ } from '../../../buttons';
+import { Input, InputFlexReverse$ } from '../../../inputs';
+import { FileData } from '../../../files';
 
 function Delete({ method }) {
 
@@ -28,35 +29,25 @@ function Delete({ method }) {
 		<Form$ method={ method } onSubmit={ e => e.preventDefault() }>
 
 			<ul className='file-list'>
+				{ attachmentCtx.files.list.map((fileData, i) => (
+					<li key={ fileData.name + i }>
+						<Input
+							styleAs={ InputFlexReverse$ }
+							className='file-select'
+							type='checkbox'
+							name='file'
+							value={ fileData.name }
+							onChange={ handleSelectFile }
+							label={ <FileData data={ fileData } /> }
+						/>
 
-				{ !attachmentCtx.files.list.length ? (
-					<li>No attachments</li>
-				) : '' }
-
-				{ attachmentCtx.files.list.length ? (
-					attachmentCtx.files.list.map((fileData, i) => (
-						<li key={ fileData.name + i }>
-							<input
-								type='checkbox'
-								name='file'
-								id={ fileData.name + i }
-								value={ fileData.name }
-								onChange={ handleSelectFile }
-							/>
-							<label htmlFor={ fileData.name + i }>
-								<img className='icon' src={ getAttachmentIconSRC(fileData) } alt='' />
-								<span className='name'>{ fileData.name }</span>
-								<span className='light-font'>{ formatFileSize(fileData.size) }</span>
-							</label>
-
-							<a href={ BASE_URL + location.pathname + '/' + fileData.name }
-								target='_blank'
-								rel='noopener noreferrer'>
-								view
-							</a>
-						</li>
-
-					))) : '' }
+						<a href={ BASE_URL + location.pathname + '/' + fileData.name }
+							target='_blank'
+							rel='noopener noreferrer'>
+							view
+						</a>
+					</li>
+				)) }
 			</ul>
 
 			<Button
@@ -67,7 +58,7 @@ function Delete({ method }) {
 				Remove
 			</Button>
 
-		</Form$ >
+		</Form$>
 	);
 }
 
@@ -94,30 +85,9 @@ const Form$ = styled.form`
 			background: rgba(0,0,0,0.03);
 		}
 
-		input {
-			height: 1rem;
-			width: 1rem;
-		}
-
-		label {
-			padding-left: 0.5rem;
+		.file-select,
+		.file-data {
 			flex-grow: 1;
-			display: flex;
-			align-items: center;
-		}
-
-		img {
-			height: 1.1rem;
-			margin-right: 0.4rem;
-			margin-left: 0.2rem;
-			margin-top: -1px;
-		}
-
-		.light-font {
-			padding: 0 0.5rem 0 0.7rem;
-			font-size: 0.9em;
-			user-select: none;
-			margin-left: auto;
 		}
 
 		a {
@@ -129,7 +99,7 @@ const Form$ = styled.form`
 				opacity: 1;
 				text-decoration: underline;
 			}
-		}
+		} 
 	}
 	.delete-btn {
 		margin: 1rem;

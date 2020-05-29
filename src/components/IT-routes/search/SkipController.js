@@ -2,20 +2,21 @@ import styled from 'styled-components';
 import React from 'react';
 import { Input, InputSkip$ } from '../../inputs';
 
-function SkipController({ handleChangePage, searchLimit, skip, setSkip, state }) {
+function SkipController({ handleChangePage, pageSize, skip, setSkip, state }) {
+
 	return (
 		<Form$ onSubmit={ handleChangePage }>
 			<button
-				type='button'
 				name='previous'
+				type='button'
 				className='previous'
-				value={ - searchLimit }
+				value={ - pageSize }
 				onClick={ handleChangePage }
 				disabled={ state.skipped === 0 }
 			/>
 			<Input
 				styleAs={ InputSkip$ }
-				label={ `- ${ Math.min(state.skipped + searchLimit, state.resultsCount) } of ${ state.resultsCount }` }
+				label={ `- ${ Math.min(state.skipped + pageSize, state.resultsCount) } of ${ state.resultsCount }` }
 				name='skip'
 				type='number'
 				onChange={ e => setSkip(parseInt(e.target.value)) }
@@ -24,12 +25,12 @@ function SkipController({ handleChangePage, searchLimit, skip, setSkip, state })
 				max={ state.resultsCount }
 			/>
 			<button
-				type='button'
 				name='next'
+				type='button'
 				className='next'
-				value={ searchLimit }
+				value={ pageSize }
 				onClick={ handleChangePage }
-				disabled={ state.skipped + searchLimit >= state.resultsCount - 1 }
+				disabled={ state.skipped + pageSize >= state.resultsCount - 1 }
 			/>
 		</Form$>
 	);

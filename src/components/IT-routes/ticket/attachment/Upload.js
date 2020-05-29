@@ -38,13 +38,14 @@ function UploadForm({ method, encType }) {
 				</Button>
 
 				{ attachmentCtx.files.chosen && attachmentCtx.files.chosen.name || 'No file chosen' }
-			</label>
 
-			<input
-				id='file'
-				name='file'
-				type='file'
-				onChange={ e => attachmentCtx.files.setChosen(e.target.files[ 0 ]) } />
+				<input
+					id='file'
+					name='file'
+					type='file'
+					onChange={ e => attachmentCtx.files.setChosen(e.target.files[ 0 ]) }
+				/>
+			</label>
 
 			<Button
 				styleAs={ ButtonUpload$ }
@@ -84,28 +85,5 @@ const Form$ = styled.form`
 		padding-right: 0.7rem;
 		border-right: none;
 		cursor: pointer;
-	}
-
-	.upload-btn {
-		background-image: ${ `url(${ SRC.upload })` };
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: 1.3rem;
-		width: 40px;
-		color: transparent;
-
-		
-		@supports(filter: grayscale(1) brightness(1.4)){
-			&.disabled {
-				opacity: 1;
-				filter: grayscale(1) brightness(1.45);
-			}
-		}
-
-		&.enabled {
-			background-color: #00c4ff;
-			border-color: #00c4ff;
-			outline: 1px solid #00c4ff;
-		}
 	}
 `;

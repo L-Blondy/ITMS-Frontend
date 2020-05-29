@@ -9,7 +9,8 @@ function Button({
 	onConfirm,
 	warning = {},
 	className,
-	tag: Tag = 'button'
+	tag: Tag = 'button',
+	...props
 }) {
 	if (!isVisible) return <div />;
 
@@ -22,8 +23,8 @@ function Button({
 		}
 	};
 
-	const handleClick = () => {
-		onClick && onClick();
+	const handleClick = (e) => {
+		onClick && onClick(e);
 		onConfirm && setIsWarning(true);
 	};
 
@@ -39,8 +40,10 @@ function Button({
 		/>
 		<StyleAs
 			as={ Tag }
+			type='button'
 			className={ className }
-			onClick={ handleClick }>
+			onClick={ handleClick }
+			{ ...props }>
 			{ children }
 		</StyleAs>
 	</>);
