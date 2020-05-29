@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { BASE_URL } from '/BASE_URL';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatFileSize, formatDate } from '../../../utils';
-import { TruncateLongText } from '../../';
+import { TruncatedText } from '../../';
 import { CLR } from '../../../GlobalStyles';
 
 function WorknotesHistory() {
@@ -62,7 +62,7 @@ function ChangeLog({ children: log, when }) {
 				if (i % 6 === 0)
 					return <Prop$ key={ part + i }>{ part + ' :' }</Prop$>;
 				if (i % 2 === 0) {
-					return <TruncateLongText limit={ 20 } key={ part + i }>{ part }</TruncateLongText>;
+					return <TruncatedText limit={ 25 } key={ part + i }>{ part }</TruncatedText>;
 				}
 				else
 					return <I$ key={ part + i }>{ part }</I$>;

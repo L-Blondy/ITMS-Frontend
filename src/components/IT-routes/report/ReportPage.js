@@ -1,26 +1,25 @@
 import styled from 'styled-components';
 import React from 'react';
-import { ControlBar$, Form$ } from '../';
-// import Button, { Button$ } from '../../Button';
-import * as Button from '../../buttons';
-import { Select } from '../../';
+import { ControlBar$$, Form$ } from '../';
+import { Button, ButtonControlBar$ } from '../../buttons';
+import { Select, InputSimple$ } from '../../inputs';
 
 function ReportPage() {
 	return (<>
-		<ControlBar$>
+		<ControlBar$$>
 			<div />
-			<Button.Button
-				styleAs={ Button.ControlBar$ }
+			<Button
+				styleAs={ ButtonControlBar$ }
 				onClick={ e => console.log(e.target) } >
 				Run
-			</Button.Button>
-		</ControlBar$>
+			</Button>
+		</ControlBar$$>
 		<Form$$>
 
 			<div className='columns-container'>
 				<div className='column'>
 
-					<Select label='Type' name='type'>
+					<Select styleAs={ InputSimple$ } label='Type' name='type'>
 						<option value=""> -none- </option>
 						<option value="incidents"> Incident </option>
 						<option value="requests"> Request </option>

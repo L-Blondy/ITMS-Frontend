@@ -5,7 +5,7 @@ import { UserCtx } from '../../../GlobalContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
 import { TicketsGrid, SkipController } from './';
 import { http } from '../../../utils';
-import { ControlBar$ } from '../';
+import { ControlBar$$ } from '../';
 import { BASE_URL } from '/BASE_URL';
 
 function SearchPage({ initialData }) {
@@ -66,7 +66,7 @@ function SearchPage({ initialData }) {
 	};
 
 	return (<>
-		<ControlBar$>
+		<ControlBar$$>
 			<div />
 			<SkipController
 				handleChangePage={ handleChangePage }
@@ -75,7 +75,7 @@ function SearchPage({ initialData }) {
 				setSkip={ setSkip }
 				state={ state }
 			/>
-		</ControlBar$>
+		</ControlBar$$>
 		<TicketsGrid
 			onSubmit={ handleSubmitSearch }
 			tickets={ state.results }

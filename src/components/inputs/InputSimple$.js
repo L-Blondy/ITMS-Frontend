@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { CLR } from '../../GlobalStyles';
 
 const Simple$ = styled.label`
 	position: relative;
@@ -17,6 +18,7 @@ const Simple$ = styled.label`
 		border-radius: 3px;
 		padding-left: 0.45rem;
 		padding-right: 0.45rem;
+		border: 1px solid ${CLR.BORDER.PRIMARY };
 	}
 
 	input, select {

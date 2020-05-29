@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Common$ from './Common$';
+import ButtonCommon$ from './ButtonCommon$';
 
-const ControlBar$ = styled(Common$)`
+const ButtonControlBar$ = styled(ButtonCommon$)`
 	padding: 0.15rem 0.8rem;
 	background-color: #f4f4f4;
 	border-radius: 2px;
@@ -15,4 +15,4 @@ const ControlBar$ = styled(Common$)`
 	}
 `;
 
-export default ControlBar$;
+export default ButtonControlBar$;

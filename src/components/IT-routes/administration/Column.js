@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
-import { plus, plusRed, chevron } from '/assets/icons';
-import * as Button from '../../buttons';
+import { Button, ButtonItemControl$ } from '../../buttons';
+import { Input, InputAddItem$ } from '../../inputs';
+console.log(Input, InputAddItem$);
+
 
 function Column({ items = [], name, selectedItem, setSelectedItem, updateState }) {
 
@@ -58,16 +60,16 @@ function Column({ items = [], name, selectedItem, setSelectedItem, updateState }
 								onClick={ () => selectItem(category) }>
 								{ category }
 							</span>
-							<Button.Button
-								styleAs={ Button.ItemControl$.Up$ }
+							<Button
+								styleAs={ ButtonItemControl$.Up$ }
 								onClick={ () => handleUp(index) }
 							/>
-							<Button.Button
-								styleAs={ Button.ItemControl$.Down$ }
+							<Button
+								styleAs={ ButtonItemControl$.Down$ }
 								onClick={ () => handleDown(index) }
 							/>
-							<Button.Button
-								styleAs={ Button.ItemControl$.Delete$ }
+							<Button
+								styleAs={ ButtonItemControl$.Delete$ }
 								className='delete-btn'
 								onClick={ () => handleDelete(index) }
 							/>
@@ -77,14 +79,16 @@ function Column({ items = [], name, selectedItem, setSelectedItem, updateState }
 
 				{ (name === 'categories' || selectedItem) && (
 					<form className='add-item-form' onSubmit={ handleAdd }>
-						<input
-							name='add-item-input'
-							id={ name }
-							className='add-item-input'
+						<Input
+							styleAs={ InputAddItem$ }
+							name={ name }
 							placeholder='Add item'
 							autoComplete='off'
 						/>
-						<Button.Button styleAs={ Button.ItemControl$.Add$ } className='add-item-button' />
+						<Button
+							styleAs={ ButtonItemControl$.Add$ }
+							className='add-item-button'
+						/>
 					</form>
 				) }
 			</Column$>

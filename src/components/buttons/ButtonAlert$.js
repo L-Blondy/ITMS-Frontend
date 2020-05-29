@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import Common$ from './Common$';
+import ButtonCommon$ from './ButtonCommon$';
 import { BTN_CLR } from '../../GlobalStyles';
 
-const Primary$ = styled(Common$)`
+const Primary$ = styled(ButtonCommon$)`
 	background-color: ${ BTN_CLR.ALERT.PRIMARY };
 	border-color: ${ BTN_CLR.ALERT.PRIMARY };
 	color: white;
 `;
 
-const Secondary$ = styled(Common$)`
+const Secondary$ = styled(ButtonCommon$)`
 	background-color: ${ BTN_CLR.SECONDARY };
 	border-color: ${ BTN_CLR.SECONDARY };
 	color: white;

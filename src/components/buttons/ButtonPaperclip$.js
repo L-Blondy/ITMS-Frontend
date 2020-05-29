@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Common$ from './Common$';
+import ButtonCommon$ from './ButtonCommon$';
 import { paperclip } from '/assets/icons';
 
-const Paperclip$ = styled(Common$)`
+const ButtonPaperclip$ = styled(ButtonCommon$)`
 	width: 2.2rem;
 	background-image: ${ `url(${ paperclip })` };
 	background-repeat: no-repeat;
@@ -19,4 +19,4 @@ const Paperclip$ = styled(Common$)`
 	}
 `;
 
-export default Paperclip$;
+export default ButtonPaperclip$;

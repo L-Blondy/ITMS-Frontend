@@ -92,9 +92,6 @@ const Ticket$ = styled.div`
 	overflow-y: scroll;
 	flex-grow: 1;
 
-	input,
-	textarea,
-	select,
 	.worknote {
 		border: 1px solid ${CLR.BORDER.PRIMARY };
 	}

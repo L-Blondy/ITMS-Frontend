@@ -5,7 +5,7 @@ function Select({ label, name, children, className, ...props }) {
 	const [ value, setValue ] = useState(props.defaultValue || '');
 
 	return (
-		<label className={ 'form-element ' + className }>
+		<label className={ className }>
 			<span>{ label }</span>
 			<select
 				id={ name }

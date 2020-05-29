@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { DisableBg } from './';
-import * as Button from './buttons';
+import { Button, ButtonAlert$ } from './buttons';
 
 function Warning({
 	title = 'Warning !',
@@ -26,17 +26,17 @@ function Warning({
 
 				<div className='warning-message'>{ message }</div>
 
-				<Button.Button
-					styleAs={ Button.Alert$.Primary$ }
+				<Button
+					styleAs={ ButtonAlert$.Primary$ }
 					onClick={ () => handleChoice(true) }>
 					{ confirm }
-				</Button.Button>
+				</Button>
 
-				<Button.Button
-					styleAs={ Button.Alert$.Secondary$ }
+				<Button
+					styleAs={ ButtonAlert$.Secondary$ }
 					onClick={ () => handleChoice(false) }>
 					{ cancel }
-				</Button.Button>
+				</Button>
 
 			</Warning$>
 		</>);

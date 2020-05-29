@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Common$ from './Common$';
+import ButtonCommon$ from './ButtonCommon$';
 import { close } from '/assets/icons';
 
-const Close$ = styled(Common$)`
+const ButtonClose$ = styled(ButtonCommon$)`
 	background: none;
 	box-shadow: none;
 	color: white;
@@ -22,4 +22,4 @@ const Close$ = styled(Common$)`
 	}
 `;
 
-export default Close$;
+export default ButtonClose$;

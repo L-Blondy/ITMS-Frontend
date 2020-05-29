@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Common$ = styled.button`
+const ButtonCommon$ = styled.button`
 	cursor: pointer;
 	padding: 0.25em 0.8em;
 	display: inline-block;
@@ -14,4 +14,4 @@ const Common$ = styled.button`
 	}
 `;
 
-export default Common$;
+export default ButtonCommon$;

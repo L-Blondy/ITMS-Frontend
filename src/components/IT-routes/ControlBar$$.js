@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { CLR } from '../../GlobalStyles';
 
-const ControlBar$ = styled.div`
+const ControlBar$$ = styled.div`
 	display: flex;
 	justify-content:space-between;
 	background-color: ${ CLR.BACKGROUND.LIGHT };
@@ -25,4 +25,4 @@ const ControlBar$ = styled.div`
 	}
 `;
 
-export default ControlBar$;
+export default ControlBar$$;

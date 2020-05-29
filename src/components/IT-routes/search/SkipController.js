@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import { Input, InputSkip$ } from '../../inputs';
 
 function SkipController({ handleChangePage, searchLimit, skip, setSkip, state }) {
 	return (
@@ -12,18 +13,16 @@ function SkipController({ handleChangePage, searchLimit, skip, setSkip, state })
 				onClick={ handleChangePage }
 				disabled={ state.skipped === 0 }
 			/>
-			<input
-				type='number'
+			<Input
+				styleAs={ InputSkip$ }
+				label={ `- ${ Math.min(state.skipped + searchLimit, state.resultsCount) } of ${ state.resultsCount }` }
 				name='skip'
-				id='skip'
-				value={ skip }
+				type='number'
 				onChange={ e => setSkip(parseInt(e.target.value)) }
+				value={ skip }
 				min="1"
 				max={ state.resultsCount }
 			/>
-			<label htmlFor='skip'>
-				{ `- ${ Math.min(state.skipped + searchLimit, state.resultsCount) } of ${ state.resultsCount }` }
-			</label>
 			<button
 				type='button'
 				name='next'
@@ -41,12 +40,6 @@ export default SkipController;
 const Form$ = styled.form`
 	display: flex;
 	align-items: center;
-
-	input {
-		width: 3em;
-		text-align: right;
-		margin-right: 0.5em;
-	}
 
 	button:disabled {
 		opacity: 0.33;

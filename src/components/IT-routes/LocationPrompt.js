@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
-import * as Button from '../buttons';
+import { Button, ButtonAlert$ } from '../buttons';
 
 function LocationPrompt({ when = false, message = '', reason = '' }) {
 
@@ -44,28 +44,28 @@ function LocationPrompt({ when = false, message = '', reason = '' }) {
 };
 
 function CustomAlert({ message, reason, handleConfirmation }) {
-	return <Alert$>
+	return <Alert$$>
 		<div className='alert'>
 			<div className='message'>{ message }</div>
 			<div className='reason'>{ reason }</div>
 			<div className='buttons'>
-				<Button.Button
-					styleAs={ Button.Alert$.Primary$ }
+				<Button
+					styleAs={ ButtonAlert$.Primary$ }
 					onClick={ () => handleConfirmation(true) }>
 					Exit
-				</Button.Button>
-				<Button.Button
-					styleAs={ Button.Alert$.Secondary$ }
+				</Button>
+				<Button
+					styleAs={ ButtonAlert$.Secondary$ }
 					onClick={ () => handleConfirmation(false) }>
 					Cancel
-				</Button.Button>
+				</Button>
 			</div>
 		</div>
-	</Alert$>;
+	</Alert$$>;
 }
 export default LocationPrompt;
 
-const Alert$ = styled.div`
+const Alert$$ = styled.div`
 	position: absolute;
 	top: 0;
 	left: 0;

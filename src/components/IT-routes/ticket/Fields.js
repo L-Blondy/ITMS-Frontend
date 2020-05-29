@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatDate, formatPriority } from '../../../utils';
 import { Form$ } from '../';
-import * as Input from '../../inputs';
+import { Input, Select, Textarea, InputSimple$ } from '../../inputs';
 import { activityCircle } from '/assets/icons';
 
-function IncidentFields() {
+function Fields() {
 
 	const ticketCtx = useContext(TicketCtx);
 
@@ -27,8 +27,8 @@ function IncidentFields() {
 			<div className='columns-container'>
 				<div className='column'>
 
-					<Input.Input
-						styleAs={ Input.Simple$ }
+					<Input
+						styleAs={ InputSimple$ }
 						label='Number'
 						name='id'
 						type='text'
@@ -36,8 +36,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input.Input
-						styleAs={ Input.Simple$ }
+					<Input
+						styleAs={ InputSimple$ }
 						label='Created on'
 						name='createdOn'
 						type='text'
@@ -45,8 +45,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input.Input
-						styleAs={ Input.Simple$ }
+					<Input
+						styleAs={ InputSimple$ }
 						label='Due date'
 						name='dueDate'
 						type='text'
@@ -54,8 +54,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input.Input
-						styleAs={ Input.Simple$ }
+					<Input
+						styleAs={ InputSimple$ }
 						label='Escalation'
 						name='escalation'
 						type='text'
@@ -64,8 +64,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input.Select
-						styleAs={ Input.Simple$ }
+					<Select
+						styleAs={ InputSimple$ }
 						label='Category'
 						name='category'
 						value={ category }
@@ -75,10 +75,10 @@ function IncidentFields() {
 						{ Object.keys(categories).map(cat => (
 							<option value={ cat } key={ cat }>{ cat }</option>
 						)) }
-					</Input.Select>
+					</Select>
 
-					<Input.Select
-						styleAs={ Input.Simple$ }
+					<Select
+						styleAs={ InputSimple$ }
 						label='Sub category'
 						name='subCategory'
 						value={ subCategory }
@@ -88,14 +88,14 @@ function IncidentFields() {
 						{ (categories[ category ] || []).map(cat => (
 							<option value={ cat } key={ cat }>{ cat }</option>
 						)) }
-					</Input.Select>
+					</Select>
 
 				</div>
 
 				<div className='column'>
 
-					<Input.Input
-						styleAs={ Input.Simple$ }
+					<Input
+						styleAs={ InputSimple$ }
 						label='Status'
 						name='status'
 						type='text'
@@ -104,8 +104,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input.Select
-						styleAs={ Input.Simple$ }
+					<Select
+						styleAs={ InputSimple$ }
 						label='Impact'
 						name='impact'
 						value={ impact }
@@ -114,10 +114,10 @@ function IncidentFields() {
 						<option value='2'> 2 - Significant/Large </option>
 						<option value='3'> 3 - Moderate/Limited </option>
 						<option value='4'> 4 - Minor/localized </option>
-					</Input.Select>
+					</Select>
 
-					<Input.Select
-						styleAs={ Input.Simple$ }
+					<Select
+						styleAs={ InputSimple$ }
 						label='Urgency'
 						name='urgency'
 						value={ urgency }
@@ -126,10 +126,10 @@ function IncidentFields() {
 						<option value="2"> 2 - High </option>
 						<option value="3"> 3 - Medium </option>
 						<option value="4"> 4 - Non critical </option>
-					</Input.Select>
+					</Select>
 
-					<Input.Input
-						styleAs={ Input.Simple$ }
+					<Input
+						styleAs={ InputSimple$ }
 						label='Priority'
 						name='priority'
 						type='text'
@@ -138,8 +138,8 @@ function IncidentFields() {
 						disabled
 					/>
 
-					<Input.Input
-						styleAs={ Input.Simple$ }
+					<Input
+						styleAs={ InputSimple$ }
 						label='Assignment group'
 						name='assignmentGroup'
 						type='text'
@@ -149,8 +149,8 @@ function IncidentFields() {
 						autoComplete="off"
 					/>
 
-					<Input.Input
-						styleAs={ Input.Simple$ }
+					<Input
+						styleAs={ InputSimple$ }
 						label='Assigned to'
 						name='assignedTo'
 						type='text'
@@ -165,8 +165,8 @@ function IncidentFields() {
 
 			<div className='full-width'>
 
-				<Input.Input
-					styleAs={ Input.Simple$ }
+				<Input
+					styleAs={ InputSimple$ }
 					label='Description'
 					name='description'
 					type='text'
@@ -176,8 +176,8 @@ function IncidentFields() {
 					autoComplete="off"
 				/>
 
-				<Input.Textarea
-					styleAs={ Input.Simple$ }
+				<Textarea
+					styleAs={ InputSimple$ }
 					label='Instructions'
 					name='instructions'
 					type='text'
@@ -189,9 +189,9 @@ function IncidentFields() {
 					autoComplete="off"
 				/>
 
-				{ !/new$/.test(location.pathname) ? (<>
-					<Input.Textarea
-						styleAs={ Input.Simple$ }
+				{ !/new$/.test(location.pathname) ? (
+					<Textarea
+						styleAs={ InputSimple$ }
 						label='Work notes'
 						name='log'
 						type='text'
@@ -202,15 +202,14 @@ function IncidentFields() {
 						autoComplete="off"
 						errorMessage='Required for resolution'
 					/>
-
-				</>) : '' }
+				) : '' }
 
 			</div>
 		</Form$$>
 	);
 }
 
-export default IncidentFields;
+export default Fields;
 
 const Form$$ = styled(Form$)`
 

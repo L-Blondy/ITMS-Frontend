@@ -6,7 +6,7 @@ import { bigArrow } from '/assets/icons';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
-import * as Button from '../../buttons';
+import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../buttons';
 
 function Categories({ categories }) {
 
@@ -18,7 +18,6 @@ function Categories({ categories }) {
 
 
 	useEffect(() => {
-		console.log(state);
 		setKey(Math.random());
 	}, [ state ]);
 
@@ -90,8 +89,8 @@ function Categories({ categories }) {
 				</div>
 
 				<span className='controls'>
-					<Button.Button styleAs={ Button.Primary$ } onClick={ saveChanges }>Save</Button.Button>
-					<Button.Button styleAs={ Button.Secondary$ }>Cancel</Button.Button>
+					<Button styleAs={ ButtonPrimary$ } onClick={ saveChanges }>Save</Button>
+					<Button styleAs={ ButtonSecondary$ }>Cancel</Button>
 				</span>
 			</div>
 		</Categories$>

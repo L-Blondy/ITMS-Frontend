@@ -1,28 +1,29 @@
 import styled from 'styled-components';
 import { chevron, plusRed, plus } from '/assets/icons';
 
-const ItemControl$ = styled.button`
+const ButtonItemControl$ = styled.button`
 	background-color: transparent;
 	width: 25px;
 	background-size: 1.2rem;
 	background-repeat: no-repeat;
 	background-position: center;
 	opacity: 0.3;
+
 	&:hover,
 	&:focus {
 		opacity: 1;
 	}
 `;
 
-const Up$ = styled(ItemControl$)`
+const Up$ = styled(ButtonItemControl$)`
 	background-image: url(${ chevron });
 `;
 
-const Down$ = styled(ItemControl$)`
+const Down$ = styled(ButtonItemControl$)`
 	background-image: url(${ chevron });
 	transform: rotate(180deg);
 `;
-const Delete$ = styled(ItemControl$)`
+const Delete$ = styled(ButtonItemControl$)`
 	background-image: url(${ plusRed });
 	background-size: 1.1rem;
 `;
@@ -41,8 +42,8 @@ const Add$ = styled.button`
 
 	&:hover,
 	&:focus {
-		filter: brightness(1.2);
 		outline: none;
+		opacity: 0.66;
 	}
 `;
 

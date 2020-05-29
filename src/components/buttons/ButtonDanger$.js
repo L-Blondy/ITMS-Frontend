@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Common$ from './Common$';
+import ButtonCommon$ from './ButtonCommon$';
 import { CLR } from '../../GlobalStyles';
 
-const Danger$ = styled(Common$)`
+const ButtonDanger$ = styled(ButtonCommon$)`
 	box-shadow: none;
 	background: ${ CLR.BACKGROUND.DANGER };
 	box-shadow: 0 0 0 1px ${ CLR.BACKGROUND.DANGER };
@@ -19,4 +19,4 @@ const Danger$ = styled(Common$)`
 	}
 `;
 
-export default Danger$;
+export default ButtonDanger$;

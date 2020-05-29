@@ -4,7 +4,7 @@ import * as SRC from '/assets/icons';
 import { CLR } from '../../../../GlobalStyles';
 import { UserCtx } from '../../../../GlobalContext';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
-import * as Button from '../../../buttons';
+import { Button, ButtonPrimary$, ButtonUpload$ } from '../../../buttons';
 
 function UploadForm({ method, encType }) {
 
@@ -30,12 +30,12 @@ function UploadForm({ method, encType }) {
 			encType={ encType }>
 
 			<label htmlFor="file">
-				<Button.Button
-					styleAs={ Button.Primary$ }
+				<Button
+					styleAs={ ButtonPrimary$ }
 					tag='span'
 					className='choose-btn'>
 					Choose file
-				</Button.Button>
+				</Button>
 
 				{ attachmentCtx.files.chosen && attachmentCtx.files.chosen.name || 'No file chosen' }
 			</label>
@@ -46,8 +46,8 @@ function UploadForm({ method, encType }) {
 				type='file'
 				onChange={ e => attachmentCtx.files.setChosen(e.target.files[ 0 ]) } />
 
-			<Button.Button
-				styleAs={ Button.Upload$ }
+			<Button
+				styleAs={ ButtonUpload$ }
 				className={ enabledOrDisabled(attachmentCtx) }
 			/>
 		</Form$>

@@ -7,13 +7,10 @@ import { CLR } from '../../../GlobalStyles';
 import * as SRC from '/assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
-// import Button, { Button$ } from '../../Button';
-import * as Button from '../../buttons';
-import { ControlBar$ } from '../';
+import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../buttons';
+import { ControlBar$$ } from '../';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
-
-console.log(typeof Button.Button);
 
 function ControlBar() {
 
@@ -79,111 +76,78 @@ function ControlBar() {
 	const status = ticketCtx.state.status;
 
 	return (
-		<ControlBar$>
+		<ControlBar$$>
 
-			<Button.Button
-				styleAs={ Button.Danger$ }
+			<Button
+				styleAs={ ButtonDanger$ }
 				className='delete-btn'
 				isVisible={ status !== STATUS.NEW }
 				warning={ { message: 'Do you want to delete this ticket ?' } }
 				onConfirm={ deleteTicket } >
 				Delete
-			</Button.Button>
+			</Button>
 
 			<div className='controls'>
 
-				<Button.Button
-					styleAs={ Button.Paperclip$ }
+				<Button
+					styleAs={ ButtonPaperclip$ }
 					className='paperclip-btn'
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					onClick={ () => ticketCtx.attachments.setIsOpened(true) }
 				/>
 
-				<Button.Button
-					styleAs={ Button.ControlBar$ }
+				<Button
+					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					onClick={ () => handleSubmit() } >
 					Save
-				</Button.Button>
+				</Button>
 
-				<Button.Button
-					styleAs={ Button.ControlBar$ }
+				<Button
+					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.NEW ]) }
 					onClick={ () => handleSubmit({ status: STATUS.QUEUED }) } >
 					Submit
-				</Button.Button>
+				</Button>
 
-				<Button.Button
-					styleAs={ Button.ControlBar$ }
+				<Button
+					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
 					warning={ { message: 'Do you want to escalate this ticket ?' } }
 					onConfirm={ () => handleSubmit({ escalation: ticketCtx.state.escalation + 1 }) } >
 					Escalate
-				</Button.Button>
+				</Button>
 
-				<Button.Button
-					styleAs={ Button.ControlBar$ }
+				<Button
+					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.ON_HOLD ]) }
 					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
 					Set in progress
-				</Button.Button>
+				</Button>
 
-				<Button.Button
-					styleAs={ Button.ControlBar$ }
+				<Button
+					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					onClick={ () => handleSubmit({ status: STATUS.ON_HOLD }) } >
 					Place on hold
-				</Button.Button>
+				</Button>
 
-				<Button.Button
-					styleAs={ Button.ControlBar$ }
+				<Button
+					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					onClick={ () => forceWorknote() } >
 					Resolve
-				</Button.Button>
+				</Button>
 
-				<Button.Button
-					styleAs={ Button.ControlBar$ }
+				<Button
+					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.RESOLVED ]) }
 					onClick={ () => handleSubmit({ status: STATUS.IN_PROGRESS }) } >
 					Reopen
-				</Button.Button>
+				</Button>
 			</div>
-		</ControlBar$>
+		</ControlBar$$>
 	);
 }
 
 export default ControlBar;
-
-const PaperclipBtn$ = styled.button`
-	width: 2.2rem;
-	background-image: ${ `url(${ SRC.paperclip })` };
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
-	background-color: transparent !important;
-	height: 100%;
-	margin: 0 0.5rem !important;
-	padding: 0 1.5rem !important;
-	box-shadow: none !important;
-	
-	&:hover {
-		filter: blur(0.5px);
-		opacity: 0.65;
-	}
-`;
-
-const Delete$ = styled.button`
-	box-shadow: none;
-	background: #dd3131;
-	box-shadow: 0 0 0 1px #dd3131;
-	color: white;
-	padding: 0 0.8rem;
-	border-radius: 1px;
-	font-weight: bold;
-
-	&:hover {
-		opacity: 0.66;
-	}
-`;
-

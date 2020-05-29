@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { useContext } from 'react';
 import { preloader } from '/assets/icons';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
+import { Button, ButtonAlert$ } from '../../../buttons';
 
 function Status() {
 
@@ -33,9 +34,10 @@ function Status() {
 					<div>{ attachmentCtx.request.status.message }</div>
 				</div>
 
-				<button className='btn-contained-alert-prim' onClick={ () => attachmentCtx.request.setStatus({ state: XHR.UNSENT }) }>
+				<Button
+					styleAs={ ButtonAlert$.Primary$ } onClick={ () => attachmentCtx.request.setStatus({ state: XHR.UNSENT }) }>
 					ok
-				</button>
+				</Button>
 			</Div$>
 		);
 	}

@@ -6,7 +6,7 @@ import { Warning, DisableBg } from '../../../';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { TicketCtx } from '../TicketPageWithContext';
-import * as Button from '../../../buttons';
+import { Button, ButtonClose$ } from '../../../buttons';
 
 function AttachmentBox() {
 
@@ -21,8 +21,8 @@ function AttachmentBox() {
 
 				<div className='header'>
 					<span>Attachments</span>
-					<Button.Button
-						styleAs={ Button.Close$ }
+					<Button
+						styleAs={ ButtonClose$ }
 						onClick={ () => ticketCtx.attachments.setIsOpened(false) }
 					/>
 				</div>

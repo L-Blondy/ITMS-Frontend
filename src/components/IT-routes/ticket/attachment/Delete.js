@@ -4,8 +4,7 @@ import { BASE_URL } from '/BASE_URL';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { formatFileSize, getAttachmentIconSRC } from '../../../../utils';
-// import { Button } from '../../../';
-import * as Button from '../../../buttons';
+import { Button, ButtonDanger$ } from '../../../buttons';
 
 function Delete({ method }) {
 
@@ -60,13 +59,13 @@ function Delete({ method }) {
 					))) : '' }
 			</ul>
 
-			<Button.Button
-				styleAs={ Button.Danger$ }
+			<Button
+				styleAs={ ButtonDanger$ }
 				className={ 'delete-btn ' + disabledOrNothing(attachmentCtx) }
 				warning={ { disableBg: true } }
 				onConfirm={ handleConfirmDelete }>
 				Remove
-			</Button.Button>
+			</Button>
 
 		</Form$ >
 	);

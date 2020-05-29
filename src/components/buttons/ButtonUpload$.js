@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Primary$ from './Primary$';
+import ButtonPrimary$ from './ButtonPrimary$';
 import { upload } from '/assets/icons';
 
-const Upload$ = styled(Primary$)`
+const ButtonUpload$ = styled(ButtonPrimary$)`
 	background-image: ${ `url(${ upload })` };
 	background-repeat: no-repeat;
 	background-position: center;
@@ -25,4 +25,4 @@ const Upload$ = styled(Primary$)`
 	}
 `;
 
-export default Upload$;
+export default ButtonUpload$;
