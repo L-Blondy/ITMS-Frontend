@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { UserCtx } from '../../../GlobalContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
 import { SkipController } from './';
@@ -84,7 +83,7 @@ function SearchPage({ initialData }) {
 		<ControlBar$$>
 			<div />
 			<SkipController
-				handleChangePage={ handleChangePage }
+				handleSubmit={ handleChangePage }
 				pageSize={ pageSize }
 				skip={ skip }
 				setSkip={ setSkip }

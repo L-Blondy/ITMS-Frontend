@@ -2,16 +2,16 @@ import styled from 'styled-components';
 import React from 'react';
 import { Input, InputSkip$ } from '../../inputs';
 
-function SkipController({ handleChangePage, pageSize, skip, setSkip, state }) {
+function SkipController({ handleSubmit, pageSize, skip, setSkip, state }) {
 
 	return (
-		<Form$ onSubmit={ handleChangePage }>
+		<Form$ onSubmit={ handleSubmit }>
 			<button
 				name='previous'
 				type='button'
 				className='previous'
 				value={ - pageSize }
-				onClick={ handleChangePage }
+				onClick={ handleSubmit }
 				disabled={ state.skipped === 0 }
 			/>
 			<Input
@@ -29,7 +29,7 @@ function SkipController({ handleChangePage, pageSize, skip, setSkip, state }) {
 				type='button'
 				className='next'
 				value={ pageSize }
-				onClick={ handleChangePage }
+				onClick={ handleSubmit }
 				disabled={ state.skipped + pageSize >= state.resultsCount - 1 }
 			/>
 		</Form$>
