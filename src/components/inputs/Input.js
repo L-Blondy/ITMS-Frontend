@@ -1,32 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-const Input = React.forwardRef( ( {
+const Input = React.forwardRef(({
 	as: Input = 'input',
 	styleAs: Span$ = 'span',
-	errorMessage,
 	label,
 	name,
 	className,
 	defaultValue,
 	onChange,
+	validation,
 	...props
-}, ref ) => {
+}, ref) => {
 
-	const [ value, setValue ] = useState( defaultValue || '' );
+	const [ value, setValue ] = useState(defaultValue || '');
+	const [ errors, setErrors ] = useState([]);
+	let input = ref || useRef();
 
-	const Label = ( { htmlFor } ) => {
-		if ( typeof label === 'string' )
-			return <label htmlFor={ htmlFor }>{ label }</label>
-		return label || null
-	}
+	const Label = ({ htmlFor }) => {
+		if (typeof label === 'string')
+			return <label htmlFor={ htmlFor }>{ label }</label>;
+		return label || null;
+	};
 
-	const handleChange = ( e ) => {
-		setValue( e.target.value )
-		onChange && onChange( e )
-	}
+	const setValidationErrors = () => {
+		if (!validation) return;
+		const errorMessages = validation.getErrors(input.current);
+		validation && setErrors(errorMessages);
+		return errorMessages.length;
+	};
+
+	const handleChange = (e) => {
+		setValidationErrors();
+		setValue(e.target.value);
+		onChange && onChange(e);
+	};
+
+	useEffect(() => {
+		input.current.setErrors = setValidationErrors;
+	}, []);
 
 	return (
-		<Span$ className={ 'labelled-input ' + className }>
+		<Span$ className={ `labelled-input ${ errors.length && 'invalid' } ${ className } ` } disabled={ props.disabled }>
 
 			<Label htmlFor={ name } />
 
@@ -34,15 +48,23 @@ const Input = React.forwardRef( ( {
 				name={ name }
 				id={ name }
 				value={ value }
-				ref={ ref }
+				ref={ input }
 				{ ...props }
 				onChange={ handleChange }
 			/>
 
-			{ errorMessage && <div>{ errorMessage }</div> }
+			{ errors.length ? (
+				<div>
+					{ errors.map((err, i) => (
+						<div key={ name + value + i }>
+							{ err }
+						</div>
+					)) }
+				</div>
+			) : null }
 
 		</Span$>
 	);
-} )
+});
 
 export default Input;

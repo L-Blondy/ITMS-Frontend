@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSubscription } from '../../../hooks';
 import { Fields, ControlBar, WorknotesHistory, FileList } from '.';
-import { LocationPrompt } from '../';
+import { LocationPrompt } from '..';
 import { BASE_URL } from '/BASE_URL';
 import AttachmentWithContext from './attachment/AttachmentWithContext';
 import { TicketCtx } from './TicketPageWithContext';

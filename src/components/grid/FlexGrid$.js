@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
-const FormTicketSearch$ = styled.form`
+const FlexGrid$ = styled.form`
 	flex-grow: 1;
 	width: 100%;
 	height: 100%;
 	display: flex;
 	font-size: 15px;
-	justify-content: stretch;
 	overflow: auto;
 
 	.column {
@@ -29,4 +28,4 @@ const FormTicketSearch$ = styled.form`
 	}
 `;
 
-export default FormTicketSearch$;
+export default FlexGrid$;

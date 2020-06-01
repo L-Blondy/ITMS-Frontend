@@ -1,0 +1,17 @@
+{
+	"id": {
+		"required": true
+	},
+	"description": {
+		"required": true
+	},
+	"instructions": {
+		"required": true
+	},
+	"assignmentGroup": {
+		"required": true
+	},
+	"assignmedTo": {
+		"required": true
+	}
+}

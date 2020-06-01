@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import InputCommon$ from './InputCommon$';
 import { CLR } from '../../GlobalStyles';
 
-const InputBoxAround$ = styled( InputCommon$ )`
+const InputBoxAround$ = styled(InputCommon$)`
+	font-size: inherit;
 	padding: 0.5em;
 	background:  ${ CLR.BACKGROUND.LIGHT };
 	border-right: 1px solid #e5e5e5;

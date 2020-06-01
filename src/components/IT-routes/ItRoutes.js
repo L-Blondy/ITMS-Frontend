@@ -5,47 +5,47 @@ import { Settings, ErrorPage } from '../';
 import { DashboardPage } from '../../pages/dashboard';
 import { ReportPage } from '../../pages/report';
 import { ItRoutesCtx } from './ItRoutesWithContext';
-import { TicketPageWithContext } from './ticket';
+import { TicketPage } from '../../pages/ticket';
 import { AdministrationPage } from './administration';
 import { SearchPage } from './search';
 import { UserCtx } from '../../GlobalContext';
 import { BASE_URL } from '/BASE_URL';
 import http from '../../utils/http';
-import { Nav, Navbar$, Sidebar$ } from '../navs'
+import { Nav, Navbar$, Sidebar$ } from '../navs';
 
-function ItRoutes () {
+function ItRoutes() {
 
-	const itRoutesCtx = useContext( ItRoutesCtx );
-	const { pageSize } = useContext( UserCtx );
-	const [ switchKey, setSwitchKey ] = useState( Math.random() );
+	const itRoutesCtx = useContext(ItRoutesCtx);
+	const { pageSize } = useContext(UserCtx);
+	const [ switchKey, setSwitchKey ] = useState(Math.random());
 	const history = useHistory();
 
-	useEffect( () => {
-		itRoutesCtx.setInitialData( null )
-		itRoutesCtx.page.setIsLoading( true );
-		itRoutesCtx.setError( null );
+	useEffect(() => {
+		itRoutesCtx.setInitialData(null);
+		itRoutesCtx.page.setIsLoading(true);
+		itRoutesCtx.setError(null);
 
-		setTimeout( () => {
+		setTimeout(() => {
 			http()
-				.get( BASE_URL + location.pathname, getQuery( pageSize ) )
-				.then( res => {
-					setSwitchKey( Math.random() );
-					itRoutesCtx.page.setIsLoading( false );
-					itRoutesCtx.setInitialData( res );
-				} )
-				.catch( e => {
-					itRoutesCtx.page.setIsLoading( false );
-					itRoutesCtx.setError( e );
-				} );
-		}, 300 );
-	}, [ history.location, location.pathname ] );
+				.get(BASE_URL + location.pathname, getQuery(pageSize))
+				.then(res => {
+					setSwitchKey(Math.random());
+					itRoutesCtx.page.setIsLoading(false);
+					itRoutesCtx.setInitialData(res);
+				})
+				.catch(e => {
+					itRoutesCtx.page.setIsLoading(false);
+					itRoutesCtx.setError(e);
+				});
+		}, 300);
+	}, [ history.location, location.pathname ]);
 
-	const { error, initialData } = itRoutesCtx
+	const { error, initialData } = itRoutesCtx;
 
-	return ( <>
+	return (<>
 		<Settings
 			when={ itRoutesCtx.settings.areOpened }
-			close={ () => itRoutesCtx.settings.setAreOpened( false ) }
+			close={ () => itRoutesCtx.settings.setAreOpened(false) }
 		/>
 
 		<Nav styleAs={ Navbar$ }>
@@ -60,7 +60,7 @@ function ItRoutes () {
 					<NavLink className='navlink' to='/it/sdfff'>Anywhere</NavLink>
 				</li>
 
-				<button className="settings" onClick={ () => itRoutesCtx.settings.setAreOpened( true ) }>Settings</button>
+				<button className="settings" onClick={ () => itRoutesCtx.settings.setAreOpened(true) }>Settings</button>
 			</ul>
 		</Nav>
 
@@ -119,7 +119,7 @@ function ItRoutes () {
 							<AdministrationPage initialData={ initialData.administrationData } />
 						) } />
 						<Route path='/it/ticket/:type/:id' render={ () => initialData.id && (
-							<TicketPageWithContext initialData={ initialData } />
+							<TicketPage initialData={ initialData } />
 						) } />
 						<Route path='/it/ticket/:type' render={ () => initialData.searchData && (
 							<SearchPage initialData={ initialData.searchData } />
@@ -130,13 +130,13 @@ function ItRoutes () {
 			</Main$>
 
 		</Flex$>
-	</> );
+	</>);
 }
 
-function getQuery ( searchLimit ) {
-	if ( location.pathname.isOneOf( [ '/it/ticket/incidents', '/it/ticket/requests', '/it/ticket/changes' ] ) ) {
-		const sortBy = localStorage.getItem( 'sortBy' );
-		const sortOrder = localStorage.getItem( 'sortOrder' );
+function getQuery(searchLimit) {
+	if (location.pathname.isOneOf([ '/it/ticket/incidents', '/it/ticket/requests', '/it/ticket/changes' ])) {
+		const sortBy = localStorage.getItem('sortBy');
+		const sortOrder = localStorage.getItem('sortOrder');
 		return `?limit=${ searchLimit }&sort[sortBy]=${ sortBy }&sort[sortOrder]=${ sortOrder }`;
 	}
 	return location.search;
