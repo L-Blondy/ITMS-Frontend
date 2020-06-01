@@ -2,6 +2,7 @@ class Validation {
 
 	constructor(requirements) {
 		this.requirements = requirements;
+		this.errorCount = 0;
 	}
 
 	getErrors(input) {
@@ -17,6 +18,19 @@ class Validation {
 			error && errors.push(error);
 		}
 		return errors;
+	}
+
+	validateElements(form) {
+		const elements = [].slice.call(form.elements);
+		this.errorCount = elements.reduce((errorCount, el) => {
+			if (!el.setErrors) return errorCount;
+			errorCount += el.setErrors();
+			return errorCount;
+		}, 0);
+	}
+
+	get hasErrors() {
+		return this.errorCount;
 	}
 
 	required(value, requirement) {

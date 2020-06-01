@@ -6,18 +6,9 @@ const Form = React.forwardRef(({ validation, ...props }, ref) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const errorCount = validate(e.target);
-		if (errorCount) return;
+		validation.validateElements(e.target);
+		if (validation.hasErrors) return;
 		console.log('submit');
-	};
-	const validate = (form) => {
-		const elements = [].slice.call(form.elements);
-		return elements.reduce((errorCount, el) => {
-			if (!el.setErrors) return errorCount;
-			errorCount += el.setErrors();
-			console.log(errorCount);
-			return errorCount;
-		}, 0);
 	};
 
 	return (
