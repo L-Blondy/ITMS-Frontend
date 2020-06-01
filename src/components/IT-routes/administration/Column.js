@@ -1,48 +1,47 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { Button, ButtonItemControl$ } from '../../buttons';
-import { Input, InputAddItem$ } from '../../inputs';
-console.log(Input, InputAddItem$);
+import { Input, InputTransparent$ } from '../../inputs';
 
 
-function Column({ items = [], name, selectedItem, setSelectedItem, updateState }) {
+function Column ( { items = [], name, selectedItem, setSelectedItem, updateState } ) {
 
-	useEffect(() => {
-		if (name === 'sub-categories' && selectedItem)
-			document.querySelector('#sub-categories').focus();
-	}, []);
+	useEffect( () => {
+		if ( name === 'sub-categories' && selectedItem )
+			document.querySelector( '#sub-categories' ).focus();
+	}, [] );
 
-	const selectItem = (category) => {
-		if (!setSelectedItem)
+	const selectItem = ( category ) => {
+		if ( !setSelectedItem )
 			return;
-		setSelectedItem(category);
+		setSelectedItem( category );
 	};
 
-	const handleUp = (index) => {
-		if (!index)
+	const handleUp = ( index ) => {
+		if ( !index )
 			return;
 		const nextState = [ ...items ];
 		[ nextState[ index ], nextState[ index - 1 ] ] = [ nextState[ index - 1 ], nextState[ index ] ];
-		updateState(nextState);
+		updateState( nextState );
 	};
 
-	const handleDown = (index) => {
-		if (index === items.length - 1)
+	const handleDown = ( index ) => {
+		if ( index === items.length - 1 )
 			return;
 		const nextState = [ ...items ];
 		[ nextState[ index ], nextState[ index + 1 ] ] = [ nextState[ index + 1 ], nextState[ index ] ];
-		updateState(nextState);
+		updateState( nextState );
 	};
 
-	const handleDelete = (index) => {
-		const nextState = [ ...items.slice(0, index), ...items.slice(index + 1) ];
-		updateState(nextState);
+	const handleDelete = ( index ) => {
+		const nextState = [ ...items.slice( 0, index ), ...items.slice( index + 1 ) ];
+		updateState( nextState );
 	};
 
-	const handleAdd = (e) => {
+	const handleAdd = ( e ) => {
 		e.preventDefault();
 		const value = e.target.elements[ 0 ].value;
-		value && updateState([ ...items, value ]);
+		value && updateState( [ ...items, value ] );
 	};
 
 	return (
@@ -51,36 +50,36 @@ function Column({ items = [], name, selectedItem, setSelectedItem, updateState }
 			<Column$>
 
 
-				{ items.map((category, index) => {
+				{ items.map( ( category, index ) => {
 					const isSelected = name === 'categories' && category === selectedItem ? 'selected' : '';
 					return (
 						<div className={ 'item ' + isSelected } key={ category + index } >
 							<span
 								className='item-name'
-								onClick={ () => selectItem(category) }>
+								onClick={ () => selectItem( category ) }>
 								{ category }
 							</span>
 							<Button
 								styleAs={ ButtonItemControl$.Up$ }
-								onClick={ () => handleUp(index) }
+								onClick={ () => handleUp( index ) }
 							/>
 							<Button
 								styleAs={ ButtonItemControl$.Down$ }
-								onClick={ () => handleDown(index) }
+								onClick={ () => handleDown( index ) }
 							/>
 							<Button
 								styleAs={ ButtonItemControl$.Delete$ }
 								className='delete-btn'
-								onClick={ () => handleDelete(index) }
+								onClick={ () => handleDelete( index ) }
 							/>
 						</div>
 					);
-				}) }
+				} ) }
 
-				{ (name === 'categories' || selectedItem) && (
+				{ ( name === 'categories' || selectedItem ) && (
 					<form className='add-item-form' onSubmit={ handleAdd }>
 						<Input
-							styleAs={ InputAddItem$ }
+							styleAs={ InputTransparent$ }
 							name={ name }
 							placeholder='Add item'
 							autoComplete='off'

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const AddItem$ = styled.label`
+const InputTransparent$ = styled.span`
 	flex-grow: 1;
 
 	input {
@@ -11,11 +11,7 @@ const AddItem$ = styled.label`
 		padding-left: 0.7rem;
 		border: none;
 		border-radius: 30px;
-		background: #f3f5f5;
-		
-		@supports(filter: brightness(0)){
-			background: inherit;	
-		}
+		background: transparent;
 
 		&:focus {
 			outline: none;
@@ -28,4 +24,4 @@ const AddItem$ = styled.label`
 	
 `;
 
-export default AddItem$;
+export default InputTransparent$;

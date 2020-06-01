@@ -3,12 +3,14 @@ import { ItRoutes } from './';
 
 export const ItRoutesCtx = createContext();
 
-function ItRoutesWithContext() {
+function ItRoutesWithContext () {
 
 	const [ initialData, setInitialData ] = useState();
 	const [ error, setError ] = useState();
-	const [ areOpened, setAreOpened ] = useState(false);
-	const [ isLoading, setIsLoading ] = useState(false);
+	const [ areOpened, setAreOpened ] = useState( false );
+	const [ isLoading, setIsLoading ] = useState( false );
+
+	useEffect( () => console.log( areOpened ), [ areOpened ] )
 
 	const itRoutesCtx = {
 		initialData,

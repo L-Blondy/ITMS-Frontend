@@ -6,7 +6,7 @@ const user = {
 	name: 'Guest user',
 	timezone: 'some timezone here',
 	pageSize: 5,
-	incidentSearchProps: [
+	incidentSearchFields: [
 		'id',
 		'status',
 		'priority',
@@ -22,7 +22,7 @@ const user = {
 	],
 };
 
-function GlobalContext({ children }) {
+function GlobalContext ( { children } ) {
 	return (
 		<UserCtx.Provider value={ user }>
 			{ children }

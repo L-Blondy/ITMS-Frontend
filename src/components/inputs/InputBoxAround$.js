@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import InputCommon$ from './InputCommon$';
 import { CLR } from '../../GlobalStyles';
 
-const Search$ = styled(InputCommon$)`
+const InputBoxAround$ = styled( InputCommon$ )`
 	padding: 0.5em;
 	background:  ${ CLR.BACKGROUND.LIGHT };
 	border-right: 1px solid #e5e5e5;
@@ -17,4 +17,4 @@ const Search$ = styled(InputCommon$)`
 	}
 `;
 
-export default Search$;
+export default InputBoxAround$;

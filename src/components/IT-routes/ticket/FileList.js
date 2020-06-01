@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import React from 'react';
 import { BASE_URL } from '/BASE_URL';
-import { FileData } from '../../files';
+import { FileInfo } from '../../files';
 
-function FileList({ when, fileList }) {
-	if (!when)
+function FileList ( { when, fileList } ) {
+	if ( !when )
 		return null;
 
 	return (
 		<FileList$>
-			{ fileList.map((fileData, i) => (
-				<FileData
+			{ fileList.map( ( fileData, i ) => (
+				<FileInfo
 					tag='a'
 					className='file-data'
 					data={ fileData }
@@ -19,7 +19,7 @@ function FileList({ when, fileList }) {
 					rel='noopener noreferrer'
 					key={ fileData.name + i }
 				/>
-			)) }
+			) ) }
 		</FileList$>
 	);
 }

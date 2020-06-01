@@ -3,32 +3,32 @@ import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatDate, formatPriority } from '../../../utils';
 import { Form$ } from '../';
-import { Input, Select, Textarea, InputAbsolute$ } from '../../inputs';
+import { Input, Select, Textarea, InputLabelLeftAbs$ } from '../../inputs';
 import { activityCircle } from '/assets/icons';
 
-function Fields() {
+function Fields () {
 
-	const ticketCtx = useContext(TicketCtx);
+	const ticketCtx = useContext( TicketCtx );
 
-	useEffect(() => {
+	useEffect( () => {
 		const { categories, category, subCategory } = ticketCtx.state;
 
-		if (!categories[ category ])
-			ticketCtx.setState({ ...ticketCtx.state, category: '', subCategory: '' });
-		if (categories[ category ] && !categories[ category ].includes(subCategory))
-			ticketCtx.setState({ ...ticketCtx.state, subCategory: '' });
-	}, []);
+		if ( !categories[ category ] )
+			ticketCtx.setState( { ...ticketCtx.state, category: '', subCategory: '' } );
+		if ( categories[ category ] && !categories[ category ].includes( subCategory ) )
+			ticketCtx.setState( { ...ticketCtx.state, subCategory: '' } );
+	}, [] );
 
 	const { assignedTo, assignmentGroup, categories, category, createdOn, description, dueDate, escalation, id, impact, instructions, log, priority, status, subCategory, updatedOn, urgency } = ticketCtx.state;
 
 	return (
-		<Form$$ onSubmit={ (e) => e.preventDefault() } spellCheck='false'>
+		<Form$$ onSubmit={ ( e ) => e.preventDefault() } spellCheck='false'>
 
 			<div className='columns-container'>
 				<div className='column'>
 
 					<Input
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Number'
 						name='id'
 						type='text'
@@ -37,57 +37,57 @@ function Fields() {
 					/>
 
 					<Input
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Created on'
 						name='createdOn'
 						type='text'
-						value={ formatDate(createdOn) }
+						value={ formatDate( createdOn ) }
 						disabled
 					/>
 
 					<Input
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Due date'
 						name='dueDate'
 						type='text'
-						value={ formatDate(dueDate) }
+						value={ formatDate( dueDate ) }
 						disabled
 					/>
 
 					<Input
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Escalation'
 						name='escalation'
 						type='text'
 						value={ escalation === 0 ? 'None' : escalation === 1 ? 'Uplift' : 'Overdue' }
-						className={ ticketCtx.changedProps.has('escalation') ? 'live-updated' : '' }
+						className={ ticketCtx.changedProps.has( 'escalation' ) ? 'live-updated' : '' }
 						disabled
 					/>
 
 					<Select
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Category'
 						name='category'
 						value={ category }
-						onChange={ e => ticketCtx.handleChange(e) }
-						className={ ticketCtx.changedProps.has('category') ? 'live-updated' : '' }>
+						onChange={ e => ticketCtx.handleChange( e ) }
+						className={ ticketCtx.changedProps.has( 'category' ) ? 'live-updated' : '' }>
 						<option value=''>-none-</option>
-						{ Object.keys(categories).map(cat => (
+						{ Object.keys( categories ).map( cat => (
 							<option value={ cat } key={ cat }>{ cat }</option>
-						)) }
+						) ) }
 					</Select>
 
 					<Select
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Sub category'
 						name='subCategory'
 						value={ subCategory }
-						onChange={ e => ticketCtx.handleChange(e) }
-						className={ ticketCtx.changedProps.has('subCategory') ? 'live-updated' : '' }>
+						onChange={ e => ticketCtx.handleChange( e ) }
+						className={ ticketCtx.changedProps.has( 'subCategory' ) ? 'live-updated' : '' }>
 						<option value=''>-none-</option>
-						{ (categories[ category ] || []).map(cat => (
+						{ ( categories[ category ] || [] ).map( cat => (
 							<option value={ cat } key={ cat }>{ cat }</option>
-						)) }
+						) ) }
 					</Select>
 
 				</div>
@@ -95,7 +95,7 @@ function Fields() {
 				<div className='column'>
 
 					<Input
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Status'
 						name='status'
 						type='text'
@@ -105,11 +105,11 @@ function Fields() {
 					/>
 
 					<Select
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Impact'
 						name='impact'
 						value={ impact }
-						onChange={ e => ticketCtx.handleChange(e) }>
+						onChange={ e => ticketCtx.handleChange( e ) }>
 						<option value='1'> 1 - Extensive/Widespread </option>
 						<option value='2'> 2 - Significant/Large </option>
 						<option value='3'> 3 - Moderate/Limited </option>
@@ -117,11 +117,11 @@ function Fields() {
 					</Select>
 
 					<Select
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Urgency'
 						name='urgency'
 						value={ urgency }
-						onChange={ e => ticketCtx.handleChange(e) }>
+						onChange={ e => ticketCtx.handleChange( e ) }>
 						<option value="1"> 1 - Critical </option>
 						<option value="2"> 2 - High </option>
 						<option value="3"> 3 - Medium </option>
@@ -129,34 +129,34 @@ function Fields() {
 					</Select>
 
 					<Input
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Priority'
 						name='priority'
 						type='text'
-						value={ formatPriority(priority) }
-						className={ ticketCtx.changedProps.has('priority') ? 'live-updated' : '' }
+						value={ formatPriority( priority ) }
+						className={ ticketCtx.changedProps.has( 'priority' ) ? 'live-updated' : '' }
 						disabled
 					/>
 
 					<Input
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Assignment group'
 						name='assignmentGroup'
 						type='text'
 						value={ assignmentGroup }
-						onChange={ e => ticketCtx.handleChange(e) }
-						className={ ticketCtx.changedProps.has('assignmentGroup') ? 'live-updated' : '' }
+						onChange={ e => ticketCtx.handleChange( e ) }
+						className={ ticketCtx.changedProps.has( 'assignmentGroup' ) ? 'live-updated' : '' }
 						autoComplete="off"
 					/>
 
 					<Input
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Assigned to'
 						name='assignedTo'
 						type='text'
 						value={ assignedTo }
-						onChange={ e => ticketCtx.handleChange(e) }
-						className={ ticketCtx.changedProps.has('assignedTo') ? 'live-updated' : '' }
+						onChange={ e => ticketCtx.handleChange( e ) }
+						className={ ticketCtx.changedProps.has( 'assignedTo' ) ? 'live-updated' : '' }
 						autoComplete="off"
 					/>
 
@@ -166,37 +166,37 @@ function Fields() {
 			<div className='full-width'>
 
 				<Input
-					styleAs={ InputAbsolute$ }
+					styleAs={ InputLabelLeftAbs$ }
 					label='Description'
 					name='description'
 					type='text'
 					value={ description }
-					onChange={ e => ticketCtx.handleChange(e) }
-					className={ ticketCtx.changedProps.has('description') ? 'live-updated' : '' }
+					onChange={ e => ticketCtx.handleChange( e ) }
+					className={ ticketCtx.changedProps.has( 'description' ) ? 'live-updated' : '' }
 					autoComplete="off"
 				/>
 
 				<Textarea
-					styleAs={ InputAbsolute$ }
+					styleAs={ InputLabelLeftAbs$ }
 					label='Instructions'
 					name='instructions'
 					type='text'
 					value={ instructions }
-					onChange={ e => ticketCtx.handleChange(e) }
-					className={ ticketCtx.changedProps.has('instructions') ? 'live-updated' : '' }
+					onChange={ e => ticketCtx.handleChange( e ) }
+					className={ ticketCtx.changedProps.has( 'instructions' ) ? 'live-updated' : '' }
 					minRows={ 5 }
 					maxRows={ 20 }
 					autoComplete="off"
 				/>
 
-				{ !/new$/.test(location.pathname) ? (
+				{ !/new$/.test( location.pathname ) ? (
 					<Textarea
-						styleAs={ InputAbsolute$ }
+						styleAs={ InputLabelLeftAbs$ }
 						label='Work notes'
 						name='log'
 						type='text'
 						value={ log }
-						onChange={ e => ticketCtx.handleChange(e) }
+						onChange={ e => ticketCtx.handleChange( e ) }
 						minRows={ 5 }
 						maxRows={ 20 }
 						autoComplete="off"
@@ -211,7 +211,7 @@ function Fields() {
 
 export default Fields;
 
-const Form$$ = styled(Form$)`
+const Form$$ = styled( Form$ )`
 
 	.live-updated::before{
 		content: '';
@@ -225,7 +225,7 @@ const Form$$ = styled(Form$)`
 		background-size: 60%;
 	}
 
-	label {
+	.labelled-input {
 		margin-top: 1rem;
 		margin-bottom: 0.3rem;
 	}

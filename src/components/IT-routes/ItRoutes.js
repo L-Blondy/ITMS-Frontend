@@ -1,84 +1,128 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
-import { Navbar, Settings, Sidebar } from './';
-import { ErrorPage } from '../';
-import { DashboardWithContext } from './dashboard';
+import { Switch, Route, useHistory, NavLink } from 'react-router-dom';
+import { Settings, ErrorPage } from '../';
+import { DashboardPage } from '../../pages/dashboard';
+import { ReportPage } from '../../pages/report';
 import { ItRoutesCtx } from './ItRoutesWithContext';
 import { TicketPageWithContext } from './ticket';
-import { ReportPage } from './report';
 import { AdministrationPage } from './administration';
 import { SearchPage } from './search';
-import { usePathnameChangeCallback } from '../../hooks';
 import { UserCtx } from '../../GlobalContext';
 import { BASE_URL } from '/BASE_URL';
 import http from '../../utils/http';
+import { Nav, Navbar$, Sidebar$ } from '../navs'
 
-!localStorage.getItem('sortBy') && localStorage.setItem('sortBy', 'id');
-!localStorage.getItem('sortOrder') && localStorage.setItem('sortOrder', -1);
+function ItRoutes () {
 
-function ItRoutes() {
-
-	const itRoutesCtx = useContext(ItRoutesCtx);
-	const { pageSize } = useContext(UserCtx);
-	const [ key, setKey ] = useState(Math.random());
+	const itRoutesCtx = useContext( ItRoutesCtx );
+	const { pageSize } = useContext( UserCtx );
+	const [ switchKey, setSwitchKey ] = useState( Math.random() );
 	const history = useHistory();
-	usePathnameChangeCallback(() => itRoutesCtx.setInitialData(null));
 
-	useEffect(() => {
-		itRoutesCtx.page.setIsLoading(true);
-		itRoutesCtx.setError(null);
+	useEffect( () => {
+		itRoutesCtx.setInitialData( null )
+		itRoutesCtx.page.setIsLoading( true );
+		itRoutesCtx.setError( null );
 
-		setTimeout(() => {
+		setTimeout( () => {
 			http()
-				.get(BASE_URL + location.pathname, getQuery(pageSize))
-				.then(res => {
-					console.log(res);
-					itRoutesCtx.setInitialData(res);
-				})
-				.catch(e => {
-					itRoutesCtx.page.setIsLoading(false);
-					itRoutesCtx.setError(e);
-				});
-		}, 300);
-	}, [ history.location ]);
+				.get( BASE_URL + location.pathname, getQuery( pageSize ) )
+				.then( res => {
+					setSwitchKey( Math.random() );
+					itRoutesCtx.page.setIsLoading( false );
+					itRoutesCtx.setInitialData( res );
+				} )
+				.catch( e => {
+					itRoutesCtx.page.setIsLoading( false );
+					itRoutesCtx.setError( e );
+				} );
+		}, 300 );
+	}, [ history.location, location.pathname ] );
 
-	useEffect(() => {
-		setKey(Math.random());
-		itRoutesCtx.initialData && itRoutesCtx.page.setIsLoading(false);
-	}, [ itRoutesCtx.initialData ]);
+	const { error, initialData } = itRoutesCtx
 
-	return (<>
-		{ itRoutesCtx.settings.areOpened && (<Settings closeSettings={ () => itRoutesCtx.settings.setAreOpened(false) } />) }
+	return ( <>
+		<Settings
+			when={ itRoutesCtx.settings.areOpened }
+			close={ () => itRoutesCtx.settings.setAreOpened( false ) }
+		/>
 
-		<Navbar />
+		<Nav styleAs={ Navbar$ }>
+			<ul>
+				<li>
+					<NavLink className='navlink' to='/it/dashboard'>Dashboard</NavLink>
+				</li>
+				<li>
+					<NavLink className='navlink' to='/it/administration'>Administration</NavLink>
+				</li>
+				<li>
+					<NavLink className='navlink' to='/it/sdfff'>Anywhere</NavLink>
+				</li>
+
+				<button className="settings" onClick={ () => itRoutesCtx.settings.setAreOpened( true ) }>Settings</button>
+			</ul>
+		</Nav>
 
 		<Flex$>
 
-			<Sidebar />
+			<Nav styleAs={ Sidebar$ }>
+				<ul>
+					<li>
+						<NavLink to='/it/report'>Report</NavLink>
+					</li>
+					<li>
+						<NavLink to='/it/ticket/incidents/new'>Open Incident</NavLink>
+					</li>
+					<li>
+						<NavLink to='/it/ticket/requests/new'>Open Request</NavLink>
+					</li>
+					<li>
+						<NavLink to='/it/ticket/changes/new'>Open Change</NavLink>
+					</li>
+					<li>
+						<NavLink to='/it/administration/incidents/categories'>Incident Cat</NavLink>
+					</li>
+					<li>
+						<NavLink to='/it/administration/requests/categories'>Request Cat</NavLink>
+					</li>
+					<li>
+						<NavLink to='/it/administration/changes/categories'>Change Cat</NavLink>
+					</li>
+					<li>
+						<NavLink to={ `/it/ticket/incidents` }>Incident Search </NavLink>
+					</li>
+					<li>
+						<NavLink to={ `/it/ticket/requests` }>Request Search</NavLink>
+					</li>
+					<li>
+						<NavLink to={ `/it/ticket/changes` }>Change Search</NavLink>
+					</li>
+				</ul>
+			</Nav>
 
 			<Main$ className={ itRoutesCtx.page.isLoading ? 'is-loading' : '' }>
-				{ itRoutesCtx.error ? (
+				{ error ? (
 
-					<ErrorPage error={ itRoutesCtx.error } />
+					<ErrorPage error={ error } />
 
-				) : itRoutesCtx.initialData ? (
+				) : initialData ? (
 
-					<Switch>
+					<Switch key={ switchKey }>
 						<Route path='/it/dashboard' render={ () => (
-							<DashboardWithContext key={ 'a' + key } initialData={ itRoutesCtx.initialData } />
+							<DashboardPage initialData={ initialData } />
 						) } />
-						<Route path='/it/report' render={ () => itRoutesCtx.initialData.reportData && (
-							<ReportPage key={ 'a' + key } initialData={ itRoutesCtx.initialData.reportData } />
+						<Route path='/it/report' render={ () => initialData.reportData && (
+							<ReportPage initialData={ initialData.reportData } />
 						) } />
-						<Route path='/it/administration/:type/:other' render={ () => itRoutesCtx.initialData.administrationData && (
-							<AdministrationPage key={ 'b' + key } initialData={ itRoutesCtx.initialData.administrationData } />
+						<Route path='/it/administration/:type/:other' render={ () => initialData.administrationData && (
+							<AdministrationPage initialData={ initialData.administrationData } />
 						) } />
-						<Route path='/it/ticket/:type/:id' render={ () => itRoutesCtx.initialData.id && (
-							<TicketPageWithContext key={ 'c' + key } initialData={ itRoutesCtx.initialData } />
+						<Route path='/it/ticket/:type/:id' render={ () => initialData.id && (
+							<TicketPageWithContext initialData={ initialData } />
 						) } />
-						<Route path='/it/ticket/:type' render={ () => itRoutesCtx.initialData.searchData && (
-							<SearchPage key={ 'd' + key } initialData={ itRoutesCtx.initialData.searchData } />
+						<Route path='/it/ticket/:type' render={ () => initialData.searchData && (
+							<SearchPage initialData={ initialData.searchData } />
 						) } />
 					</Switch>
 
@@ -86,13 +130,13 @@ function ItRoutes() {
 			</Main$>
 
 		</Flex$>
-	</>);
+	</> );
 }
 
-function getQuery(searchLimit) {
-	if (location.pathname.isOneOf([ '/it/ticket/incidents', '/it/ticket/requests', '/it/ticket/changes' ])) {
-		const sortBy = localStorage.getItem('sortBy');
-		const sortOrder = localStorage.getItem('sortOrder');
+function getQuery ( searchLimit ) {
+	if ( location.pathname.isOneOf( [ '/it/ticket/incidents', '/it/ticket/requests', '/it/ticket/changes' ] ) ) {
+		const sortBy = localStorage.getItem( 'sortBy' );
+		const sortOrder = localStorage.getItem( 'sortOrder' );
 		return `?limit=${ searchLimit }&sort[sortBy]=${ sortBy }&sort[sortOrder]=${ sortOrder }`;
 	}
 	return location.search;

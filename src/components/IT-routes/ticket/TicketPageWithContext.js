@@ -12,16 +12,16 @@ export const STATUS = {
 	CLOSED: 'closed'
 };
 
-function TicketPageWithContext({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
-	const [ needToSave, setNeedToSave ] = useState(false);
-	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
-	const [ state, setState ] = useState(initialState);
-	const [ isOpened, setIsOpened ] = useState(false);
+function TicketPageWithContext ( { initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } } ) {
+	const [ needToSave, setNeedToSave ] = useState( false );
+	const [ worknotesHistory, setWorknotesHistory ] = useState( initialWorknotesHistory );
+	const [ state, setState ] = useState( initialState );
+	const [ isOpened, setIsOpened ] = useState( false );
 	const [ dataToPost, setDataToPost ] = useState();
-	const [ key, setKey ] = useState(Math.random());
-	const [ changedProps, setChangedProps ] = useState(new Set());
+	const [ key, setKey ] = useState( Math.random() );
+	const [ changedProps, setChangedProps ] = useState( new Set() );
 
-	useEffect(() => setKey(Math.random()), []);
+	useEffect( () => setKey( Math.random() ), [] );
 
 	const ticketCtx = new TicketCtxModel(
 		needToSave, setNeedToSave,
@@ -44,7 +44,7 @@ export default TicketPageWithContext;
 
 class TicketCtxModel {
 
-	constructor(
+	constructor (
 		needToSave, setNeedToSave,
 		worknotesHistory, setWorknotesHistory,
 		state, setState,
@@ -72,26 +72,25 @@ class TicketCtxModel {
 		};
 	}
 
-	handleChange(e) {
-		console.log(this);
+	handleChange ( e ) {
 		const { name, value } = e.target;
-		this.setNeedToSave(true);
+		this.setNeedToSave( true );
 
 		const changes = {
 			[ name ]: value
 		};
-		if (name === 'category')
+		if ( name === 'category' )
 			changes.subCategory = '';
-		else if (name === 'impact')
-			changes.priority = 'P' + Math.floor((parseInt(this.state.urgency) + parseInt(value)) / 2);
-		else if (name === 'urgency')
-			changes.priority = 'P' + Math.floor((parseInt(value) + parseInt(this.state.impact)) / 2);
+		else if ( name === 'impact' )
+			changes.priority = 'P' + Math.floor( ( parseInt( this.state.urgency ) + parseInt( value ) ) / 2 );
+		else if ( name === 'urgency' )
+			changes.priority = 'P' + Math.floor( ( parseInt( value ) + parseInt( this.state.impact ) ) / 2 );
 
-		Validate.setClassName(e.target, name, value);
+		Validate.setClassName( e.target, name, value );
 
-		this.setState({
+		this.setState( {
 			...this.state,
 			...changes
-		});
+		} );
 	}
 }

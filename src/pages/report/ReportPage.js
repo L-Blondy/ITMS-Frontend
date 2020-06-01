@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import React from 'react';
-import { ControlBar$$, Form$ } from '../';
-import { Button, ButtonControlBar$ } from '../../buttons';
-import { Select, InputAbsolute$ } from '../../inputs';
+import { ControlBar$$, Form$ } from '../../components/IT-routes';
+import { Button, ButtonControlBar$ } from '../../components/buttons';
+import { Select, InputLabelLeftAbs$ } from '../../components/inputs';
 
-function ReportPage() {
-	return (<>
+function ReportPage () {
+	return ( <>
 		<ControlBar$$>
 			<div />
 			<Button
 				styleAs={ ButtonControlBar$ }
-				onClick={ e => console.log(e.target) } >
+				onClick={ e => console.log( e.target ) } >
 				Run
 			</Button>
 		</ControlBar$$>
@@ -19,7 +19,7 @@ function ReportPage() {
 			<div className='columns-container'>
 				<div className='column'>
 
-					<Select styleAs={ InputAbsolute$ } label='Type' name='type'>
+					<Select styleAs={ InputLabelLeftAbs$ } label='Type' name='type'>
 						<option value=""> -none- </option>
 						<option value="incidents"> Incident </option>
 						<option value="requests"> Request </option>
@@ -29,11 +29,11 @@ function ReportPage() {
 				</div>
 			</div>
 		</Form$$>
-	</>);
+	</> );
 }
 
 export default ReportPage;
 
-const Form$$ = styled(Form$)`
+const Form$$ = styled( Form$ )`
 	flex-grow: 1;
 `;

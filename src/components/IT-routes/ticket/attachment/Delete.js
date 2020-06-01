@@ -4,24 +4,24 @@ import { BASE_URL } from '/BASE_URL';
 import { CLR } from '../../../../GlobalStyles';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { Button, ButtonDanger$ } from '../../../buttons';
-import { Input, InputFlexReverse$ } from '../../../inputs';
-import { FileData } from '../../../files';
+import { Input, InputLabelRight$ } from '../../../inputs';
+import { FileInfo } from '../../../files';
 
-function Delete({ method }) {
+function Delete ( { method } ) {
 
-	const attachmentCtx = useContext(AttachmentCtx);
+	const attachmentCtx = useContext( AttachmentCtx );
 
-	const handleSelectFile = (e) => {
-		if (e.target.checked) {
-			attachmentCtx.files.select(e.target.value);
+	const handleSelectFile = ( e ) => {
+		if ( e.target.checked ) {
+			attachmentCtx.files.select( e.target.value );
 		}
 		else {
-			attachmentCtx.files.deselect(e.target.value);
+			attachmentCtx.files.deselect( e.target.value );
 		}
 	};
 
 	const handleConfirmDelete = () => {
-		attachmentCtx.request.setStatus({ state: XHR.LOADING });
+		attachmentCtx.request.setStatus( { state: XHR.LOADING } );
 		attachmentCtx.files.delete();
 	};
 
@@ -29,16 +29,22 @@ function Delete({ method }) {
 		<Form$ method={ method } onSubmit={ e => e.preventDefault() }>
 
 			<ul className='file-list'>
-				{ attachmentCtx.files.list.map((fileData, i) => (
+				{ attachmentCtx.files.list.map( ( fileData, i ) => (
 					<li key={ fileData.name + i }>
 						<Input
-							styleAs={ InputFlexReverse$ }
+							styleAs={ InputLabelRight$ }
 							className='file-select'
 							type='checkbox'
-							name='file'
+							name={ fileData.name }
 							value={ fileData.name }
 							onChange={ handleSelectFile }
-							label={ <FileData data={ fileData } /> }
+							label={
+								<FileInfo
+									as='label'
+									htmlFor={ fileData.name }
+									data={ fileData }
+								/>
+							}
 						/>
 
 						<a href={ BASE_URL + location.pathname + '/' + fileData.name }
@@ -47,12 +53,12 @@ function Delete({ method }) {
 							view
 						</a>
 					</li>
-				)) }
+				) ) }
 			</ul>
 
 			<Button
 				styleAs={ ButtonDanger$ }
-				className={ 'delete-btn ' + disabledOrNothing(attachmentCtx) }
+				className={ 'delete-btn ' + disabledOrNothing( attachmentCtx ) }
 				warning={ { disableBg: true } }
 				onConfirm={ handleConfirmDelete }>
 				Remove
@@ -64,7 +70,7 @@ function Delete({ method }) {
 
 export default Delete;
 
-function disabledOrNothing(attachmentCtx) {
+function disabledOrNothing ( attachmentCtx ) {
 	return !attachmentCtx.files.selected.length ? 'disabled' : '';
 }
 

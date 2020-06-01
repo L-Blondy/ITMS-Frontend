@@ -8,59 +8,57 @@ import { BASE_URL } from '/BASE_URL';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
 import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../buttons';
 
-function Categories({ categories }) {
+function Categories ( { categories } ) {
 
-	const itRoutesCtx = useContext(ItRoutesCtx);
+	const itRoutesCtx = useContext( ItRoutesCtx );
 	const [ selectedItem, setSelectedItem ] = useState();
-	const [ state, setState ] = useState(categories);
-	const [ key, setKey ] = useState(Math.random());
+	const [ state, setState ] = useState( categories );
+	const [ key, setKey ] = useState( Math.random() );
 	const params = useParams();
 
 
-	useEffect(() => {
-		setKey(Math.random());
-	}, [ state ]);
+	useEffect( () => {
+		setKey( Math.random() );
+	}, [ state ] );
 
 	const pageTitle = () => {
 		const { type } = params;
 
-		switch (type) {
-			case 'incidents':
-				return 'Incident categories';
-			case 'requests':
-				return 'Request categories';
-			case 'changes':
-				return 'Change categories';
+		const dictionary = {
+			'incidents': 'Incident categories',
+			'requests': 'Request categories',
+			'changes': 'Change categories'
 		}
+		return dictionary[ type ]
 	};
 
-	const updateCat = (catState) => {
-		const nextState = catState.reduce((result, cat) => {
+	const updateCat = ( catState ) => {
+		const nextState = catState.reduce( ( result, cat ) => {
 			result[ cat ] = [ ...state[ cat ] || [] ];
 			return result;
-		}, {});
-		setState(nextState);
+		}, {} );
+		setState( nextState );
 	};
 
-	const updateSubCat = (subCatState) => {
-		setState({
+	const updateSubCat = ( subCatState ) => {
+		setState( {
 			...state,
 			[ selectedItem ]: subCatState
-		});
+		} );
 	};
 
 	const saveChanges = () => {
-		itRoutesCtx.page.setIsLoading(true);
+		itRoutesCtx.page.setIsLoading( true );
 
 		http()
-			.post(BASE_URL + location.pathname, state)
-			.then(res => {
-				itRoutesCtx.page.setIsLoading(false);
-			})
-			.catch(err => {
-				console.log(err);
-				itRoutesCtx.page.setIsLoading(false);
-			});
+			.post( BASE_URL + location.pathname, state )
+			.then( res => {
+				itRoutesCtx.page.setIsLoading( false );
+			} )
+			.catch( err => {
+				console.log( err );
+				itRoutesCtx.page.setIsLoading( false );
+			} );
 	};
 
 	return (
@@ -73,7 +71,7 @@ function Categories({ categories }) {
 					<Column
 						name='categories'
 						key={ 'a' + key }
-						items={ Object.keys(state) }
+						items={ Object.keys( state ) }
 						setSelectedItem={ setSelectedItem }
 						selectedItem={ selectedItem }
 						updateState={ updateCat }

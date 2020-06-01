@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { CLR } from '../../GlobalStyles';
 
-const InputCommon$ = styled.label`
+const InputCommon$ = styled.span`
 	position: relative;
 	
 	input, textarea, select {

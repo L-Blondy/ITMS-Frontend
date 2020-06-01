@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Settings({ closeSettings }) {
+function Settings ( { when = false, close } ) {
+
+	if ( !when ) return null
+
 	return (
 		<Settings$>
 			<div className="header">
 				<div>Settings</div>
-				<button className='close' onClick={ closeSettings }>X</button>
+				<button className='close' onClick={ close }>X</button>
 			</div>
 
 			<div className='main'>
@@ -43,9 +46,5 @@ const Settings$ = styled.div`
 		margin: 0;
 		border: none;
 		background: none;
-	}
-
-	.main {
-
 	}
 `;

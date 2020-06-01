@@ -2,7 +2,7 @@ import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import Input from './Input';
 
-function Textarea(props) {
+function Textarea ( props ) {
 	return <Input as={ TextareaAutosize } { ...props } />;
 }
 

@@ -4,41 +4,41 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils';
 import { CLR } from '../../../GlobalStyles';
 
-function ColumnData({ tickets, propName }) {
+function ColumnData ( { tickets, field } ) {
 
-	return tickets.reduce((columnData, ticket, i) => {
-		let value = ticket[ propName ];
+	return tickets.reduce( ( columnData, ticket, i ) => {
+		let value = ticket[ field ];
 		const isDate = typeof value === 'number' && value > 10 ** 12;
 		const isObject = typeof value === 'object';
 
-		if (isDate)
-			value = formatDate(value);
-		else if (isObject)
-			value = JSON.stringify(value);
+		if ( isDate )
+			value = formatDate( value );
+		else if ( isObject )
+			value = JSON.stringify( value );
 
-		if (propName === 'id')
+		if ( field === 'id' )
 			columnData.push(
 				<Span$
 					as={ Link$ }
 					to={ location.pathname + '/' + value }
-					key={ 'b' + propName + i }>
+					key={ 'b' + field + i }>
 					{ value }
 				</Span$>
 			);
 		else
 			columnData.push(
-				<Span$ key={ 'c' + propName + i }>
+				<Span$ key={ 'c' + field + i }>
 					<div className='value'>{ value }</div>
 					<div className='tooltip'>{ value }</div>
 				</Span$>
 			);
 		return columnData;
-	}, []);
+	}, [] );
 };
 
 export default ColumnData;
 
-const Link$ = styled(Link)`
+const Link$ = styled( Link )`
 	color: inherit;
 	text-decoration: underline;
 `;

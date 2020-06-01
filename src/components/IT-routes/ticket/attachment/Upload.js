@@ -6,21 +6,22 @@ import { UserCtx } from '../../../../GlobalContext';
 import { AttachmentCtx, XHR } from './AttachmentWithContext';
 import { Button, ButtonPrimary$, ButtonUpload$ } from '../../../buttons';
 
-function UploadForm({ method, encType }) {
+function UploadForm ( { method, encType } ) {
 
-	const userCtx = useContext(UserCtx);
-	const attachmentCtx = useContext(AttachmentCtx);
+	const userCtx = useContext( UserCtx );
+	const attachmentCtx = useContext( AttachmentCtx );
 
-	const uploadFile = (e) => {
+	const uploadFile = ( e ) => {
 		e.preventDefault();
-		if (!attachmentCtx.files.chosen)
+		console.log( e )
+		if ( !attachmentCtx.files.chosen )
 			return;
 
 		const formData = new FormData();
-		formData.append("file", attachmentCtx.files.chosen);
-		formData.append("user", userCtx.name);
-		attachmentCtx.request.setStatus({ state: XHR.LOADING });
-		attachmentCtx.files.upload(formData);
+		formData.append( "file", attachmentCtx.files.chosen );
+		formData.append( "user", userCtx.name );
+		attachmentCtx.request.setStatus( { state: XHR.LOADING } );
+		attachmentCtx.files.upload( formData );
 	};
 
 	return (
@@ -43,13 +44,14 @@ function UploadForm({ method, encType }) {
 					id='file'
 					name='file'
 					type='file'
-					onChange={ e => attachmentCtx.files.setChosen(e.target.files[ 0 ]) }
+					onChange={ e => attachmentCtx.files.setChosen( e.target.files[ 0 ] ) }
 				/>
 			</label>
 
 			<Button
+				type='submit'
 				styleAs={ ButtonUpload$ }
-				className={ enabledOrDisabled(attachmentCtx) }
+				className={ enabledOrDisabled( attachmentCtx ) }
 			/>
 		</Form$>
 	);
@@ -57,8 +59,8 @@ function UploadForm({ method, encType }) {
 
 export default UploadForm;
 
-function enabledOrDisabled(attachmentCtx) {
-	if (attachmentCtx.files.chosen && !attachmentCtx.files.list.includes(attachmentCtx.files.chosen.name))
+function enabledOrDisabled ( attachmentCtx ) {
+	if ( attachmentCtx.files.chosen && !attachmentCtx.files.list.includes( attachmentCtx.files.chosen.name ) )
 		return 'enabled';
 	return 'disabled';
 }

@@ -1,1 +1,1 @@
-export { default as FileData } from './FileData';
+export { default as FileInfo } from './FileInfo';

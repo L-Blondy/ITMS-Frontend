@@ -1,25 +1,48 @@
 import React, { useState } from 'react';
 
-function Input({ as = 'input', styleAs: StyleAs = 'label', errorMessage, label, name, className, children, defaultValue, ...props }) {
-	const RenderAs = as;
+const Input = React.forwardRef( ( {
+	as: Input = 'input',
+	styleAs: Span$ = 'span',
+	errorMessage,
+	label,
+	name,
+	className,
+	defaultValue,
+	onChange,
+	...props
+}, ref ) => {
 
-	const [ value, setValue ] = useState(defaultValue || '');
+	const [ value, setValue ] = useState( defaultValue || '' );
+
+	const Label = ( { htmlFor } ) => {
+		if ( typeof label === 'string' )
+			return <label htmlFor={ htmlFor }>{ label }</label>
+		return label || null
+	}
+
+	const handleChange = ( e ) => {
+		setValue( e.target.value )
+		onChange && onChange( e )
+	}
 
 	return (
-		<StyleAs className={ className }>
-			{ typeof label === 'string' ? <span>{ label }</span> : label }
+		<Span$ className={ 'labelled-input ' + className }>
 
-			<RenderAs
+			<Label htmlFor={ name } />
+
+			<Input
 				name={ name }
+				id={ name }
 				value={ value }
-				onChange={ e => setValue(e.target.value) }
-				{ ...props }>
-				{ children }
-			</RenderAs>
+				ref={ ref }
+				{ ...props }
+				onChange={ handleChange }
+			/>
 
 			{ errorMessage && <div>{ errorMessage }</div> }
-		</StyleAs>
+
+		</Span$>
 	);
-}
+} )
 
 export default Input;
