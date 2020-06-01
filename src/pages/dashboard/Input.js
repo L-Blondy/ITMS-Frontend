@@ -23,7 +23,9 @@ const Input = React.forwardRef(({
 	};
 
 	const setValidationErrors = () => {
-		validation && setErrors(validation.getErrors(input.current));
+		const errorMessages = validation.getErrors(input.current);
+		validation && setErrors(errorMessages);
+		return errorMessages.length;
 	};
 
 	const handleChange = (e) => {

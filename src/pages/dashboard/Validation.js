@@ -1,14 +1,13 @@
 class Validation {
 
-	constructor(form, requirements) {
+	constructor(requirements) {
 		this.requirements = requirements;
-		this.form = form;
 	}
 
 	getErrors(input) {
-		console.log(this.form.current.elements);
 		const { name, value } = input;
 		const inputRequirements = this.requirements[ name ];
+		if (!inputRequirements) console.error(`No requirements were set for input ${ name }`);
 		let errors = [];
 
 		for (let requirement in inputRequirements) {

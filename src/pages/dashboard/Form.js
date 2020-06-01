@@ -6,8 +6,18 @@ const Form = React.forwardRef(({ validation, ...props }, ref) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const elements = [].slice.call(e.target.elements);
-		elements.forEach(el => el.setErrors && el.setErrors());
+		const errorCount = validate(e.target);
+		if (errorCount) return;
+		console.log('submit');
+	};
+	const validate = (form) => {
+		const elements = [].slice.call(form.elements);
+		return elements.reduce((errorCount, el) => {
+			if (!el.setErrors) return errorCount;
+			errorCount += el.setErrors();
+			console.log(errorCount);
+			return errorCount;
+		}, 0);
 	};
 
 	return (
@@ -38,8 +48,18 @@ const Form = React.forwardRef(({ validation, ...props }, ref) => {
 				style={ { width: 'auto' } }
 			/>
 			<button />
+			<br />
+			<br />
+			<Input
+				name='test4'
+				label='test4'
+				validation={ validation }
+				styleAs={ InputLabelLeft$ }
+				style={ { width: 'auto' } }
+			/>
+			<button />
 		</form>
 	);
 });
-//test
+
 export default Form;

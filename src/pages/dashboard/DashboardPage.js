@@ -6,11 +6,10 @@ import requirements from './requirements.json';
 
 function DashboardPage() {
 
-	const form = useRef();
-	const validation = new Validation(form, requirements);
+	const validation = new Validation(requirements);
 	return (
 		<div>
-			<Form ref={ form } validation={ validation } />
+			<Form validation={ validation } />
 		</div>
 	);
 }
