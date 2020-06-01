@@ -14,4 +14,4 @@ const formatDate = (rawDate, timeZone) => {
 
 export default formatDate;
 
-console.log(timeZones);
+// console.log(timeZones);
