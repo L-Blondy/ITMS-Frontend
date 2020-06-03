@@ -1,6 +1,7 @@
 class Validation {
 
-	constructor(requirements) {
+	constructor(form, requirements) {
+		this.form = form;
 		this.requirements = requirements;
 		this.errorCount = 0;
 	}
@@ -8,6 +9,7 @@ class Validation {
 	getErrors(input) {
 		const { name, value } = input;
 		const inputRequirements = this.requirements[ name ];
+		console.log(name);
 		if (!inputRequirements) console.error(`No requirements were set for input ${ name }`);
 		let errors = [];
 
@@ -20,8 +22,8 @@ class Validation {
 		return errors;
 	}
 
-	validateElements(form) {
-		const elements = [].slice.call(form.elements);
+	validateElements() {
+		const elements = [].slice.call(this.form.current.elements);
 		this.errorCount = elements.reduce((errorCount, el) => {
 			if (!el.setErrors) return errorCount;
 			errorCount += el.setErrors();

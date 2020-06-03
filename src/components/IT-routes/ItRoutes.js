@@ -6,12 +6,13 @@ import { DashboardPage } from '../../pages/dashboard';
 import { ReportPage } from '../../pages/report';
 import { ItRoutesCtx } from './ItRoutesWithContext';
 import { TicketPage } from '../../pages/ticket';
-import { AdministrationPage } from './administration';
-import { SearchPage } from './search';
+import { AdministrationPage } from '../../pages/administration';
+import { SearchPage } from '../../pages/search';
 import { UserCtx } from '../../GlobalContext';
+import { Navbar, Sidebar } from '../navs';
+import { FlexRow$, FlexCol$ } from '../flex';
 import { BASE_URL } from '/BASE_URL';
 import http from '../../utils/http';
-import { Nav, Navbar$, Sidebar$ } from '../navs';
 
 function ItRoutes() {
 
@@ -48,88 +49,40 @@ function ItRoutes() {
 			close={ () => itRoutesCtx.settings.setAreOpened(false) }
 		/>
 
-		<Nav styleAs={ Navbar$ }>
-			<ul>
-				<li>
-					<NavLink className='navlink' to='/it/dashboard'>Dashboard</NavLink>
-				</li>
-				<li>
-					<NavLink className='navlink' to='/it/administration'>Administration</NavLink>
-				</li>
-				<li>
-					<NavLink className='navlink' to='/it/sdfff'>Anywhere</NavLink>
-				</li>
+		<ColViewport$>
+			<Navbar />
 
-				<button className="settings" onClick={ () => itRoutesCtx.settings.setAreOpened(true) }>Settings</button>
-			</ul>
-		</Nav>
+			<FlexRow$$>
+				<Sidebar />
+				<FlexCol$$ className={ itRoutesCtx.page.isLoading ? 'is-loading' : '' }>
+					{ error ? (
 
-		<Flex$>
+						<ErrorPage error={ error } />
 
-			<Nav styleAs={ Sidebar$ }>
-				<ul>
-					<li>
-						<NavLink to='/it/report'>Report</NavLink>
-					</li>
-					<li>
-						<NavLink to='/it/ticket/incidents/new'>Open Incident</NavLink>
-					</li>
-					<li>
-						<NavLink to='/it/ticket/requests/new'>Open Request</NavLink>
-					</li>
-					<li>
-						<NavLink to='/it/ticket/changes/new'>Open Change</NavLink>
-					</li>
-					<li>
-						<NavLink to='/it/administration/incidents/categories'>Incident Cat</NavLink>
-					</li>
-					<li>
-						<NavLink to='/it/administration/requests/categories'>Request Cat</NavLink>
-					</li>
-					<li>
-						<NavLink to='/it/administration/changes/categories'>Change Cat</NavLink>
-					</li>
-					<li>
-						<NavLink to={ `/it/ticket/incidents` }>Incident Search </NavLink>
-					</li>
-					<li>
-						<NavLink to={ `/it/ticket/requests` }>Request Search</NavLink>
-					</li>
-					<li>
-						<NavLink to={ `/it/ticket/changes` }>Change Search</NavLink>
-					</li>
-				</ul>
-			</Nav>
+					) : initialData ? (
 
-			<Main$ className={ itRoutesCtx.page.isLoading ? 'is-loading' : '' }>
-				{ error ? (
+						<Switch key={ switchKey }>
+							<Route path='/it/dashboard' render={ () => (
+								<DashboardPage initialData={ initialData } />
+							) } />
+							<Route path='/it/report' render={ () => initialData.reportData && (
+								<ReportPage initialData={ initialData.reportData } />
+							) } />
+							<Route path='/it/administration/:type/:other' render={ () => initialData.administrationData && (
+								<AdministrationPage initialData={ initialData.administrationData } />
+							) } />
+							<Route path='/it/ticket/:type/:id' render={ () => initialData.id && (
+								<TicketPage initialData={ initialData } />
+							) } />
+							<Route path='/it/ticket/:type' render={ () => initialData.searchData && (
+								<SearchPage initialData={ initialData.searchData } />
+							) } />
+						</Switch>
 
-					<ErrorPage error={ error } />
-
-				) : initialData ? (
-
-					<Switch key={ switchKey }>
-						<Route path='/it/dashboard' render={ () => (
-							<DashboardPage initialData={ initialData } />
-						) } />
-						<Route path='/it/report' render={ () => initialData.reportData && (
-							<ReportPage initialData={ initialData.reportData } />
-						) } />
-						<Route path='/it/administration/:type/:other' render={ () => initialData.administrationData && (
-							<AdministrationPage initialData={ initialData.administrationData } />
-						) } />
-						<Route path='/it/ticket/:type/:id' render={ () => initialData.id && (
-							<TicketPage initialData={ initialData } />
-						) } />
-						<Route path='/it/ticket/:type' render={ () => initialData.searchData && (
-							<SearchPage initialData={ initialData.searchData } />
-						) } />
-					</Switch>
-
-				) : '' }
-			</Main$>
-
-		</Flex$>
+					) : '' }
+				</FlexCol$$>
+			</FlexRow$$>
+		</ColViewport$>
 	</>);
 }
 
@@ -144,7 +97,11 @@ function getQuery(searchLimit) {
 
 export default ItRoutes;
 
-const Flex$ = styled.div`
+const ColViewport$ = styled(FlexCol$)`
+	height: 100%;
+`;
+
+const FlexRow$$ = styled(FlexRow$)`
 	display: flex;
 	flex-grow: 1;
 	max-height: calc(100% - 80px);
@@ -152,7 +109,8 @@ const Flex$ = styled.div`
 	overflow: hidden;
 `;
 
-const Main$ = styled.div`
+const FlexCol$$ = styled(FlexCol$)`
+	flex-basis: 0;
 	flex-grow: 1;
 	overflow: hidden;
 	display: flex;

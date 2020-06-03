@@ -6,6 +6,7 @@ const ControlBar$ = styled.nav`
 	justify-content:space-between;
 	background-color: ${ CLR.BACKGROUND.LIGHT };
 	padding: 0.5rem 1rem 0.5rem 0.8rem;
+	width: 100%;
 
 	.controls {
 		height: 100%;

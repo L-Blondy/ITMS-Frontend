@@ -3,9 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { requirements, setPriority } from './';
 import { Input, Select, Textarea, InputLabelLeftAbs$ } from '../../components/inputs';
 import { Validation, formatDate } from '../../utils';
-import { Row$, Col12$, Col12md6$ } from '../../components/grid';
+import { FlexRow$, FlexCol$ } from '../../components/flex';
 
-function Form({ initialState }) {
+const Form = React.forwardRef(({ initialState, validation }, ref) => {
 
 	const [ category, setCategory ] = useState(initialState.category);
 	const [ subCategory, setSubCategory ] = useState(initialState.subCategory);
@@ -13,13 +13,14 @@ function Form({ initialState }) {
 	const { assignedTo, assignmentGroup, categories, createdOn, description, dueDate, escalation, id, impact, instructions, log, priority, status, updatedOn, urgency } = initialState;
 
 	return (
-		<Row$$ as='form'>
-			<Col12md6$$>
+		<FlexRow$$ ref={ ref } as='form'>
+			<FlexCol$$ className='sm-6'>
 				<Input
 					styleAs={ InputLabelLeftAbs$ }
 					label='Number'
 					name='id'
 					type='text'
+					validation={ validation }
 					defaultValue={ id }
 					disabled
 				/>
@@ -55,6 +56,7 @@ function Form({ initialState }) {
 					styleAs={ InputLabelLeftAbs$ }
 					label='Category'
 					name='category'
+					validation={ validation }
 					value={ category }
 					onChange={ (e) => { setCategory(e.target.value); setSubCategory(''); } }>
 					<option value=''>-none-</option>
@@ -67,6 +69,7 @@ function Form({ initialState }) {
 					styleAs={ InputLabelLeftAbs$ }
 					label='Sub category'
 					name='subCategory'
+					validation={ validation }
 					value={ subCategory }
 					onChange={ e => setSubCategory(e.target.value) }>
 					<option value=''>-none-</option>
@@ -74,9 +77,9 @@ function Form({ initialState }) {
 						<option value={ cat } key={ cat }>{ cat }</option>
 					)) }
 				</Select>
-			</Col12md6$$>
+			</FlexCol$$>
 
-			<Col12md6$$>
+			<FlexCol$$ className='sm-6'>
 				<Input
 					styleAs={ InputLabelLeftAbs$ }
 					label='Status'
@@ -127,6 +130,7 @@ function Form({ initialState }) {
 					styleAs={ InputLabelLeftAbs$ }
 					label='Assignment group'
 					name='assignmentGroup'
+					validation={ validation }
 					type='text'
 					defaultValue={ assignmentGroup }
 					autoComplete="off"
@@ -136,17 +140,19 @@ function Form({ initialState }) {
 					styleAs={ InputLabelLeftAbs$ }
 					label='Assigned to'
 					name='assignedTo'
+					validation={ validation }
 					type='text'
 					defaultValue={ assignedTo }
 					autoComplete="off"
 				/>
-			</Col12md6$$>
+			</FlexCol$$>
 
-			<Col12$$>
+			<ColFullWidth$ className='xs-12'>
 				<Input
 					styleAs={ InputLabelLeftAbs$ }
 					label='Description'
 					name='description'
+					validation={ validation }
 					type='text'
 					defaultValue={ description }
 					autoComplete="off"
@@ -156,11 +162,13 @@ function Form({ initialState }) {
 					styleAs={ InputLabelLeftAbs$ }
 					label='Instructions'
 					name='instructions'
+					validation={ validation }
 					type='text'
 					defaultValue={ instructions }
 					minRows={ 5 }
 					maxRows={ 20 }
 					autoComplete="off"
+					spellCheck="off"
 				/>
 
 				{ !/new$/.test(location.pathname) ? (
@@ -175,27 +183,27 @@ function Form({ initialState }) {
 						autoComplete="off"
 					/>
 				) : '' }
-			</Col12$$>
-		</Row$$>
+			</ColFullWidth$>
+		</FlexRow$$>
 	);
-}
+});
 
 export default Form;
 
-const Row$$ = styled(Row$)`
+const FlexRow$$ = styled(FlexRow$)`
 	margin-left: auto;
 	margin-right: auto;
 	width: 70%;
 `;
 
-const Col12md6$$ = styled(Col12md6$)`
+const FlexCol$$ = styled(FlexCol$)`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 
 	&:nth-child(even){
-		align-items: flex-end
-	;}
+		align-items: flex-end;
+	}
 
 	> * {
 		margin-top: 1rem;
@@ -204,10 +212,8 @@ const Col12md6$$ = styled(Col12md6$)`
 	}
 `;
 
-const Col12$$ = styled(Col12$)`
-	> * {
-		margin-top: 1rem;
-		margin-bottom: 0.3rem;
-		width: 250px;
+const ColFullWidth$ = styled(FlexCol$$)`
+	> *  {
+		width: 100% !important;
 	}
 `;

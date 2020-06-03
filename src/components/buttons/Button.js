@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Warning } from '../';
 
-function Button ( {
+function Button({
 	styleAs: Button$ = 'button',
 	type = 'button',
 	isVisible = true,
@@ -11,24 +11,31 @@ function Button ( {
 	className,
 	tag: Tag = 'button',
 	...props
-} ) {
-	if ( !isVisible ) return <div />;
+}) {
+	if (!isVisible) return <div />;
 
-	const [ isWarning, setIsWarning ] = useState( false );
+	const [ isWarning, setIsWarning ] = useState(false);
+	const event = useRef();
 
-	const handleChoice = ( isConfirmed ) => {
-		setIsWarning( false );
-		if ( isConfirmed ) {
-			onConfirm();
+	const handleChoice = (isConfirmed) => {
+		setIsWarning(false);
+		if (isConfirmed) {
+			onConfirm(event.current);
 		}
 	};
 
-	const handleClick = ( e ) => {
-		onClick && onClick( e );
-		onConfirm && setIsWarning( true );
+	const handleClick = (e) => {
+		if (onClick) {
+			onClick(e);
+		}
+		if (onConfirm) {
+			e.persist();
+			event.current = e;
+			setIsWarning(true);
+		}
 	};
 
-	return ( <>
+	return (<>
 		<Warning
 			when={ isWarning }
 			title={ warning.title }
@@ -44,7 +51,7 @@ function Button ( {
 			onClick={ handleClick }
 			{ ...props }
 		/>
-	</> );
+	</>);
 };
 
 export default Button;

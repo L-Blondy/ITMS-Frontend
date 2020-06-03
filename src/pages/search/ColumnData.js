@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../../utils';
-import { CLR } from '../../../GlobalStyles';
+import { formatDate } from '../../utils';
+import { CLR } from '../../GlobalStyles';
 
-function ColumnData ( { tickets, field } ) {
+function ColumnData({ tickets, field }) {
 
-	return tickets.reduce( ( columnData, ticket, i ) => {
+	return tickets.reduce((columnData, ticket, i) => {
 		let value = ticket[ field ];
 		const isDate = typeof value === 'number' && value > 10 ** 12;
 		const isObject = typeof value === 'object';
 
-		if ( isDate )
-			value = formatDate( value );
-		else if ( isObject )
-			value = JSON.stringify( value );
+		if (isDate)
+			value = formatDate(value);
+		else if (isObject)
+			value = JSON.stringify(value);
 
-		if ( field === 'id' )
+		if (field === 'id')
 			columnData.push(
 				<Span$
 					as={ Link$ }
@@ -33,12 +33,12 @@ function ColumnData ( { tickets, field } ) {
 				</Span$>
 			);
 		return columnData;
-	}, [] );
+	}, []);
 };
 
 export default ColumnData;
 
-const Link$ = styled( Link )`
+const Link$ = styled(Link)`
 	color: inherit;
 	text-decoration: underline;
 `;

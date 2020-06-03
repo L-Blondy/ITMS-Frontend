@@ -1,9 +1,9 @@
 import React from 'react';
-import { FlexGrid$ } from '../../grid';
 import { ColumnData } from '.';
-import { Input, InputBoxAround$ } from '../../inputs';
-import { Button, ButtonSortBy$ } from '../../buttons';
-import { formatFieldName, toQueryObject } from '../../../utils';
+import { FlexGrid$ } from '../../components/grid';
+import { Input, InputBoxAround$ } from '../../components/inputs';
+import { Button, ButtonSortBy$ } from '../../components/buttons';
+import { formatFieldName, toQueryObject } from '../../utils';
 
 function FlexSearchGrid({ fields, results, pageSize, onSubmitQuery, query: previousQuery }) {
 

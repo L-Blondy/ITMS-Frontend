@@ -5,10 +5,12 @@ import requirements from './requirements.json';
 
 function DashboardPage() {
 
-	const validation = new Validation(requirements);
+	const form = useRef();
+
+	const validation = new Validation(form, requirements);
 	return (
 		<div>
-			<Form validation={ validation } />
+			<Form ref={ form } validation={ validation } />
 		</div>
 	);
 }

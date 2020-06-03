@@ -1,0 +1,8 @@
+{
+	"NEW": "new",
+	"QUEUED": "queued",
+	"IN_PROGRESS": "in progress",
+	"ON_HOLD": "on hold",
+	"RESOLVED": "resolved",
+	"CLOSED": "closed"
+}

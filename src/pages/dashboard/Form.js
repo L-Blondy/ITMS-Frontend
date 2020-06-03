@@ -6,7 +6,7 @@ const Form = React.forwardRef(({ validation, ...props }, ref) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		validation.validateElements(e.target);
+		validation.validateElements();
 		if (validation.hasErrors) return;
 		console.log('submit');
 	};

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Validate } from '../../../utils';
+import { Validate } from '../../../polyfills';
 import { UserCtx } from '../../../GlobalContext';
 import { CLR } from '../../../GlobalStyles';
 import * as SRC from '/assets/icons';

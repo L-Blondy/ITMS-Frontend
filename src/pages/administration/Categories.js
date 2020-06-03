@@ -3,23 +3,24 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Column } from '.';
 import { bigArrow } from '/assets/icons';
-import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
-import { ItRoutesCtx } from '../ItRoutesWithContext';
-import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../buttons';
+import { http } from '../../utils';
+import { ItRoutesCtx } from '../../components/IT-routes/ItRoutesWithContext';
+import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../components/buttons';
+import { FlexRow$, FlexCol$ } from '../../components/flex';
 
-function Categories ( { categories } ) {
+function Categories({ categories }) {
 
-	const itRoutesCtx = useContext( ItRoutesCtx );
+	const itRoutesCtx = useContext(ItRoutesCtx);
 	const [ selectedItem, setSelectedItem ] = useState();
-	const [ state, setState ] = useState( categories );
-	const [ key, setKey ] = useState( Math.random() );
+	const [ state, setState ] = useState(categories);
+	const [ key, setKey ] = useState(Math.random());
 	const params = useParams();
 
 
-	useEffect( () => {
-		setKey( Math.random() );
-	}, [ state ] );
+	useEffect(() => {
+		setKey(Math.random());
+	}, [ state ]);
 
 	const pageTitle = () => {
 		const { type } = params;
@@ -28,55 +29,57 @@ function Categories ( { categories } ) {
 			'incidents': 'Incident categories',
 			'requests': 'Request categories',
 			'changes': 'Change categories'
-		}
-		return dictionary[ type ]
+		};
+		return dictionary[ type ];
 	};
 
-	const updateCat = ( catState ) => {
-		const nextState = catState.reduce( ( result, cat ) => {
+	const updateCat = (catState) => {
+		const nextState = catState.reduce((result, cat) => {
 			result[ cat ] = [ ...state[ cat ] || [] ];
 			return result;
-		}, {} );
-		setState( nextState );
+		}, {});
+		setState(nextState);
 	};
 
-	const updateSubCat = ( subCatState ) => {
-		setState( {
+	const updateSubCat = (subCatState) => {
+		setState({
 			...state,
 			[ selectedItem ]: subCatState
-		} );
+		});
 	};
 
 	const saveChanges = () => {
-		itRoutesCtx.page.setIsLoading( true );
+		itRoutesCtx.page.setIsLoading(true);
 
 		http()
-			.post( BASE_URL + location.pathname, state )
-			.then( res => {
-				itRoutesCtx.page.setIsLoading( false );
-			} )
-			.catch( err => {
-				console.log( err );
-				itRoutesCtx.page.setIsLoading( false );
-			} );
+			.post(BASE_URL + location.pathname, state)
+			.then(res => {
+				itRoutesCtx.page.setIsLoading(false);
+			})
+			.catch(err => {
+				console.log(err);
+				itRoutesCtx.page.setIsLoading(false);
+			});
 	};
 
 	return (
-		<Categories$>
+		<FlexCol$$>
 			<div className='wrapper'>
 
-				<h2 className='title'>{ pageTitle() }</h2>
+				<FlexRow$ as='h2' className='title'>{ pageTitle() }</FlexRow$>
 
-				<div className='columns'>
+				<FlexRow$ className='columns'>
 					<Column
 						name='categories'
 						key={ 'a' + key }
-						items={ Object.keys( state ) }
+						items={ Object.keys(state) }
 						setSelectedItem={ setSelectedItem }
 						selectedItem={ selectedItem }
 						updateState={ updateCat }
 					/>
+
 					<img className='big-arrow' src={ bigArrow } alt='=>' />
+
 					<Column
 						name='sub-categories'
 						key={ 'b' + key }
@@ -84,40 +87,29 @@ function Categories ( { categories } ) {
 						selectedItem={ selectedItem }
 						updateState={ updateSubCat }
 					/>
-				</div>
+				</FlexRow$>
 
-				<span className='controls'>
+				<FlexRow$ className='controls'>
 					<Button styleAs={ ButtonPrimary$ } onClick={ saveChanges }>Save</Button>
 					<Button styleAs={ ButtonSecondary$ }>Cancel</Button>
-				</span>
+				</FlexRow$>
 			</div>
-		</Categories$>
+		</FlexCol$$>
 	);
 }
 
 export default Categories;
 
-
-const Categories$ = styled.div`
+const FlexCol$$ = styled(FlexCol$)`
 	height: 100%;
-	display: flex;
 	justify-content: center;
-
-	.wrapper {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
+	align-items: center;
 
 	.title {
 		font-weight: normal;
 	}
-	
+
 	.columns {
-		display: flex;
-		justify-content: space-between;
-		height: 0%;
-		min-height: 400px;
 		margin: 1.5rem 0;
 	}
 
@@ -128,7 +120,8 @@ const Categories$ = styled.div`
 	}
 
 	.controls {
-		margin: 2rem auto;
+		justify-content: center;
+		margin: 2rem 0;
 		
 		button {
 			margin: 0.3em;
@@ -137,5 +130,4 @@ const Categories$ = styled.div`
 			border-radius: 3px;
 		}
 	}
-
 `;

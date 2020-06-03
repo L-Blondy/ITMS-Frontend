@@ -15,6 +15,10 @@ const Input = React.forwardRef(({
 	const [ value, setValue ] = useState(defaultValue || '');
 	const [ errors, setErrors ] = useState([]);
 	let input = ref || useRef();
+	useEffect(() => {
+		console.log(input.current.name);
+		input.current = document.getElementById(name);
+	}, []);
 
 	const Label = ({ htmlFor }) => {
 		if (typeof label === 'string')
@@ -23,6 +27,7 @@ const Input = React.forwardRef(({
 	};
 
 	const setValidationErrors = () => {
+		console.log(name);
 		if (!validation) return;
 		const errorMessages = validation.getErrors(input.current);
 		validation && setErrors(errorMessages);

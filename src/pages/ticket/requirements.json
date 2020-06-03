@@ -5,13 +5,19 @@
 	"description": {
 		"required": true
 	},
+	"category": {
+		"required": true
+	},
+	"subCategory": {
+		"required": true
+	},
 	"instructions": {
 		"required": true
 	},
 	"assignmentGroup": {
 		"required": true
 	},
-	"assignmedTo": {
+	"assignedTo": {
 		"required": true
 	}
 }

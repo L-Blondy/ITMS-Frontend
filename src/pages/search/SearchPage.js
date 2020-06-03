@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { UserCtx } from '../../../GlobalContext';
-import { ItRoutesCtx } from '../ItRoutesWithContext';
-import { Skipper } from '../../skipper';
-import { http } from '../../../utils';
-import { ControlBar$$ } from '..';
+import { UserCtx } from '../../GlobalContext';
+import { ItRoutesCtx } from '../../components/IT-routes/ItRoutesWithContext';
+import { Skipper } from '../../components/skipper';
+import { FlexRow$ } from '../../components/flex';
+import { ControlBar$ } from '../../components/navs';
 import FlexGrid from './FlexGrid';
+import { http } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
 
 function SearchPage({ initialData }) {
@@ -32,27 +33,27 @@ function SearchPage({ initialData }) {
 		}, 500);
 	};
 
-	return (<>
-		<ControlBar$$>
-			<div />
-			<Skipper
-				onSubmit={ (startFrom => newSearch({ ...state.query, startFrom })) }
-				step={ pageSize }
-				startFrom={ state.startFrom }
-				maxValue={ state.resultsCount }
-				key={ skipperKey }
+	return (
+		<FlexRow$>
+			<ControlBar$>
+				<div />
+				<Skipper
+					onSubmit={ (startFrom => newSearch({ ...state.query, startFrom })) }
+					step={ pageSize }
+					startFrom={ state.startFrom }
+					maxValue={ state.resultsCount }
+					key={ skipperKey }
+				/>
+			</ControlBar$>
+			<FlexGrid
+				onSubmitQuery={ query => newSearch(query) }
+				query={ state.query }
+				fields={ incidentSearchFields }
+				results={ state.results }
+				pageSize={ pageSize }
 			/>
-		</ControlBar$$>
-
-		<FlexGrid
-			onSubmitQuery={ query => newSearch(query) }
-			query={ state.query }
-			fields={ incidentSearchFields }
-			results={ state.results }
-			pageSize={ pageSize }
-		/>
-
-	</>);
+		</FlexRow$>
+	);
 }
 
 export default SearchPage;
