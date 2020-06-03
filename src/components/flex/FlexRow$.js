@@ -5,6 +5,7 @@ const FlexRow$ = styled.div`
 	flex-wrap: wrap;
 	flex-shrink: 0;
 	max-width: 100%;
+	max-height: 100%;
 
 	&.xs-1 {
 		flex-basis: calc(100% / 12);

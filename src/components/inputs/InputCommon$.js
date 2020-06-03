@@ -22,14 +22,13 @@ const InputCommon$ = styled.span`
 		}
 	`};
 
-	
-	
 	input, textarea, select {
 		width: 100%;
 		border-radius: 3px;
 		padding-left: 0.45rem;
 		padding-right: 0.45rem;
 		border: 1px solid ${ CLR.BORDER.PRIMARY };
+		overflow: hidden;
 
 		&:disabled {
 			background-color: #eaf0f1;
@@ -45,6 +44,12 @@ const InputCommon$ = styled.span`
 		padding-top: 0.13rem;
 		padding-bottom: 0.13rem;
 		resize: none;
+	}
+
+	.invalid {
+		border-color: ${ CLR.BACKGROUND.DANGER } !important;
+		outline-color: ${ CLR.BACKGROUND.DANGER } !important;
+		background-color: rgba(255,0,0,0.03);
 	}
 `;
 

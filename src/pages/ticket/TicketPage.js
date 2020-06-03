@@ -1,55 +1,79 @@
 import styled from 'styled-components';
-import React, { useState, useEffect, useRef } from 'react';
-import { requirements, Form, ControlBar, STATUS } from './';
-import { Validation, formatDate, formatPriority } from '../../utils';
-import { ControlBar$ } from '../../components/navs';
-import { useHistory, useParams } from 'react-router-dom';
-import { Validate } from '../../utils';
-import { UserCtx } from '../../GlobalContext';
-import { CLR } from '../../GlobalStyles';
-import * as SRC from '/assets/icons';
-import { ItRoutesCtx } from '../../components/IT-routes/ItRoutesWithContext';
-import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../components/buttons';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { requirements, Form, ControlBar, WorknotesHistory, AttachmentBox } from './';
+import { useFormValidation, useToggle } from '../../hooks';
 import { http } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
+import { UserCtx } from '../../GlobalContext';
 
 function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 
-	const form = useRef();
-	const [ state, setState ] = useState(initialState);
+	const {
+		state,
+		setState,
+		errors,
+		handleChange,
+		validateSubmission
+	} = useFormValidation({ requirements, initialState, getStateChanges, onValidSubmission });
 	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
+	const [ isAttachmentBoxOpened, toggleAttachments ] = useToggle(false);
+	const history = useHistory();
+	const userCtx = useContext(UserCtx);
 
-	const handleChange = (e) => { };
+	function onValidSubmission(e) {
+		const additionalData = JSON.parse(e.target.value || '{}');
+		additionalData.user = userCtx.name;
+		additionalData.date = Date.now();
+		additionalData.updatedOn = Date.now();
+
+		http()
+			.post(BASE_URL + location.pathname, { ...state, ...additionalData })
+			.then(() => history.push(location.pathname))
+			.catch(err => console.log(err));
+	}
+
 	const deleteTicket = (e) => { };
-	const submitTicket = (e) => { };
-	const toggleAttachments = (e) => { };
-
-	const formValidation = new Validation(form, requirements);
-
-	const handleSubmit = (e) => {
-		const action = JSON.parse(e.target.value || '{}');
-		formValidation.validateElements();
-	};
-
-
+	useEffect(() => console.log(isAttachmentBoxOpened), [ isAttachmentBoxOpened ]);
 
 	return (<>
+		<AttachmentBox
+			when={ isAttachmentBoxOpened }
+			toggleSelf={ toggleAttachments }
+		/>
 
 		<ControlBar
 			state={ state }
 			toggleAttachments={ toggleAttachments }
 			deleteTicket={ deleteTicket }
-			handleSubmit={ handleSubmit }
+			validateSubmission={ validateSubmission }
 		/>
 
 		<Form
-			ref={ form }
-			validation={ formValidation }
-			initialState={ initialState }
+			state={ state }
+			errors={ errors }
+			handleChange={ handleChange }
+			validateSubmission={ validateSubmission }
+		/>
+
+		<WorknotesHistory
+			worknotesHistory={ worknotesHistory }
+			state={ state }
 		/>
 
 	</>);
 }
 
 export default TicketPage;
+
+function getStateChanges(state, name, value) {
+	const changes = { [ name ]: value };
+	if (name === 'category')
+		changes.subCategory = '';
+	if (name === 'impact')
+		changes.priority = 'P' + Math.floor((parseInt(state.urgency) + parseInt(value)) / 2);
+	if (name === 'urgency')
+		changes.priority = 'P' + Math.floor((parseInt(state.impact) + parseInt(value)) / 2);
+	return changes;
+};
 

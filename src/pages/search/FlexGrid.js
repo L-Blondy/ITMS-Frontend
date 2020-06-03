@@ -46,7 +46,7 @@ function FlexSearchGrid({ fields, results, pageSize, onSubmitQuery, query: previ
 	};
 
 	return (
-		<FlexRow$$ className='DONTBREAKMYBALLS' onSubmit={ handleNewQuery }>
+		<FlexRow$$ as='form' className='DONTBREAKMYBALLS' onSubmit={ handleNewQuery }>
 			{
 				fields.map(field => (
 					<FlexCol$$ className='xs-1' key={ 'a' + field }>

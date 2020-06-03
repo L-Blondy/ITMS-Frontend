@@ -24,7 +24,7 @@ function ItRoutes() {
 	useEffect(() => {
 		itRoutesCtx.setInitialData(null);
 		itRoutesCtx.page.setIsLoading(true);
-		itRoutesCtx.setError(null);
+		itRoutesCtx.fetching.setError(null);
 
 		setTimeout(() => {
 			http()
@@ -36,12 +36,12 @@ function ItRoutes() {
 				})
 				.catch(e => {
 					itRoutesCtx.page.setIsLoading(false);
-					itRoutesCtx.setError(e);
+					itRoutesCtx.fetching.setError(e);
 				});
 		}, 300);
 	}, [ history.location, location.pathname ]);
 
-	const { error, initialData } = itRoutesCtx;
+	const { fetching, initialData } = itRoutesCtx;
 
 	return (<>
 		<Settings
@@ -55,9 +55,9 @@ function ItRoutes() {
 			<FlexRow$$>
 				<Sidebar />
 				<FlexCol$$ className={ itRoutesCtx.page.isLoading ? 'is-loading' : '' }>
-					{ error ? (
+					{ fetching.error ? (
 
-						<ErrorPage error={ error } />
+						<ErrorPage error={ fetching.error } />
 
 					) : initialData ? (
 
@@ -112,7 +112,8 @@ const FlexRow$$ = styled(FlexRow$)`
 const FlexCol$$ = styled(FlexCol$)`
 	flex-basis: 0;
 	flex-grow: 1;
-	overflow: hidden;
+	overflow: auto;
 	display: flex;
 	flex-direction: column;
+	flex-wrap: nowrap;
 `;

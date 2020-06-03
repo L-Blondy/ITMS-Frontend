@@ -51,15 +51,15 @@ function Categories({ categories }) {
 	const saveChanges = () => {
 		itRoutesCtx.page.setIsLoading(true);
 
-		http()
-			.post(BASE_URL + location.pathname, state)
-			.then(res => {
-				itRoutesCtx.page.setIsLoading(false);
-			})
-			.catch(err => {
-				console.log(err);
-				itRoutesCtx.page.setIsLoading(false);
-			});
+		setTimeout(() => {
+			http()
+				.post(BASE_URL + location.pathname, state)
+				.then(res => itRoutesCtx.page.setIsLoading(false))
+				.catch(err => {
+					console.log(err);
+					itRoutesCtx.page.setIsLoading(false);
+				});
+		}, 500);
 	};
 
 	return (

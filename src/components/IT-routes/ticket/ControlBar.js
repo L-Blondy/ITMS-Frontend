@@ -30,7 +30,7 @@ function ControlBar() {
 	};
 
 	const deleteTicket = () => {
-		itRoutesCtx.page.setIsLoading(true);
+		// itRoutesCtx.page.setIsLoading(true);
 		ticketCtx.setNeedToSave(false);
 		http()
 			.delete(BASE_URL + location.pathname, '')
@@ -48,7 +48,7 @@ function ControlBar() {
 			console.error('CANNOT SUBMIT INCOMPLETE FORM');
 			return;
 		}
-		itRoutesCtx.page.setIsLoading(true);
+		// itRoutesCtx.page.setIsLoading(true);
 		ticketCtx.setNeedToSave(false);
 		ticketCtx.setDataToPost({
 			...ticketCtx.state,
@@ -63,13 +63,8 @@ function ControlBar() {
 		if (!ticketCtx.needToSave && ticketCtx.dataToPost) {
 			http()
 				.post(BASE_URL + location.pathname, ticketCtx.dataToPost)
-				.then(res => {
-					history.push(`/it/ticket/${ params.type }/${ res.id }`);
-				})
-				.catch(error => {
-					console.error(error);
-					itRoutesCtx.page.setIsLoading(false);
-				});
+				.then(res => history.push(`/it/ticket/${ params.type }/${ res.id }`))
+				.catch(error => console.error(error));
 		}
 	}, [ ticketCtx.needToSave, ticketCtx.dataToPost ]);
 

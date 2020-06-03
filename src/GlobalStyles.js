@@ -125,7 +125,7 @@ const GlobalStyles = createGlobalStyle`
 			background-size: contain;
 			z-index: 1006;
 		}
-	}
+	}	
 `;
 
 export {

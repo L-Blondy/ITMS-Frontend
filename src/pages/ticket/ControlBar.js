@@ -1,20 +1,11 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
 import { requirements, Form } from './';
-import { Validation, formatDate, formatPriority } from '../../utils';
 import { ControlBar$ } from '../../components/navs';
-import { useHistory, useParams } from 'react-router-dom';
-import { Validate } from '../../utils';
-import { UserCtx } from '../../GlobalContext';
-import { CLR } from '../../GlobalStyles';
-import * as SRC from '/assets/icons';
 import STATUS from './STATUS.json';
-import { ItRoutesCtx } from '../../components/IT-routes/ItRoutesWithContext';
 import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../components/buttons';
-import { http } from '../../utils';
-import { BASE_URL } from '/BASE_URL';
 
-function ControlBar({ toggleAttachments, deleteTicket, handleSubmit, state }) {
+function ControlBar({ toggleAttachments, deleteTicket, validateSubmission, state }) {
 
 	const { status, escalation } = state;
 
@@ -42,7 +33,7 @@ function ControlBar({ toggleAttachments, deleteTicket, handleSubmit, state }) {
 				<Button
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
-					onClick={ handleSubmit } >
+					onClick={ validateSubmission } >
 					Save
 				</Button>
 
@@ -50,7 +41,7 @@ function ControlBar({ toggleAttachments, deleteTicket, handleSubmit, state }) {
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.NEW ]) }
 					value={ JSON.stringify({ status: STATUS.QUEUED }) }
-					onClick={ handleSubmit } >
+					onClick={ validateSubmission } >
 					Submit
 				</Button>
 
@@ -60,7 +51,7 @@ function ControlBar({ toggleAttachments, deleteTicket, handleSubmit, state }) {
 					warning={ { message: 'Do you want to escalate this ticket ?' } }
 					name='escalateName'
 					value={ JSON.stringify({ escalation: escalation + 1 }) }
-					onConfirm={ handleSubmit } >
+					onConfirm={ validateSubmission } >
 					Escalate
 				</Button>
 
@@ -68,7 +59,7 @@ function ControlBar({ toggleAttachments, deleteTicket, handleSubmit, state }) {
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.ON_HOLD ]) }
 					value={ JSON.stringify({ status: STATUS.IN_PROGRESS }) }
-					onClick={ handleSubmit } >
+					onClick={ validateSubmission } >
 					Set in progress
 				</Button>
 
@@ -76,7 +67,7 @@ function ControlBar({ toggleAttachments, deleteTicket, handleSubmit, state }) {
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					value={ JSON.stringify({ status: STATUS.ON_HOLD }) }
-					onClick={ handleSubmit } >
+					onClick={ validateSubmission } >
 					Place on hold
 				</Button>
 
@@ -84,7 +75,7 @@ function ControlBar({ toggleAttachments, deleteTicket, handleSubmit, state }) {
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					value={ JSON.stringify({ status: STATUS.RESOLVED }) }
-					onClick={ handleSubmit } >
+					onClick={ validateSubmission } >
 					Resolve
 				</Button>
 
@@ -92,7 +83,7 @@ function ControlBar({ toggleAttachments, deleteTicket, handleSubmit, state }) {
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.RESOLVED ]) }
 					value={ JSON.stringify({ status: STATUS.IN_PROGRESS }) }
-					onClick={ handleSubmit } >
+					onClick={ validateSubmission } >
 					Reopen
 				</Button>
 			</div>

@@ -9,5 +9,9 @@
 	},
 	"test3": {
 		"required": true
+	},
+	"test4": {
+		"required": true,
+		"maxLength": 2
 	}
 }

@@ -9,12 +9,11 @@ const Input = React.forwardRef(({
 	defaultValue,
 	onChange,
 	validation,
+	errors = [],
 	...props
 }, ref) => {
 
 	const [ value, setValue ] = useState(defaultValue || '');
-	const [ errors, setErrors ] = useState([]);
-	let input = ref || useRef();
 
 	const Label = ({ htmlFor }) => {
 		if (typeof label === 'string')
@@ -22,22 +21,13 @@ const Input = React.forwardRef(({
 		return label || null;
 	};
 
-	const setValidationErrors = () => {
-		const errorMessages = validation.getErrors(input.current);
-		validation && setErrors(errorMessages);
-		return errorMessages.length;
-	};
-
 	const handleChange = (e) => {
-		setValidationErrors();
 		setValue(e.target.value);
 		onChange && onChange(e);
 	};
 
-	useEffect(() => input.current.setErrors = setValidationErrors, []);
-
 	return (
-		<Span$ className={ `labelled-input ${ errors.length && 'invalid' } ${ className } ` }>
+		<Span$ className={ `labelled-input ${ errors.length && 'invalid' } ${ className } ` } disabled={ props.disabled }>
 
 			<Label htmlFor={ name } />
 
@@ -45,7 +35,7 @@ const Input = React.forwardRef(({
 				name={ name }
 				id={ name }
 				value={ value }
-				ref={ input }
+				ref={ ref }
 				{ ...props }
 				onChange={ handleChange }
 			/>
