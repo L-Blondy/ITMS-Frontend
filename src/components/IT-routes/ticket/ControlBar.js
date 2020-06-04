@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Validate } from '../../../polyfills';
+// import { Validate } from '../../../polyfills';
 import { UserCtx } from '../../../GlobalContext';
 import { CLR } from '../../../GlobalStyles';
 import * as SRC from '/assets/icons';
@@ -13,9 +13,10 @@ import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
 
 function ControlBar() {
+	const ticketCtx = useContext(TicketCtx);
+	if (!ticketCtx) return null;
 
 	const userCtx = useContext(UserCtx);
-	const ticketCtx = useContext(TicketCtx);
 	const itRoutesCtx = useContext(ItRoutesCtx);
 	const params = useParams();
 	const history = useHistory();
@@ -44,10 +45,10 @@ function ControlBar() {
 	};
 
 	const handleSubmit = (action = {}) => {
-		if (!Validate.state(ticketCtx.state)) {
-			console.error('CANNOT SUBMIT INCOMPLETE FORM');
-			return;
-		}
+		// if (!Validate.state(ticketCtx.state)) {
+		// 	console.error('CANNOT SUBMIT INCOMPLETE FORM');
+		// 	return;
+		// }
 		// itRoutesCtx.page.setIsLoading(true);
 		ticketCtx.setNeedToSave(false);
 		ticketCtx.setDataToPost({
@@ -70,7 +71,7 @@ function ControlBar() {
 
 	const status = ticketCtx.state.status;
 
-	return (
+	return (<>{ ticketCtx && (
 		<ControlBar$$>
 
 			<Button
@@ -142,7 +143,8 @@ function ControlBar() {
 				</Button>
 			</div>
 		</ControlBar$$>
-	);
+	) }
+	</>);
 }
 
 export default ControlBar;

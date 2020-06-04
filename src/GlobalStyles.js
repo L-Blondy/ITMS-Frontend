@@ -14,20 +14,19 @@ const CLR = {
 	},
 	BORDER: {
 		PRIMARY: '#9eb3b6'
+	},
+	BUTTON: {
+		PRIMARY: '#4999a3',
+		SECONDARY: '#CCCCCC',
+		ALERT: {
+			PRIMARY: '#61a0d5',
+			SECONDARY: '#CCCCCC'
+		}
 	}
 };
 
 const FONT_FAM = {
 	PRIMARY: "'Nunito', sans-serif"
-};
-
-const BTN_CLR = {
-	PRIMARY: CLR.PRIMARY,
-	SECONDARY: '#CCCCCC',
-	ALERT: {
-		PRIMARY: '#61a0d5',
-		SECONDARY: '#CCCCCC'
-	}
 };
 
 const GlobalStyles = createGlobalStyle`
@@ -43,6 +42,7 @@ const GlobalStyles = createGlobalStyle`
 		height: 100%;
 		max-height: 100%;
 		width: 100%;
+		overflow: hidden;
 	}
 
 	#root {
@@ -130,7 +130,6 @@ const GlobalStyles = createGlobalStyle`
 
 export {
 	CLR,
-	BTN_CLR,
 	FONT_FAM,
 	GlobalStyles
 };

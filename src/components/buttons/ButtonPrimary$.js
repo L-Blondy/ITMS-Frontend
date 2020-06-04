@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import ButtonCommon$ from './ButtonCommon$';
-import { BTN_CLR } from '../../GlobalStyles';
+import { CLR } from '../../GlobalStyles';
 
 const ButtonPrimary$ = styled(ButtonCommon$)`
-	background-color: ${ BTN_CLR.PRIMARY };
-	border-color: ${ BTN_CLR.PRIMARY };
+	background-color: ${ CLR.BUTTON.PRIMARY };
+	border-color: ${ CLR.BUTTON.PRIMARY };
 	color: white;
 `;
 

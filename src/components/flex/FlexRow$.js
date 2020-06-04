@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const FlexRow$ = styled.div`
 	display: flex;
-	flex-wrap: wrap;
 	flex-shrink: 0;
 	max-width: 100%;
 	max-height: 100%;

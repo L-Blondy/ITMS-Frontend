@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 function useFormValidation({
 	requirements,
 	initialState = {},
 	initialErrors = {},
-	getStateChanges = (state, name, value) => ({ [ name ]: value }),
+	getStateChanges = (name, value) => ({ [ name ]: value }),
 	onValidSubmission
 }) {
 	const validation = useRef(new Validation(requirements)).current;
@@ -14,7 +14,7 @@ function useFormValidation({
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		const newErrorsArray = validation.getInputErrors(name, value);
-		const stateChanges = getStateChanges(state, name, value);
+		const stateChanges = getStateChanges(name, value, state);
 		setState({ ...state, ...stateChanges });
 		setErrors({ ...errors, [ name ]: newErrorsArray });
 	};

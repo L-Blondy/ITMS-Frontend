@@ -1,8 +1,9 @@
+import styled from 'styled-components';
 import React, { useEffect, useState, useContext } from 'react';
 import { UserCtx } from '../../GlobalContext';
 import { ItRoutesCtx } from '../../components/IT-routes/ItRoutesWithContext';
 import { Skipper } from '../../components/skipper';
-import { FlexRow$ } from '../../components/flex';
+import { FlexRowWrap$ } from '../../components/flex';
 import { ControlBar$ } from '../../components/navs';
 import FlexGrid from './FlexGrid';
 import { http } from '../../utils';
@@ -34,7 +35,7 @@ function SearchPage({ initialData }) {
 	};
 
 	return (
-		<FlexRow$>
+		<FlexRowWrap$$>
 			<ControlBar$>
 				<div />
 				<Skipper
@@ -52,8 +53,12 @@ function SearchPage({ initialData }) {
 				results={ state.results }
 				pageSize={ pageSize }
 			/>
-		</FlexRow$>
+		</FlexRowWrap$$>
 	);
 }
 
 export default SearchPage;
+
+const FlexRowWrap$$ = styled(FlexRowWrap$)`
+	max-width: 100%;
+`;

@@ -4,12 +4,11 @@ import { useLocation } from 'react-router-dom';
 import { formatFileSize } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
 
-function FileLog({ children: file, when, state, ...props }) {
-	if (!when) return null;
+function FileLog({ children: file, fileList, ...props }) {
 
 	const { pathname } = useLocation();
 	const { mimetype, originalname } = file;
-	const wasDeleted = state.fileList.filter(fileData => fileData.name === originalname).length === 0;
+	const wasDeleted = fileList.filter(fileData => fileData.name === originalname).length === 0;
 	const isImage = mimetype.indexOf('image') === 0;
 
 	if (wasDeleted) {
@@ -59,6 +58,14 @@ const A$ = styled.a`
 	color: #3582a2;
 	font-weight: bold;
 	text-decoration: underline;
+
+	img {
+		max-width: 100%;
+		max-height: calc(20vh + 100px);
+		display: block;
+		margin: auto;
+		box-shadow: 0 0 5px 0 #ddd;
+	}
 `;
 
 const LightFont$ = styled.span`

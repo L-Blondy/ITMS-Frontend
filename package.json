@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel public/index.html",
-    "build": "rm -rf dist && parcel build index.html 404.html --public-url /H2O/",
+    "build": "rm -rf dist && parcel build public/index.html --public-url /ITMS-Frontend/",
     "deploy": "npm run build && copyfiles public/robots.txt dist && gh-pages -d dist",
     "analyze": "source-map-explorer dist/H2O.*",
     "test:eslint": "eslint src/ --ext .js --ext .jsx"
@@ -15,6 +15,7 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
+    "gh-pages": "^3.0.0",
     "source-map-explorer": "^2.4.0"
   },
   "dependencies": {
@@ -29,8 +30,8 @@
     "parcel": "^1.12.4",
     "parcel-bundler": "^1.12.4",
     "react": "^16.13.1",
-    "react-dom": "^16.13.0",
-    "react-router-dom": "^5.1.2",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-textarea-autosize": "^7.1.2",
     "styled-components": "^5.0.1"
   }

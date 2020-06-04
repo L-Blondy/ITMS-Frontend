@@ -1,7 +1,6 @@
 import React from 'react';
 
-function WorkLog({ children: log, when, ...props }) {
-	if (!when) return null;
+function WorkLog({ children: log, ...props }) {
 
 	return (
 		<div { ...props }>

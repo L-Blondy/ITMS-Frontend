@@ -1,68 +1,87 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { formatDate } from '../../utils';
 import { FileLog, ChangeLog, WorkLog } from '../../components/logs';
-import { FlexRow$, FlexCol$, FlexColReverse$ } from '../../components/flex';
+import { FlexRow$, FlexColReverse$ } from '../../components/flex';
 import { CLR } from '../../GlobalStyles';
 
-function WorknotesHistory({ worknotesHistory, state }) {
+function WorknotesHistory({ worknotesHistory, fileList }) {
 	if (!worknotesHistory.length) return null;
 
+	const [ height$, setheight$ ] = useState('100%');
+
+	useEffect(() => {
+		cb();
+		window.addEventListener('resize', cb);
+		function cb() {
+			const worknotes = document.querySelector('.worknotes');
+			setheight$(worknotes.getBoundingClientRect().height);
+		};
+	}, []);
+
 	return (
-		<FlexColReverse$$>
-			{ worknotesHistory.map((note, i) => (
+		<div>
 
-				<WorkNote$ className={ note.type } key={ note.type + i }>
+			<FlexColReverse$$ className='worknotes'>
+				{ worknotesHistory.map(({ type, user, date, file, log }, i) => (
 
-					<FlexRow$ className="header">
-						<div className="user">{ note.user }</div>
-						<div className="date">{ formatDate(note.date) }</div>
-					</FlexRow$>
+					<Worknote$ className={ 'worknote ' + type } key={ type + i }>
 
-					<WorkLog
-						className='log'
-						when={ note.type === "workLog" }>
-						{ note.log }
-					</WorkLog>
+						<FlexRow$ className="header">
+							<div className="user">{ user }</div>
+							<div className="date">{ formatDate(date) }</div>
+						</FlexRow$>
 
-					<ChangeLog
-						className='log'
-						when={ note.type === "changeLog" }>
-						{ note.log }
-					</ChangeLog>
+						{ type === "workLog" && (
+							<WorkLog className='log'>
+								{ log }
+							</WorkLog>
+						) }
 
-					<FileLog
-						className='log'
-						when={ note.type === "fileLog" }
-						state={ state }>
-						{ note.file }
-					</FileLog>
+						{ type === "changeLog" && (
+							<ChangeLog className='log'>
+								{ log }
+							</ChangeLog>
+						) }
+						{ type === "fileLog" && (
+							<FileLog className='log' fileList={ fileList }>
+								{ file }
+							</FileLog>
+						) }
+					</Worknote$>
+				)) }
+			</FlexColReverse$$>
 
-				</WorkNote$>
-			)) }
-		</FlexColReverse$$>
+		</div>
 	);
 }
 
-export default WorknotesHistory;
+
+export default React.memo(WorknotesHistory);
 
 const FlexColReverse$$ = styled(FlexColReverse$)`
 	margin-top: 2rem;
-	width: 70%;
 	padding-bottom: 5rem;
 	font-size: 15px;
 	margin-left: auto;
 	margin-right: auto;
-	flex-wrap: nowrap;
+	position: absolute;
+	width: 70%;
+	max-height: initial;
 `;
 
-const WorkNote$ = styled(FlexCol$)`
+const Worknote$ = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	max-width: 100%;
+	max-height: 100%;
 	position: relative;
 	border: 1px solid ${ CLR.BORDER.PRIMARY };
 	border-radius: 3px;
 	margin: 0.5rem 0;
 	padding: 0.8rem 1.5rem;
-	overflow: hidden;
+	overflow: hidden;		
 
 	.header {
 		justify-content: space-between;
@@ -97,12 +116,5 @@ const WorkNote$ = styled(FlexCol$)`
 	&.fileLog::before {
 		background: ${ CLR.PRIMARY_VIBRANT };
 	}
-
-	&.fileLog img {
-		max-width: 100%;
-		max-height: calc(20vh + 100px);
-		display: block;
-		margin: auto;
-		box-shadow: 0 0 5px 0 #ddd;
-	}
 `;
+

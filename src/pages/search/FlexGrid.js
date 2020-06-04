@@ -82,7 +82,6 @@ function FlexSearchGrid({ fields, results, pageSize, onSubmitQuery, query: previ
 export default FlexSearchGrid;
 
 const FlexRow$$ = styled(FlexRow$)`
-	flex-wrap: nowrap;
 	overflow: auto;
 	flex-grow: 1;
 	flex-shrink: 0;

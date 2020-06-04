@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { BASE_URL } from '/BASE_URL';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatFileSize, formatDate } from '../../../utils';
-import { TruncatedText } from '../../';
+import { TruncatedText } from '../../text';
 import { CLR } from '../../../GlobalStyles';
 
 function WorknotesHistory() {
@@ -41,6 +41,8 @@ function WorknotesHistory() {
 }
 
 export default WorknotesHistory;
+
+console.log(ChangeLog);
 
 function WorkLog({ children: log, when }) {
 	if (!when) return null;

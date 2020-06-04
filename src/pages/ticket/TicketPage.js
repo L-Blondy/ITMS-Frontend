@@ -3,12 +3,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { requirements, Form, ControlBar, WorknotesHistory, AttachmentBox } from './';
 import { useFormValidation, useToggle } from '../../hooks';
+import { FlexCol$ } from '../../components/flex';
 import { http } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
 import { UserCtx } from '../../GlobalContext';
 
 function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
-
 	const {
 		state,
 		setState,
@@ -29,12 +29,11 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 
 		http()
 			.post(BASE_URL + location.pathname, { ...state, ...additionalData })
-			.then(() => history.push(location.pathname))
+			.then(() => history.push(location.pathname.split('/').slice(0, -1).join('/') + `/${ state.id }`))
 			.catch(err => console.log(err));
 	}
 
 	const deleteTicket = (e) => { };
-	useEffect(() => console.log(isAttachmentBoxOpened), [ isAttachmentBoxOpened ]);
 
 	return (<>
 		<AttachmentBox
@@ -49,24 +48,27 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 			validateSubmission={ validateSubmission }
 		/>
 
-		<Form
-			state={ state }
-			errors={ errors }
-			handleChange={ handleChange }
-			validateSubmission={ validateSubmission }
-		/>
+		<Container$>
+			<FlexCol$$>
+				<Form
+					state={ state }
+					errors={ errors }
+					handleChange={ handleChange }
+					validateSubmission={ validateSubmission }
+				/>
 
-		<WorknotesHistory
-			worknotesHistory={ worknotesHistory }
-			state={ state }
-		/>
-
+				<WorknotesHistory
+					worknotesHistory={ worknotesHistory }
+					fileList={ state.fileList }
+				/>
+			</FlexCol$$>
+		</Container$>
 	</>);
 }
 
 export default TicketPage;
 
-function getStateChanges(state, name, value) {
+function getStateChanges(name, value, state) {
 	const changes = { [ name ]: value };
 	if (name === 'category')
 		changes.subCategory = '';
@@ -76,4 +78,16 @@ function getStateChanges(state, name, value) {
 		changes.priority = 'P' + Math.floor((parseInt(state.impact) + parseInt(value)) / 2);
 	return changes;
 };
+
+const Container$ = styled.div`
+	overflow: auto;
+	flex-grow: 1;
+	position: relative;
+	transform: translateZ(0);
+`;
+
+const FlexCol$$ = styled(FlexCol$)`
+	width: 70%;
+	margin: 0 auto;
+`;
 

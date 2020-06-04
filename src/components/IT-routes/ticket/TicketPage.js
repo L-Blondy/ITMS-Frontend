@@ -9,6 +9,7 @@ import AttachmentWithContext from './attachment/AttachmentWithContext';
 import { TicketCtx } from './TicketPageWithContext';
 import { CLR } from '../../../GlobalStyles';
 
+
 function TicketPage() {
 
 	const ticketCtx = useContext(TicketCtx);
@@ -28,37 +29,39 @@ function TicketPage() {
 	}, [ liveData ]);
 
 	return (<>
-		<ControlBar />
+		{ ticketCtx && (<>
+			<ControlBar />
 
-		<Ticket$>
+			<Ticket$>
 
-			<FileList
-				when={ ticketCtx.state.fileList.length }
-				fileList={ ticketCtx.state.fileList }
-			/>
+				<FileList
+					when={ ticketCtx.state.fileList.length }
+					fileList={ ticketCtx.state.fileList }
+				/>
 
-			<LocationPrompt
-				when={ ticketCtx.needToSave }
-				message={ 'Modifications may not be saved.' }
-				reason={ 'Do you want to exit this page ?' }
-			/>
+				<LocationPrompt
+					when={ ticketCtx.needToSave }
+					message={ 'Modifications may not be saved.' }
+					reason={ 'Do you want to exit this page ?' }
+				/>
 
-			<AttachmentWithContext
-				fileList={ ticketCtx.state.fileList }
-				isOpened={ ticketCtx.attachments.isOpened }
-			/>
+				<AttachmentWithContext
+					fileList={ ticketCtx.state.fileList }
+					isOpened={ ticketCtx.attachments.isOpened }
+				/>
 
-			{ type === 'incidents' ? (
-				<Fields />
-			) : type === 'requests' ? (
-				<Fields />
-			) : type === 'changes' ? (
-				<Fields />
-			) : '' }
+				{ type === 'incidents' ? (
+					<Fields />
+				) : type === 'requests' ? (
+					<Fields />
+				) : type === 'changes' ? (
+					<Fields />
+				) : '' }
 
-			<WorknotesHistory />
+				<WorknotesHistory />
 
-		</Ticket$>
+			</Ticket$>
+		</>) }
 	</>);
 }
 

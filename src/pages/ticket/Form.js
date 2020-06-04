@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
-
 import { Input, Select, Textarea, InputLabelLeftAbs$ } from '../../components/inputs';
 import { formatDate } from '../../utils';
 import { FlexRow$, FlexCol$ } from '../../components/flex';
@@ -195,9 +194,7 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 export default Form;
 
 const FlexRow$$ = styled(FlexRow$)`
-	margin-left: auto;
-	margin-right: auto;
-	width: 70%;
+	flex-wrap: wrap;
 `;
 
 const FlexCol$$ = styled(FlexCol$)`

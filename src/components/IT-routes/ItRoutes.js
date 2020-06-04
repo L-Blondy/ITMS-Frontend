@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
-import { Switch, Route, useHistory, NavLink } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import { Settings, ErrorPage } from '../';
 import { DashboardPage } from '../../pages/dashboard';
 import { ReportPage } from '../../pages/report';
@@ -53,7 +53,9 @@ function ItRoutes() {
 			<Navbar />
 
 			<FlexRow$$>
+
 				<Sidebar />
+
 				<FlexCol$$ className={ itRoutesCtx.page.isLoading ? 'is-loading' : '' }>
 					{ fetching.error ? (
 
@@ -102,18 +104,12 @@ const ColViewport$ = styled(FlexCol$)`
 `;
 
 const FlexRow$$ = styled(FlexRow$)`
-	display: flex;
-	flex-grow: 1;
-	max-height: calc(100% - 80px);
-	max-width: 100vw;
-	overflow: hidden;
+	height: calc(100% - 80px);
+	width: 100vw;
 `;
 
 const FlexCol$$ = styled(FlexCol$)`
-	flex-basis: 0;
 	flex-grow: 1;
-	overflow: auto;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
+	height: 100%;
+	max-width: calc(100% - 200px);
 `;
