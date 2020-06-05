@@ -83,7 +83,6 @@ const Container$ = styled.div`
 	overflow: auto;
 	flex-grow: 1;
 	position: relative;
-	transform: translateZ(0);
 `;
 
 const FlexCol$$ = styled(FlexCol$)`

@@ -24,7 +24,6 @@ function AttachmentBox({ when, toggleSelf }) {
 						onClick={ toggleSelf }
 					/>
 				</div>
-				98798798
 				{/* <Upload method='POST' encType='multipart/form-data' /> */ }
 
 				{/* <Delete method='DELETE' /> */ }

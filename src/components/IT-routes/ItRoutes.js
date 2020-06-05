@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
-import { Settings, ErrorPage } from '../';
+import { Settings } from '../';
 import { DashboardPage } from '../../pages/dashboard';
+import { ErrorPage } from '../../pages/error';
 import { ReportPage } from '../../pages/report';
 import { ItRoutesCtx } from './ItRoutesWithContext';
 import { TicketPage } from '../../pages/ticket';
