@@ -3,34 +3,34 @@ import React from 'react';
 import { formatFileSize } from '../../utils';
 import * as SRC from '/assets/icons/fileTypes';
 
-function FileInfo ( { data, tag = 'span', className, ...props } ) {
+function AttachmentInfo({ data, tag = 'span', className, ...props }) {
 	return (
-		<FileInfo$
+		<AttachmentInfo$
 			as={ tag }
 			{ ...props }
 			className={ 'file-data ' + className } >
-			<img className='icon' src={ getSRC( data ) } alt='' />
+			<img className='icon' src={ getSRC(data) } alt='' />
 			<span className='name'>{ data.name }</span>
-			<span className='size light-font'>{ formatFileSize( data.size ) }</span>
-		</FileInfo$>
+			<span className='size light-font'>{ formatFileSize(data.size) }</span>
+		</AttachmentInfo$>
 	);
 }
 
-export default FileInfo;
+export default AttachmentInfo;
 
-function getSRC ( file ) {
+function getSRC(file) {
 	const { mimetype, name } = file;
-	if ( mimetype.includes( 'image' ) )
+	if (mimetype.includes('image'))
 		return SRC.image;
-	if ( mimetype.includes( 'pdf' ) )
+	if (mimetype.includes('pdf'))
 		return SRC.pdf;
-	if ( mimetype.includes( 'zip' ) || name.endsWith( 'rar' ) )
+	if (mimetype.includes('zip') || name.endsWith('rar'))
 		return SRC.archive;
-	if ( mimetype.includes( 'text' ) )
+	if (mimetype.includes('text'))
 		return SRC.all;
 }
 
-const FileInfo$ = styled.span`
+const AttachmentInfo$ = styled.span`
 	display: flex;
 	align-items: center;
 	color: #333;

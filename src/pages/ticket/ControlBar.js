@@ -5,7 +5,7 @@ import { ControlBar$ } from '../../components/navs';
 import STATUS from './STATUS.json';
 import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../components/buttons';
 
-function ControlBar({ toggleAttachments, deleteTicket, validateSubmission, state }) {
+function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, state }) {
 
 	const { status, escalation } = state;
 
@@ -27,7 +27,7 @@ function ControlBar({ toggleAttachments, deleteTicket, validateSubmission, state
 					styleAs={ ButtonPaperclip$ }
 					className='paperclip-btn'
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
-					onClick={ toggleAttachments }
+					onClick={ toggleAttachmentPopup }
 				/>
 
 				<Button

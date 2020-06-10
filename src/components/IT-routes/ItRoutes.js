@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
-import { Settings } from '../';
+import { Settings } from '../popup';
 import { DashboardPage } from '../../pages/dashboard';
 import { ErrorPage } from '../../pages/error';
 import { ReportPage } from '../../pages/report';

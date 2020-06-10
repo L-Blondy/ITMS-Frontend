@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { requirements, Form, ControlBar, WorknotesHistory, AttachmentBox } from './';
-import { useFormValidation, useToggle } from '../../hooks';
+import { requirements, Form, ControlBar, WorknotesHistory } from './';
+import { useFormValidation, useToggle, useSubscription } from '../../hooks';
 import { FlexCol$ } from '../../components/flex';
+import { LocationPrompt } from '../../components/popup';
+import { AttachmentPopup } from '../../components/attachments';
 import { http } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
 import { UserCtx } from '../../GlobalContext';
+import { ItRoutesCtx } from '../../components/IT-routes/ItRoutesWithContext';
 
 function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 	const {
@@ -17,33 +20,82 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 		validateSubmission
 	} = useFormValidation({ requirements, initialState, getStateChanges, onValidSubmission });
 	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
-	const [ isAttachmentBoxOpened, toggleAttachments ] = useToggle(false);
+	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
+	const [ isAttachmentPopupOpened, toggleAttachmentPopup ] = useToggle(false);
 	const history = useHistory();
 	const userCtx = useContext(UserCtx);
+	const itRoutesCtx = useContext(ItRoutesCtx);
+	const [ needToSave, setNeedToSave ] = useState(false);
+
+	useEffect(() => {
+		if (!liveData) return;
+
+		let { worknotesHistory, ...newState } = liveData;
+		worknotesHistory && setWorknotesHistory(worknotesHistory);
+		setState({ ...state, ...newState });
+		// const changedProps = compare(liveData, ticketCtx.initialState);
+		// ticketCtx.setChangedProps(changedProps);
+	}, [ liveData ]);
+
 
 	function onValidSubmission(e) {
+		setNeedToSave(false);
 		const additionalData = JSON.parse(e.target.value || '{}');
 		additionalData.user = userCtx.name;
 		additionalData.date = Date.now();
 		additionalData.updatedOn = Date.now();
+		itRoutesCtx.page.setIsLoading(true);
 
-		http()
-			.post(BASE_URL + location.pathname, { ...state, ...additionalData })
-			.then(() => history.push(location.pathname.split('/').slice(0, -1).join('/') + `/${ state.id }`))
-			.catch(err => console.log(err));
+		setTimeout(() => {
+			http()
+				.post(BASE_URL + location.pathname, { ...state, ...additionalData })
+				.then(() => history.push(location.pathname.split('/').slice(0, -1).join('/') + `/${ state.id }`))
+				.catch(err => {
+					console.log(err);
+					itRoutesCtx.page.setIsLoading(false);
+				});
+		}, 200);
 	}
 
-	const deleteTicket = (e) => { };
+	const deleteTicket = (e) => {
+		itRoutesCtx.page.setIsLoading(true);
+		setNeedToSave(false);
+
+		http()
+			.delete(BASE_URL + location.pathname, '')
+			.then(res => {
+				if (!res.deletedCount) console.error('Could not delete the ticket');
+				const redirectURL = location.pathname.split('/').slice(0, -1).join('/');
+				history.push(redirectURL);
+			})
+			.catch(err => {
+				console.log(err);
+				itRoutesCtx.page.setIsLoading(false);
+			});
+	};
+
+	useEffect(() => {
+		if (state !== initialState && !itRoutesCtx.page.isLoading) {
+			setNeedToSave(true);
+		};
+	}, [ state ]);
 
 	return (<>
-		<AttachmentBox
-			when={ isAttachmentBoxOpened }
-			toggleSelf={ toggleAttachments }
+		<LocationPrompt
+			when={ needToSave }
+			message={ 'Modifications may not be saved.' }
+			reason={ 'Do you want to exit this page ?' }
+		/>
+
+		<AttachmentPopup
+			when={ isAttachmentPopupOpened }
+			close={ toggleAttachmentPopup }
+			fileList={ state.fileList }
 		/>
 
 		<ControlBar
 			state={ state }
-			toggleAttachments={ toggleAttachments }
+			toggleAttachmentPopup={ toggleAttachmentPopup }
 			deleteTicket={ deleteTicket }
 			validateSubmission={ validateSubmission }
 		/>

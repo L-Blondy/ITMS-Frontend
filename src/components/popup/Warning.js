@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { DisableBg } from './';
-import { Button, ButtonAlert$ } from './buttons';
+import { Button, ButtonAlert$ } from '../buttons';
 
 function Warning({
 	title = 'Warning !',

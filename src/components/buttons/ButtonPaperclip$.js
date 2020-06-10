@@ -10,7 +10,8 @@ const ButtonPaperclip$ = styled(ButtonCommon$)`
 	background-size: contain;
 	background-color: transparent;
 	height: 100%;
-	padding: 0 1.5rem;
+	/* padding: 0 1.5rem; */
+	width: 3rem;
 	box-shadow: none;
 	
 	&:hover {

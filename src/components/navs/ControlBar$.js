@@ -15,10 +15,12 @@ const ControlBar$ = styled.nav`
 
 	button {
 		margin-left: 0.5rem;
+		
 	}
 
 	.paperclip-btn {
 		margin: 0 0.5rem;
+		height: 30px;
 	}
 
 	.delete-btn {
