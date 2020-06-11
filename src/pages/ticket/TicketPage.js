@@ -10,22 +10,26 @@ import { http } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
 import { UserCtx } from '../../GlobalContext';
 import { ItRoutesCtx } from '../../components/IT-routes/ItRoutesWithContext';
+import { useSubmitTicket } from './helpers';
 
 function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
+
+	const history = useHistory();
+	const userCtx = useContext(UserCtx);
+	const itRoutesCtx = useContext(ItRoutesCtx);
+	const [ needToSave, setNeedToSave ] = useState(false);
+	// const submitTicket = useSubmitTicket(setNeedToSave, itRoutesCtx, userCtx,);
+
 	const {
 		state,
 		setState,
 		errors,
 		handleChange,
 		validateSubmission
-	} = useFormValidation({ requirements, initialState, getStateChanges, onValidSubmission });
+	} = useFormValidation({ requirements, initialState, getStateChanges, onValidSubmission: submitTicket });
 	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
 	const [ isAttachmentPopupOpened, toggleAttachmentPopup ] = useToggle(false);
-	const history = useHistory();
-	const userCtx = useContext(UserCtx);
-	const itRoutesCtx = useContext(ItRoutesCtx);
-	const [ needToSave, setNeedToSave ] = useState(false);
 
 	useEffect(() => {
 		if (!liveData) return;
@@ -38,7 +42,7 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 	}, [ liveData ]);
 
 
-	function onValidSubmission(e) {
+	function submitTicket(e) {
 		setNeedToSave(false);
 		const additionalData = JSON.parse(e.target.value || '{}');
 		additionalData.user = userCtx.name;

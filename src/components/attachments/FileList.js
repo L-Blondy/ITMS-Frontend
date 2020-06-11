@@ -5,10 +5,10 @@ import { Input, InputLabelRight$ } from '../inputs';
 import { BASE_URL } from '/BASE_URL';
 import { CLR } from '../../GlobalStyles';
 
-const FileList = React.forwardRef(({ fileList = [], className, ...props }, ref) => {
+const FileList = ({ fileList = [], className, selectFile, ...props }) => {
 
 	return (
-		<Form$ ref={ ref } className={ 'file-list ' + className } { ...props }>
+		<Form$ className={ 'file-list ' + className } { ...props }>
 			<ul>
 				{
 					fileList.map((file, i) => (
@@ -19,7 +19,7 @@ const FileList = React.forwardRef(({ fileList = [], className, ...props }, ref) 
 								type='checkbox'
 								name={ file.name }
 								value={ file.name }
-								onChange={ () => 'handleSelectFile' }
+								onChange={ e => selectFile(e.target) }
 								label={
 									<AttachmentInfo
 										as='label'
@@ -39,7 +39,7 @@ const FileList = React.forwardRef(({ fileList = [], className, ...props }, ref) 
 			</ul>
 		</Form$>
 	);
-});
+};
 
 export default FileList;
 

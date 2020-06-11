@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import * as SRC from '/assets/icons';
 import { DisableBg } from '../popup';
 import { CLR } from '../../GlobalStyles';
 import { Button, ButtonClose$, ButtonDanger$ } from '../buttons';
 import { UserCtx } from '../../GlobalContext';
-import { http } from '../../utils';
-import { BASE_URL } from '/BASE_URL';
 import { XHR, RequestStatus, Upload, FileList } from '.';
+import { useUpload, useDelete } from './helpers';
 
 function AttachmentPopup({ when, close, fileList }) {
 	if (!when) return null;
@@ -15,66 +13,16 @@ function AttachmentPopup({ when, close, fileList }) {
 	const userCtx = useContext(UserCtx);
 	const [ requestStatus, setRequestStatus ] = useState({ state: XHR.UNSENT });
 	const [ key, setKey ] = useState(Math.random());
+	const [ selectedFiles, setSelectedFiles ] = useState([]);
 
+	const upload = useUpload(userCtx.name, setKey, setRequestStatus);
+	const deleteFiles = useDelete(selectedFiles, setSelectedFiles, setKey, setRequestStatus);
 
-	const fileListForm = useRef();
-
-	function upload(file) {
-		if (!file) return;
-
-		const formData = new FormData();
-		formData.append("file", file);
-		formData.append("user", userCtx.name);
-		setRequestStatus({ state: XHR.LOADING });
-
-		http()
-			.post(BASE_URL + location.pathname + '/attach', formData)
-			.then(() => {
-				setRequestStatus({
-					state: XHR.SUCCESS,
-					files: [ file.name ],
-					message: '  was uploaded with success'
-				});
-				setKey(Math.random());
-			})
-			.catch(e => {
-				setRequestStatus({
-					state: XHR.ERROR,
-					files: [ file.name ],
-					message: `  could not be uploaded.\n${ e.message }`
-				});
-				console.error(e);
-			});
-	}
-
-	function deleteFiles() {
-		const elements = [].slice.call(fileListForm.current.elements);
-		const toDelete = elements.reduce((toDelete, el) => {
-			el.checked && toDelete.push(el.name);
-			return toDelete;
-		}, []);
-		console.log(toDelete);
-
-		// this.request.setStatus({ state: XHR.LOADING });
-
-		// http()
-		// 	.delete(BASE_URL + location.pathname + '/delete', { toDelete: this.files.selected })
-		// 	.then(() => {
-		// 		this.request.setStatus({
-		// 			state: XHR.SUCCESS,
-		// 			files: this.files.selected,
-		// 			message: ` ${ this.files.selected.length > 1 ? 'were' : 'was' } removed with success.`
-		// 		});
-		// 		this.files.setSelected([]);
-		// 	})
-		// 	.catch(e => {
-		// 		this.request.setStatus({
-		// 			state: XHR.ERROR,
-		// 			files: this.files.selected,
-		// 			message: '  could not be removed, please try again.'
-		// 		});
-		// 	});
-	}
+	const selectFile = (file) => {
+		if (!selectedFiles.includes(file.name))
+			return setSelectedFiles([ ...selectedFiles, file.name ]);
+		setSelectedFiles(selectedFiles.filter(name => name !== file.name));
+	};
 
 	return (
 		<>
@@ -97,13 +45,13 @@ function AttachmentPopup({ when, close, fileList }) {
 				/>
 
 				<FileList
-					ref={ fileListForm }
 					fileList={ fileList }
+					selectFile={ selectFile }
 				/>
 
 				<Button
-					styleAs={ ButtonDanger$ }
-					className={ 'delete-btn ' + 'disabledOrNothing(attachmentCtx)' }
+					styleAs={ DeleteButton$ }
+					className={ 'delete-btn ' + (selectedFiles.length ? '' : 'disabled') }
 					warning={ { disableBg: true } }
 					onConfirm={ deleteFiles }>
 					Remove
@@ -146,4 +94,8 @@ const AttachmentPopup$ = styled.div`
 			color: inherit;
 		}
 	}
+`;
+
+const DeleteButton$ = styled(ButtonDanger$)`
+	margin: 1rem;
 `;
