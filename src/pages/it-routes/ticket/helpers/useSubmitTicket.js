@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { BASE_URL } from '/BASE_URL';
-import { http } from '../../../utils';
+import { http } from '../../../../utils';
 import { useHistory } from 'react-router-dom';
-import { ItRoutesCtx } from '../../../components/IT-routes/ItRoutesWithContext';
-import { UserCtx } from '../../../GlobalContext';
+import { ItRoutesCtx } from '../../ItRoutesContext';
+import { UserCtx } from '../../../../GlobalContext';
 
 function useSubmitTicket(setNeedToSave, state) {
 

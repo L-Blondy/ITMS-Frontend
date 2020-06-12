@@ -3,8 +3,8 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import GlobalContext from './GlobalContext.js';
 import { GlobalStyles } from './GlobalStyles.js';
-import { ItRoutes } from './pages/it-routes';
-import { CommonRoutes } from './components/Common-routes';
+import { ItRoutesContext } from './pages/it-routes';
+import { CommonRoutes } from './pages/common-routes';
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
 			<GlobalStyles />
 			<BrowserRouter>
 				<Switch>
-					<Route path='/it' render={ () => <ItRoutes /> } />
+					<Route path='/it' render={ () => <ItRoutesContext /> } />
 					<Route path='/' render={ () => <CommonRoutes /> } />
 				</Switch>
 			</BrowserRouter>

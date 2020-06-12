@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import React from 'react';
 import { ColumnData } from '.';
-import { FlexRow$, FlexCol$ } from '../../components/flex';
-import { Input, InputBoxAround$ } from '../../components/inputs';
-import { Button, ButtonSortBy$ } from '../../components/buttons';
-import { formatFieldName, toQueryObject } from '../../utils';
+import { FlexRow$, FlexCol$ } from '../../../components/flex';
+import { Input, InputBoxAround$ } from '../../../components/inputs';
+import { Button, ButtonSortBy$ } from '../../../components/buttons';
+import { formatFieldName, toQueryObject } from '../../../utils';
 
 function FlexSearchGrid({ fields, results, pageSize, onSubmitQuery, query: previousQuery }) {
 

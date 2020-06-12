@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { BASE_URL } from '/BASE_URL';
-import { http } from '../../../utils';
+import { http } from '../../../../utils';
 import { useHistory } from 'react-router-dom';
-import { ItRoutesCtx } from '../../../components/IT-routes/ItRoutesWithContext';
+import { ItRoutesCtx } from '../../ItRoutesContext';
 
 function useDeleteTicket(setNeedToSave) {
 

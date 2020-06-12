@@ -8,16 +8,16 @@ import { CLR } from '../../../GlobalStyles';
 function WorknotesHistory({ worknotesHistory, fileList }) {
 	if (!worknotesHistory.length) return null;
 
-	const [ height$, setheight$ ] = useState('100%');
+	// const [ height$, setheight$ ] = useState('100%');
 
-	useEffect(() => {
-		cb();
-		window.addEventListener('resize', cb);
-		function cb() {
-			const worknotes = document.querySelector('.worknotes');
-			setheight$(worknotes.getBoundingClientRect().height);
-		};
-	}, []);
+	// useEffect(() => {
+	// 	cb();
+	// 	window.addEventListener('resize', cb);
+	// 	function cb() {
+	// 		const worknotes = document.querySelector('.worknotes');
+	// 		setheight$(worknotes.getBoundingClientRect().height);
+	// 	};
+	// }, []);
 
 	return (
 		<div>
