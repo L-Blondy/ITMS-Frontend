@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import React, { useState, useEffect, useRef } from 'react';
-import { Input, Select, Textarea, InputLabelLeftAbs$ } from '../../components/inputs';
-import { formatDate } from '../../utils';
-import { FlexRow$, FlexCol$ } from '../../components/flex';
+import React from 'react';
+import { formatDate } from '../../../utils';
+import { Input, Select, Textarea, InputLabelLeftAbs$ } from '../../../components/inputs';
+import { FlexRow$, FlexCol$ } from '../../../components/flex';
+import { activityCircle } from '/assets/icons';
 
-const Form = ({ state, errors, handleChange, validateSubmission }) => {
+const Fields = ({ state, errors, handleChange, validateSubmission, changedFields }) => {
 
 	return (
 		<FlexRow$$ as='form' onSubmit={ validateSubmission }>
@@ -42,6 +43,7 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					name='escalation'
 					type='text'
 					value={ state.escalation === 0 ? 'none' : state.escalation === 1 ? 'uplift' : 'overdue' }
+					className={ changedFields.has('escalation') ? 'updated' : '' }
 					disabled
 				/>
 
@@ -51,7 +53,8 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					name='category'
 					value={ state.category }
 					errors={ errors.category }
-					onChange={ handleChange }>
+					onChange={ handleChange }
+					className={ changedFields.has('category') ? 'updated' : '' }>
 					<option value=''>-none-</option>
 					{ Object.keys(state.categories).map(cat => (
 						<option value={ cat } key={ cat }>{ cat }</option>
@@ -64,7 +67,8 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					name='subCategory'
 					value={ state.subCategory }
 					errors={ errors.subCategory }
-					onChange={ handleChange }>
+					onChange={ handleChange }
+					className={ changedFields.has('subCategory') ? 'updated' : '' }>
 					<option value=''>-none-</option>
 					{ (state.categories[ state.category ] || []).map(cat => (
 						<option value={ cat } key={ cat }>{ cat }</option>
@@ -80,6 +84,7 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					type='text'
 					style={ { textTransform: 'capitalize' } }
 					value={ state.status }
+					className={ changedFields.has('status') ? 'updated' : '' }
 					disabled
 				/>
 
@@ -116,6 +121,7 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					value={ state.priority }
 					errors={ errors.priority }
 					onChange={ handleChange }
+					className={ changedFields.has('priority') ? 'updated' : '' }
 					disabled>
 					<option value="P1"> P1 - Critical </option>
 					<option value="P2"> P2 - High </option>
@@ -131,6 +137,7 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					value={ state.assignmentGroup }
 					errors={ errors.assignmentGroup }
 					onChange={ handleChange }
+					className={ changedFields.has('assignmentGroup') ? 'updated' : '' }
 					autoComplete="off"
 				/>
 
@@ -142,6 +149,7 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					value={ state.assignedTo }
 					errors={ errors.assignedTo }
 					onChange={ handleChange }
+					className={ changedFields.has('priority') ? 'updated' : '' }
 					autoComplete="off"
 				/>
 			</FlexCol$$>
@@ -155,6 +163,7 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					value={ state.description }
 					errors={ errors.description }
 					onChange={ handleChange }
+					className={ changedFields.has('description') ? 'updated' : '' }
 					autoComplete="off"
 				/>
 
@@ -168,6 +177,7 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 					value={ state.instructions }
 					errors={ errors.instructions }
 					onChange={ handleChange }
+					className={ changedFields.has('instructions') ? 'updated' : '' }
 					autoComplete="off"
 					spellCheck="off"
 				/>
@@ -191,10 +201,23 @@ const Form = ({ state, errors, handleChange, validateSubmission }) => {
 	);
 };
 
-export default Form;
+export default Fields;
 
 const FlexRow$$ = styled(FlexRow$)`
 	flex-wrap: wrap;
+
+	.updated::before{
+		content: '';
+		font-size: 14px;
+		position: absolute;
+		right: 100%;
+		height: 1.5em;
+		width: 1.7em;
+		background-image: url(${ activityCircle });
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 60%;
+	}
 `;
 
 const FlexCol$$ = styled(FlexCol$)`

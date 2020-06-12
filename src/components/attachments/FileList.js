@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import { AttachmentInfo } from './';
+import { FileInfo } from './';
 import { Input, InputLabelRight$ } from '../inputs';
 import { BASE_URL } from '/BASE_URL';
 import { CLR } from '../../GlobalStyles';
@@ -21,7 +21,7 @@ const FileList = ({ fileList = [], className, selectFile, ...props }) => {
 								value={ file.name }
 								onChange={ e => selectFile(e.target) }
 								label={
-									<AttachmentInfo
+									<FileInfo
 										as='label'
 										htmlFor={ file.name }
 										data={ file }
@@ -56,21 +56,21 @@ const Form$ = styled.form`
 		align-items: center;
 		line-height: 1.7rem;
 			
-		$:hover {
+		&:hover {
 			background: rgba(0, 0, 0, 0.03);
 		}
 
 		.file-select,
-		.file-data {
+		.file-info {
 			flex-grow: 1;
 		}
 
 		a {
-			margin -left: auto;
+			margin-left: auto;
 			color: ${ CLR.PRIMARY };
 			padding: 0 0.2rem;
 
-				&: hover {
+				&:hover {
 				opacity: 1;
 				text-decoration: underline;
 			}

@@ -7,3 +7,4 @@ export { default as InputTransparent$ } from './InputTransparent$';
 export { default as InputLabelLeftAbs$ } from './InputLabelLeftAbs$';
 export { default as InputLabelLeft$ } from './InputLabelLeft$';
 export { default as InputLabelRight$ } from './InputLabelRight$';
+export { default as Skipper } from './Skipper';

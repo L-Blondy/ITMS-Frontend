@@ -1,16 +1,16 @@
 import styled from 'styled-components';
-import React, { useState, useEffect, useRef } from 'react';
-import { Input, InputLabelRight$ } from '../inputs';
+import React, { useRef } from 'react';
+import { Input, InputLabelRight$ } from '.';
 
-function Skipper ( { onSubmit, step, startFrom, maxValue } ) {
+function Skipper({ onSubmit, step, startFrom, maxValue }) {
 
-	const input = useRef()
+	const input = useRef();
 
-	const handleSubmit = ( e ) => {
-		e.preventDefault()
-		const newValue = Math.max( 1, parseInt( e.target.value ) || input.current.value )
-		onSubmit( newValue )
-	}
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const newValue = Math.max(1, parseInt(e.target.value) || input.current.value);
+		onSubmit(newValue);
+	};
 
 	return (
 		<Form$ onSubmit={ handleSubmit }>
@@ -18,7 +18,7 @@ function Skipper ( { onSubmit, step, startFrom, maxValue } ) {
 				name='previous'
 				type='button'
 				className='previous'
-				value={ Math.max( startFrom - step, 1 ) }
+				value={ Math.max(startFrom - step, 1) }
 				onClick={ handleSubmit }
 				disabled={ startFrom === 1 }
 			/>
@@ -46,7 +46,7 @@ function Skipper ( { onSubmit, step, startFrom, maxValue } ) {
 
 export default Skipper;
 
-const InputSkip$ = styled( InputLabelRight$ )`
+const InputSkip$ = styled(InputLabelRight$)`
 	input {
 		width: 3em;
 		text-align: right;

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { TicketCtx } from './TicketPageWithContext';
 import { formatDate } from '../../../utils';
-import { Form$ } from '../';
+import { Form$ } from '..';
 import { Input, Select, Textarea, InputLabelLeftAbs$ } from '../../inputs';
 import { activityCircle } from '/assets/icons';
 

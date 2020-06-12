@@ -1,17 +1,13 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
-import { Settings } from '../popup';
-import { DashboardPage } from '../../pages/dashboard';
-import { ErrorPage } from '../../pages/error';
-import { ReportPage } from '../../pages/report';
-import { ItRoutesCtx } from './ItRoutesWithContext';
-import { TicketPage } from '../../pages/ticket';
-import { AdministrationPage } from '../../pages/administration';
-import { SearchPage } from '../../pages/search';
+import { Settings } from '../../components/popup';
+import { ItRoutesCtx } from './ItRoutesContext';
+import { DashboardPage, ReportPage, TicketPage, AdministrationPage, SearchPage } from './';
+import { ErrorPage } from '../error';
 import { UserCtx } from '../../GlobalContext';
-import { Navbar, Sidebar } from '../navs';
-import { FlexRow$, FlexCol$ } from '../flex';
+import { Navbar, Sidebar } from '../../components/navs';
+import { FlexRow$, FlexCol$ } from '../../components/flex';
 import { BASE_URL } from '/BASE_URL';
 import http from '../../utils/http';
 

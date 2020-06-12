@@ -1,9 +1,8 @@
-import styled from 'styled-components';
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { requirements, Form } from './';
-import { ControlBar$ } from '../../components/navs';
+import { ControlBar$ } from '../../../components/navs';
+import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../../components/buttons';
 import STATUS from './STATUS.json';
-import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../components/buttons';
 
 function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, state }) {
 

@@ -1,16 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { ItRoutes } from './';
+import { ItRoutes } from '.';
 
 export const ItRoutesCtx = createContext();
 
-function ItRoutesWithContext() {
+function ItRoutesContext() {
 
 	const [ initialData, setInitialData ] = useState();
 	const [ error, setError ] = useState();
 	const [ areOpened, setAreOpened ] = useState(false);
 	const [ isLoading, setIsLoading ] = useState(false);
-
-	useEffect(() => console.log(areOpened), [ areOpened ]);
 
 	const itRoutesCtx = {
 		initialData,
@@ -37,4 +35,4 @@ function ItRoutesWithContext() {
 	);
 }
 
-export default ItRoutesWithContext;
+export default ItRoutesContext;

@@ -5,3 +5,4 @@ export { default as formatFileSize } from './formatFileSize';
 export { default as formatDate } from './formatDate';
 export { default as formatFieldName } from './formatFieldName';
 export { default as setDefaultLocalStorage } from './setDefaultLocalStorage';
+export { default as compareObjects } from './compareObjects';

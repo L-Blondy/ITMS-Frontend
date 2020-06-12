@@ -86,8 +86,6 @@ class TicketCtxModel {
 		else if (name === 'urgency')
 			changes.priority = 'P' + Math.floor((parseInt(value) + parseInt(this.state.impact)) / 2);
 
-		// Validate.setClassName( e.target, name, value );
-
 		this.setState({
 			...this.state,
 			...changes

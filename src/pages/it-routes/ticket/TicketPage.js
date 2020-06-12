@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
-import { requirements, Form, ControlBar, WorknotesHistory } from './';
-import { useFormValidation, useToggle, useSubscription } from '../../hooks';
-import { FlexCol$ } from '../../components/flex';
-import { LocationPrompt } from '../../components/popup';
-import { AttachmentPopup } from '../../components/attachments';
+import { requirements, Fields, ControlBar, FileList, WorknotesHistory } from './';
+import { useFormValidation, useToggle, useSubscription } from '../../../hooks';
+import { FlexCol$ } from '../../../components/flex';
+import { LocationPrompt } from '../../../components/popup';
+import { AttachmentPopup } from '../../../components/attachments';
+import { ItRoutesCtx } from '../ItRoutesContext';
 import { BASE_URL } from '/BASE_URL';
-import { ItRoutesCtx } from '../../components/IT-routes/ItRoutesWithContext';
 import { useSubmitTicket, useDeleteTicket } from './helpers';
+import { compareObjects } from '../../../utils';
 
 function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 
@@ -26,6 +27,7 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 	const [ needToSave, setNeedToSave ] = useState(false);
 	const submitTicket = useSubmitTicket(setNeedToSave, state);
 	const deleteTicket = useDeleteTicket(setNeedToSave);
+	const [ changedFields, setChangedFields ] = useState(new Set());
 
 	useEffect(() => {
 		if (!submission.isValid) return;
@@ -38,8 +40,10 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 		let { worknotesHistory, ...newState } = liveData;
 		worknotesHistory && setWorknotesHistory(worknotesHistory);
 		setState({ ...state, ...newState });
-		// const changedProps = compare(liveData, ticketCtx.initialState);
-		// ticketCtx.setChangedProps(changedProps);
+		let changes = compareObjects(liveData, initialState);
+		changes = changes.filter(prop => !prop.isOneOf([ '__v', 'worknotesHistory', 'fileList', 'updatedOn' ]));
+		changes = new Set(changes);
+		setChangedFields(changes);
 	}, [ liveData ]);
 
 	useEffect(() => {
@@ -68,13 +72,16 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 			validateSubmission={ validateSubmission }
 		/>
 
+		<FileList fileList={ state.fileList } />
+
 		<Container$>
 			<FlexCol$$>
-				<Form
+				<Fields
 					state={ state }
 					errors={ errors }
 					handleChange={ handleChange }
 					validateSubmission={ validateSubmission }
+					changedFields={ changedFields }
 				/>
 
 				<WorknotesHistory

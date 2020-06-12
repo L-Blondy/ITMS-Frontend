@@ -3,20 +3,17 @@ import React from 'react';
 import { formatFileSize } from '../../utils';
 import * as SRC from '/assets/icons/fileTypes';
 
-function AttachmentInfo({ data, tag = 'span', className, ...props }) {
+function FileInfo({ data, className, ...props }) {
 	return (
-		<AttachmentInfo$
-			as={ tag }
-			{ ...props }
-			className={ 'file-data ' + className } >
+		<FileInfo$ { ...props } className={ 'file-info ' + className } >
 			<img className='icon' src={ getSRC(data) } alt='' />
 			<span className='name'>{ data.name }</span>
 			<span className='size light-font'>{ formatFileSize(data.size) }</span>
-		</AttachmentInfo$>
+		</FileInfo$>
 	);
 }
 
-export default AttachmentInfo;
+export default FileInfo;
 
 function getSRC(file) {
 	const { mimetype, name } = file;
@@ -30,7 +27,7 @@ function getSRC(file) {
 		return SRC.all;
 }
 
-const AttachmentInfo$ = styled.span`
+const FileInfo$ = styled.span`
 	display: flex;
 	align-items: center;
 	color: #333;

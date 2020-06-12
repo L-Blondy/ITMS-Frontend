@@ -8,7 +8,7 @@ import * as SRC from '/assets/icons';
 import { TicketCtx, STATUS } from './TicketPageWithContext';
 import { ItRoutesCtx } from '../ItRoutesWithContext';
 import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../buttons';
-import { ControlBar$$ } from '../';
+import { ControlBar$$ } from '..';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
 

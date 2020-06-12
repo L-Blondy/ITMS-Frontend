@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { formatDate } from '../../utils';
-import { FileLog, ChangeLog, WorkLog } from '../../components/logs';
-import { FlexRow$, FlexColReverse$ } from '../../components/flex';
-import { CLR } from '../../GlobalStyles';
+import { formatDate } from '../../../utils';
+import { FileLog, ChangeLog, WorkLog } from '../../../components/logs';
+import { FlexRow$, FlexColReverse$ } from '../../../components/flex';
+import { CLR } from '../../../GlobalStyles';
 
 function WorknotesHistory({ worknotesHistory, fileList }) {
 	if (!worknotesHistory.length) return null;
