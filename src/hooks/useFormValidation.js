@@ -4,12 +4,12 @@ function useFormValidation({
 	requirements,
 	initialState = {},
 	initialErrors = {},
-	getStateChanges = (name, value) => ({ [ name ]: value }),
-	onValidSubmission
+	getStateChanges = (name, value) => ({ [ name ]: value })
 }) {
 	const validation = useRef(new Validation(requirements)).current;
 	const [ state, setState ] = useState(initialState);
 	const [ errors, setErrors ] = useState(initialErrors);
+	const [ submission, setSubmission ] = useState({});
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -23,9 +23,21 @@ function useFormValidation({
 		e.preventDefault();
 		const errors = validation.getFormErrors(state);
 		setErrors(errors);
-		if (validation.hasErrors) return console.error('Invalid submission.');;
-		if (!onValidSubmission) return console.error('onValidSubmission is required @useFormValidation.');
-		onValidSubmission(e);
+		if (validation.hasErrors) {
+			console.error('Invalid submission.');
+			setSubmission({
+				isValid: false,
+				source: e.target
+			});
+		}
+		else {
+			setSubmission({
+				isValid: true,
+				source: e.target
+			});
+		}
+		// if (!onValidSubmission) return console.error('onValidSubmission is required @useFormValidation.');
+		// onValidSubmission(e);
 	};
 
 	return {
@@ -34,6 +46,7 @@ function useFormValidation({
 		errors,
 		handleChange,
 		validateSubmission,
+		submission
 	};
 }
 
