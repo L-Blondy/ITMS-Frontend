@@ -17,7 +17,7 @@ function useSubmitTicket(setNeedToSave, state) {
 		const additionalData = JSON.parse(source.value || '{}');
 		additionalData.user = userCtx.name;
 		additionalData.date = Date.now();
-		additionalData.updatedOn = Date.now();
+		// additionalData.updatedOn = Date.now();
 		itRoutesCtx.page.setIsLoading(true);
 
 		setTimeout(() => {

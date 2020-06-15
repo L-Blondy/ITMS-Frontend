@@ -10,6 +10,7 @@ function useUpload(username, setKey, setRequestStatus, file) {
 		const formData = new FormData();
 		formData.append("file", file);
 		formData.append("user", username);
+		formData.append("date", Date.now());
 		setRequestStatus({ state: XHR.LOADING });
 
 		http()

@@ -10,6 +10,8 @@ function ItRoutesContext() {
 	const [ areOpened, setAreOpened ] = useState(false);
 	const [ isLoading, setIsLoading ] = useState(false);
 
+	useEffect(() => console.log(initialData), [ initialData ]);
+
 	const itRoutesCtx = {
 		initialData,
 		setInitialData,

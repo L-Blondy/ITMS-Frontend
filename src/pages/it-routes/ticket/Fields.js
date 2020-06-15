@@ -2,14 +2,15 @@ import styled from 'styled-components';
 import React from 'react';
 import { formatDate } from '../../../utils';
 import { Input, Select, Textarea, InputLabelLeftAbs$ } from '../../../components/inputs';
-import { FlexRow$, FlexCol$ } from '../../../components/flex';
+import { FlexRow$ } from '../../../components/flex';
+import { InputContainer$, InputContainerFullWidth$ } from '../../../components/containers';
 import { activityCircle } from '/assets/icons';
 
 const Fields = ({ state, errors, handleChange, validateSubmission, changedFields }) => {
 
 	return (
 		<FlexRow$$ as='form' onSubmit={ validateSubmission }>
-			<FlexCol$$ className='sm-6'>
+			<InputContainer$ className='sm-6'>
 				<Input
 					styleAs={ InputLabelLeftAbs$ }
 					label='Number'
@@ -74,9 +75,9 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 						<option value={ cat } key={ cat }>{ cat }</option>
 					)) }
 				</Select>
-			</FlexCol$$>
+			</InputContainer$>
 
-			<FlexCol$$ className='sm-6'>
+			<InputContainer$ className='sm-6'>
 				<Input
 					styleAs={ InputLabelLeftAbs$ }
 					label='Status'
@@ -152,9 +153,9 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 					className={ changedFields.has('priority') ? 'updated' : '' }
 					autoComplete="off"
 				/>
-			</FlexCol$$>
+			</InputContainer$>
 
-			<ColFullWidth$ className='xs-12'>
+			<InputContainerFullWidth$ className='xs-12'>
 				<Input
 					styleAs={ InputLabelLeftAbs$ }
 					label='Description'
@@ -196,7 +197,7 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 						autoComplete="off"
 					/>
 				) : '' }
-			</ColFullWidth$>
+			</InputContainerFullWidth$>
 		</FlexRow$$>
 	);
 };
@@ -217,27 +218,5 @@ const FlexRow$$ = styled(FlexRow$)`
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 60%;
-	}
-`;
-
-const FlexCol$$ = styled(FlexCol$)`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-
-	&:nth-child(even){
-		align-items: flex-end;
-	}
-
-	> * {
-		margin-top: 1rem;
-		margin-bottom: 0.3rem;
-		width: 250px;
-	}
-`;
-
-const ColFullWidth$ = styled(FlexCol$$)`
-	> *  {
-		width: 100% !important;
 	}
 `;
