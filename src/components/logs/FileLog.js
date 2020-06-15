@@ -4,11 +4,12 @@ import { useLocation } from 'react-router-dom';
 import { formatFileSize } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
 
-function FileLog({ children: file, fileList, ...props }) {
+function FileLog({ children: file, fileList, used, ...props }) {
 
 	const { pathname } = useLocation();
 	const { mimetype, originalname } = file;
-	const wasDeleted = fileList.filter(fileData => fileData.name === originalname).length === 0;
+	const wasDeleted = fileList.filter(fileData => fileData.name === originalname).length === 0
+		|| used.filter(fileData => fileData.originalname === originalname).length > 0;
 	const isImage = mimetype.indexOf('image') === 0;
 
 	if (wasDeleted) {
@@ -23,6 +24,8 @@ function FileLog({ children: file, fileList, ...props }) {
 			</div>
 		);
 	}
+
+	used.push(file);
 
 	if (isImage) {
 		return (

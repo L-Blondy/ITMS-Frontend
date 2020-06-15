@@ -20,7 +20,7 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 		validateSubmission,
 		submission
 	} = useFormValidation({ requirements, initialState, getStateChanges });
-	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory);
+	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory.reverse());
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
 	const [ isAttachmentPopupOpened, toggleAttachmentPopup ] = useToggle(false);
 	const itRoutesCtx = useContext(ItRoutesCtx);
@@ -38,7 +38,7 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 		if (!liveData) return;
 
 		let { worknotesHistory, ...newState } = liveData;
-		worknotesHistory && setWorknotesHistory(worknotesHistory);
+		worknotesHistory && setWorknotesHistory(worknotesHistory.reverse());
 		setState({ ...state, ...newState });
 		let changes = compareObjects(liveData, initialState);
 		changes = changes.filter(prop => !prop.isOneOf([ '__v', 'worknotesHistory', 'fileList', 'updatedOn' ]));
