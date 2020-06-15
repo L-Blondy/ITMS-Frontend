@@ -1,12 +1,16 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ControlBar$ } from '../../../components/navs';
 import { FlexCol$, FlexRow$ } from '../../../components/flex';
 import { InputContainer$, InputContainerFullWidth$ } from '../../../components/containers';
 import { Button, ButtonControlBar$ } from '../../../components/buttons';
 import { Select, InputLabelLeftAbs$ } from '../../../components/inputs';
+import { Filters } from './';
 
 function ReportPage() {
+
+	const [ table, setTable ] = useState('');
+	useEffect(() => console.log(table), [ table ]);
 
 	return (<>
 		<ControlBar$>
@@ -23,7 +27,12 @@ function ReportPage() {
 
 				<InputContainer$ className='sm-6'>
 
-					<Select styleAs={ InputLabelLeftAbs$ } label='Data' name='data'>
+					<Select
+						styleAs={ InputLabelLeftAbs$ }
+						label='Table'
+						name='table'
+						value={ table }
+						onChange={ e => setTable(e.target.value) }>
 						<option value=""> -none- </option>
 						<option value="incidents"> Incident </option>
 						<option value="requests"> Request </option>
@@ -45,20 +54,7 @@ function ReportPage() {
 
 			</FlexRow$>
 
-			<InputContainerFullWidth$ className='xs-12'>
-				<FlexRow$>
-					<Button
-						styleAs={ ButtonControlBar$ }
-						onClick={ () => { } } >
-						Add filter condition
-					</Button>
-					<Button
-						styleAs={ ButtonControlBar$ }
-						onClick={ () => { } } >
-						Add "OR" clause
-					</Button>
-				</FlexRow$>
-			</InputContainerFullWidth$>
+			<Filters table={ table } />
 
 			<InputContainerFullWidth$ className='xs-12'>
 				12
