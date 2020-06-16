@@ -20,13 +20,13 @@ function Sidebar(props) {
 					<NavLink$ to='/it/ticket/changes/new'>Open Change</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to='/it/administration/incidents/categories'>Incident Cat</NavLink$>
+					<NavLink$ to='/it/administration/categories/incidents'>Incident Cat</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to='/it/administration/requests/categories'>Request Cat</NavLink$>
+					<NavLink$ to='/it/administration/categories/requests'>Request Cat</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to='/it/administration/changes/categories'>Change Cat</NavLink$>
+					<NavLink$ to='/it/administration/categories/changes'>Change Cat</NavLink$>
 				</li>
 				<li>
 					<NavLink$ to={ `/it/ticket/incidents` }>Incident Search </NavLink$>

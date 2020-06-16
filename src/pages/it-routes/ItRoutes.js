@@ -3,14 +3,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { Settings } from '../../components/popup';
 import { ItRoutesCtx } from './ItRoutesContext';
-import { DashboardPage, ReportPage, TicketPage, AdministrationPage, SearchPage } from './';
+import { AdministrationRoutes } from '../administration-routes';
+import { DashboardPage, ReportPage, TicketPage, SearchPage } from './';
 import { ErrorPage } from '../error';
 import { UserCtx } from '../../GlobalContext';
 import { Navbar, Sidebar } from '../../components/navs';
 import { FlexRow$, FlexCol$ } from '../../components/flex';
 import { BASE_URL } from '/BASE_URL';
 import http from '../../utils/http';
-
 
 function ItRoutes() {
 
@@ -62,14 +62,15 @@ function ItRoutes() {
 					) : initialData ? (
 
 						<Switch key={ switchKey }>
+							<Route path='/it/administration' render={ () => initialData.administrationData && (
+								<AdministrationRoutes initialData={ initialData.administrationData } />
+							) } />
+
 							<Route path='/it/dashboard' render={ () => (
 								<DashboardPage initialData={ initialData } />
 							) } />
 							<Route path='/it/report' render={ () => initialData.reportData && (
 								<ReportPage initialData={ initialData.reportData } />
-							) } />
-							<Route path='/it/administration/:type/:other' render={ () => initialData.administrationData && (
-								<AdministrationPage initialData={ initialData.administrationData } />
 							) } />
 							<Route path='/it/ticket/:type/:id' render={ () => initialData.id && (
 								<TicketPage initialData={ initialData } />

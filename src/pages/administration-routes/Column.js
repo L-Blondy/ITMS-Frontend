@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonItemControl$ } from '../../../components/buttons';
-import { Input, InputTransparent$ } from '../../../components/inputs';
-import { FlexRow$, FlexCol$ } from '../../../components/flex';
+import { Button, ButtonItemControl$ } from '../../components/buttons';
+import { Input, InputTransparent$ } from '../../components/inputs';
+import { FlexRow$, FlexCol$ } from '../../components/flex';
 
 function Column({ items = [], name, selectedItem, setSelectedItem, updateState }) {
 

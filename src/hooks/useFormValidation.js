@@ -36,8 +36,6 @@ function useFormValidation({
 				source: e.target
 			});
 		}
-		// if (!onValidSubmission) return console.error('onValidSubmission is required @useFormValidation.');
-		// onValidSubmission(e);
 	};
 
 	return {

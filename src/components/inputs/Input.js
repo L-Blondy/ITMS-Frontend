@@ -41,9 +41,9 @@ const Input = React.forwardRef(({
 			/>
 
 			{ errors.length ? (
-				<div>
+				<div className='errors'>
 					{ errors.map((err, i) => (
-						<div key={ name + value + i }>
+						<div className='error' key={ name + value + i }>
 							{ err }
 						</div>
 					)) }

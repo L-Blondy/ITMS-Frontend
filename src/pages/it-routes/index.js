@@ -1,4 +1,3 @@
-export { default as AdministrationPage } from './administration/AdministrationPage';
 export { default as DashboardPage } from './dashboard/DashboardPage';
 export { default as ReportPage } from './report/ReportPage';
 export { default as SearchPage } from './search/SearchPage';

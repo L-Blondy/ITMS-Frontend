@@ -29,6 +29,7 @@ const InputCommon$ = styled.span`
 		padding-right: 0.45rem;
 		border: 1px solid ${ CLR.BORDER.PRIMARY };
 		overflow: hidden;
+		line-height: inherit;
 
 		&:disabled {
 			background-color: #eaf0f1;
@@ -37,7 +38,7 @@ const InputCommon$ = styled.span`
 	}
 
 	input, select {
-		height: 1.6em;
+		min-height: 1.6em;
 	}
 
 	textarea {
