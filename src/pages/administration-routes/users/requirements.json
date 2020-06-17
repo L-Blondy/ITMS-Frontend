@@ -1,0 +1,13 @@
+{
+	"id": {
+		"required": true
+	},
+	"name": {
+		"required": true,
+		"minLength": 3
+	},
+	"password": {
+		"required": true,
+		"minLength": 8
+	}
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import Input from './Input';
 
-function Select ( props ) {
-	return <Input as={ 'select' } { ...props } />;
-}
+const Select = React.forwardRef((props, ref) => {
+	return <Input as={ 'select' } ref={ ref } { ...props } />;
+});
 
 export default Select;

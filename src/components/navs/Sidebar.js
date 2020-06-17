@@ -37,6 +37,9 @@ function Sidebar(props) {
 				<li>
 					<NavLink$ to={ `/it/ticket/changes` }>Change Search</NavLink$>
 				</li>
+				<li>
+					<NavLink$ to={ `/it/administration/users/new` }>New user</NavLink$>
+				</li>
 			</FlexCol$>
 		</FlexRow$$>
 	);

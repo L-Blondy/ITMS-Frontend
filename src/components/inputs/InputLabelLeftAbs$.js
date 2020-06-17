@@ -6,7 +6,7 @@ const InputLabelLeftAbs$ = styled(InputCommon$)`
 		position: absolute;
 		right: calc(100% + 1.5rem);
 		white-space: nowrap;
-		line-height: 1.5em;
+		line-height: 1.55em;
 	}
 `;
 

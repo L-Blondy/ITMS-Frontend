@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 import { Column } from '.';
 import { bigArrow } from '/assets/icons';
 import { BASE_URL } from '/BASE_URL';
-import { http } from '../../utils';
-import { ItRoutesCtx } from '../it-routes/ItRoutesContext';
-import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../components/buttons';
-import { FlexRow$, FlexCol$ } from '../../components/flex';
+import { http } from '../../../utils';
+import { ItRoutesCtx } from '../../it-routes/ItRoutesContext';
+import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../../components/buttons';
+import { FlexRow$, FlexCol$ } from '../../../components/flex';
 
 function Categories({ categories }) {
 

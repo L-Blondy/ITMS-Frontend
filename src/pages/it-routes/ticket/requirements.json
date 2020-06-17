@@ -16,8 +16,5 @@
 	},
 	"assignmentGroup": {
 		"required": true
-	},
-	"assignedTo": {
-		"required": true
 	}
 }

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Categories, Users, NewUserPage } from '.';
+import { Categories } from './categories';
+import NewUserPage from './users/NewUserPage';
+import ManageUserPage from './users/ManageUserPage';
 
 function AdministrationRoutes({ initialData }) {
 
-	console.log(initialData);
-
 	return (
 		<Switch>
-			<Route exact path='/it/administration/user/new' render={ () => <NewUserPage /> } />
-			<Route path='/it/administration/user/:id' render={ () => <Users /> } />
+			<Route exact path='/it/administration/users/new' render={ () => <NewUserPage initialData={ initialData } /> } />
+			<Route exact path='/it/administration/users/:id' render={ () => <ManageUserPage initialData={ initialData } /> } />
+			<Route path='/it/administration/users/:id' render={ () => <Users /> } />
 			<Route path='/it/administration/categories/:type' render={ () => <Categories categories={ initialData } /> } />
 		</Switch>
 	);

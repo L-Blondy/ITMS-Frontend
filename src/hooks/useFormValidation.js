@@ -102,4 +102,9 @@ class Validation {
 		if (value.length <= requirementValue) return;
 		return `Please type no more than ${ requirementValue } characters`;
 	}
+
+	enum(value, requirementValue) {
+		if (value.isOneOf(requirementValue)) return;
+		return `Please choose a role the the user`;
+	}
 }

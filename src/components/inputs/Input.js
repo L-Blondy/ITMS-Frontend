@@ -14,6 +14,8 @@ const Input = React.forwardRef(({
 }, ref) => {
 	const [ value, setValue ] = useState(defaultValue || '');
 
+	console.log();
+
 	const Label = ({ htmlFor }) => {
 		if (typeof label === 'string')
 			return <label htmlFor={ htmlFor }>{ label }</label>;
@@ -21,7 +23,19 @@ const Input = React.forwardRef(({
 	};
 
 	const handleChange = (e) => {
-		setValue(e.target.value);
+		if (!props.multiple) {
+			setValue(e.target.value);
+		}
+		else {
+			const options = [].slice.call(e.target.options);
+			const nextValue = options.reduce((nextValue, opt) => {
+				if (opt.selected) {
+					nextValue.push(opt.value);
+				}
+				return nextValue;
+			}, []);
+			setValue(nextValue);
+		}
 		onChange && onChange(e);
 	};
 
