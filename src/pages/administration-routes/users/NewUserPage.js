@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlexCol$ } from '.././../../components/flex';
-import { Input, Select, InputLabelLeftAbs$ } from '.././../../components/inputs';
+import { Input, InputLabelLeftAbs$ } from '.././../../components/inputs';
 import { Button, ButtonPrimary$ } from '.././../../components/buttons';
 import { useFormValidation } from '../../../hooks';
 import requirements from './requirements.json';
@@ -21,12 +21,12 @@ function NewUserPage({ initialData }) {
 			id: initialData.id,
 			name: '',
 			password: '',
-			groups: []
+			email: '',
+			phone: ''
 		}
 	});
 
-	const groups = useRef();
-	const submitUser = useSubmitUser(state, groups);
+	const submitUser = useSubmitUser(state);
 
 	useEffect(() => {
 		if (!submission.isValid || !submission.source) return;
@@ -49,9 +49,8 @@ function NewUserPage({ initialData }) {
 
 			<Input
 				styleAs={ WithErrorRight$ }
-				label='Name'
+				label='Name*'
 				name='name'
-				type='text'
 				value={ state.name }
 				onChange={ handleChange }
 				errors={ errors.name }
@@ -60,27 +59,33 @@ function NewUserPage({ initialData }) {
 
 			<Input
 				styleAs={ WithErrorRight$ }
-				label='Password'
+				label='Password*'
 				name='password'
-				type='text'
 				value={ state.password }
 				onChange={ handleChange }
 				errors={ errors.password }
 				autoComplete='off'
 			/>
 
-			<Select
+			<Input
 				styleAs={ WithErrorRight$ }
-				ref={ groups }
-				label='Groups'
-				name='groups'
-				defaultValue={ [] }
-				multiple>
-				<option value=''> -none- </option>
-				{ initialData.groups.map(group => (
-					<option value={ group } key={ group }> { group } </option>
-				)) }
-			</Select>
+				label='Email'
+				name='email'
+				value={ state.email }
+				onChange={ handleChange }
+				errors={ errors.email }
+				autoComplete='off'
+			/>
+
+			<Input
+				styleAs={ WithErrorRight$ }
+				label='Phone'
+				name='phone'
+				value={ state.phone }
+				onChange={ handleChange }
+				errors={ errors.phone }
+				autoComplete='off'
+			/>
 
 			<Button
 				styleAs={ ButtonPrimary$ }

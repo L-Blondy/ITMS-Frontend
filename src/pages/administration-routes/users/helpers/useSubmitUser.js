@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { ItRoutesCtx } from '../../../it-routes/ItRoutesContext';
 import { UserCtx } from '../../../../GlobalContext';
 
-function useSubmitUser(state, groups) {
+function useSubmitUser(state) {
 
 	const itRoutesCtx = useContext(ItRoutesCtx);
 	const userCtx = useContext(UserCtx);
@@ -13,17 +13,9 @@ function useSubmitUser(state, groups) {
 
 	return function () {
 		itRoutesCtx.page.setIsLoading(true);
-		const options = [].slice.call(groups.current.options);
-		const selectedGroups = options.reduce((selectedGroups, opt) => {
-			if (opt.selected) {
-				selectedGroups.push(opt.value);
-			}
-			return selectedGroups;
-		}, []);
 
 		const newUserData = {
 			...state,
-			groups: selectedGroups,
 			createdOn: Date.now(),
 			createdBy: userCtx.name
 		};
