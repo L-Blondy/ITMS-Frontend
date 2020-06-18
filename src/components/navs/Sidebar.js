@@ -40,6 +40,15 @@ function Sidebar(props) {
 				<li>
 					<NavLink$ to={ `/it/administration/users/new` }>New user</NavLink$>
 				</li>
+				<li>
+					<NavLink$ to={ `/it/administration/users` }>All users</NavLink$>
+				</li>
+				<li>
+					<NavLink$ to={ `/it/administration/groups/new` }>New group</NavLink$>
+				</li>
+				<li>
+					<NavLink$ to={ `/it/administration/groups` }>All groups</NavLink$>
+				</li>
 			</FlexCol$>
 		</FlexRow$$>
 	);
