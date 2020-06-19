@@ -3,11 +3,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { Settings } from '../../components/popup';
 import { ItRoutesCtx } from './ItRoutesContext';
-import { AdministrationRoutes } from '../administration-routes';
+import { CategoriesPage } from './categories';
 import { DashboardPage, ReportPage, TicketPage, SearchPage } from './';
+import { UsersPage, ViewUserPage } from './users';
+import { GroupsPage, ViewGroupPage, NewGroupPage } from './groups';
+import NewUserPage from './users/NewUserPage';
 import { ErrorPage } from '../error';
 import { UserCtx } from '../../GlobalContext';
-import { Navbar, Sidebar } from '../../components/navs';
+import { Navbar, Sidebar } from './';
 import { FlexRow$, FlexCol$ } from '../../components/flex';
 import { BASE_URL } from '/BASE_URL';
 import http from '../../utils/http';
@@ -62,10 +65,30 @@ function ItRoutes() {
 					) : initialData ? (
 
 						<Switch key={ switchKey }>
-							<Route path='/it/administration' render={ () => initialData.administrationData && (
-								<AdministrationRoutes initialData={ initialData.administrationData } />
+							{/* USER ROUTES */ }
+							<Route path='/it/users/new' render={ () => initialData.userData && initialData.userData.id && (
+								<NewUserPage initialData={ initialData.userData } />
 							) } />
-
+							<Route path='/it/users/:id' render={ () => initialData.userData && initialData.userData.user && (
+								<ViewUserPage initialData={ initialData.userData } />
+							) } />
+							<Route path='/it/users' render={ () => initialData.userData && initialData.userData.users && (
+								<UsersPage initialData={ initialData.userData } />
+							) } />
+							{/* GROUP ROUTES */ }
+							<Route path='/it/groups/new' render={ () => initialData.groupData && initialData.groupData && (
+								<NewGroupPage initialData={ initialData.groupData } />
+							) } />
+							<Route path='/it/groups/:id' render={ () => initialData.groupData && initialData.groupData.group && (
+								<ViewGroupPage initialData={ initialData.groupData } />
+							) } />
+							<Route path='/it/groups' render={ () => initialData.groupData && initialData.groupData.groups && (
+								<GroupsPage initialData={ initialData.groupData } />
+							) } />
+							{/* OTHER ROUTES */ }
+							<Route path='/it/categories/:type' render={ () => initialData.categoriesData && (
+								<CategoriesPage categories={ initialData.categoriesData } />
+							) } />
 							<Route path='/it/dashboard' render={ () => (
 								<DashboardPage initialData={ initialData } />
 							) } />

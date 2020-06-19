@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FlexRow$, FlexCol$ } from '../flex';
+import { FlexRow$, FlexCol$ } from '../../components/flex';
 
 function Sidebar(props) {
 	return (
@@ -20,13 +20,13 @@ function Sidebar(props) {
 					<NavLink$ to='/it/ticket/changes/new'>Open Change</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to='/it/administration/categories/incidents'>Incident Cat</NavLink$>
+					<NavLink$ to='/it/categories/incidents'>Incident Cat</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to='/it/administration/categories/requests'>Request Cat</NavLink$>
+					<NavLink$ to='/it/categories/requests'>Request Cat</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to='/it/administration/categories/changes'>Change Cat</NavLink$>
+					<NavLink$ to='/it/categories/changes'>Change Cat</NavLink$>
 				</li>
 				<li>
 					<NavLink$ to={ `/it/ticket/incidents` }>Incident Search </NavLink$>
@@ -38,16 +38,16 @@ function Sidebar(props) {
 					<NavLink$ to={ `/it/ticket/changes` }>Change Search</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to={ `/it/administration/users/new` }>New user</NavLink$>
+					<NavLink$ to={ `/it/users/new` }>New user</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to={ `/it/administration/users` }>All users</NavLink$>
+					<NavLink$ to={ `/it/groups` }>All groups</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to={ `/it/administration/groups/new` }>New group</NavLink$>
+					<NavLink$ to={ `/it/groups/new` }>New group</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to={ `/it/administration/groups` }>All groups</NavLink$>
+					<NavLink$ to={ `/it/users` }>All users</NavLink$>
 				</li>
 			</FlexCol$>
 		</FlexRow$$>
@@ -72,6 +72,10 @@ const FlexRow$$ = styled(FlexRow$)`
 	
 	li {
 		display: flex;
+	}
+	
+	a {
+		color: white;
 	}
 `;
 

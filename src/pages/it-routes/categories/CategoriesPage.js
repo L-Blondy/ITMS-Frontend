@@ -5,11 +5,11 @@ import { Column } from '.';
 import { bigArrow } from '/assets/icons';
 import { BASE_URL } from '/BASE_URL';
 import { http } from '../../../utils';
-import { ItRoutesCtx } from '../../it-routes/ItRoutesContext';
+import { ItRoutesCtx } from '../ItRoutesContext';
 import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../../components/buttons';
 import { FlexRow$, FlexCol$ } from '../../../components/flex';
 
-function Categories({ categories }) {
+function CategoriesPage({ categories }) {
 
 	const itRoutesCtx = useContext(ItRoutesCtx);
 	const [ selectedItem, setSelectedItem ] = useState();
@@ -91,14 +91,14 @@ function Categories({ categories }) {
 
 				<FlexRow$ className='controls'>
 					<Button styleAs={ ButtonPrimary$ } onClick={ saveChanges }>Save</Button>
-					<Button styleAs={ ButtonSecondary$ }>Cancel</Button>
+					<Button styleAs={ ButtonSecondary$ } onClick={ () => setState(categories) }>Cancel</Button>
 				</FlexRow$>
 			</div>
-		</FlexCol$$>
+		</FlexCol$$ >
 	);
 }
 
-export default Categories;
+export default CategoriesPage;
 
 const FlexCol$$ = styled(FlexCol$)`
 	height: 100%;

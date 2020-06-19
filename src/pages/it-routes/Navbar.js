@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { CLR } from '../../GlobalStyles';
-import { FlexRow$ } from '../flex';
+import { FlexRow$ } from '../../components/flex';
 
 function Navbar(props) {
 	return (
@@ -12,7 +12,7 @@ function Navbar(props) {
 					<NavLink$ className='navlink' to='/it/dashboard'>Dashboard</NavLink$>
 				</li>
 				<li>
-					<NavLink$ className='navlink' to='/it/administration'>Administration</NavLink$>
+					<NavLink$ className='navlink' to='/it'>Administration</NavLink$>
 				</li>
 				<li>
 					<NavLink$ className='navlink' to='/it/sdfff'>Anywhere</NavLink$>
@@ -33,6 +33,10 @@ const FlexRow$$ = styled(FlexRow$)`
 	flex-shrink: 0;
 	border-bottom: 5px solid ${ CLR.PRIMARY_VIBRANT };
 	color: white;
+
+	a {
+		color: white;
+	}
 
 	ul {
 		width: 100%;

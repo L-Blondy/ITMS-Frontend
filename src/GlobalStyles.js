@@ -51,7 +51,6 @@ const GlobalStyles = createGlobalStyle`
 	}
 
 	a {
-		color: white;
 		text-decoration: none;
 		cursor: pointer;
 

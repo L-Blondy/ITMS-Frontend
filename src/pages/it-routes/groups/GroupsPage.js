@@ -2,24 +2,31 @@ import styled from 'styled-components';
 import React from 'react';
 import { FlexRow$, FlexCol$ } from '../../../components/flex';
 
-function AllGroupsPage({ initialData: { groups } }) {
+function GroupsPage({ initialData: { groups } }) {
 
 	return (
-		<div>
+		<FlexCol$$>
 			{ groups && groups.map(group => (
-				<FlexCol$ key={ group.name }>
-					<FlexRow$ as='h3'>
+				<FlexRow$ key={ group.name }>
+					<a href={ `${ location.pathname }/${ group.name }` }>
 						{ group.name }
-					</FlexRow$>
+					</a>
 					<FlexRow$>
 						{ group.users.map(user => (
 							<FlexRow$>{ user.name }</FlexRow$>
 						)) }
 					</FlexRow$>
-				</FlexCol$>
+				</FlexRow$>
 			)) }
-		</div>
+		</FlexCol$$>
 	);
 }
 
-export default AllGroupsPage;
+export default GroupsPage;
+
+const FlexCol$$ = styled(FlexCol$)`
+
+	a {
+		text-decoration: underline;
+	}
+`;

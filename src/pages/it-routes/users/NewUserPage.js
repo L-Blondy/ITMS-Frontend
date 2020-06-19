@@ -8,7 +8,6 @@ import requirements from './requirements.json';
 import { useSubmitUser } from './helpers';
 
 function NewUserPage({ initialData }) {
-
 	const {
 		state,
 		errors,
