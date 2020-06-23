@@ -8,13 +8,16 @@ import { useHistory } from 'react-router-dom';
 import { ItRoutesCtx } from '../../it-routes/ItRoutesContext';
 import { UserCtx } from '../../../GlobalContext';
 import { BASE_URL } from '/BASE_URL';
+import { SelectNew } from '../../../components/inputs';
 
 
 function NewGroupPage({ initialData }) {
 
 	const [ name, setName ] = useState();
 	const [ roles, setRoles ] = useState([]);
+	const [ users, setUsers ] = useState([]);
 	const [ selectedRole, setSelectedRole ] = useState();
+	const [ selectedUser, setSelectedUser ] = useState();
 	const [ keyBtn, setKeyBtn ] = useState(Math.random());
 	const itRoutesCtx = useContext(ItRoutesCtx);
 	const userCtx = useContext(UserCtx);
@@ -28,6 +31,16 @@ function NewGroupPage({ initialData }) {
 
 	const removeRole = (e) => {
 		setRoles(roles.filter(role => role !== e.target.value));
+	};
+
+	const addUser = () => {
+		setUsers([ ...users, selectedUser ]);
+		setSelectedUser('');
+		setKeyBtn(Math.random());
+	};
+
+	const removeUser = (e) => {
+		setUsers(users.filter(user => user !== e.target.value));
 	};
 
 	const handleSubmit = (e) => {
@@ -63,7 +76,39 @@ function NewGroupPage({ initialData }) {
 				name='name'
 				value={ name }
 				onChange={ e => setName(e.target.value) }
+				autoComplete='off'
 			/>
+
+			<FlexRow$ className='line'>
+				{/* <Select
+					styleAs={ InputLabelLeftAbs$ }
+					label='Roles'
+					name='roles'
+					value={ selectedRole }
+					onChange={ e => { console.log('onChange'); setSelectedRole(e.target.value); } }>
+					<option value=''> -select a role- </option>;
+					{ initialData.roles.map(role => {
+						if (roles.includes(role)) return;
+						return <option key={ `${ role }-option` } value={ role }>{ role }</option>;
+					}) }
+				</Select> */}
+				<SelectNew
+					styleAs={ InputLabelLeftAbs$ }
+					label='Roles'
+					onChange={ option => setSelectedRole(option.value) }
+					options={ initialData.roles.reduce((result, role) => (
+						[ ...result, { value: role, label: role } ]
+					), [ { value: '', label: '-none-' } ]) }
+				/>
+
+				<Button
+					styleAs={ ButtonItemControl$.Add$ }
+					className={ selectedRole ? '' : 'disabled' }
+					type='button'
+					onClick={ addRole }
+					key={ keyBtn }
+				/>
+			</FlexRow$>
 
 			{ roles.map(role => (
 				<FlexRow$ key={ `${ role }-added` }>
@@ -77,44 +122,44 @@ function NewGroupPage({ initialData }) {
 				</FlexRow$>
 			)) }
 
-			<FlexRow$ className='new-role'>
-				<Select
+			<FlexRow$ className='line'>
+				<InputWithQuery$
+					queryURL={ BASE_URL + '/it/users' }
+					dataNesting={ [ 'userData', 'users' ] }
 					styleAs={ InputLabelLeftAbs$ }
-					label='Roles'
-					name='roles'
-					value={ selectedRole }
-					onChange={ e => { console.log('onChange'); setSelectedRole(e.target.value); } }>
-					<option value=''> -select a role- </option>;
-					{ initialData.roles.map(role => {
-						if (roles.includes(role)) return;
-						return <option key={ `${ role }-option` } value={ role }>{ role }</option>;
-					}) }
-				</Select>
+					label='Users'
+					maxResults={ 10 }
+					searchedProps={ [ 'name', 'id' ] }
+					mainProp='name'
+					onSelect={ user => setSelectedUser(user) }
+					singleResultJSX={ user => (
+						<FlexRow$ className='single-result'>
+							<div>{ user.name }</div>
+							<div>{ user.id }</div>
+						</FlexRow$>
+					) }
+				/>
 
 				<Button
 					styleAs={ ButtonItemControl$.Add$ }
-					className={ selectedRole ? '' : 'disabled' }
+					className={ selectedUser ? '' : 'disabled' }
 					type='button'
-					onClick={ addRole }
+					onClick={ addUser }
 					key={ keyBtn }
 				/>
 			</FlexRow$>
 
-			<InputWithQuery$
-				queryURL={ BASE_URL + '/it/users' }
-				dataNesting={ [ 'userData', 'users' ] }
-				styleAs={ InputLabelLeftAbs$ }
-				label='Users'
-				maxResults={ 10 }
-				searchedProps={ [ 'name', 'id' ] }
-				mainProp='name'
-				singleResultJSX={ user => (
-					<FlexRow$ className='single-result'>
-						<div>{ user.name }</div>
-						<div>{ user.id }</div>
-					</FlexRow$>
-				) }
-			/>
+			{ users.map(user => (
+				<FlexRow$ key={ `${ user.id }-added` }>
+					<div >{ user }</div>
+					<Button
+						styleAs={ ButtonItemControl$.Delete$ }
+						type='button'
+						onClick={ removeUser }
+						value={ user }
+					/>
+				</FlexRow$>
+			)) }
 
 		</FlexCol$$>
 	);
@@ -129,11 +174,11 @@ const FlexCol$$ = styled(FlexCol$)`
 		margin: 0.7rem;
 	}
 
-	input, select {
+	input, select, .select {
 		width: 230px;
 	}
 
-	.new-role {
+	.line {
 		position: relative;
 
 		button {

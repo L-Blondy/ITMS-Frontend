@@ -8,7 +8,7 @@ const Input = React.forwardRef(({
 	className,
 	defaultValue,
 	onChange,
-	validation,
+	// validation,
 	errors = [],
 	otherChildren,
 	...props
