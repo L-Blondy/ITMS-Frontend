@@ -10,11 +10,10 @@ const Input = React.forwardRef(({
 	onChange,
 	validation,
 	errors = [],
+	children,
 	...props
 }, ref) => {
 	const [ value, setValue ] = useState(defaultValue || '');
-
-	console.log();
 
 	const Label = ({ htmlFor }) => {
 		if (typeof label === 'string')
@@ -50,7 +49,7 @@ const Input = React.forwardRef(({
 				id={ name }
 				ref={ ref }
 				{ ...props }
-				value={ props.value || value }
+				value={ (props.value || props.value === '' || props.value === 0) ? props.value : value }
 				onChange={ handleChange }
 			/>
 
@@ -63,6 +62,8 @@ const Input = React.forwardRef(({
 					)) }
 				</div>
 			) : null }
+
+			{ children }
 
 		</Span$>
 	);

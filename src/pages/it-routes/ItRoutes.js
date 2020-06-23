@@ -76,7 +76,7 @@ function ItRoutes() {
 								<UsersPage initialData={ initialData.userData } />
 							) } />
 							{/* GROUP ROUTES */ }
-							<Route path='/it/groups/new' render={ () => initialData.groupData && initialData.groupData && (
+							<Route path='/it/groups/new' render={ () => initialData.groupData && initialData.groupData.roles && (
 								<NewGroupPage initialData={ initialData.groupData } />
 							) } />
 							<Route path='/it/groups/:id' render={ () => initialData.groupData && initialData.groupData.group && (

@@ -4,7 +4,15 @@ import { FlexRow$, FlexCol$ } from '../../../components/flex';
 
 function GroupsPage({ initialData: { groups } }) {
 
-	return (
+	return (<>
+		<h1>
+			Groups
+		</h1>
+
+		<a href={ `${ location.pathname }/new` }>
+			Create new Group
+		</a>
+
 		<FlexCol$$>
 			{ groups && groups.map(group => (
 				<FlexRow$ key={ group.name }>
@@ -19,7 +27,7 @@ function GroupsPage({ initialData: { groups } }) {
 				</FlexRow$>
 			)) }
 		</FlexCol$$>
-	);
+	</>);
 }
 
 export default GroupsPage;

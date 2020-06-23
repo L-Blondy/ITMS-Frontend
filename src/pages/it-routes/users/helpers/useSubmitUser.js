@@ -24,7 +24,7 @@ function useSubmitUser(state) {
 			http()
 				.post(BASE_URL + location.pathname, newUserData)
 				.then(res => {
-					const { id } = res.administrationData;
+					const { id } = res.userData;
 					const nextPathname = location.pathname.split('/').slice(0, -1).join('/') + '/' + id;
 					history.push(nextPathname);
 				})

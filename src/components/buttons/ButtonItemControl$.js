@@ -36,7 +36,7 @@ const Add$ = styled.button`
 	width: 32px; 
 	position: relative;
 	background-image: ${`url(${ plus })` };
-	background-size: 1rem;
+	background-size: 50%;
 	background-repeat: no-repeat;
 	background-position: center;
 

@@ -3,7 +3,6 @@ import { Warning } from '../popup';
 
 function Button({
 	styleAs: Button$ = 'button',
-	type = 'button',
 	isVisible = true,
 	onClick,
 	onConfirm,

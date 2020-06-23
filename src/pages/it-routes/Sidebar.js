@@ -38,9 +38,6 @@ function Sidebar(props) {
 					<NavLink$ to={ `/it/ticket/changes` }>Change Search</NavLink$>
 				</li>
 				<li>
-					<NavLink$ to={ `/it/users/new` }>New user</NavLink$>
-				</li>
-				<li>
 					<NavLink$ to={ `/it/groups` }>All groups</NavLink$>
 				</li>
 				<li>
@@ -48,6 +45,9 @@ function Sidebar(props) {
 				</li>
 				<li>
 					<NavLink$ to={ `/it/users` }>All users</NavLink$>
+				</li>
+				<li>
+					<NavLink$ to={ `/it/users/new` }>New user</NavLink$>
 				</li>
 			</FlexCol$>
 		</FlexRow$$>

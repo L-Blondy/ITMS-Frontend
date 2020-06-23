@@ -1,4 +1,4 @@
-import toQueryString from './toQueryString';
+import { functionName, toQueryString } from './';
 
 const http = () => ({
 
@@ -152,10 +152,3 @@ const http = () => ({
 });
 
 export default http;
-
-function functionName(fun) {
-	var ret = fun.toString();
-	ret = ret.substr('function '.length);
-	ret = ret.substr(0, ret.indexOf('('));
-	return ret.trim();
-}

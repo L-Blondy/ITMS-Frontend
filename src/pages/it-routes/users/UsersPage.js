@@ -30,7 +30,6 @@ function UsersPage({ initialData }) {
 				value={ filter }
 				onChange={ e => setFilter(e.target.value) }
 			/>
-
 			{ users && users.map(user => (
 				<div key={ user.id }>
 					<a href={ `${ location.pathname }/${ user.id }` }>{ user.id }</a>
