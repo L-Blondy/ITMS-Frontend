@@ -1,7 +1,7 @@
 export { default as Input } from './Input';
 export { default as Textarea } from './Textarea';
-export { default as Select } from './Select.old';
-export { default as SelectNew } from './SelectNew';
+// export { default as Select } from './Select.old';
+export { default as Select } from './Select';
 export { default as InputWithQuery } from './InputWithQuery';
 export { default as InputCommon$ } from './InputCommon$';
 export { default as InputLogin$ } from './InputLogin$';
