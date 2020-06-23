@@ -71,19 +71,20 @@ function InputWithQuery({
 	}, [ filter ]);
 
 	return (
-		<Input value={ filter } onChange={ handleChange } { ...props }>
-			{
-				!selected && data.length && (
-					<FlexCol$ className='inputwithquery-results results'>
-						{ data.map((d, i) => (
-							<Option$ key={ 'singleResultJSX-' + i } onClick={ () => handleSelect(d) }>
-								{ singleResultJSX(d, i) }
-							</Option$>
-						)) }
-					</FlexCol$>
-				)
-			}
-		</Input>
+		<Input
+			value={ filter }
+			onChange={ handleChange }
+			{ ...props }
+			otherChildren={ !selected && data.length && (
+				<FlexCol$ className='inputwithquery-results results'>
+					{ data.map((d, i) => (
+						<Option$ key={ 'singleResultJSX-' + i } onClick={ () => handleSelect(d) }>
+							{ singleResultJSX(d, i) }
+						</Option$>
+					)) }
+				</FlexCol$>
+			) }
+		/>
 	);
 }
 

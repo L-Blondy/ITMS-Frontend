@@ -10,7 +10,7 @@ const Input = React.forwardRef(({
 	onChange,
 	validation,
 	errors = [],
-	children,
+	otherChildren,
 	...props
 }, ref) => {
 	const [ value, setValue ] = useState(defaultValue || '');
@@ -63,7 +63,7 @@ const Input = React.forwardRef(({
 				</div>
 			) : null }
 
-			{ children }
+			{ otherChildren }
 
 		</Span$>
 	);
