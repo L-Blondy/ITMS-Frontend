@@ -24,7 +24,6 @@ function SelectAsync({
 	const resetCache = () => setCache({ filter: '' });
 
 	const fetchOptions = (filter) => {
-		console.log('fetch');
 		http()
 			.get(queryURL, { [ queryProp ]: filter })
 			.then(res => {

@@ -7,7 +7,7 @@ function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', cla
 
 	const handleChange = (option) => {
 		setSelected(option || '');
-		onChange && onChange(option);
+		onChange && onChange(option || '');
 	};
 
 	useEffect(() => {

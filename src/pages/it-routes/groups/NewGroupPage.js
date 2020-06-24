@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState, useContext, useEffect } from 'react';
-import { Input, Select, SelectAsync, InputWithQuery, InputLabelLeftAbs$ } from '../../../components/inputs';
+import { Input, Select, SelectAsync, InputLabelLeftAbs$ } from '../../../components/inputs';
 import { FlexCol$, FlexRow$ } from '../../../components/flex';
 import { Button, ButtonItemControl$ } from '../../../components/buttons';
 import { http } from '../../../utils';
@@ -169,13 +169,5 @@ const FlexCol$$ = styled(FlexCol$)`
 			height: 24px;
 			width: 24px;
 		}
-	}
-`;
-
-const InputWithQuery$ = styled(InputWithQuery)`
-	.single-result {
-		justify-content: space-between;
-		padding: 0 0.5em;
-		line-height: 1.5em;
 	}
 `;

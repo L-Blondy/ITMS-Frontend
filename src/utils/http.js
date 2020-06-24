@@ -27,10 +27,10 @@ const http = () => ({
 			}
 			else if (this.req.readyState === 4) {
 				try {
-					this.then(this.thenCB(JSON.parse(this.req.response)));
+					this.thenCB(JSON.parse(this.req.response));
 				}
 				catch (e) {
-					this.then(this.thenCB(this.req.response));
+					this.thenCB(this.req.response);
 				}
 			}
 		};
@@ -68,10 +68,10 @@ const http = () => ({
 			}
 			else if (this.req.readyState === 4) {
 				try {
-					this.then(this.thenCB(JSON.parse(this.req.response)));
+					this.thenCB(JSON.parse(this.req.response));
 				}
 				catch (e) {
-					this.then(this.thenCB(this.req.response));
+					this.thenCB(this.req.response);
 				}
 			}
 		};
@@ -109,10 +109,10 @@ const http = () => ({
 			}
 			else if (this.req.readyState === 4) {
 				try {
-					this.then(this.thenCB(JSON.parse(this.req.response)));
+					this.thenCB(JSON.parse(this.req.response));
 				}
 				catch (e) {
-					this.then(this.thenCB(this.req.response));
+					this.thenCB(this.req.response);
 				}
 			}
 		};

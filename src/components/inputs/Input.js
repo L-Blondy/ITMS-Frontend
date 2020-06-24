@@ -25,7 +25,7 @@ const Input = React.forwardRef(({
 			setValue(e.target.value);
 		}
 		else {
-			const options = [].slice.call(e.target.options);
+			const options = Array.from(e.target.options);
 			const nextValue = options.reduce((nextValue, opt) => {
 				if (opt.selected) {
 					nextValue.push(opt.value);
