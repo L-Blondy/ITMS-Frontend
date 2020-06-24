@@ -6,7 +6,7 @@ function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', cla
 	const [ selected, setSelected ] = useState(getOptionFromValue(props.value, options));
 
 	const handleChange = (option) => {
-		setSelected(option);
+		setSelected(option || '');
 		onChange && onChange(option);
 	};
 

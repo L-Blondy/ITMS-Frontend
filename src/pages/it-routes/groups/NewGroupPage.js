@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState, useContext, useEffect } from 'react';
-import { Input, Select, InputWithQuery, InputLabelLeftAbs$ } from '../../../components/inputs';
+import { Input, Select, SelectAsync, InputWithQuery, InputLabelLeftAbs$ } from '../../../components/inputs';
 import { FlexCol$, FlexRow$ } from '../../../components/flex';
 import { Button, ButtonItemControl$ } from '../../../components/buttons';
 import { http } from '../../../utils';
@@ -110,21 +110,15 @@ function NewGroupPage({ initialData }) {
 			)) }
 
 			<FlexRow$ className='line'>
-				<InputWithQuery$
+				<SelectAsync
+					name='roles'
 					queryURL={ BASE_URL + '/it/users' }
+					queryProp='value'
 					dataNesting={ [ 'userData', 'users' ] }
 					styleAs={ InputLabelLeftAbs$ }
-					label='Users'
 					maxResults={ 10 }
-					searchedProps={ [ 'name', 'id' ] }
-					mainProp='name'
-					onSelect={ user => setSelectedUser(user) }
-					singleResultJSX={ user => (
-						<FlexRow$ className='single-result'>
-							<div>{ user.name }</div>
-							<div>{ user.id }</div>
-						</FlexRow$>
-					) }
+					onChange={ option => setSelectedUser(option.value) }
+					isClearable
 				/>
 
 				<Button
