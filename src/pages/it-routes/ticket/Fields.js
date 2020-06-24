@@ -52,15 +52,14 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 					styleAs={ InputLabelLeftAbs$ }
 					label='Category'
 					name='category'
-					value={ state.category }
 					errors={ errors.category }
+					value={ state.category }
 					onChange={ handleChange }
-					className={ changedFields.has('category') ? 'updated' : '' }>
-					<option value=''>-none-</option>
-					{ Object.keys(state.categories).map(cat => (
-						<option value={ cat } key={ cat }>{ cat }</option>
-					)) }
-				</Select>
+					className={ changedFields.has('category') ? 'updated' : '' }
+					options={ Object.keys(state.categories).reduce((options, cat) => (
+						[ ...options, { value: cat, label: cat } ]
+					), [ { value: '', label: '-none-' } ]) }
+				/>
 
 				<Select
 					styleAs={ InputLabelLeftAbs$ }
@@ -69,12 +68,12 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 					value={ state.subCategory }
 					errors={ errors.subCategory }
 					onChange={ handleChange }
-					className={ changedFields.has('subCategory') ? 'updated' : '' }>
-					<option value=''>-none-</option>
-					{ (state.categories[ state.category ] || []).map(cat => (
-						<option value={ cat } key={ cat }>{ cat }</option>
-					)) }
-				</Select>
+					className={ changedFields.has('subCategory') ? 'updated' : '' }
+					options={ (state.categories[ state.category ] || []).reduce((options, cat) => (
+						[ ...options, { value: cat, label: cat } ]
+					), [ { value: '', label: '-none-' } ]) }
+				/>
+
 			</InputContainer$>
 
 			<InputContainer$ className='sm-6'>
@@ -95,12 +94,14 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 					name='impact'
 					value={ state.impact }
 					errors={ errors.impact }
-					onChange={ handleChange }>
-					<option value='1'> 1 - Extensive/Widespread </option>
-					<option value='2'> 2 - Significant/Large </option>
-					<option value='3'> 3 - Moderate/Limited </option>
-					<option value='4'> 4 - Minor/localized </option>
-				</Select>
+					onChange={ handleChange }
+					options={ [
+						{ value: '1', label: '1 - Extensive/Widespread' },
+						{ value: '2', label: '2 - Significant/Large' },
+						{ value: '3', label: '3 - Moderate/Limited' },
+						{ value: '4', label: '4 - Minor/localized' },
+					] }
+				/>
 
 				<Select
 					styleAs={ InputLabelLeftAbs$ }
@@ -108,12 +109,14 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 					name='urgency'
 					value={ state.urgency }
 					errors={ errors.urgency }
-					onChange={ handleChange }>
-					<option value="1"> 1 - Critical </option>
-					<option value="2"> 2 - High </option>
-					<option value="3"> 3 - Medium </option>
-					<option value="4"> 4 - Non critical </option>
-				</Select>
+					onChange={ handleChange }
+					options={ [
+						{ value: '1', label: '1 - Critical' },
+						{ value: '2', label: '2 - High' },
+						{ value: '3', label: '3 - Medium' },
+						{ value: '4', label: '4 - Non critical' },
+					] }
+				/>
 
 				<Select
 					styleAs={ InputLabelLeftAbs$ }
@@ -123,12 +126,14 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 					errors={ errors.priority }
 					onChange={ handleChange }
 					className={ changedFields.has('priority') ? 'updated' : '' }
-					disabled>
-					<option value="P1"> P1 - Critical </option>
-					<option value="P2"> P2 - High </option>
-					<option value="P3"> P3 - Medium </option>
-					<option value="P4"> P4 - Non critical </option>
-				</Select>
+					disabled
+					options={ [
+						{ value: 'P1', label: '1 - Critical' },
+						{ value: 'P2', label: '2 - High' },
+						{ value: 'P3', label: '3 - Medium' },
+						{ value: 'P4', label: '4 - Non critical' },
+					] }
+				/>
 
 				<Input
 					styleAs={ InputLabelLeftAbs$ }

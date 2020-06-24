@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { FlexRow$, FlexCol$ } from '../../../components/flex';
-import { SelectNew } from '../../../components/inputs';
+import { Select } from '../../../components/inputs';
 
 function GroupsPage({ initialData: { groups } }) {
 
@@ -29,11 +29,12 @@ function GroupsPage({ initialData: { groups } }) {
 			)) }
 		</FlexCol$$>
 
-		<SelectNew options={ [
+		<Select options={ [
 			{ value: 'chocolate', label: 'Chocolate' },
 			{ value: 'strawberry', label: 'Strawberry' },
 			{ value: 'vanilla', label: 'Vanilla' },
-		] } />
+		] }
+		/>
 	</>);
 }
 

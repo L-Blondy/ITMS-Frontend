@@ -8,8 +8,6 @@ import { useHistory } from 'react-router-dom';
 import { ItRoutesCtx } from '../../it-routes/ItRoutesContext';
 import { UserCtx } from '../../../GlobalContext';
 import { BASE_URL } from '/BASE_URL';
-import { SelectNew } from '../../../components/inputs';
-
 
 function NewGroupPage({ initialData }) {
 
@@ -80,19 +78,8 @@ function NewGroupPage({ initialData }) {
 			/>
 
 			<FlexRow$ className='line'>
-				{/* <Select
-					styleAs={ InputLabelLeftAbs$ }
-					label='Roles'
-					name='roles'
-					value={ selectedRole }
-					onChange={ e => { console.log('onChange'); setSelectedRole(e.target.value); } }>
-					<option value=''> -select a role- </option>;
-					{ initialData.roles.map(role => {
-						if (roles.includes(role)) return;
-						return <option key={ `${ role }-option` } value={ role }>{ role }</option>;
-					}) }
-				</Select> */}
-				<SelectNew
+
+				<Select
 					styleAs={ InputLabelLeftAbs$ }
 					label='Roles'
 					onChange={ option => setSelectedRole(option.value) }

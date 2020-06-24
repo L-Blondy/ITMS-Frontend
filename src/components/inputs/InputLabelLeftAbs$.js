@@ -8,6 +8,10 @@ const InputLabelLeftAbs$ = styled(InputCommon$)`
 		white-space: nowrap;
 		line-height: 28px;
 	}
+	.errors {
+		position: absolute;
+		top: 100%;
+	}
 `;
 
 export default InputLabelLeftAbs$;
