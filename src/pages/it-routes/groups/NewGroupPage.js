@@ -11,7 +11,7 @@ import { BASE_URL } from '/BASE_URL';
 
 function NewGroupPage({ initialData }) {
 
-	const [ name, setName ] = useState();
+	const [ groupName, setGroupName ] = useState();
 	const [ roles, setRoles ] = useState([]);
 	const [ users, setUsers ] = useState([]);
 	const [ selectedRole, setSelectedRole ] = useState();
@@ -32,7 +32,7 @@ function NewGroupPage({ initialData }) {
 	};
 
 	const addUser = () => {
-		setUsers([ ...users, selectedUser ]);
+		!selectedUser.isOneOf(users) && setUsers([ ...users, selectedUser ]);
 		setSelectedUser('');
 		setKeyBtn(Math.random());
 	};
@@ -43,27 +43,30 @@ function NewGroupPage({ initialData }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		itRoutesCtx.page.setIsLoading(true);
+		console.log('groupName', groupName);
+		console.log('roles', roles);
+		console.log('users', users);
+		// itRoutesCtx.page.setIsLoading(true);
 
-		const newGroupData = {
-			name,
-			createdOn: Date.now(),
-			createdBy: userCtx.name
-		};
+		// const newGroupData = {
+		// 	name:groupName,
+		// 	createdOn: Date.now(),
+		// 	createdBy: userCtx.name
+		// };
 
-		setTimeout(() => {
-			http()
-				.post(BASE_URL + location.pathname, newGroupData)
-				.then(res => {
-					console.log(res.administrationData);
-					const nextPathname = location.pathname.split('/').slice(0, -1).join('/') + '/' + name;
-					history.push(nextPathname);
-				})
-				.catch(err => {
-					console.error(err);
-					itRoutesCtx.page.setIsLoading(false);
-				});
-		}, 300);
+		// setTimeout(() => {
+		// 	http()
+		// 		.post(BASE_URL + location.pathname, newGroupData)
+		// 		.then(res => {
+		// 			console.log(res.administrationData);
+		// 			const nextPathname = location.pathname.split('/').slice(0, -1).join('/') + '/' + groupName;
+		// 			history.push(nextPathname);
+		// 		})
+		// 		.catch(err => {
+		// 			console.error(err);
+		// 			itRoutesCtx.page.setIsLoading(false);
+		// 		});
+		// }, 300);
 	};
 
 	return (
@@ -72,8 +75,8 @@ function NewGroupPage({ initialData }) {
 				styleAs={ InputLabelLeftAbs$ }
 				label='New group name'
 				name='name'
-				value={ name }
-				onChange={ e => setName(e.target.value) }
+				value={ groupName }
+				onChange={ e => setGroupName(e.target.value) }
 				autoComplete='off'
 			/>
 
@@ -82,10 +85,15 @@ function NewGroupPage({ initialData }) {
 				<Select
 					styleAs={ InputLabelLeftAbs$ }
 					label='Roles'
+					name='roles'
+					value={ selectedRole }
 					onChange={ option => setSelectedRole(option.value) }
-					options={ initialData.roles.reduce((result, role) => (
-						[ ...result, { value: role, label: role } ]
-					), [ { value: '', label: '-none-' } ]) }
+					onKeyDown={ (e) => { selectedRole && e.keyCode === 13 && addRole(); } }
+					options={ initialData.roles.reduce((result, role) => {
+						if (!role.isOneOf(roles))
+							return [ ...result, { value: role, label: role } ];
+						return result;
+					}, [ { value: '', label: '-none-' } ]) }
 				/>
 
 				<Button
@@ -94,6 +102,7 @@ function NewGroupPage({ initialData }) {
 					type='button'
 					onClick={ addRole }
 					key={ keyBtn }
+					disabled={ selectedRole ? false : true }
 				/>
 			</FlexRow$>
 
@@ -111,13 +120,16 @@ function NewGroupPage({ initialData }) {
 
 			<FlexRow$ className='line'>
 				<SelectAsync
-					name='roles'
+					name='users'
 					queryURL={ BASE_URL + '/it/users' }
 					queryProp='value'
 					dataNesting={ [ 'userData', 'users' ] }
 					styleAs={ InputLabelLeftAbs$ }
 					maxResults={ 10 }
+					value={ selectedUser }
 					onChange={ option => setSelectedUser(option.value) }
+					onKeyDown={ (e) => { selectedUser && e.keyCode === 13 && addUser(); } }
+					noOptionsMessage={ () => 'No user found' }
 					isClearable
 				/>
 
@@ -127,6 +139,7 @@ function NewGroupPage({ initialData }) {
 					type='button'
 					onClick={ addUser }
 					key={ keyBtn }
+					disabled={ selectedUser ? false : true }
 				/>
 			</FlexRow$>
 
@@ -141,6 +154,8 @@ function NewGroupPage({ initialData }) {
 					/>
 				</FlexRow$>
 			)) }
+
+			<button></button>
 
 		</FlexCol$$>
 	);

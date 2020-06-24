@@ -126,6 +126,7 @@ const Fields = ({ state, errors, handleChange, validateSubmission, changedFields
 					errors={ errors.priority }
 					onChange={ handleChange }
 					className={ changedFields.has('priority') ? 'updated' : '' }
+					isDisabled
 					disabled
 					options={ [
 						{ value: 'P1', label: '1 - Critical' },

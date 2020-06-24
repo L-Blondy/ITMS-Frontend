@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { http, functionName } from '../../utils';
+import { http, functionName, withThrottling } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
 import Select from './Select';
 
@@ -15,15 +15,18 @@ function SelectAsync({
 
 	const handleInputChange = (filter) => {
 		if (!filter)
-			return resetCache();
+			return reset();
 
 		if (!cache.filter || filter.length < cache.filter.length)
 			return fetchOptions(filter);
 	};
 
-	const resetCache = () => setCache({ filter: '' });
+	const reset = () => {
+		setCache({ filter: '' });
+		setOptions([]);
+	};
 
-	const fetchOptions = (filter) => {
+	const fetchOptions = withThrottling((filter) => {
 		http()
 			.get(queryURL, { [ queryProp ]: filter })
 			.then(res => {
@@ -40,7 +43,7 @@ function SelectAsync({
 				setCache({ filter, options: nextOptions });
 			})
 			.catch(err => console.log(err));
-	};
+	}, 200);
 
 	return (
 		<Select

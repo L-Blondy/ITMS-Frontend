@@ -25,15 +25,20 @@ const InputCommon$ = styled.span`
 	input, textarea, select, .select {
 		width: 100%;
 		border-radius: 3px;
-		padding-left: 0.45rem;
-		padding-right: 0.45rem;
+		padding-left: 0.6em;
+		padding-right: 0.6em;
 		border: 1px solid ${ CLR.BORDER.PRIMARY };
 		line-height: inherit;
 		background: white;
 
-		&:disabled {
+		&:disabled, &.disabled {
 			background-color: #eaf0f1;
 			opacity: 1;
+			color: #777;
+			
+			* {
+				color: inherit;
+			}
 		}
 	}
 
@@ -43,6 +48,11 @@ const InputCommon$ = styled.span`
 		[class*="control"] {
 			border: none;
 			min-height: 0;
+			background: none;
+		}
+
+		[class*="singleValue"] {
+			margin: 0
 		}
 
 		[class*="ValueContainer"] {

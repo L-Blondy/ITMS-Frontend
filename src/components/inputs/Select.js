@@ -32,8 +32,9 @@ function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', cla
 			</select>
 
 			<Select
-				className={ `select ${ className } ${ errors.length ? 'invalid' : '' }` }
+				className={ `select ${ className } ${ errors.length && 'invalid' } ${ props.isDisabled && 'disabled' }` }
 				options={ options.map(option => ({ ...option, name })) }
+				openMenuOnFocus={ true }
 				{ ...props }
 				value={ selected }
 				onChange={ handleChange }
