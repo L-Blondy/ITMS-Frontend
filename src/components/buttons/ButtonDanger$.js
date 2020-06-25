@@ -7,8 +7,8 @@ const ButtonDanger$ = styled(ButtonCommon$)`
 	background: ${ CLR.BACKGROUND.DANGER };
 	box-shadow: 0 0 0 1px ${ CLR.BACKGROUND.DANGER };
 	color: white;
-	padding: 0.25 0.8rem;
-	font-weight: bold;
+	/* padding: 0.25em 0.8rem; */
+	/* font-weight: bold; */
 
 	&.disabled {
 		filter: grayscale(1)

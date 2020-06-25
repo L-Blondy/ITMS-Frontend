@@ -3,13 +3,13 @@ import React from 'react';
 import { BASE_URL } from '/BASE_URL';
 import { FileInfo } from '../../files';
 
-function FileList ( { when, fileList } ) {
-	if ( !when )
+function FileList({ when, fileList }) {
+	if (!when)
 		return null;
 
 	return (
 		<FileList$>
-			{ fileList.map( ( fileData, i ) => (
+			{ fileList.map((fileData, i) => (
 				<FileInfo
 					tag='a'
 					className='file-data'
@@ -19,7 +19,7 @@ function FileList ( { when, fileList } ) {
 					rel='noopener noreferrer'
 					key={ fileData.name + i }
 				/>
-			) ) }
+			)) }
 		</FileList$>
 	);
 }
@@ -28,7 +28,7 @@ export default FileList;
 
 const FileList$ = styled.div`
 	font-size: 0.9em;
-	letter-spacing: -0.01em;
+	/* letter-spacing: -0.01em; */
 	display: flex;
 	flex-wrap: wrap;
 	padding: 0.2rem;

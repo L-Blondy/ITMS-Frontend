@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import { preloader } from '/assets/icons';
 
 const CLR = {
-	PRIMARY: '#4999a3',
+	PRIMARY: '#149aab',
 	PRIMARY_VIBRANT: '#149aab',
 	BACKGROUND: {
 		LIGHT: '#d8e1e2',
@@ -13,20 +13,21 @@ const CLR = {
 		LIGHT: '#828c8d'
 	},
 	BORDER: {
-		PRIMARY: '#9eb3b6'
+		PRIMARY: '#6d8e92'
 	},
 	BUTTON: {
-		PRIMARY: '#4999a3',
+		PRIMARY: '#149aab',
 		SECONDARY: '#CCCCCC',
 		ALERT: {
-			PRIMARY: '#61a0d5',
+			PRIMARY: '#56a4e6',
 			SECONDARY: '#CCCCCC'
 		}
 	}
 };
 
 const FONT_FAM = {
-	PRIMARY: "'Nunito', sans-serif"
+	// PRIMARY: "'Nunito', sans-serif"
+	PRIMARY: "Roboto"
 };
 
 const GlobalStyles = createGlobalStyle`
@@ -36,6 +37,7 @@ const GlobalStyles = createGlobalStyle`
 		font-family: ${ FONT_FAM.PRIMARY };
 		box-sizing: border-box;
 		color: ${ CLR.FONT.PRIMARY };
+		/* letter-spacing: 0.01em; */
 	}
 
 	html,body,#root {
@@ -48,6 +50,10 @@ const GlobalStyles = createGlobalStyle`
 	#root {
 		display: flex;
 		flex-direction: column;
+	}
+
+	ul {
+		list-style:none
 	}
 
 	a {
@@ -89,6 +95,10 @@ const GlobalStyles = createGlobalStyle`
 	button {
 		border: none;
 		cursor: pointer;
+
+		&:disabled {
+			cursor: initial;
+		}
 	}
 
 	.light-font {

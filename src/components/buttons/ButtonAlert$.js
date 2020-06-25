@@ -12,7 +12,6 @@ const Secondary$ = styled(ButtonCommon$)`
 	background-color: ${ CLR.BUTTON.SECONDARY };
 	border-color: ${ CLR.BUTTON.SECONDARY };
 	color: white;
-	font-weight: bold;
 `;
 
 export default { Primary$, Secondary$ };

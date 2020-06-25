@@ -127,7 +127,7 @@ const FlexCol$$ = styled(FlexCol$)`
 			margin: 0.3em;
 			min-width: 5.5em;
 			font-size: 1.05rem;
-			border-radius: 3px;
+			/* border-radius: 3px; */
 		}
 	}
 `;

@@ -4,7 +4,7 @@ import { chevron, plusRed, plus } from '/assets/icons';
 const ButtonItemControl$ = styled.button`
 	background-color: transparent;
 	width: 25px;
-	background-size: 1.2rem;
+	background-size: 1.3rem;
 	background-repeat: no-repeat;
 	background-position: center;
 	opacity: 0.3;

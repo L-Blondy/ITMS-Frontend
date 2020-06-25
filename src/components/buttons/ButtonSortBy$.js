@@ -6,7 +6,7 @@ const ButtonSortBy$ = styled.button`
 	background: none;
 	padding: 0 0.5em;
 	text-align: left;
-	font-weight: bold;
+	font-weight: 500;
 	position: relative;
 	display: flex;
 	align-items: center;

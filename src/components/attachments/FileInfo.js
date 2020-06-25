@@ -28,7 +28,7 @@ function getSRC(file) {
 }
 
 const FileInfo$ = styled.span`
-	display: flex;
+	display: flex !important;
 	align-items: center;
 	color: #333;
 	padding-left: 0.5rem;
@@ -36,11 +36,13 @@ const FileInfo$ = styled.span`
 	border-radius: 5px;
 
 	* {
-		margin-right: 0.35em;
+		margin-right: 0.4em;
 	}
 
 	.icon {
-		height: 1rem;
+		height: 1.1rem;
+		text-align: initial;
+		line-height: initial;
 	}
 
 	.name {

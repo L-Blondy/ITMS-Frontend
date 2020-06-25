@@ -1,8 +1,10 @@
-function withThrottling(fun, delay) {
-	let token;
-	return function (...args) {
-		clearTimeout(token);
-		token = setTimeout(() => fun(...args), delay);
+function withThrottling(delay) {
+	return function (fun) {
+		let token;
+		return function (...args) {
+			clearTimeout(token);
+			token = setTimeout(() => fun(...args), delay);
+		};
 	};
 }
 

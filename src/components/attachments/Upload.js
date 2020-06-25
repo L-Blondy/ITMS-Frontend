@@ -59,7 +59,7 @@ export default Upload;
 
 const Upload$ = styled.div`
 	display: flex;
-	border: 1px solid #CCC;
+	border: 1px solid #9bbdc1;
 	margin: 1rem;
 	position: relative;
 

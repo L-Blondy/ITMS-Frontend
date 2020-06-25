@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
+import { CLR } from '../../GlobalStyles';
 
 function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', className, errors = [], name, ...props }) {
 
@@ -38,6 +39,9 @@ function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', cla
 				{ ...props }
 				value={ selected }
 				onChange={ handleChange }
+				styles={ {
+					option: (provided, state) => state.isSelected ? ({ ...provided, background: CLR.PRIMARY }) : provided,
+				} }
 			/>
 
 			{ errors.length ? (

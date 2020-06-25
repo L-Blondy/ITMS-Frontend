@@ -25,7 +25,6 @@ export default FileList;
 
 const Div$ = styled.div`
 	font-size: 0.9em;
-	letter-spacing: -0.01em;
 	display: flex;
 	flex-wrap: wrap;
 	padding: 0.2rem;
@@ -33,10 +32,6 @@ const Div$ = styled.div`
 	.file-info {
 		margin-right: 0.5rem;
 		
-		.size {
-			padding-top: 3px;
-		}
-
 		&:hover {
 			background: #f0f0f0;
 			opacity: 1;

@@ -9,6 +9,10 @@ const InputCommon$ = styled.span`
 		font-size: 15px;
 	}
 
+	label {
+		display: block;
+	}
+
 	${props => props.disabled && `
 		&::after {
 			content: '';
@@ -33,8 +37,7 @@ const InputCommon$ = styled.span`
 
 		&:disabled, &.disabled {
 			background-color: #eaf0f1;
-			opacity: 1;
-			color: #777;
+			opacity: 0.8;
 			
 			* {
 				color: inherit;
@@ -49,6 +52,10 @@ const InputCommon$ = styled.span`
 			border: none;
 			min-height: 0;
 			background: none;
+
+			&:focus-within {
+				box-shadow: 0 0 0 1px #1db8cc;
+			}
 		}
 
 		[class*="singleValue"] {
@@ -61,7 +68,12 @@ const InputCommon$ = styled.span`
 		}
 
 		[class*="indicatorContainer"] {
-			padding: 0;
+			padding: 0 0.1em;
+			cursor: pointer;
+		}
+
+		[class*="option"] {
+			line-height: 10px;
 		}
 
 		input {

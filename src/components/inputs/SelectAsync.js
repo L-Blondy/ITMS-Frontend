@@ -26,24 +26,25 @@ function SelectAsync({
 		setOptions([]);
 	};
 
-	const fetchOptions = withThrottling((filter) => {
+	const fetchOptions = withThrottling(200)((filter) => {
 		http()
 			.get(queryURL, { [ queryProp ]: filter })
-			.then(res => {
-				const rawOptions = unNestOptions(dataNesting, res);
+			.then(res => unNestOptions(dataNesting, res))
+			.then(rawOptions => {
 				if (functionName(rawOptions.constructor) !== 'Array')
 					console.warn('SelectAsync data should to be an array, please use the "dataNesting" prop to un-nest the data');
 
-				const nextOptions = rawOptions.reduce((nextOptions, option) => {
+				return rawOptions.reduce((nextOptions, option) => {
 					nextOptions.push({ value: option.name, label: option.name });
 					return nextOptions;
 				}, []);
-
+			})
+			.then(nextOptions => {
 				setOptions(nextOptions.slice(0, maxResults));
 				setCache({ filter, options: nextOptions });
 			})
 			.catch(err => console.log(err));
-	}, 200);
+	});
 
 	return (
 		<Select
