@@ -4,12 +4,18 @@ import { ControlBar$ } from '../../../components/navs';
 import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../../components/buttons';
 import STATUS from './STATUS.json';
 
-function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, state }) {
+function ControlBar({ deleteTicket, state, ...props }) {
 
 	const { status, escalation } = state;
 
+	const handleClick = (e) => {
+		const action = e.target.dataset.action;
+		if (!action) return;
+		props[ action ](e);
+	};
+
 	return (
-		<ControlBar$>
+		<ControlBar$ onClick={ handleClick }>
 
 			<Button
 				styleAs={ ButtonDanger$ }
@@ -26,13 +32,14 @@ function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, s
 					styleAs={ ButtonPaperclip$ }
 					className='paperclip-btn'
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
-					onClick={ toggleAttachmentPopup }
+					data-action='toggleAttachmentPopup'
+					data-test={ { a: 1 } }
 				/>
 
 				<Button
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.IN_PROGRESS, STATUS.ON_HOLD ]) }
-					onClick={ validateSubmission } >
+					data-action='validateSubmission'>
 					Save
 				</Button>
 
@@ -40,7 +47,7 @@ function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, s
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.NEW ]) }
 					value={ JSON.stringify({ status: STATUS.QUEUED }) }
-					onClick={ validateSubmission } >
+					data-action='validateSubmission'>
 					Submit
 				</Button>
 
@@ -50,7 +57,7 @@ function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, s
 					warning={ { message: 'Do you want to escalate this ticket ?' } }
 					name='escalateName'
 					value={ JSON.stringify({ escalation: escalation + 1 }) }
-					onConfirm={ validateSubmission } >
+					data-action='validateSubmission' >
 					Escalate
 				</Button>
 
@@ -58,7 +65,7 @@ function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, s
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.QUEUED, STATUS.ON_HOLD ]) }
 					value={ JSON.stringify({ status: STATUS.IN_PROGRESS }) }
-					onClick={ validateSubmission } >
+					data-action='validateSubmission' >
 					Set in progress
 				</Button>
 
@@ -66,7 +73,7 @@ function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, s
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					value={ JSON.stringify({ status: STATUS.ON_HOLD }) }
-					onClick={ validateSubmission } >
+					data-action='validateSubmission' >
 					Place on hold
 				</Button>
 
@@ -74,7 +81,7 @@ function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, s
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.IN_PROGRESS ]) }
 					value={ JSON.stringify({ status: STATUS.RESOLVED }) }
-					onClick={ validateSubmission } >
+					data-action='validateSubmission'>
 					Resolve
 				</Button>
 
@@ -82,7 +89,7 @@ function ControlBar({ toggleAttachmentPopup, deleteTicket, validateSubmission, s
 					styleAs={ ButtonControlBar$ }
 					isVisible={ status.isOneOf([ STATUS.RESOLVED ]) }
 					value={ JSON.stringify({ status: STATUS.IN_PROGRESS }) }
-					onClick={ validateSubmission } >
+					data-action='validateSubmission'>
 					Reopen
 				</Button>
 			</div>
