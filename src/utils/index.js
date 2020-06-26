@@ -7,4 +7,4 @@ export { default as formatFieldName } from './formatFieldName';
 export { default as functionName } from './functionName';
 export { default as setDefaultLocalStorage } from './setDefaultLocalStorage';
 export { default as compareObjects } from './compareObjects';
-export { default as withThrottling } from './withThrottling';
+export { default as debounce } from './debounce';

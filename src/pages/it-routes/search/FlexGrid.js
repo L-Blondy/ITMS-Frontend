@@ -85,6 +85,7 @@ const FlexRow$$ = styled(FlexRow$)`
 	overflow: auto;
 	flex-grow: 1;
 	flex-shrink: 0;
+	/* height: 100%; */
 `;
 
 const FlexCol$$ = styled(FlexCol$)`

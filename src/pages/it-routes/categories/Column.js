@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, ButtonItemControl$ } from '../../../components/buttons';
 import { Input, InputTransparent$ } from '../../../components/inputs';
 import { FlexRow$, FlexCol$ } from '../../../components/flex';
+import { FONT_FAM } from '../../../GlobalStyles';
 
 function Column({ items = [], name, selectedItem, setSelectedItem, updateState }) {
 
@@ -107,6 +108,7 @@ const FlexCol$$ = styled(FlexCol$)`
 		text-transform: capitalize;
 		font-size: 1.1rem;
 		line-height: 2em;
+		font-family: ${ FONT_FAM.SECONDARY };
 	}
 `;
 

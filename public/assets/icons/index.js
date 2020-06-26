@@ -6,5 +6,6 @@ export { default as plus } from './plus.svg';
 export { default as plusRed } from './plus-red.svg';
 export { default as chevron } from './chevron.svg';
 export { default as chevron2 } from './chevron2.svg';
+export { default as chevron3 } from './chevron3.svg';
 export { default as bigArrow } from './big-arrow.svg';
 export { default as activityCircle } from './activity-circle.svg';

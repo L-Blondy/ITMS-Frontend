@@ -30,12 +30,17 @@ function NewGroupPage({ initialData }) {
 		}
 	};
 
+	const handleNextStage = (e) => {
+		e.preventDefault();
+		setStage(stage + 1);
+	};
+
 	return (
 		<Container$>
 
 			<NewGroupStages stage={ stage } setStage={ setStage } />
 
-			<Form$ onSubmit={ e => e.preventDefault() }>
+			<Form$ as='form' onSubmit={ handleNextStage }>
 				<NewGroupName
 					when={ stage === 1 }
 					name={ name }
@@ -52,14 +57,16 @@ function NewGroupPage({ initialData }) {
 					users={ users }
 					setUsers={ setUsers }
 				/>
+
+				<Button
+					className='next'
+					styleAs={ ButtonPrimary$$ }
+					disabled={ isNextAllowed() }>
+					Next
+				</Button>
 			</Form$>
 
-			<Button
-				styleAs={ ButtonPrimary$$ }
-				onClick={ () => setStage(stage + 1) }
-				disabled={ isNextAllowed() }>
-				Next
-			</Button>
+
 		</Container$>
 	);
 }
@@ -72,12 +79,18 @@ const Container$ = styled(FlexCol$)`
 	align-items: flex-start;
 `;
 
-const Form$ = styled.form`
-	padding: 2rem 0;
+const Form$ = styled(FlexCol$)`
+	align-items: flex-start;
+	margin-top: 2rem;
+
+	.next {
+		margin-top: 2rem;
+	}
 
 	input, .select {
 		width: 230px;
 	}
+
 `;
 
 const ButtonPrimary$$ = styled(ButtonPrimary$)`

@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { UserCtx } from '../../../GlobalContext';
 import { ItRoutesCtx } from '../ItRoutesContext';
 import { Skipper } from '../../../components/inputs';
-import { FlexRowWrap$ } from '../../../components/flex';
+import { FlexCol$ } from '../../../components/flex';
 import { ControlBar$ } from '../../../components/navs';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
@@ -35,7 +35,7 @@ function SearchPage({ initialData }) {
 	};
 
 	return (
-		<FlexRowWrap$$>
+		<FlexCol$$>
 			<ControlBar$>
 				<div />
 				<Skipper
@@ -53,12 +53,13 @@ function SearchPage({ initialData }) {
 				results={ state.results }
 				pageSize={ pageSize }
 			/>
-		</FlexRowWrap$$>
+		</FlexCol$$>
 	);
 }
 
 export default SearchPage;
 
-const FlexRowWrap$$ = styled(FlexRowWrap$)`
-	max-width: 100%;
+const FlexCol$$ = styled(FlexCol$)`
+	height: 100%;
+	font-size: 15px;
 `;

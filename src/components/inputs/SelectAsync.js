@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { http, functionName, withThrottling } from '../../utils';
+import { http, functionName, debounce } from '../../utils';
 import { BASE_URL } from '/BASE_URL';
 import Select from './Select';
 
@@ -26,7 +26,7 @@ function SelectAsync({
 		setOptions([]);
 	};
 
-	const fetchOptions = withThrottling(200)((filter) => {
+	const fetchOptions = debounce(200)((filter) => {
 		http()
 			.get(queryURL, { [ queryProp ]: filter })
 			.then(res => unNestOptions(dataNesting, res))

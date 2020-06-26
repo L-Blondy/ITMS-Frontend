@@ -8,6 +8,7 @@ import { http } from '../../../utils';
 import { ItRoutesCtx } from '../ItRoutesContext';
 import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../../components/buttons';
 import { FlexRow$, FlexCol$ } from '../../../components/flex';
+import { FONT_FAM } from '../../../GlobalStyles';
 
 function CategoriesPage({ categories }) {
 
@@ -66,7 +67,7 @@ function CategoriesPage({ categories }) {
 		<FlexCol$$>
 			<div className='wrapper'>
 
-				<FlexRow$ as='h2' className='title'>{ pageTitle() }</FlexRow$>
+				<FlexRow$ as='h1' className='title'>{ pageTitle() }</FlexRow$>
 
 				<FlexRow$ className='columns'>
 					<Column
@@ -107,6 +108,9 @@ const FlexCol$$ = styled(FlexCol$)`
 
 	.title {
 		font-weight: normal;
+		font-family: ${ FONT_FAM.SECONDARY };
+		font-weight: 600;
+		opacity: 0.9;
 	}
 
 	.columns {

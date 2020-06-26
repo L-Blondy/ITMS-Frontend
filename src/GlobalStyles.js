@@ -26,8 +26,8 @@ const CLR = {
 };
 
 const FONT_FAM = {
-	// PRIMARY: "'Nunito', sans-serif"
-	PRIMARY: "Roboto"
+	PRIMARY: "Roboto",
+	SECONDARY: "'Oxanium', cursive"
 };
 
 const GlobalStyles = createGlobalStyle`

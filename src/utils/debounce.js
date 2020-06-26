@@ -1,4 +1,4 @@
-function withThrottling(delay) {
+function debounce(delay) {
 	return function (fun) {
 		let token;
 		return function (...args) {
@@ -8,4 +8,4 @@ function withThrottling(delay) {
 	};
 }
 
-export default withThrottling;
+export default debounce;

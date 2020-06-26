@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { FlexRow$ } from '../../../components/flex';
 import { Button, ButtonText$ } from '../../../components/buttons';
-import { CLR } from '../../../GlobalStyles';
+import { CLR, FONT_FAM } from '../../../GlobalStyles';
 import { chevron2 } from '/assets/icons';
 
 function NewGroupStages({ stage, setStage }) {
@@ -59,6 +59,6 @@ const Chevron$ = styled.img`
 const ButtonText$$ = styled(ButtonText$)`
 	padding: 0;
 	white-space: nowrap;
-	font-size: 1.05rem;
+	font-size: 1.1rem;
 	color: ${({ isActive$ }) => isActive$ ? CLR.PRIMARY_VIBRANT : '#757575' };
 `;;
