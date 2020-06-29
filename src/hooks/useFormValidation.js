@@ -12,7 +12,7 @@ function useFormValidation({
 	const [ submission, setSubmission ] = useState({});
 
 	const handleChange = (e) => {
-		const { name, value } = e.target || e;
+		const { name, value } = e.target;
 		const newErrorsArray = validation.getInputErrors(name, value);
 		const stateChanges = getStateChanges(name, value, state);
 		setState({ ...state, ...stateChanges });

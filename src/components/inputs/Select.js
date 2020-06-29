@@ -8,7 +8,7 @@ function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', cla
 
 	const handleChange = (option) => {
 		setSelected(option || '');
-		onChange && onChange(option || '');
+		onChange && onChange({ target: option || '' });
 	};
 
 	useEffect(() => {
@@ -44,16 +44,18 @@ function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', cla
 				} }
 			/>
 
-			{ errors.length ? (
-				<div className='errors'>
-					{ errors.map((err, i) => (
-						<div className='error' key={ name + selected.value + i }>
-							{ err }
-						</div>
-					)) }
-				</div>
-			) : null }
-		</Span$>
+			{
+				errors.length ? (
+					<div className='errors'>
+						{ errors.map((err, i) => (
+							<div className='error' key={ name + selected.value + i }>
+								{ err }
+							</div>
+						)) }
+					</div>
+				) : null
+			}
+		</Span$ >
 	);
 }
 
