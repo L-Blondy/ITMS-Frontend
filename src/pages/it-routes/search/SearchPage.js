@@ -9,16 +9,24 @@ import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
 import FlexGrid from './FlexGrid';
 
-function SearchPage({ initialData }) {
+function SearchPage() {
 
 	const { incidentSearchFields, pageSize } = useContext(UserCtx);
 	const itRoutesCtx = useContext(ItRoutesCtx);
-	const [ state, setState ] = useState(initialData);
+	const [ state, setState ] = useState({});
 	const [ skipperKey, setSkipperKey ] = useState(Math.random());
 
 	useEffect(() => {
-		newSearch({});
-	}, []);
+		setState({});
+		setSkipperKey(Math.random());
+		newSearch({
+			limit: pageSize,
+			sort: {
+				sortBy: localStorage.getItem('sortBy'),
+				sortOrder: localStorage.getItem('sortOrder')
+			}
+		});
+	}, [ location.pathname ]);
 
 	const newSearch = (query) => {
 		itRoutesCtx.page.setIsLoading(true);

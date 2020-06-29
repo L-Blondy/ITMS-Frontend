@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils';
 import { CLR } from '../../../GlobalStyles';
 
-function ColumnData({ tickets, field }) {
+function ColumnData({ tickets = [], field }) {
 
 	return tickets.reduce((columnData, ticket, i) => {
 		let value = ticket[ field ];

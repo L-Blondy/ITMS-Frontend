@@ -11,7 +11,7 @@ import { useSubmitTicket, useDeleteTicket } from './helpers';
 import { compareObjects } from '../../../utils';
 import { withInitialFetch } from '../../../higher-order';
 
-function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
+function TicketPage({ className, initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 
 	const {
 		state,
@@ -37,7 +37,6 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 
 	useEffect(() => {
 		if (!liveData) return;
-
 		let { worknotesHistory, ...newState } = liveData;
 		worknotesHistory && setWorknotesHistory(worknotesHistory.reverse());
 		setState({ ...state, ...newState });
@@ -75,7 +74,7 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 
 		<FileList fileList={ state.fileList } />
 
-		<Container$>
+		<Container$ className={ className }>
 			<FlexCol$$>
 				<Fields
 					state={ state }

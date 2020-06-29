@@ -18,6 +18,7 @@ function useDeleteTicket(setNeedToSave) {
 			.then(res => {
 				if (!res.deletedCount) console.error('Could not delete the ticket');
 				const redirectURL = location.pathname.split('/').slice(0, -1).join('/');
+				itRoutesCtx.page.setIsLoading(false);
 				history.push(redirectURL);
 			})
 			.catch(err => {

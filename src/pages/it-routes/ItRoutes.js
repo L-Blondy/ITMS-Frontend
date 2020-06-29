@@ -16,11 +16,6 @@ import { FlexRow$, FlexCol$ } from '../../components/flex';
 function ItRoutes() {
 
 	const itRoutesCtx = useContext(ItRoutesCtx);
-	const { pageSize } = useContext(UserCtx);
-	const [ switchKey, setSwitchKey ] = useState(Math.random());
-	const history = useHistory();
-
-	const { fetching, initialData } = itRoutesCtx;
 
 	return (<>
 		<Settings
@@ -37,7 +32,7 @@ function ItRoutes() {
 
 				<FlexCol$$ className={ itRoutesCtx.page.isLoading ? 'is-loading' : '' }>
 
-					<Switch key={ switchKey }>
+					<Switch>
 						{/* USER ROUTES */ }
 						<Route path='/it/users/new' render={ () => <NewUserPage /> } />
 						<Route path='/it/users/:id' render={ () => <ViewUserPage /> } />
@@ -58,15 +53,6 @@ function ItRoutes() {
 			</FlexRow$$>
 		</ColViewport$>
 	</>);
-}
-
-function getQuery(searchLimit) {
-	if (location.pathname.isOneOf([ '/it/ticket/incidents', '/it/ticket/requests', '/it/ticket/changes' ])) {
-		const sortBy = localStorage.getItem('sortBy');
-		const sortOrder = localStorage.getItem('sortOrder');
-		return `?limit=${ searchLimit }&sort[sortBy]=${ sortBy }&sort[sortOrder]=${ sortOrder }`;
-	}
-	return location.search;
 }
 
 export default ItRoutes;

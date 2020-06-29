@@ -1,1 +1,1 @@
-export { default as withInitialFetch } from './withInitialFetch'
+export { default as withInitialFetch } from './withInitialFetch';

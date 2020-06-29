@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useRef } from 'react';
 import { Input, InputLabelRight$ } from '.';
 
-function Skipper({ onSubmit, step, startFrom, maxValue }) {
+function Skipper({ onSubmit, step, startFrom = 1, maxValue = 0 }) {
 
 	const input = useRef();
 

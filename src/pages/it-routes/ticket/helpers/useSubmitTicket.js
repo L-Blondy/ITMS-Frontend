@@ -21,7 +21,10 @@ function useSubmitTicket(setNeedToSave, state) {
 		setTimeout(() => {
 			http()
 				.post(BASE_URL + location.pathname, { ...state, ...additionalData })
-				.then(() => history.push(location.pathname.split('/').slice(0, -1).join('/') + `/${ state.id }`))
+				.then(() => {
+					itRoutesCtx.page.setIsLoading(false);
+					history.push(location.pathname.split('/').slice(0, -1).join('/') + `/${ state.id }`);
+				})
 				.catch(err => {
 					console.log(err);
 					itRoutesCtx.page.setIsLoading(false);

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FileInfo } from './';
 import { Input, InputLabelRight$ } from '../inputs';
 import { BASE_URL } from '/BASE_URL';
@@ -33,7 +33,7 @@ const FileList = ({ fileList = [], className, selectFile, ...props }) => {
 								target='_blank'
 								rel='noopener noreferrer'>
 								view
-						</a>
+							</a>
 						</li>
 					)) }
 			</ul>
