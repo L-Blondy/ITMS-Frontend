@@ -38,7 +38,6 @@ function FetchCurrentLocation({ onProgress, onLoad, children: Children }) {
 			<Children initialData={ data } />
 		);
 	}
-	//test
 }
 
 export default FetchCurrentLocation;
