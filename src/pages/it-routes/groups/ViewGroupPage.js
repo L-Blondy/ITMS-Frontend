@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 import React from 'react';
 import { FlexRow$ } from '../../../components/flex';
+import { withInitialFetch } from '../../../higher-order';
 
 function ViewGroupPage({ initialData: { group } }) {
 	console.log(group);
 
-	return (<>
-		<h1>
-			ManageGroupPage
-		</h1>
-		{
-			Object.keys(group).map(key => (
+	return (
+		<>
+			<h1>
+				ManageGroupPage
+			</h1>
+
+			{ Object.keys(group).map(key => (
 				<FlexRow$$ key={ key + key }>
 					<span className='key'>
 						{ key }
@@ -19,12 +21,12 @@ function ViewGroupPage({ initialData: { group } }) {
 						{ JSON.stringify(group[ key ]) }
 					</span>
 				</FlexRow$$>
-			))
-		}
-	</>);
+			)) }
+		</>
+	);
 }
 
-export default ViewGroupPage;
+export default withInitialFetch(ViewGroupPage);
 
 const FlexRow$$ = styled(FlexRow$)`
 

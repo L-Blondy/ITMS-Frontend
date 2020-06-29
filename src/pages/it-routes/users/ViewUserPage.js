@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { FlexRow$ } from '../../../components/flex';
+import { withInitialFetch } from '../../../higher-order';
 
 function ViewUserPage({ initialData: { user } }) {
 
@@ -24,7 +25,7 @@ function ViewUserPage({ initialData: { user } }) {
 
 }
 
-export default ViewUserPage;
+export default withInitialFetch(ViewUserPage);
 
 const FlexRow$$ = styled(FlexRow$)`
 

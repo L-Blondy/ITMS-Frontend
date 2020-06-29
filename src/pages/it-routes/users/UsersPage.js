@@ -5,15 +5,15 @@ import { Input, InputLabelLeft$ } from '../../../components/inputs';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
 
-function UsersPage({ initialData }) {
+function UsersPage() {
 	const [ filter, setFilter ] = useState();
-	const [ users, setUsers ] = useState(initialData.users);
+	const [ users, setUsers ] = useState();
 
 	useEffect(() => {
 		http()
 			.get(BASE_URL + location.pathname, { value: filter })
 			.then(res => {
-				setUsers(res.userData.users);
+				setUsers(res.users);
 			})
 			.catch(err => console.log(err));
 	}, [ filter ]);

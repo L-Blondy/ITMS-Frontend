@@ -9,15 +9,15 @@ import { ItRoutesCtx } from '../ItRoutesContext';
 import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../../components/buttons';
 import { FlexRow$, FlexCol$ } from '../../../components/flex';
 import { FONT_FAM } from '../../../GlobalStyles';
+import { withInitialFetch } from '../../../higher-order';
 
-function CategoriesPage({ categories }) {
+function CategoriesPage({ initialData: categories }) {
 
 	const itRoutesCtx = useContext(ItRoutesCtx);
 	const [ selectedItem, setSelectedItem ] = useState();
 	const [ state, setState ] = useState(categories);
 	const [ key, setKey ] = useState(Math.random());
 	const params = useParams();
-
 
 	useEffect(() => {
 		setKey(Math.random());
@@ -95,11 +95,11 @@ function CategoriesPage({ categories }) {
 					<Button styleAs={ ButtonSecondary$ } onClick={ () => setState(categories) }>Cancel</Button>
 				</FlexRow$>
 			</div>
-		</FlexCol$$ >
+		</FlexCol$$>
 	);
 }
 
-export default CategoriesPage;
+export default withInitialFetch(CategoriesPage);
 
 const FlexCol$$ = styled(FlexCol$)`
 	height: 100%;

@@ -3,13 +3,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Input, Select, SelectAsync, InputLabelTopAbs$ } from '../../../components/inputs';
 import { FlexCol$, FlexRow$ } from '../../../components/flex';
 import { Button, ButtonItemControl$, ButtonPrimary$ } from '../../../components/buttons';
-import { CLR } from '../../../GlobalStyles';
-import { http } from '../../../utils';
-import { useHistory } from 'react-router-dom';
-import { ItRoutesCtx } from '../../it-routes/ItRoutesContext';
-import { UserCtx } from '../../../GlobalContext';
-import { BASE_URL } from '/BASE_URL';
 import { NewGroupStages, NewGroupName, NewGroupRoles, NewGroupUsers } from './';
+import { withInitialFetch } from '../../../higher-order';
 
 function NewGroupPage({ initialData }) {
 	const [ stage, setStage ] = useState(2);
@@ -22,7 +17,6 @@ function NewGroupPage({ initialData }) {
 			return name.length ? false : true;
 		}
 		if (stage === 2) {
-			console.log(roles.length);
 			return roles.length ? false : true;
 		}
 		if (stage === 3) {
@@ -71,7 +65,7 @@ function NewGroupPage({ initialData }) {
 	);
 }
 
-export default NewGroupPage;
+export default withInitialFetch(NewGroupPage);
 
 const Container$ = styled(FlexCol$)`
 	height: 100%;

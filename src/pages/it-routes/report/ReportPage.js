@@ -6,6 +6,7 @@ import { InputContainer$, InputContainerFullWidth$ } from '../../../components/c
 import { Button, ButtonControlBar$ } from '../../../components/buttons';
 import { Select, InputLabelLeftAbs$ } from '../../../components/inputs';
 import { Filters } from './';
+import { withInitialFetch } from '../../../higher-order';
 
 function ReportPage() {
 
@@ -64,7 +65,7 @@ function ReportPage() {
 	</>);
 }
 
-export default ReportPage;
+export default withInitialFetch(ReportPage);
 
 const FlexCol$$ = styled(FlexCol$)`
 	width: 70%;

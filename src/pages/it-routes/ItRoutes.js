@@ -12,8 +12,6 @@ import { ErrorPage } from '../error';
 import { UserCtx } from '../../GlobalContext';
 import { Navbar, Sidebar } from './';
 import { FlexRow$, FlexCol$ } from '../../components/flex';
-import { BASE_URL } from '/BASE_URL';
-import http from '../../utils/http';
 
 function ItRoutes() {
 
@@ -21,26 +19,6 @@ function ItRoutes() {
 	const { pageSize } = useContext(UserCtx);
 	const [ switchKey, setSwitchKey ] = useState(Math.random());
 	const history = useHistory();
-
-	useEffect(() => {
-		itRoutesCtx.setInitialData(null);
-		itRoutesCtx.page.setIsLoading(true);
-		itRoutesCtx.fetching.setError(null);
-
-		setTimeout(() => {
-			http()
-				.get(BASE_URL + location.pathname, getQuery(pageSize))
-				.then(res => {
-					setSwitchKey(Math.random());
-					itRoutesCtx.page.setIsLoading(false);
-					itRoutesCtx.setInitialData(res);
-				})
-				.catch(e => {
-					itRoutesCtx.page.setIsLoading(false);
-					itRoutesCtx.fetching.setError(e);
-				});
-		}, 300);
-	}, [ history.location, location.pathname ]);
 
 	const { fetching, initialData } = itRoutesCtx;
 
@@ -58,52 +36,24 @@ function ItRoutes() {
 				<Sidebar />
 
 				<FlexCol$$ className={ itRoutesCtx.page.isLoading ? 'is-loading' : '' }>
-					{ fetching.error ? (
 
-						<ErrorPage error={ fetching.error } />
+					<Switch key={ switchKey }>
+						{/* USER ROUTES */ }
+						<Route path='/it/users/new' render={ () => <NewUserPage /> } />
+						<Route path='/it/users/:id' render={ () => <ViewUserPage /> } />
+						<Route path='/it/users' render={ () => <UsersPage /> } />
+						{/* GROUP ROUTES */ }
+						<Route path='/it/groups/new' render={ () => <NewGroupPage /> } />
+						<Route path='/it/groups/:id' render={ () => <ViewGroupPage /> } />
+						<Route path='/it/groups' render={ () => <GroupsPage /> } />
+						{/* OTHER ROUTES */ }
+						<Route path='/it/categories/:type' render={ () => <CategoriesPage /> } />
+						<Route path='/it/dashboard' render={ () => <DashboardPage /> } />
+						<Route path='/it/report' render={ () => <ReportPage /> } />
+						<Route path='/it/ticket/:type/:id' render={ () => <TicketPage /> } />
+						<Route path='/it/ticket/:type' render={ () => <SearchPage /> } />
+					</Switch>
 
-					) : initialData ? (
-
-						<Switch key={ switchKey }>
-							{/* USER ROUTES */ }
-							<Route path='/it/users/new' render={ () => initialData.userData && initialData.userData.id && (
-								<NewUserPage initialData={ initialData.userData } />
-							) } />
-							<Route path='/it/users/:id' render={ () => initialData.userData && initialData.userData.user && (
-								<ViewUserPage initialData={ initialData.userData } />
-							) } />
-							<Route path='/it/users' render={ () => initialData.userData && initialData.userData.users && (
-								<UsersPage initialData={ initialData.userData } />
-							) } />
-							{/* GROUP ROUTES */ }
-							<Route path='/it/groups/new' render={ () => initialData.groupData && initialData.groupData.roles && (
-								<NewGroupPage initialData={ initialData.groupData } />
-							) } />
-							<Route path='/it/groups/:id' render={ () => initialData.groupData && initialData.groupData.group && (
-								<ViewGroupPage initialData={ initialData.groupData } />
-							) } />
-							<Route path='/it/groups' render={ () => initialData.groupData && initialData.groupData.groups && (
-								<GroupsPage initialData={ initialData.groupData } />
-							) } />
-							{/* OTHER ROUTES */ }
-							<Route path='/it/categories/:type' render={ () => initialData.categoriesData && (
-								<CategoriesPage categories={ initialData.categoriesData } />
-							) } />
-							<Route path='/it/dashboard' render={ () => (
-								<DashboardPage initialData={ initialData } />
-							) } />
-							<Route path='/it/report' render={ () => initialData.reportData && (
-								<ReportPage initialData={ initialData.reportData } />
-							) } />
-							<Route path='/it/ticket/:type/:id' render={ () => initialData.id && (
-								<TicketPage initialData={ initialData } />
-							) } />
-							<Route path='/it/ticket/:type' render={ () => initialData.searchData && (
-								<SearchPage initialData={ initialData.searchData } />
-							) } />
-						</Switch>
-
-					) : '' }
 				</FlexCol$$>
 			</FlexRow$$>
 		</ColViewport$>

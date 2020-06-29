@@ -9,6 +9,7 @@ import { ItRoutesCtx } from '../ItRoutesContext';
 import { BASE_URL } from '/BASE_URL';
 import { useSubmitTicket, useDeleteTicket } from './helpers';
 import { compareObjects } from '../../../utils';
+import { withInitialFetch } from '../../../higher-order';
 
 function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 
@@ -93,7 +94,7 @@ function TicketPage({ initialData: { worknotesHistory: initialWorknotesHistory, 
 	</>);
 }
 
-export default TicketPage;
+export default withInitialFetch(TicketPage);
 
 function getStateChanges(name, value, state) {
 	const changes = { [ name ]: value };

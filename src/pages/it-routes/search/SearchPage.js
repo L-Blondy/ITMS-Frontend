@@ -16,6 +16,10 @@ function SearchPage({ initialData }) {
 	const [ state, setState ] = useState(initialData);
 	const [ skipperKey, setSkipperKey ] = useState(Math.random());
 
+	useEffect(() => {
+		newSearch({});
+	}, []);
+
 	const newSearch = (query) => {
 		itRoutesCtx.page.setIsLoading(true);
 

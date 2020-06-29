@@ -6,6 +6,7 @@ import { Button, ButtonPrimary$ } from '.././../../components/buttons';
 import { useFormValidation } from '../../../hooks';
 import requirements from './requirements.json';
 import { useSubmitUser } from './helpers';
+import { withInitialFetch } from '../../../higher-order';
 
 function NewUserPage({ initialData }) {
 	const {
@@ -100,7 +101,7 @@ function NewUserPage({ initialData }) {
 	);
 }
 
-export default NewUserPage;
+export default withInitialFetch(NewUserPage);
 
 const FlexCol$$ = styled(FlexCol$)`
 	align-items: center;
@@ -126,3 +127,4 @@ const WithErrorRight$ = styled(InputLabelLeftAbs$)`
 		white-space: nowrap;
 	}
 `;
+
