@@ -38,6 +38,6 @@ function FetchCurrentLocation({ onProgress, onLoad, children: Children }) {
 			<Children initialData={ data } />
 		);
 	}
-}
+}//sfdsf
 
 export default FetchCurrentLocation;
