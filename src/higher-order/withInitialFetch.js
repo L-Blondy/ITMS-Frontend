@@ -7,7 +7,7 @@ import { ErrorPage } from '../components/error';
 
 function withInitialFetch(Target) {
 
-	return function (props) {
+	return function T(props) {
 		const [ error, setError ] = useState();
 		const [ data, setData ] = useState();
 		const location = useLocation();
@@ -18,7 +18,7 @@ function withInitialFetch(Target) {
 					.get(BASE_URL + location.pathname)
 					.then(res => setData(res))
 					.catch(e => setError(e));
-			}, 1000);
+			}, 300);
 		}, []);
 
 		if (!error && !data) {
@@ -29,6 +29,6 @@ function withInitialFetch(Target) {
 		}
 		return <Target { ...props } initialData={ data } />;
 	};
-};
+}
 
 export default withInitialFetch;

@@ -2,12 +2,10 @@ import { useContext } from 'react';
 import { BASE_URL } from '/BASE_URL';
 import { http } from '../../../../utils';
 import { useHistory } from 'react-router-dom';
-import { ItRoutesCtx } from '../../../it-routes/ItRoutesContext';
 import { UserCtx } from '../../../../GlobalContext';
 
 function useSubmitUser(state, setIsLoading) {
 
-	const itRoutesCtx = useContext(ItRoutesCtx);
 	const userCtx = useContext(UserCtx);
 	const history = useHistory();
 

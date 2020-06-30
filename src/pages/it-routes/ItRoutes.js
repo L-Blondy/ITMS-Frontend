@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Settings } from '../../components/popup';
-import { ItRoutesCtx } from './ItRoutesContext';
 import { CategoriesPage } from './categories';
 import { DashboardPage, ReportPage, TicketPage, SearchPage } from './';
 import { UsersPage, ViewUserPage } from './users';
@@ -10,19 +9,20 @@ import { GroupsPage, ViewGroupPage, NewGroupPage } from './groups';
 import NewUserPage from './users/NewUserPage';
 import { Navbar, Sidebar } from './';
 import { FlexRow$, FlexCol$ } from '../../components/flex';
+import { useToggle } from '../../hooks';
 
 function ItRoutes() {
 
-	const itRoutesCtx = useContext(ItRoutesCtx);
+	const [ areSettingsOpened, toggleSettings ] = useToggle();
 
 	return (<>
 		<Settings
-			when={ itRoutesCtx.settings.areOpened }
-			close={ () => itRoutesCtx.settings.setAreOpened(false) }
+			when={ areSettingsOpened }
+			close={ toggleSettings }
 		/>
 
-		<ColViewport$>
-			<Navbar />
+		<ColViewport$ >
+			<Navbar toggleSettings={ toggleSettings } />
 
 			<FlexRow$$>
 

@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { requirements, Fields, ControlBar, FileList, WorknotesHistory } from './';
 import { useFormValidation, useToggle, useSubscription } from '../../../hooks';
 import { FlexCol$ } from '../../../components/flex';
 import { LocationPrompt } from '../../../components/popup';
 import { AttachmentPopup } from '../../../components/attachments';
-import { ItRoutesCtx } from '../ItRoutesContext';
 import { BASE_URL } from '/BASE_URL';
 import { useSubmitTicket, useDeleteTicket } from './helpers';
 import { compareObjects } from '../../../utils';
@@ -49,7 +48,7 @@ function TicketPage({ setIsLoading, isLoading, Preloader, initialData: { worknot
 	useEffect(() => {
 		if (state !== initialState && !isLoading) {
 			setNeedToSave(true);
-		};
+		}
 	}, [ state ]);
 
 	return (
@@ -112,7 +111,7 @@ function getStateChanges(name, value, state) {
 	if (name === 'urgency')
 		changes.priority = 'P' + Math.floor((parseInt(state.impact) + parseInt(value)) / 2);
 	return changes;
-};
+}
 
 const Container$ = styled.div`
 	overflow: auto;

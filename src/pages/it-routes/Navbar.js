@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { CLR } from '../../GlobalStyles';
 import { FlexRow$ } from '../../components/flex';
 
-function Navbar(props) {
+function Navbar({ toggleSettings, ...props }) {
 	return (
 		<FlexRow$$ as='nav' { ...props }>
 			<FlexRow$ as='ul'>
@@ -18,7 +18,7 @@ function Navbar(props) {
 					<NavLink$ className='navlink' to='/it/sdfff'>Anywhere</NavLink$>
 				</li>
 
-				<button className="settings" onClick={ () => itRoutesCtx.settings.setAreOpened(true) }>Settings</button>
+				<button className="settings" onClick={ toggleSettings }>Settings</button>
 			</FlexRow$>
 		</FlexRow$$>
 	);
