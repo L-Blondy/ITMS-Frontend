@@ -22,8 +22,8 @@ function NewGroupRoles({ when, roles, setRoles, initialOptions }) {
 			styleAs={ InputCommon$ }
 			minHeight='270px'
 			columnWidth='230px'
-			nameColumn1='Available roles'
-			nameColumn2='Selected roles'
+			columnNameLeft='Available roles'
+			columnNameRight='Selected roles'
 			options={ initialOptions }
 		/>
 	);

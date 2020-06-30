@@ -9,7 +9,7 @@ const InputCommon$ = styled.span`
 		font-size: 15px;
 	}
 
-	label,.label {
+	label, .label {
 		display: block;
 	}
 
