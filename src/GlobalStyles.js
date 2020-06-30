@@ -17,6 +17,7 @@ const CLR = {
 	},
 	BUTTON: {
 		PRIMARY: '#149aab',
+		PRIMARY_HOVER: '#ceebef',
 		SECONDARY: '#CCCCCC',
 		ALERT: {
 			PRIMARY: '#56a4e6',

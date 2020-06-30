@@ -9,7 +9,7 @@ const InputCommon$ = styled.span`
 		font-size: 15px;
 	}
 
-	label {
+	label,.label {
 		display: block;
 	}
 
@@ -26,7 +26,7 @@ const InputCommon$ = styled.span`
 		}
 	`};
 
-	input, textarea, select, .select {
+	input, textarea, select, .select, .select-column {
 		width: 100%;
 		border-radius: 3px;
 		padding-left: 0.6em;
@@ -45,8 +45,29 @@ const InputCommon$ = styled.span`
 		}
 	}
 
-	.select {
+	.option {
+		padding: 0 0.6em;
+		line-height: 1.6em;
+		user-select: none;
+
+		&:hover, &:focus {
+			background: ${ CLR.BUTTON.PRIMARY_HOVER };
+			outline: none;
+			cursor: pointer;
+		}
+
+		&.selected {
+			background: ${ CLR.BUTTON.PRIMARY };
+			color: white;
+		}
+	}
+
+	.select{
 		padding: 0;
+
+		&-column {
+			padding: 0;
+		}
 
 		[class*="control"] {
 			border: none;

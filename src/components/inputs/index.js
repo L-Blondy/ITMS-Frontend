@@ -2,6 +2,7 @@ export { default as Input } from './Input';
 export { default as Textarea } from './Textarea';
 export { default as Select } from './Select';
 export { default as SelectAsync } from './SelectAsync';
+export { default as SelectColumns } from './SelectColumns';
 export { default as InputCommon$ } from './InputCommon$';
 export { default as InputLogin$ } from './InputLogin$';
 export { default as InputBoxAround$ } from './InputBoxAround$';

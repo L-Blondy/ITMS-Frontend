@@ -1,69 +1,86 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { FlexRow$, FlexCol$ } from '../../../components/flex';
-import { Select, InputLabelTopAbs$ } from '../../../components/inputs';
-import { Button, ButtonCommon$, ButtonPrimary$ } from '../../../components/buttons';
+import { Button, ButtonCommon$ } from '../../../components/buttons';
 import { CLR, FONT_FAM } from '../../../GlobalStyles';
 import { chevron3 } from '/assets/icons';
+import { SelectColumns, InputCommon$ } from '../../../components/inputs';
 
 function NewGroupRoles({ when, roles, setRoles, initialOptions }) {
 	if (!when) return null;
 
-	const [ selected, setSelected ] = useState('');
+	// const [ selected, setSelected ] = useState('');
 
-	const addRole = () => { };
+	// const addRole = () => { };
+
+	// const handleSelect = (e) => {
+	// 	console.log(e.target.dataset.option);
+	// };
 
 	return (
-		<FlexRow$$>
-			<FlexCol$>
-				<div className='column-name'>
-					Available roles
-				</div>
-
-				<FlexCol$ className='column'>
-					{ initialOptions.map(option => (
-						<Button
-							styleAs={ Option$ }
-							key={ option }
-							type='button'>
-							{ option }
-						</Button>
-					)) }
-				</FlexCol$>
-			</FlexCol$>
-
-			<FlexCol$ className='controls'>
-				<Button
-					styleAs={ AddRole$ }
-					type='button'>
-					<img src={ chevron3 } alt='add' />
-				</Button>
-				<Button
-					styleAs={ RemoveRole$ }
-					type='button'
-					disabled>
-					<img src={ chevron3 } alt='add' />
-				</Button>
-			</FlexCol$>
-
-			<FlexCol$>
-				<div className='column-name'>
-					Selected roles
-				</div>
-
-				<FlexCol$ className='column'>
-					{ roles.map(role => (
-						<Button
-							styleAs={ Option$ }
-							key={ role }
-							type='button'>
-							{ role }
-						</Button>
-					)) }
-				</FlexCol$>
-			</FlexCol$>
-		</FlexRow$$>
+		<SelectColumns
+			styleAs={ InputCommon$ }
+			minHeight='270px'
+			columnWidth='230px'
+			nameColumn1='Available roles'
+			nameColumn2='Selected roles'
+			options={ initialOptions }
+		/>
 	);
+
+	// return (
+	// 	<FlexRow$$>
+	// 		<FlexCol$>
+	// 			<div className='column-name'>
+	// 				Available roles
+	// 			</div>
+
+	// 			<FlexCol$ className='column' onClick={ handleSelect }>
+	// 				{ initialOptions.map(option => (
+	// 					<Button
+	// 						styleAs={ Option$ }
+	// 						key={ option }
+	// 						type='button'
+	// 						data-option={ option }>
+	// 						{ option }
+	// 					</Button>
+	// 				)) }
+	// 			</FlexCol$>
+	// 		</FlexCol$>
+
+	// 		<FlexCol$ className='controls'>
+	// 			<Button
+	// 				styleAs={ AddRole$ }
+	// 				type='button'>
+	// 				<img src={ chevron3 } alt='add' />
+	// 			</Button>
+
+	// 			<Button
+	// 				styleAs={ RemoveRole$ }
+	// 				type='button'
+	// 				disabled>
+	// 				<img src={ chevron3 } alt='add' />
+	// 			</Button>
+	// 		</FlexCol$>
+
+	// 		<FlexCol$>
+	// 			<div className='column-name'>
+	// 				Selected roles
+	// 			</div>
+
+	// 			<FlexCol$ className='column'>
+	// 				{ roles.map(role => (
+	// 					<Button
+	// 						styleAs={ Option$ }
+	// 						key={ role }
+	// 						type='button'>
+	// 						{ role }
+	// 					</Button>
+	// 				)) }
+	// 			</FlexCol$>
+	// 		</FlexCol$>
+	// 	</FlexRow$$>
+	// );
 }
 
 export default NewGroupRoles;

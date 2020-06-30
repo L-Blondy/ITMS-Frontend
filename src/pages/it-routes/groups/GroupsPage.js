@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FlexRow$, FlexCol$ } from '../../../components/flex';
 import { withInitialFetch } from '../../../higher-order';
 import { ItPageContainer$$ } from '../../../components/containers';
@@ -30,7 +30,7 @@ function GroupsPage({ initialData: { groups } }) {
 						</a>
 						<FlexRow$>
 							{ group.users.map(user => (
-								<FlexRow$>{ user.name }</FlexRow$>
+								<FlexRow$ key={ user.name }>{ user.name }</FlexRow$>
 							)) }
 						</FlexRow$>
 					</FlexRow$>

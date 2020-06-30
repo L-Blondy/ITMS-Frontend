@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import InputCommon$ from './InputCommon$';
 
 const InputLabelTopAbs$ = styled(InputCommon$)`
-	label {
+	label, .label {
 		position: absolute;
 		bottom: 100%;
 		white-space: nowrap;

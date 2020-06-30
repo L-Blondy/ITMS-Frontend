@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import React, { useState, useContext, useEffect } from 'react';
-import { FlexCol$, FlexRow$ } from '../../../components/flex';
-import { Button, ButtonItemControl$, ButtonPrimary$ } from '../../../components/buttons';
+import React, { useState } from 'react';
+import { FlexCol$ } from '../../../components/flex';
+import { Button, ButtonPrimary$ } from '../../../components/buttons';
 import { NewGroupStages, NewGroupName, NewGroupRoles, NewGroupUsers } from './';
 import { withInitialFetch } from '../../../higher-order';
 import { ItPageContainer$$ } from '../../../components/containers';
@@ -88,7 +88,7 @@ const Form$ = styled(FlexCol$)`
 
 const ButtonPrimary$$ = styled(ButtonPrimary$)`
 	padding: 0.2em 1.4em;
-`;;
+`;
 
 
 
