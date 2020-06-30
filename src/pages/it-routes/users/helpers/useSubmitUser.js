@@ -5,14 +5,14 @@ import { useHistory } from 'react-router-dom';
 import { ItRoutesCtx } from '../../../it-routes/ItRoutesContext';
 import { UserCtx } from '../../../../GlobalContext';
 
-function useSubmitUser(state) {
+function useSubmitUser(state, setIsLoading) {
 
 	const itRoutesCtx = useContext(ItRoutesCtx);
 	const userCtx = useContext(UserCtx);
 	const history = useHistory();
 
 	return function () {
-		itRoutesCtx.page.setIsLoading(true);
+		setIsLoading(true);
 
 		const newUserData = {
 			...state,
@@ -24,13 +24,13 @@ function useSubmitUser(state) {
 			http()
 				.post(BASE_URL + location.pathname, newUserData)
 				.then(res => {
-					const { id } = res.userData;
+					const { id } = res;
 					const nextPathname = location.pathname.split('/').slice(0, -1).join('/') + '/' + id;
 					history.push(nextPathname);
 				})
 				.catch(err => {
 					console.error(err);
-					itRoutesCtx.page.setIsLoading(false);
+					setIsLoading(false);
 				});
 		}, 300);
 	};

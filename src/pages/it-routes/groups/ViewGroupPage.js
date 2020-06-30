@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import React from 'react';
 import { FlexRow$ } from '../../../components/flex';
 import { withInitialFetch } from '../../../higher-order';
+import { ItPageContainer$$ } from '../../../components/containers';
 
 function ViewGroupPage({ initialData: { group } }) {
 	console.log(group);
 
 	return (
-		<>
+		<ItPageContainer$$>
 			<h1>
 				ManageGroupPage
 			</h1>
@@ -22,7 +23,7 @@ function ViewGroupPage({ initialData: { group } }) {
 					</span>
 				</FlexRow$$>
 			)) }
-		</>
+		</ItPageContainer$$>
 	);
 }
 

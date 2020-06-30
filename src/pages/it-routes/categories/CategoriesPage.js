@@ -5,15 +5,14 @@ import { Column } from '.';
 import { bigArrow } from '/assets/icons';
 import { BASE_URL } from '/BASE_URL';
 import { http } from '../../../utils';
-import { ItRoutesCtx } from '../ItRoutesContext';
 import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../../components/buttons';
-import { FlexRow$, FlexCol$ } from '../../../components/flex';
+import { FlexRow$ } from '../../../components/flex';
 import { FONT_FAM } from '../../../GlobalStyles';
-import { withInitialFetch } from '../../../higher-order';
+import { withInitialFetch, withPreloader, withLocationMount } from '../../../higher-order';
+import { ItPageContainer$$ } from '../../../components/containers';
 
-function CategoriesPage({ initialData: categories }) {
+function CategoriesPage({ setIsLoading, Preloader, initialData: categories }) {
 
-	const itRoutesCtx = useContext(ItRoutesCtx);
 	const [ selectedItem, setSelectedItem ] = useState();
 	const [ state, setState ] = useState(categories);
 	const [ key, setKey ] = useState(Math.random());
@@ -50,21 +49,23 @@ function CategoriesPage({ initialData: categories }) {
 	};
 
 	const saveChanges = () => {
-		itRoutesCtx.page.setIsLoading(true);
+		setIsLoading(true);
 
 		setTimeout(() => {
 			http()
 				.post(BASE_URL + location.pathname, state)
-				.then(res => itRoutesCtx.page.setIsLoading(false))
+				.then(() => setIsLoading(false))
 				.catch(err => {
 					console.log(err);
-					itRoutesCtx.page.setIsLoading(false);
+					setIsLoading(false);
 				});
 		}, 500);
 	};
 
 	return (
-		<FlexCol$$>
+		<ItPageContainer$$$>
+			<Preloader />
+
 			<div className='wrapper'>
 
 				<FlexRow$ as='h1' className='title'>{ pageTitle() }</FlexRow$>
@@ -95,13 +96,13 @@ function CategoriesPage({ initialData: categories }) {
 					<Button styleAs={ ButtonSecondary$ } onClick={ () => setState(categories) }>Cancel</Button>
 				</FlexRow$>
 			</div>
-		</FlexCol$$>
+		</ItPageContainer$$$>
 	);
 }
 
-export default withInitialFetch(CategoriesPage);
+export default withLocationMount(withPreloader(withInitialFetch(CategoriesPage)));
 
-const FlexCol$$ = styled(FlexCol$)`
+const ItPageContainer$$$ = styled(ItPageContainer$$)`
 	height: 100%;
 	justify-content: center;
 	align-items: center;
@@ -131,7 +132,6 @@ const FlexCol$$ = styled(FlexCol$)`
 			margin: 0.3em;
 			min-width: 5.5em;
 			font-size: 1.05rem;
-			/* border-radius: 3px; */
 		}
 	}
 `;

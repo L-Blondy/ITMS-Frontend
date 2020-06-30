@@ -7,62 +7,65 @@ import { Button, ButtonControlBar$ } from '../../../components/buttons';
 import { Select, InputLabelLeftAbs$ } from '../../../components/inputs';
 import { Filters } from './';
 import { withInitialFetch } from '../../../higher-order';
+import { ItPageContainer$$ } from '../../../components/containers';
 
 function ReportPage() {
 
 	const [ table, setTable ] = useState('');
 	useEffect(() => console.log(table), [ table ]);
 
-	return (<>
-		<ControlBar$>
-			<div />
-			<Button
-				styleAs={ ButtonControlBar$ }
-				onClick={ e => console.log(e.target) } >
-				Run
+	return (
+		<ItPageContainer$$>
+			<ControlBar$>
+				<div />
+				<Button
+					styleAs={ ButtonControlBar$ }
+					onClick={ e => console.log(e.target) } >
+					Run
 			</Button>
-		</ControlBar$>
+			</ControlBar$>
 
-		<FlexCol$$>
-			<FlexRow$>
+			<FlexCol$$>
+				<FlexRow$>
 
-				<InputContainer$ className='sm-6'>
+					<InputContainer$ className='sm-6'>
 
-					<Select
-						styleAs={ InputLabelLeftAbs$ }
-						label='Table'
-						name='table'
-						value={ table }
-						onChange={ e => setTable(e.target.value) }>
-						<option value=""> -none- </option>
-						<option value="incidents"> Incident </option>
-						<option value="requests"> Request </option>
-						<option value="changes"> Change </option>
-					</Select>
+						<Select
+							styleAs={ InputLabelLeftAbs$ }
+							label='Table'
+							name='table'
+							value={ table }
+							onChange={ e => setTable(e.target.value) }>
+							<option value=""> -none- </option>
+							<option value="incidents"> Incident </option>
+							<option value="requests"> Request </option>
+							<option value="changes"> Change </option>
+						</Select>
 
-					<Select styleAs={ InputLabelLeftAbs$ } label='Type' name='type'>
-						<option value="list"> List </option>
-						<option value="single Score"> Single Score </option>
-						<option value="bar"> Bar </option>
-						<option value="donut"> Donut </option>
-					</Select>
+						<Select styleAs={ InputLabelLeftAbs$ } label='Type' name='type'>
+							<option value="list"> List </option>
+							<option value="single Score"> Single Score </option>
+							<option value="bar"> Bar </option>
+							<option value="donut"> Donut </option>
+						</Select>
 
+					</InputContainer$>
+
+					<InputContainer$ className='sm-6'>
+						6
 				</InputContainer$>
 
-				<InputContainer$ className='sm-6'>
-					6
-				</InputContainer$>
+				</FlexRow$>
 
-			</FlexRow$>
+				<Filters table={ table } />
 
-			<Filters table={ table } />
-
-			<InputContainerFullWidth$ className='xs-12'>
-				12
+				<InputContainerFullWidth$ className='xs-12'>
+					12
 			</InputContainerFullWidth$>
 
-		</FlexCol$$>
-	</>);
+			</FlexCol$$>
+		</ItPageContainer$$>
+	);
 }
 
 export default withInitialFetch(ReportPage);

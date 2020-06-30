@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { FlexCol$ } from '../../../components/flex';
 import { Input, InputLabelLeft$ } from '../../../components/inputs';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
+import { ItPageContainer$$ } from '../../../components/containers';
 
 function UsersPage() {
 	const [ filter, setFilter ] = useState();
@@ -19,7 +19,7 @@ function UsersPage() {
 	}, [ filter ]);
 
 	return (
-		<FlexCol$$>
+		<ItPageContainer$$$>
 			<h1>
 				UsersPage
 			</h1>
@@ -36,13 +36,13 @@ function UsersPage() {
 					<span> : { user.name }</span>
 				</div>
 			)) }
-		</FlexCol$$>
+		</ItPageContainer$$$>
 	);
 }
 
 export default UsersPage;
 
-const FlexCol$$ = styled(FlexCol$)`
+const ItPageContainer$$$ = styled(ItPageContainer$$)`
 	a {
 		text-decoration: underline;
 	}

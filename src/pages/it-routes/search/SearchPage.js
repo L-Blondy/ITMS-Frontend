@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import React, { useEffect, useState, useContext } from 'react';
 import { UserCtx } from '../../../GlobalContext';
 import { ItRoutesCtx } from '../ItRoutesContext';
@@ -8,11 +7,12 @@ import { ControlBar$ } from '../../../components/navs';
 import { http } from '../../../utils';
 import { BASE_URL } from '/BASE_URL';
 import FlexGrid from './FlexGrid';
+import { ItPageContainer$$ } from '../../../components/containers';
+import { withPreloader } from '../../../higher-order';
 
-function SearchPage() {
+function SearchPage({ setIsLoading, Preloader }) {
 
 	const { incidentSearchFields, pageSize } = useContext(UserCtx);
-	const itRoutesCtx = useContext(ItRoutesCtx);
 	const [ state, setState ] = useState({});
 	const [ skipperKey, setSkipperKey ] = useState(Math.random());
 
@@ -29,7 +29,7 @@ function SearchPage() {
 	}, [ location.pathname ]);
 
 	const newSearch = (query) => {
-		itRoutesCtx.page.setIsLoading(true);
+		setIsLoading(true);
 
 		setTimeout(() => {
 			http()
@@ -37,17 +37,18 @@ function SearchPage() {
 				.then(res => {
 					setState(res.searchData);
 					setSkipperKey(Math.random());
-					itRoutesCtx.page.setIsLoading(false);
+					setIsLoading(false);
 				})
 				.catch(err => {
 					console.log(err);
-					itRoutesCtx.page.setIsLoading(false);
+					setIsLoading(false);
 				});
 		}, 500);
 	};
 
 	return (
-		<FlexCol$$>
+		<ItPageContainer$$>
+			<Preloader />
 			<ControlBar$>
 				<div />
 				<Skipper
@@ -65,13 +66,10 @@ function SearchPage() {
 				results={ state.results }
 				pageSize={ pageSize }
 			/>
-		</FlexCol$$>
+		</ItPageContainer$$>
 	);
 }
 
-export default SearchPage;
+export default withPreloader(SearchPage);
 
-const FlexCol$$ = styled(FlexCol$)`
-	height: 100%;
-	font-size: 15px;
-`;
+

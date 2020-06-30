@@ -6,9 +6,10 @@ import { Button, ButtonPrimary$ } from '.././../../components/buttons';
 import { useFormValidation } from '../../../hooks';
 import requirements from './requirements.json';
 import { useSubmitUser } from './helpers';
-import { withInitialFetch } from '../../../higher-order';
+import { withInitialFetch, withPreloader } from '../../../higher-order';
+import { ItPageContainer$$ } from '../../../components/containers';
 
-function NewUserPage({ initialData }) {
+function NewUserPage({ setIsLoading, Preloader, initialData }) {
 	const {
 		state,
 		errors,
@@ -26,7 +27,7 @@ function NewUserPage({ initialData }) {
 		}
 	});
 
-	const submitUser = useSubmitUser(state);
+	const submitUser = useSubmitUser(state, setIsLoading);
 
 	useEffect(() => {
 		if (!submission.isValid || !submission.source) return;
@@ -34,7 +35,8 @@ function NewUserPage({ initialData }) {
 	}, [ submission ]);
 
 	return (
-		<FlexCol$$ as='form' onSubmit={ e => e.preventDefault() }>
+		<ItPageContainer$$$ as='form' onSubmit={ e => e.preventDefault() }>
+			<Preloader />
 
 			<Input
 				styleAs={ WithErrorRight$ }
@@ -97,13 +99,13 @@ function NewUserPage({ initialData }) {
 				{ `Create user ${ state.id }` }
 			</Button>
 
-		</FlexCol$$>
+		</ItPageContainer$$$>
 	);
 }
 
-export default withInitialFetch(NewUserPage);
+export default withPreloader(withInitialFetch(NewUserPage));
 
-const FlexCol$$ = styled(FlexCol$)`
+const ItPageContainer$$$ = styled(ItPageContainer$$)`
 	align-items: center;
 
 	& > .labelled-input, 

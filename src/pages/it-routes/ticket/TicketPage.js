@@ -9,9 +9,10 @@ import { ItRoutesCtx } from '../ItRoutesContext';
 import { BASE_URL } from '/BASE_URL';
 import { useSubmitTicket, useDeleteTicket } from './helpers';
 import { compareObjects } from '../../../utils';
-import { withInitialFetch } from '../../../higher-order';
+import { withInitialFetch, withPreloader, withLocationMount } from '../../../higher-order';
+import { ItPageContainer$$ } from '../../../components/containers';
 
-function TicketPage({ className, initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
+function TicketPage({ setIsLoading, isLoading, Preloader, initialData: { worknotesHistory: initialWorknotesHistory, ...initialState } }) {
 
 	const {
 		state,
@@ -24,10 +25,9 @@ function TicketPage({ className, initialData: { worknotesHistory: initialWorknot
 	const [ worknotesHistory, setWorknotesHistory ] = useState(initialWorknotesHistory.reverse());
 	const liveData = useSubscription(BASE_URL + location.pathname + '/subscribe');
 	const [ isAttachmentPopupOpened, toggleAttachmentPopup ] = useToggle(false);
-	const itRoutesCtx = useContext(ItRoutesCtx);
 	const [ needToSave, setNeedToSave ] = useState(false);
-	const submitTicket = useSubmitTicket(setNeedToSave, state);
-	const deleteTicket = useDeleteTicket(setNeedToSave);
+	const submitTicket = useSubmitTicket(setNeedToSave, state, setIsLoading);
+	const deleteTicket = useDeleteTicket(setNeedToSave, setIsLoading);
 	const [ changedFields, setChangedFields ] = useState(new Set());
 
 	useEffect(() => {
@@ -47,53 +47,61 @@ function TicketPage({ className, initialData: { worknotesHistory: initialWorknot
 	}, [ liveData ]);
 
 	useEffect(() => {
-		if (state !== initialState && !itRoutesCtx.page.isLoading) {
+		if (state !== initialState && !isLoading) {
 			setNeedToSave(true);
 		};
 	}, [ state ]);
 
-	return (<>
-		<LocationPrompt
-			when={ needToSave }
-			message={ 'Modifications may not be saved.' }
-			reason={ 'Do you want to exit this page ?' }
-		/>
+	return (
+		<>
+			<LocationPrompt
+				when={ needToSave }
+				message={ 'Modifications may not be saved.' }
+				reason={ 'Do you want to exit this page ?' }
+			/>
 
-		<AttachmentPopup
-			when={ isAttachmentPopupOpened }
-			close={ toggleAttachmentPopup }
-			fileList={ state.fileList }
-		/>
+			<AttachmentPopup
+				when={ isAttachmentPopupOpened }
+				close={ toggleAttachmentPopup }
+				fileList={ state.fileList }
+			/>
+			<ItPageContainer$$>
 
-		<ControlBar
-			state={ state }
-			toggleAttachmentPopup={ toggleAttachmentPopup }
-			deleteTicket={ deleteTicket }
-			validateSubmission={ validateSubmission }
-		/>
-
-		<FileList fileList={ state.fileList } />
-
-		<Container$ className={ className }>
-			<FlexCol$$>
-				<Fields
+				<ControlBar
 					state={ state }
-					errors={ errors }
-					handleChange={ handleChange }
+					toggleAttachmentPopup={ toggleAttachmentPopup }
+					deleteTicket={ deleteTicket }
 					validateSubmission={ validateSubmission }
-					changedFields={ changedFields }
 				/>
 
-				<WorknotesHistory
-					worknotesHistory={ worknotesHistory }
-					fileList={ state.fileList }
-				/>
-			</FlexCol$$>
-		</Container$>
-	</>);
+				<Preloader />
+
+				<FileList fileList={ state.fileList } />
+
+				<Container$>
+
+					<FlexCol$$>
+						<Fields
+							state={ state }
+							errors={ errors }
+							handleChange={ handleChange }
+							validateSubmission={ validateSubmission }
+							changedFields={ changedFields }
+						/>
+
+						<WorknotesHistory
+							worknotesHistory={ worknotesHistory }
+							fileList={ state.fileList }
+						/>
+					</FlexCol$$>
+				</Container$>
+
+			</ItPageContainer$$>
+		</>
+	);
 }
 
-export default withInitialFetch(TicketPage);
+export default withLocationMount(withPreloader(withInitialFetch(TicketPage)));
 
 function getStateChanges(name, value, state) {
 	const changes = { [ name ]: value };

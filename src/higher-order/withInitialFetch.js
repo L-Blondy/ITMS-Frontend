@@ -2,46 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { http } from '../utils';
 import { BASE_URL } from '/BASE_URL';
+import { Preloader } from '../components/preloader';
+import { ErrorPage } from '../components/error';
 
-function withInitialFetch(Target, query) {
+function withInitialFetch(Target) {
 
 	return function (props) {
 		const [ error, setError ] = useState();
 		const [ data, setData ] = useState();
-		const [ key, setKey ] = useState(Math.random());
 		const location = useLocation();
 
 		useEffect(() => {
-			setKey(Math.random());
-			setData();
-			setError();
-
 			setTimeout(() => {
 				http()
-					.get(BASE_URL + location.pathname, query)
+					.get(BASE_URL + location.pathname)
 					.then(res => setData(res))
 					.catch(e => setError(e));
 			}, 1000);
-		}, [ location ]);
+		}, []);
 
 		if (!error && !data) {
-			return (
-				<div>Loading...</div>
-			);
+			return <Preloader />;
 		}
 		if (error) {
-			return (
-				<div>Error...</div>
-			);
+			return <ErrorPage error={ error } />;
 		}
-		return (
-			<Target
-				{ ...props }
-				key={ key }
-				initialData={ data }
-			/>
-		);
+		return <Target { ...props } initialData={ data } />;
 	};
-}
+};
 
 export default withInitialFetch;
