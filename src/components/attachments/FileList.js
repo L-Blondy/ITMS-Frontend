@@ -10,32 +10,31 @@ const FileList = ({ fileList = [], className, selectFile, ...props }) => {
 	return (
 		<Form$ className={ 'file-list ' + className } { ...props }>
 			<ul>
-				{
-					fileList.map((file, i) => (
-						<li key={ file.name + i }>
-							<Input
-								styleAs={ InputLabelRight$ }
-								className='file-select'
-								type='checkbox'
-								name={ file.name }
-								value={ file.name }
-								onChange={ e => selectFile(e.target) }
-								label={
-									<FileInfo
-										as='label'
-										htmlFor={ file.name }
-										data={ file }
-									/>
-								}
-							/>
+				{ fileList.map((file, i) => (
+					<li key={ file.name + i }>
+						<Input
+							styleAs={ InputLabelRight$ }
+							className='file-select'
+							type='checkbox'
+							name={ file.name }
+							value={ file.name }
+							onChange={ e => selectFile(e.target) }
+							label={
+								<FileInfo
+									as='label'
+									htmlFor={ file.name }
+									data={ file }
+								/>
+							}
+						/>
 
-							<a href={ BASE_URL + location.pathname + '/' + file.name }
-								target='_blank'
-								rel='noopener noreferrer'>
-								view
+						<a href={ BASE_URL + location.pathname + '/' + file.name }
+							target='_blank'
+							rel='noopener noreferrer'>
+							view
 							</a>
-						</li>
-					)) }
+					</li>
+				)) }
 			</ul>
 		</Form$>
 	);
