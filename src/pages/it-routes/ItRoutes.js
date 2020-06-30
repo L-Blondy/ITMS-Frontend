@@ -8,8 +8,6 @@ import { DashboardPage, ReportPage, TicketPage, SearchPage } from './';
 import { UsersPage, ViewUserPage } from './users';
 import { GroupsPage, ViewGroupPage, NewGroupPage } from './groups';
 import NewUserPage from './users/NewUserPage';
-import { ErrorPage } from '../error';
-import { UserCtx } from '../../GlobalContext';
 import { Navbar, Sidebar } from './';
 import { FlexRow$, FlexCol$ } from '../../components/flex';
 
