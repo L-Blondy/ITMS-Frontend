@@ -56,7 +56,7 @@ const InputCommon$ = styled.span`
 			cursor: pointer;
 		}
 
-		&.selected {
+		&.hightlighted {
 			background: ${ CLR.BUTTON.PRIMARY };
 			color: white;
 		}

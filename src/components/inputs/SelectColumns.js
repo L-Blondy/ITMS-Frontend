@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlexRow$, FlexCol$ } from '../flex';
 import { Button, ButtonCommon$ } from '../buttons';
 import { CLR } from '../../GlobalStyles';
@@ -11,65 +11,53 @@ function SelectColumns({
 	columnWidth = 'auto',
 	columnNameLeft = '',
 	columnNameRight = '',
-	options = []
+	options = [],
+	defaultValues = []
 }) {
 
-	const [ leftOptions, setLeftOptions ] = useState(options);
-	const [ rightOptions, setRightOptions ] = useState([]);
-	const [ selected, setSelected ] = useState([]);
+	useEffect(() => {
+		if (!defaultValues.every(val => options.indexOf(val) !== -1))
+			throw new Error('"defaultValues" has to be a subArray of "options"');
+	}, []);
 
-	const handleEvent = (e) => {
-		const isDownArrow = e.keyCode === 40;
-		const isUpArrow = e.keyCode === 38;
-		const isEnterKey = e.keyCode === 13;
-		const isClick = e.type === 'click';
-		console.log(selected);
+	const [ leftValues, setLeftValues ] = useState(options.filter(opt => !opt.isOneOf(defaultValues)));
+	const [ rightValues, setRightValues ] = useState(defaultValues);
+	const [ hightlighted, setHightlighted ] = useState({ side: '', values: [] });
 
-		if (!isDownArrow && !isUpArrow && !isEnterKey && !isClick) {
-			return;
-		}
+	const handleEvent = useHandleClick(setHightlighted, hightlighted, leftValues, rightValues);
 
-		if (isDownArrow) {
-			if (!document.activeElement.nextElementSibling)
-				return document.activeElement.parentElement.firstChild.focus();
-			else
-				return document.activeElement.nextElementSibling.focus();
-		}
-		if (isUpArrow) {
-			if (!document.activeElement.previousElementSibling)
-				return document.activeElement.parentElement.lastChild.focus();
-			else
-				return document.activeElement.previousElementSibling.focus();
-		}
-		if (isEnterKey || isClick) {
-			const value = document.activeElement.dataset.value;
-
-			if (selected.length && !AreSiblings(document.querySelector(`[data-value="${ selected[ 0 ] }"`), e.target)) {
-				return setSelected([ value ]);
-			}
-			if ((!e.shiftKey && !e.ctrlKey) || (e.shiftKey && !selected.length))
-				return setSelected([ value ]);
-
-			if (e.ctrlKey) {
-				return setSelected([ ...selected, value ]);
-			}
-
-			let sliceIndexes = [ options.indexOf(value), options.indexOf(selected[ 0 ]) ].sort(); /// <= do not use OPTION but LEFT-OPTION or RIGHT-OPTIONS
-			sliceIndexes[ 1 ]++;
-			setSelected(options.slice(...sliceIndexes));
-		}
-	};
 
 	const handleAdd = () => {
-		const isLeftSelected = new Set([ ...selected, ...leftOptions ]).size === leftOptions.length;
-		if (!isLeftSelected) return;
+		if (hightlighted.side !== 'left') return;
 
-		setRightOptions([ ...rightOptions, ...selected ]);
-		setLeftOptions(leftOptions.reduce((next, opt) => {
-			if (opt.isOneOf(selected))
-				return next;
-			return [ ...next, opt ];
-		}, []));
+		const nextLeftValues = leftValues.filter(value => !value.isOneOf(hightlighted.values));
+		const nextRightValues = [ ...rightValues, ...hightlighted.values ];
+
+		setLeftValues(nextLeftValues);
+		setRightValues(nextRightValues);
+		setHightlighted({
+			side: 'right',
+			values: hightlighted.values
+		});
+	};
+
+	const handleRemove = () => {
+		if (hightlighted.side !== 'right') return;
+
+		const nextRightValues = rightValues.filter(value => !value.isOneOf(hightlighted.values));
+		const nextLeftValues = [ ...leftValues, ...hightlighted.values ];
+
+		setRightValues(nextRightValues);
+		setLeftValues(nextLeftValues);
+		setHightlighted({
+			side: 'left',
+			values: hightlighted.values
+		});
+	};
+
+	const hightlightOrNot = (side, value) => {
+		if (side === hightlighted.side && value.isOneOf(hightlighted.values))
+			return 'hightlighted';
 	};
 
 	return (
@@ -80,64 +68,146 @@ function SelectColumns({
 			columnWidth$={ columnWidth }>
 
 			<FlexCol$ className='select-column-wrapper'>
-				<div className='label'> { columnNameLeft } </div>
-				<Column options={ leftOptions } handleEvent={ handleEvent } selected={ selected } />
+				<div className='label'>
+					{ columnNameLeft }
+				</div>
+				<FlexCol$ className='select-column' onClick={ handleEvent } onKeyDown={ handleEvent } data-side='left'>
+					{ leftValues.map(value => (
+						<div
+							className={ `option ${ hightlightOrNot('left', value) }` }
+							tabIndex={ 0 }
+							key={ value }
+							data-value={ value } >
+							{ value }
+						</div>
+					)) }
+				</FlexCol$>
 			</FlexCol$>
 
-			<FlexCol$>
+			<FlexCol$ className='select-controls'>
 				<Button
 					styleAs={ AddBtn$ }
 					type='button'
-					onClick={ handleAdd }>
+					onClick={ handleAdd }
+					disabled={ hightlighted.side !== 'left' }>
 					<img src={ chevron3 } alt='add' />
 				</Button>
 
 				<Button
 					styleAs={ RemoveBtn$ }
 					type='button'
-					disabled>
+					onClick={ handleRemove }
+					disabled={ hightlighted.side !== 'right' }>
 					<img src={ chevron3 } alt='remove' />
 				</Button>
 			</FlexCol$>
 
 			<FlexCol$ className='select-column-wrapper'>
-				<div className='label'> { columnNameRight } </div>
-				<Column options={ rightOptions } handleEvent={ handleEvent } selected={ selected } />
+				<div className='label'>
+					{ columnNameRight }
+				</div>
+				<FlexCol$ className='select-column' onClick={ handleEvent } onKeyDown={ handleEvent } data-side='right'>
+					{ rightValues.map(value => (
+						<div
+							className={ `option ${ hightlightOrNot('right', value) }` }
+							tabIndex={ 0 }
+							key={ value }
+							data-value={ value } >
+							{ value }
+						</div>
+					)) }
+				</FlexCol$>
 			</FlexCol$>
 
 		</FlexRow$$>
-	);
-};
-
-function Column({ options, handleEvent, selected }) {
-
-	return (
-		<FlexCol$ className='select-column' onClick={ handleEvent } onKeyDown={ handleEvent }>
-			{ options.map(opt => (
-				<div
-					className={ `option ${ opt.isOneOf(selected) ? 'selected' : '' }` }
-					tabIndex={ 0 }
-					key={ opt }
-					data-value={ opt } >
-					{ opt }
-				</div>
-			)) }
-		</FlexCol$>
 	);
 }
 
 export default SelectColumns;
 
+const useHandleClick = (setHightlighted, hightlighted, leftValues, rightValues) => {
+
+	const handleArrowEvent = (keyCode) => {
+		if (keyCode === 40) {
+			if (!document.activeElement.nextElementSibling)
+				return document.activeElement.parentElement.firstChild.focus();
+			else
+				return document.activeElement.nextElementSibling.focus();
+		}
+
+		if (keyCode === 38) {
+			if (!document.activeElement.previousElementSibling)
+				return document.activeElement.parentElement.lastChild.focus();
+			else
+				return document.activeElement.previousElementSibling.focus();
+		}
+	};
+
+	const handleEvent = (e) => {
+		const currentSide = e.currentTarget.dataset.side;
+		const isSameSide = currentSide === hightlighted.side;
+		const isDownArrow = e.keyCode === 40;
+		const isUpArrow = e.keyCode === 38;
+		const isEnterKey = e.keyCode === 13;
+		const isClick = e.type === 'click';
+		const isNotRelevantKey = !isDownArrow && !isUpArrow && !isEnterKey && !isClick;
+
+		if (isNotRelevantKey) {
+			return;
+		}
+
+		if (isDownArrow || isUpArrow)
+			return handleArrowEvent(e.keyCode);
+
+		if (isEnterKey || isClick) {
+			const value = document.activeElement.dataset.value;
+
+
+			if (!isSameSide || (!e.shiftKey && !e.ctrlKey) || (e.shiftKey && !hightlighted.values.length)) {
+				return setHightlighted({
+					side: currentSide,
+					values: [ value ]
+				});
+			}
+
+			if (e.ctrlKey) {
+				return setHightlighted({
+					side: currentSide,
+					values: [ ...hightlighted.values, value ]
+				});
+			}
+			//shiftKey
+			const values = currentSide === 'left' ? [ ...leftValues ] : [ ...rightValues ];
+			let sliceIndexes = [ values.indexOf(value), values.indexOf(hightlighted.values[ 0 ]) ].sort(); /// <= do not use OPTION but LEFT-OPTION or RIGHT-OPTIONS
+			sliceIndexes[ 1 ]++;
+			setHightlighted({
+				side: currentSide,
+				values: values.slice(...sliceIndexes)
+			});
+		}
+	};
+
+	return handleEvent;
+};
+
 const FlexRow$$ = styled(FlexRow$)`
 	min-height: ${ props => props.minHeight$ } !important;
+
+	.label {
+		line-height: 1.7em;
+	}
 
 	.select-column {
 		width: ${ props => props.columnWidth$ } !important;
 		flex-grow: 1;
+
+		.option {
+			width: 100%;
+		}
 	}
 
-	.select-column-name {
-
+	.select-controls {
+		justify-content: center;
 	}
 `;
 
@@ -145,7 +215,7 @@ const ControlButton$ = styled(ButtonCommon$)`
 	height: 1.5rem;
 	width: 1.5rem;
 	padding: 0;
-	margin: 0.2rem 0.7rem;
+	margin: 0.2rem 10px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -166,6 +236,3 @@ const RemoveBtn$ = styled(ControlButton$)`
 	transform: rotate(-90deg);
 `;
 
-function AreSiblings(elm1, elm2) {
-	return elm1 != elm2 && [ ...elm1.parentNode.children ].some(child => child == elm2);
-}
