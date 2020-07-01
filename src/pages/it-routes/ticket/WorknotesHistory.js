@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { formatDate } from '../../../utils';
 import { FileLog, ChangeLog, WorkLog } from '../../../components/logs';

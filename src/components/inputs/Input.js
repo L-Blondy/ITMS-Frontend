@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, forwardRef } from 'react';
 
-const Input = React.forwardRef(({
+const Input = ({
 	as: Input = 'input',
 	styleAs: Span$ = 'span',
 	label,
@@ -66,6 +66,6 @@ const Input = React.forwardRef(({
 
 		</Span$>
 	);
-});
+};
 
-export default Input;
+export default forwardRef(Input);

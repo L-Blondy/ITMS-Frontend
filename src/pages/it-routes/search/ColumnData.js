@@ -34,7 +34,7 @@ function ColumnData({ tickets = [], field }) {
 			);
 		return columnData;
 	}, []);
-};
+}
 
 export default ColumnData;
 

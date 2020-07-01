@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { BASE_URL } from '/BASE_URL';
 import { http } from '../../../../utils';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +6,7 @@ function useDeleteTicket(setNeedToSave, setIsLoading) {
 
 	const history = useHistory();
 
-	return function deleteTicket(e) {
+	return function deleteTicket() {
 		setIsLoading(true);
 		setNeedToSave(false);
 

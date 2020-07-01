@@ -19,7 +19,7 @@ function FileList({ fileList }) {
 			)) }
 		</Div$>
 	);
-};
+}
 
 export default FileList;
 

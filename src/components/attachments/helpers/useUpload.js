@@ -2,7 +2,7 @@ import { XHR } from '../';
 import { BASE_URL } from '/BASE_URL';
 import { http } from '../../../utils';
 
-function useUpload(username, setKey, setRequestStatus, file) {
+function useUpload(username, setKey, setRequestStatus) {
 
 	return function upload(file) {
 		if (!file) return;

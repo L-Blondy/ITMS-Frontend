@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { DisableBg } from '../popup';
 import { CLR } from '../../GlobalStyles';

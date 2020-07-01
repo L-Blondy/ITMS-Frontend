@@ -1,10 +1,8 @@
-import styled from 'styled-components';
 import React from 'react';
-import { ControlBar$ } from '../../../components/navs';
-import { FlexCol$, FlexRow$ } from '../../../components/flex';
-import { InputContainer$, InputContainerFullWidth$ } from '../../../components/containers';
+import { FlexRow$ } from '../../../components/flex';
+import { InputContainerFullWidth$ } from '../../../components/containers';
 import { Button, ButtonControlBar$ } from '../../../components/buttons';
-import { Select, InputLabelLeftAbs$ } from '../../../components/inputs';
+
 
 
 function FilterConditions() {
@@ -19,8 +17,8 @@ function FilterConditions() {
 				<Button
 					styleAs={ ButtonControlBar$ }
 					onClick={ () => { } } >
-					Add "OR" clause
-					</Button>
+					{ 'Add "OR" clause' }
+				</Button>
 			</FlexRow$>
 		</InputContainerFullWidth$>
 	);

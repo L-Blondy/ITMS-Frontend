@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import React, { useContext } from 'react';
+import React from 'react';
 import { preloader } from '/assets/icons';
-// import { AttachmentCtx, XHR } from '../../IT-routes/ticket/attachment/AttachmentWithContext';
 import { Button, ButtonAlert$ } from '../buttons';
 import { XHR } from '.';
 

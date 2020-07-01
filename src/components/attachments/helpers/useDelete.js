@@ -29,6 +29,7 @@ function useDelete(selectedFiles, setSelectedFiles, setKey, setRequestStatus) {
 				setSelectedFiles([]);
 			})
 			.catch(e => {
+				console.error(e);
 				setRequestStatus({
 					state: XHR.ERROR,
 					files: selectedFiles,

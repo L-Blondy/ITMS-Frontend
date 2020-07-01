@@ -1,10 +1,9 @@
-import styled from 'styled-components';
 import React, { useState } from 'react';
 import { Preloader } from '../components/preloader';
 
 function withPreloader(Target) {
 
-	return function (props) {
+	return function T(props) {
 
 		const [ isLoading, setIsLoading ] = useState(false);
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useEffect } from 'react';
-import { FlexRow$, FlexCol$ } from '../../components/flex';
+import { FlexCol$ } from '../../components/flex';
 import { Input, InputLogin$ } from '../../components/inputs';
 import { Button, ButtonPrimary$ } from '../../components/buttons';
 import { useFormValidation } from '../../hooks';

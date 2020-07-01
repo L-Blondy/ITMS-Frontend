@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FileInfo } from './';
 import { Input, InputLabelRight$ } from '../inputs';
 import { BASE_URL } from '/BASE_URL';

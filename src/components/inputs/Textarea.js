@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import Input from './Input';
 
-const Textarea = React.forwardRef((props, ref) => {
+const Textarea = (props, ref) => {
 	return <Input as={ TextareaAutosize } ref={ ref } { ...props } />;
-});
+};
 
-export default Textarea;
+export default forwardRef(Textarea);
