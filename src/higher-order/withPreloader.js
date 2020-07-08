@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Preloader } from '../components/preloader';
 
 function withPreloader(Target) {
 
-	return function T(props) {
+	return function V(props) {
 
 		const [ isLoading, setIsLoading ] = useState(false);
+
+		useEffect(() => console.log('MOUNT PRELOADER'), []);
 
 		return (
 			<Target

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { BASE_URL } from '/BASE_URL';
 import { http } from '../../../../utils';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { UserCtx } from '../../../../GlobalContext';
 
 function useSubmitTicket(setNeedToSave, state, setIsLoading) {
@@ -21,7 +21,7 @@ function useSubmitTicket(setNeedToSave, state, setIsLoading) {
 				.post(BASE_URL + location.pathname, { ...state, ...additionalData })
 				.then(() => {
 					setIsLoading(false);
-					history.push(location.pathname.split('/').slice(0, -1).join('/') + `/${ state.id }`);
+					history.replace(location.pathname.split('/').slice(0, -1).join('/') + `/${ state.id }`);
 				})
 				.catch(err => {
 					console.log(err);

@@ -21,6 +21,8 @@ function withInitialFetch(Target) {
 			}, 300);
 		}, []);
 
+		useEffect(() => console.log('MOUNT INITIAL FETCH'), []);
+
 		if (!error && !data) {
 			return <Preloader />;
 		}
