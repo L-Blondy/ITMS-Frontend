@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { CLR } from '../../GlobalStyles';
-import { FlexRow$ } from '../../components/flex';
+import { FlexRow$ } from '../flex';
 
-function Navbar({ toggleSettings, ...props }) {
+function ItNavbar({ toggleSettings, ...props }) {
 	return (
 		<FlexRow$$ as='nav' { ...props }>
 			<FlexRow$ as='ul'>
@@ -24,7 +24,7 @@ function Navbar({ toggleSettings, ...props }) {
 	);
 }
 
-export default Navbar;
+export default ItNavbar;
 
 const FlexRow$$ = styled(FlexRow$)`
 	position: relative;

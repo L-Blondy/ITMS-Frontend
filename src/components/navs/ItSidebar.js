@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FlexRow$, FlexCol$ } from '../../components/flex';
+import { FlexRow$, FlexCol$ } from '../flex';
 
-function Sidebar(props) {
+function ItSidebar(props) {
 	return (
 		<FlexRow$$ as='nav' { ...props }>
 			<FlexCol$ as='ul'>
@@ -54,7 +54,7 @@ function Sidebar(props) {
 	);
 }
 
-export default Sidebar;
+export default ItSidebar;
 
 const FlexRow$$ = styled(FlexRow$)`
 	height: 100%;

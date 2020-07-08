@@ -1,7 +1,11 @@
-export { default as Navbar } from './Navbar';
-export { default as Sidebar } from './Sidebar';
+export { default as CategoriesPage } from './categories/CategoriesPage';
 export { default as DashboardPage } from './dashboard/DashboardPage';
 export { default as ReportPage } from './report/ReportPage';
-export { default as SearchPage } from './search/SearchPage';
 export { default as TicketPage } from './ticket/TicketPage';
-export { default as ItRoutes } from './ItRoutes';
+export { default as SearchPage } from './search/SearchPage';
+export { default as UsersPage } from './users/UsersPage';
+export { default as ViewUserPage } from './users/ViewUserPage';
+export { default as NewUserPage } from './users/NewUserPage';
+export { default as GroupsPage } from './groups/GroupsPage';
+export { default as ViewGroupPage } from './groups/ViewGroupPage';
+export { default as NewGroupPage } from './groups/NewGroupPage';

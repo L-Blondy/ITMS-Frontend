@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-function CommonRoutes() {
+function SomeRoute() {
 	return (<>
 		<h1>
-			COMMON ROUTES
+			SomeRoute
 		</h1>
 		<NavLink to='/it/dashboard'>dashboard</NavLink>
 	</>);
 }
 
-export default CommonRoutes;
+export default SomeRoute;

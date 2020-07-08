@@ -4,21 +4,16 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import GlobalContext from './GlobalContext.js';
 import { GlobalStyles } from './GlobalStyles.js';
 import { LoginPage } from './pages/login';
-import { ItRoutes } from './pages/it-routes';
+// import { ItRoutes } from './pages/it-routes';
 import { CommonRoutes } from './pages/common-routes';
+import Router from './router/Router';
 
 function App() {
 
 	return (
 		<GlobalContext >
 			<GlobalStyles />
-			<BrowserRouter>
-				<Switch>
-					<Route path='/login' render={ () => <LoginPage /> } />
-					<Route path='/it' render={ () => <ItRoutes /> } />
-					<Route path='/' render={ () => <CommonRoutes /> } />
-				</Switch>
-			</BrowserRouter>
+			<Router />
 		</GlobalContext>
 	);
 }

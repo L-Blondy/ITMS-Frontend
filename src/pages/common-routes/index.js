@@ -1,1 +1,1 @@
-export { default as CommonRoutes } from './CommonRoutes'
+export { default as SomeRoute } from './SomeRoute'
