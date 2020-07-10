@@ -8,7 +8,8 @@
     "build": "rm -rf dist && parcel build public/index.html --public-url /ITMS-Frontend/",
     "deploy": "npm run build && copyfiles public/robots.txt dist && gh-pages -d dist",
     "analyse": "source-map-explorer dist/public.*",
-    "test:eslint": "eslint src/ --ext .js --ext .jsx"
+    "test:eslint": "eslint src/ --ext .js --ext .jsx",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
