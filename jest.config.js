@@ -1,10 +1,7 @@
 module.exports = {
-	// roots: [
-	// 	"<rootDir>/src/",
-	// 	"<rootDir>/tests/",
-	// 	"<rootDir>/public/",
-	// ],
 	moduleNameMapper: {
-		"^/([^\\.]*)$": "<rootDir>/public/$1.js",
+		".+\\.(svg|png|jpg)$": "identity-obj-proxy",
+		"^/src([^\\.]*)$": "<rootDir>/src/$1",
+		"^/([^\\.]*)$": "<rootDir>/public/$1",
 	}
 };
