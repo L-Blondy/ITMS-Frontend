@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { ControlBar$ } from '../../../components/navs';
-import { FlexCol$, FlexRow$ } from '../../../components/flex';
-import { InputContainer$, InputContainerFullWidth$ } from '../../../components/containers';
-import { Button, ButtonControlBar$ } from '../../../components/buttons';
-import { Select, InputLabelLeftAbs$ } from '../../../components/inputs';
+import { ControlBar$ } from '#/components/navs';
+import { FlexCol$, FlexRow$ } from '#/components/flex';
+import { InputContainer$, InputContainerFullWidth$ } from '#/components/containers';
+import { Button, ButtonControlBar$ } from '#/components/buttons';
+import { Select, InputLabelLeftAbs$ } from '#/components/inputs';
 import { Filters } from './';
-import { withInitialFetch } from '../../../higher-order';
-import { ItPageContainer$$ } from '../../../components/containers';
+import { withInitialFetch } from '#/higher-order';
+import { ItPageContainer$$ } from '#/components/containers';
 
 function ReportPage() {
 

@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { BASE_URL } from '/BASE_URL';
-import { http } from '../../../../utils';
+import { http } from '#/utils';
 import { useHistory } from 'react-router-dom';
-import { UserCtx } from '../../../../GlobalContext';
+import { UserCtx } from '#/GlobalContext';
 
 function useSubmitUser(state, setIsLoading) {
 

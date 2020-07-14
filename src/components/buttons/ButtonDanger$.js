@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ButtonCommon$ from './ButtonCommon$';
-import { CLR } from '../../GlobalStyles';
+import { CLR } from '#/GlobalStyles';
 
 const ButtonDanger$ = styled(ButtonCommon$)`
 	box-shadow: none;

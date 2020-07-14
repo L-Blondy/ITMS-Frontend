@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ButtonText$ } from '../buttons';
+import { Button, ButtonText$ } from '#/components/buttons';
 
 function TruncatedText({ limit = 25, children: text }) {
 	const [ isExpanded, setIsExpanded ] = useState(false);

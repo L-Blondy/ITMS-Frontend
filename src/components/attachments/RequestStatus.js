@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { preloader } from '/assets/icons';
-import { Button, ButtonAlert$ } from '../buttons';
+import { Button, ButtonAlert$ } from '#/components/buttons';
 import { XHR } from '.';
 
 function RequestStatus({ requestStatus, setRequestStatus }) {

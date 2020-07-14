@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../../utils';
-import { CLR } from '../../../GlobalStyles';
+import { formatDate } from '#/utils';
+import { CLR } from '#/GlobalStyles';
 
 function ColumnData({ tickets = [], field }) {
 

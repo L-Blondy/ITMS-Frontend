@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React from 'react';
-import { formatDate } from '../../../utils';
-import { Input, Select, Textarea, InputLabelLeftAbs$ } from '../../../components/inputs';
-import { FlexRow$ } from '../../../components/flex';
-import { InputContainer$, InputContainerFullWidth$ } from '../../../components/containers';
+import { formatDate } from '#/utils';
+import { Input, Select, Textarea, InputLabelLeftAbs$ } from '#/components/inputs';
+import { FlexRow$ } from '#/components/flex';
+import { InputContainer$, InputContainerFullWidth$ } from '#/components/containers';
 import { activityCircle } from '/assets/icons';
 
 const Fields = ({ state, errors, handleChange, validateSubmission, changedFields }) => {

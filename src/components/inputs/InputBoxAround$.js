@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import InputCommon$ from './InputCommon$';
-import { CLR } from '../../GlobalStyles';
+import { CLR } from '#/GlobalStyles';
 
 const InputBoxAround$ = styled(InputCommon$)`
 	font-size: inherit;

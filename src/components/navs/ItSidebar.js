@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FlexRow$, FlexCol$ } from '../flex';
+import { FlexRow$, FlexCol$ } from '#/components/flex';
 
 function ItSidebar(props) {
 	return (

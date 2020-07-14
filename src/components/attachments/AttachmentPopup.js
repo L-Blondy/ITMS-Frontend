@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { DisableBg } from '../popup';
-import { CLR } from '../../GlobalStyles';
-import { Button, ButtonClose$, ButtonDanger$ } from '../buttons';
-import { UserCtx } from '../../GlobalContext';
+import { DisableBg } from '#/components/popup';
+import { CLR } from '#/GlobalStyles';
+import { Button, ButtonClose$, ButtonDanger$ } from '#/components/buttons';
+import { UserCtx } from '#/GlobalContext';
 import { XHR, RequestStatus, Upload, FileList } from '.';
 import { useUpload, useDelete } from './helpers';
 

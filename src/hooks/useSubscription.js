@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { toQueryString } from '../utils';
+import { toQueryString } from '#/utils';
 
 XMLHttpRequest.prototype.setHeaders = function setHeaders(headers) {
 	for (let header in headers)

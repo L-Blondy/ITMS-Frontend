@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import { FileInfo } from '../../../components/attachments';
+import { FileInfo } from '#/components/attachments';
 import { BASE_URL } from '/BASE_URL';
 
 function FileList({ fileList }) {

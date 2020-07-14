@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { CLR } from '../../GlobalStyles';
+import { CLR } from '#/GlobalStyles';
 
 function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', className, errors = [], name, ...props }) {
 

@@ -4,12 +4,12 @@ import { useParams } from 'react-router-dom';
 import { Column } from '.';
 import { bigArrow } from '/assets/icons';
 import { BASE_URL } from '/BASE_URL';
-import { http } from '../../../utils';
-import { Button, ButtonPrimary$, ButtonSecondary$ } from '../../../components/buttons';
-import { FlexRow$ } from '../../../components/flex';
-import { FONT_FAM } from '../../../GlobalStyles';
-import { withInitialFetch, withPreloader, withLocationMount } from '../../../higher-order';
-import { ItPageContainer$$ } from '../../../components/containers';
+import { http } from '#/utils';
+import { Button, ButtonPrimary$, ButtonSecondary$ } from '#/components/buttons';
+import { FlexRow$ } from '#/components/flex';
+import { ItPageContainer$$ } from '#/components/containers';
+import { withInitialFetch, withPreloader, withLocationMount } from '#/higher-order';
+import { FONT_FAM } from '#/GlobalStyles';
 
 function CategoriesPage({ setIsLoading, Preloader, initialData: categories }) {
 

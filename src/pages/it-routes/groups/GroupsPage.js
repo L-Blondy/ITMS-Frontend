@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
-import { FlexRow$, FlexCol$ } from '../../../components/flex';
-import { withInitialFetch } from '../../../higher-order';
-import { ItPageContainer$$ } from '../../../components/containers';
+import { FlexRow$, FlexCol$ } from '#/components/flex';
+import { withInitialFetch } from '#/higher-order';
+import { ItPageContainer$$ } from '#/components/containers';
 
 function GroupsPage({ initialData: { groups } }) {
 

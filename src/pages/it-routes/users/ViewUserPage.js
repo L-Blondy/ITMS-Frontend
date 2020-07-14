@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
-import { FlexRow$ } from '../../../components/flex';
-import { withInitialFetch } from '../../../higher-order';
-import { ItPageContainer$$ } from '../../../components/containers';
+import { FlexRow$ } from '#/components/flex';
+import { withInitialFetch } from '#/higher-order';
+import { ItPageContainer$$ } from '#/components/containers';
 
 function ViewUserPage({ initialData: { user } }) {
 

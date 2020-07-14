@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Preloader } from '../components/preloader';
+import { Preloader } from '#/components/preloader';
 
 function withPreloader(Target) {
 

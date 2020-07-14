@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { Input, InputLabelLeft$ } from '../../../components/inputs';
-import { http } from '../../../utils';
+import { Input, InputLabelLeft$ } from '#/components/inputs';
+import { http } from '#/utils';
 import { BASE_URL } from '/BASE_URL';
-import { ItPageContainer$$ } from '../../../components/containers';
+import { ItPageContainer$$ } from '#/components/containers';
 
 function UsersPage() {
 	const [ filter, setFilter ] = useState();

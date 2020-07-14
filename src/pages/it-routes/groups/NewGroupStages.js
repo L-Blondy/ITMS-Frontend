@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { FlexRow$ } from '../../../components/flex';
-import { Button, ButtonText$ } from '../../../components/buttons';
-import { CLR } from '../../../GlobalStyles';
+import { FlexRow$ } from '#/components/flex';
+import { Button, ButtonText$ } from '#/components/buttons';
+import { CLR } from '#/GlobalStyles';
 import { chevron2 } from '/assets/icons';
 
 function NewGroupStages({ stage, setStage }) {

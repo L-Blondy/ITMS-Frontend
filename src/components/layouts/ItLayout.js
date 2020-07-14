@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React from 'react';
 import { Settings } from '../popup';
-import { ItNavbar, ItSidebar } from '../navs';
-import { FlexRow$, FlexCol$ } from '../flex';
-import { useToggle } from '../../hooks';
+import { ItNavbar, ItSidebar } from '#/components/navs';
+import { FlexRow$, FlexCol$ } from '#/components/flex';
+import { useToggle } from '#/hooks';
 
 function ItLayout({ children }) {
 

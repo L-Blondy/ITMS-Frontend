@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
-import { TruncatedText } from '../text';
-import { CLR } from '../../GlobalStyles';
+import { TruncatedText } from '#/components/text';
+import { CLR } from '#/GlobalStyles';
 
 function ChangeLog({ children: log, ...props }) {
 

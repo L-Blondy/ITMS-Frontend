@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { FlexCol$ } from '../../../components/flex';
-import { Button, ButtonPrimary$ } from '../../../components/buttons';
+import { FlexCol$ } from '#/components/flex';
+import { Button, ButtonPrimary$ } from '#/components/buttons';
 import { NewGroupStages, NewGroupName, NewGroupRoles, NewGroupUsers } from './';
-import { withInitialFetch } from '../../../higher-order';
-import { ItPageContainer$$ } from '../../../components/containers';
+import { withInitialFetch } from '#/higher-order';
+import { ItPageContainer$$ } from '#/components/containers';
 
 function NewGroupPage({ initialData }) {
 	const [ stage, setStage ] = useState(2);

@@ -1,7 +1,7 @@
 import React from 'react';
-import { FlexRow$ } from '../../../components/flex';
-import { InputContainerFullWidth$ } from '../../../components/containers';
-import { Button, ButtonControlBar$ } from '../../../components/buttons';
+import { FlexRow$ } from '#/components/flex';
+import { InputContainerFullWidth$ } from '#/components/containers';
+import { Button, ButtonControlBar$ } from '#/components/buttons';
 
 
 

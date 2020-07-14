@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { SomeRoute } from '../pages/common-routes';
+import { SomeRoute } from '#/pages/common-routes';
 import {
 	CategoriesPage,
 	DashboardPage,

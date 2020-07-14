@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
-import { Button, ButtonAlert$ } from '../buttons';
+import { Button, ButtonAlert$ } from '#/components/buttons';
 
 function LocationPrompt({ when = false, message = '', reason = '' }) {
 

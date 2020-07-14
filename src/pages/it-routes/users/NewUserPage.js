@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import React, { useEffect } from 'react';
-import { Input, InputLabelLeftAbs$ } from '.././../../components/inputs';
-import { Button, ButtonPrimary$ } from '.././../../components/buttons';
-import { useFormValidation } from '../../../hooks';
+import { Input, InputLabelLeftAbs$ } from '#/components/inputs';
+import { Button, ButtonPrimary$ } from '#/components/buttons';
+import { useFormValidation } from '#/hooks';
 import requirements from './requirements.json';
 import { useSubmitUser } from './helpers';
-import { withInitialFetch, withPreloader } from '../../../higher-order';
-import { ItPageContainer$$ } from '../../../components/containers';
+import { withInitialFetch, withPreloader } from '#/higher-order';
+import { ItPageContainer$$ } from '#/components/containers';
 
 function NewUserPage({ setIsLoading, Preloader, initialData }) {
 	const {

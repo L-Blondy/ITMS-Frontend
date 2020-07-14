@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CLR } from '../../GlobalStyles';
+import { CLR } from '#/GlobalStyles';
 
 const ButtonSortBy$ = styled.button`
 	text-align: left;

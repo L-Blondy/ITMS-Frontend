@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { http, functionName, debounce } from '../../utils';
+import { http, functionName, debounce } from '#/utils';
 import { BASE_URL } from '/BASE_URL';
 import Select from './Select';
 

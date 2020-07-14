@@ -3,7 +3,7 @@ import React from 'react';
 import { FileInfo } from './';
 import { Input, InputLabelRight$ } from '../inputs';
 import { BASE_URL } from '/BASE_URL';
-import { CLR } from '../../GlobalStyles';
+import { CLR } from '#/GlobalStyles';
 
 const FileList = ({ fileList = [], className, selectFile, ...props }) => {
 

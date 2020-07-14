@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { formatFileSize } from '../../utils';
+import { formatFileSize } from '#/utils';
 import { BASE_URL } from '/BASE_URL';
 
 function FileLog({ children: file, fileList, used, ...props }) {

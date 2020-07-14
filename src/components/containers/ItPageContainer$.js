@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexCol$ } from '../flex';
+import { FlexCol$ } from '#/components/flex';
 
 const ItPageContainer$$ = styled(FlexCol$)`
 	flex-grow: 1;

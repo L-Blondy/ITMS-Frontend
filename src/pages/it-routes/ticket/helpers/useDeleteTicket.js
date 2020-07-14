@@ -1,5 +1,5 @@
 import { BASE_URL } from '/BASE_URL';
-import { http } from '../../../../utils';
+import { http } from '#/utils';
 import { useHistory } from 'react-router-dom';
 
 function useDeleteTicket(setNeedToSave, setIsLoading) {

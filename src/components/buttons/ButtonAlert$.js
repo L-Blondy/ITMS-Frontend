@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ButtonCommon$ from './ButtonCommon$';
-import { CLR } from '../../GlobalStyles';
+import { CLR } from '#/GlobalStyles';
 
 const Primary$ = styled(ButtonCommon$)`
 	background-color: ${ CLR.BUTTON.ALERT.PRIMARY };

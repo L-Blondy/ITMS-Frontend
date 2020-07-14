@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { UserCtx } from '../../../GlobalContext';
-import { Skipper } from '../../../components/inputs';
-import { ControlBar$ } from '../../../components/navs';
-import { http } from '../../../utils';
+import { UserCtx } from '#/GlobalContext';
+import { Skipper } from '#/components/inputs';
+import { ControlBar$ } from '#/components/navs';
+import { http } from '#/utils';
 import { BASE_URL } from '/BASE_URL';
 import FlexGrid from './FlexGrid';
-import { ItPageContainer$$ } from '../../../components/containers';
-import { withPreloader } from '../../../higher-order';
+import { ItPageContainer$$ } from '#/components/containers';
+import { withPreloader } from '#/higher-order';
 
 function SearchPage({ setIsLoading, Preloader }) {
 

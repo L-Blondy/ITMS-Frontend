@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { CLR } from '../../GlobalStyles';
-import { Button, ButtonPrimary$, ButtonUpload$ } from '../buttons';
+import { CLR } from '#/GlobalStyles';
+import { Button, ButtonPrimary$, ButtonUpload$ } from '#/components/buttons';
 
 function Upload({ onUpload, fileList }) {
 

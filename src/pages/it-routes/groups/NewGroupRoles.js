@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { SelectColumns, InputCommon$ } from '../../../components/inputs';
+import { SelectColumns, InputCommon$ } from '#/components/inputs';
 
 function NewGroupRoles({ when, roles, setRoles, initialOptions }) {
 	if (!when) return null;

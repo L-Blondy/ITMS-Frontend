@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Warning } from '../popup';
+import { Warning } from '#/components/popup';
 
 function Button({
 	styleAs: Button$ = 'button',

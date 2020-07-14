@@ -1,6 +1,6 @@
 import React from 'react';
-import { ControlBar$ } from '../../../components/navs';
-import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '../../../components/buttons';
+import { ControlBar$ } from '#/components/navs';
+import { Button, ButtonDanger$, ButtonPaperclip$, ButtonControlBar$ } from '#/components/buttons';
 import STATUS from './STATUS.json';
 
 function ControlBar({ deleteTicket, state, ...props }) {

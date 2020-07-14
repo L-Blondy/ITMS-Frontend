@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { FlexRow$, FlexCol$ } from '../flex';
-import { Button, ButtonCommon$ } from '../buttons';
-import { CLR } from '../../GlobalStyles';
+import { FlexRow$, FlexCol$ } from '#/components/flex';
+import { Button, ButtonCommon$ } from '#/components/buttons';
+import { CLR } from '#/GlobalStyles';
 import { chevron3 } from '/assets/icons';
 
 function SelectColumns({

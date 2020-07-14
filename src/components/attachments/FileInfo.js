@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import { formatFileSize } from '../../utils';
+import { formatFileSize } from '#/utils';
 import * as SRC from '/assets/icons/fileTypes';
 
 function FileInfo({ data, className, ...props }) {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { http } from '../utils';
+import { http } from '#/utils';
 import { BASE_URL } from '/BASE_URL';
-import { Preloader } from '../components/preloader';
-import { ErrorPage } from '../components/error';
+import { Preloader } from '#/components/preloader';
+import { ErrorPage } from '#/components/error';
 
 function withInitialFetch(Target) {
 

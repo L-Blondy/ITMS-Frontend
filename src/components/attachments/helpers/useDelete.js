@@ -1,8 +1,8 @@
 import { XHR } from '../';
 import { useContext } from 'react';
 import { BASE_URL } from '/BASE_URL';
-import { http } from '../../../utils';
-import { UserCtx } from '../../../GlobalContext';
+import { http } from '#/utils';
+import { UserCtx } from '#/GlobalContext';
 
 function useDelete(selectedFiles, setSelectedFiles, setKey, setRequestStatus) {
 

@@ -1,6 +1,6 @@
 import { XHR } from '../';
 import { BASE_URL } from '/BASE_URL';
-import { http } from '../../../utils';
+import { http } from '#/utils';
 
 function useUpload(username, setKey, setRequestStatus) {
 
