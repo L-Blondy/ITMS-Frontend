@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FlexRow$, FlexCol$ } from '#/components/flex';
 import { Button, ButtonCommon$ } from '#/components/buttons';
 import { CLR } from '#/GlobalStyles';
 import { chevron3 } from '/assets/icons';
+let e = {};
 
 function SelectColumns({
 	styleAs = 'div',
@@ -12,8 +13,11 @@ function SelectColumns({
 	columnNameLeft = '',
 	columnNameRight = '',
 	options = [],
-	defaultValues = []
+	defaultValues = [],
+	onChange = () => { }
 }) {
+
+	const target = useRef();
 
 	useEffect(() => {
 		if (!defaultValues.every(val => options.indexOf(val) !== -1))
@@ -25,7 +29,6 @@ function SelectColumns({
 	const [ hightlighted, setHightlighted ] = useState({ side: '', values: [] });
 
 	const handleEvent = useHandleClick(setHightlighted, hightlighted, leftValues, rightValues);
-
 
 	const handleAdd = () => {
 		if (hightlighted.side !== 'left') return;
@@ -60,9 +63,16 @@ function SelectColumns({
 			return 'hightlighted';
 	};
 
+	useEffect(() => {
+		e.target = target.current;
+		e.target.value = rightValues;
+		onChange(e);
+	}, [ rightValues ]);
+
 	return (
 		<FlexRow$$
 			as={ styleAs }
+			ref={ target }
 			className='select-multiple'
 			minHeight$={ minHeight }
 			columnWidth$={ columnWidth }>

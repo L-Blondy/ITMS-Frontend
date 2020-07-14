@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlexCol$ } from '#/components/flex';
 import { Button, ButtonPrimary$ } from '#/components/buttons';
 import { NewGroupStages, NewGroupName, NewGroupRoles, NewGroupUsers } from './';
@@ -28,6 +28,10 @@ function NewGroupPage({ initialData }) {
 		e.preventDefault();
 		setStage(stage + 1);
 	};
+
+	useEffect(() => {
+		console.log(name, roles, users);
+	}, [ name, roles, users ]);
 
 	return (
 		<ItPageContainer$$$>

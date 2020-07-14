@@ -3,6 +3,7 @@ import { Input, InputLabelTopAbs$ } from '#/components/inputs';
 
 function NewGroupName({ when, name, setName }) {
 	if (!when) return null;
+
 	return (
 		<Input
 			styleAs={ InputLabelTopAbs$ }
