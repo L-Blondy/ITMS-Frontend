@@ -7,7 +7,7 @@ import { withInitialFetch } from '#/higher-order';
 import { ItPageContainer$$ } from '#/components/containers';
 
 function NewGroupPage({ initialData }) {
-	const [ stage, setStage ] = useState(2);
+	const [ stage, setStage ] = useState(3);
 	const [ name, setName ] = useState('');
 	const [ roles, setRoles ] = useState([]);
 	const [ users, setUsers ] = useState([]);

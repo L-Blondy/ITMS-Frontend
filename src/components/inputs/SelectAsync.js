@@ -4,9 +4,9 @@ import { BASE_URL } from '/BASE_URL';
 import Select from './Select';
 
 function SelectAsync({
-	queryURL = BASE_URL + location.pathname,
-	queryProp,
-	dataNesting,
+	url = BASE_URL + location.pathname,
+	filterBy,
+	dataNesting = [],
 	maxResults = 10,
 	...props
 }) {
@@ -28,7 +28,7 @@ function SelectAsync({
 
 	const fetchOptions = debounce(200)((filter) => {
 		http()
-			.get(queryURL, { [ queryProp ]: filter })
+			.get(url, { [ filterBy ]: filter })
 			.then(res => unNestOptions(dataNesting, res))
 			.then(rawOptions => {
 				if (functionName(rawOptions.constructor) !== 'Array')

@@ -27,8 +27,8 @@ function SelectNew({ onChange, options = [], label, styleAs: Span$ = 'span', cla
 				id={ name }
 				onChange={ () => { } }
 				style={ { display: 'none' } }>
-				{ options.map(option => (
-					<option value={ option.value } key={ option.value }>{ option.label }</option>
+				{ options.map((option, i) => (
+					<option value={ option.value } key={ option.value + i }>{ option.label }</option>
 				)) }
 			</select>
 

@@ -11,7 +11,7 @@ function UsersPage() {
 
 	useEffect(() => {
 		http()
-			.get(BASE_URL + location.pathname, { value: filter })
+			.get(BASE_URL + location.pathname, { name: filter })
 			.then(res => {
 				setUsers(res.users);
 			})

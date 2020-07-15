@@ -43,6 +43,11 @@ const InputCommon$ = styled.span`
 				color: inherit;
 			}
 		}
+
+		&:focus {
+			box-shadow: 0 0 0 1px #1db8cc;
+			outline: none;
+		}
 	}
 
 	.option {
@@ -65,6 +70,14 @@ const InputCommon$ = styled.span`
 	.select{
 		padding: 0;
 
+		&:focus-within {
+			box-shadow: 0 0 0 1px #1db8cc;
+		}
+
+		input:focus {
+			box-shadow: none;
+		}
+
 		&-column {
 			padding: 0;
 		}
@@ -75,7 +88,7 @@ const InputCommon$ = styled.span`
 			background: none;
 
 			&:focus-within {
-				box-shadow: 0 0 0 1px #1db8cc;
+				box-shadow: none;
 			}
 		}
 
