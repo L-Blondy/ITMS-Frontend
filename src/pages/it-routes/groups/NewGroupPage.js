@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { FlexCol$ } from '#/components/flex';
 import { Button, ButtonPrimary$ } from '#/components/buttons';
-import { NewGroupStages, NewGroupName, NewGroupRoles, NewGroupUsers } from './';
+import { NewGroupPageProcessStages, NewGroupPageSetGroupName, NewGroupPageSetGroupRoles, NewGroupPageSetGroupMembers } from './';
 import { withInitialFetch } from '#/higher-order';
 import { ItPageContainer$$ } from '#/components/containers';
 
@@ -36,21 +36,21 @@ function NewGroupPage({ initialData }) {
 	return (
 		<ItPageContainer$$$>
 
-			<NewGroupStages stage={ stage } setStage={ setStage } />
+			<NewGroupPageProcessStages stage={ stage } setStage={ setStage } />
 
 			<Form$ as='form' onSubmit={ handleNextStage }>
-				<NewGroupName
+				<NewGroupPageSetGroupName
 					when={ stage === 1 }
 					name={ name }
 					setName={ setName }
 				/>
-				<NewGroupRoles
+				<NewGroupPageSetGroupRoles
 					when={ stage === 2 }
 					roles={ roles }
 					setRoles={ setRoles }
 					initialOptions={ initialData.roles }
 				/>
-				<NewGroupUsers
+				<NewGroupPageSetGroupMembers
 					when={ stage === 3 }
 					users={ users }
 					setUsers={ setUsers }
@@ -59,9 +59,11 @@ function NewGroupPage({ initialData }) {
 				<Button
 					className='next'
 					styleAs={ ButtonPrimary$$ }
-					disabled={ isNextAllowed() }>
+					disabled={ isNextAllowed() }
+					type='submit'>
 					Next
 				</Button>
+
 			</Form$>
 
 		</ItPageContainer$$$>

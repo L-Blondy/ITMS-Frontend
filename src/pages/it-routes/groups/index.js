@@ -1,7 +1,7 @@
-export { default as NewGroupStages } from './NewGroupStages';
-export { default as NewGroupName } from './NewGroupName';
-export { default as NewGroupRoles } from './NewGroupRoles';
-export { default as NewGroupUsers } from './NewGroupUsers';
+export { default as NewGroupPageProcessStages } from './NewGroupPageProcessStages';
+export { default as NewGroupPageSetGroupName } from './NewGroupPageSetGroupName';
+export { default as NewGroupPageSetGroupRoles } from './NewGroupPageSetGroupRoles';
+export { default as NewGroupPageSetGroupMembers } from './NewGroupPageSetGroupMembers';
 export { default as NewGroupPage } from './NewGroupPage';
 export { default as ViewGroupPage } from './ViewGroupPage';
 export { default as GroupsPage } from './GroupsPage';

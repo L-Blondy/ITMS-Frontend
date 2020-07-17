@@ -9,6 +9,7 @@ function Button({
 	warning = {},
 	className,
 	tag: Tag = 'button',
+	type = 'button',
 	...props
 }) {
 	if (!isVisible) return <div />;
@@ -48,6 +49,7 @@ function Button({
 			as={ Tag }
 			className={ className }
 			onClick={ handleClick }
+			type={ type }
 			{ ...props }
 		/>
 	</>);

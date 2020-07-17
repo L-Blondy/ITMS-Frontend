@@ -3,8 +3,9 @@ import { SelectAsync, InputLabelTopAbs$ } from '#/components/inputs';
 import { Button } from '#/components/buttons';
 import { FlexRow$ } from '#/components/flex';
 import { BASE_URL } from '/BASE_URL';
+import { ColumnWithAddAndRemove } from '#/components/columns';
 
-function NewGroupUsers({ when, users, setUsers }) {
+function NewGroupPageSetGroupMembers({ when, users, setUsers }) {
 	if (!when) return null;
 
 	const [ chosenOption, setChosenOption ] = useState('');
@@ -35,9 +36,9 @@ function NewGroupUsers({ when, users, setUsers }) {
 				</Button>
 			</FlexRow$>
 
-			test
+			<ColumnWithAddAndRemove />
 		</div>
 	);
 }
 
-export default NewGroupUsers;
+export default NewGroupPageSetGroupMembers;

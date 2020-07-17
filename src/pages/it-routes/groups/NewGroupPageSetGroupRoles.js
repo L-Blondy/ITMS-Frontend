@@ -1,7 +1,7 @@
 import React from 'react';
 import { SelectColumns, InputCommon$ } from '#/components/inputs';
 
-function NewGroupRoles({ when, roles, setRoles, initialOptions }) {
+function NewGroupPageSetGroupRoles({ when, roles, setRoles, initialOptions }) {
 	if (!when) return null;
 
 	return (
@@ -18,4 +18,4 @@ function NewGroupRoles({ when, roles, setRoles, initialOptions }) {
 	);
 }
 
-export default NewGroupRoles;
+export default NewGroupPageSetGroupRoles;

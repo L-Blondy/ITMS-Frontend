@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, InputLabelTopAbs$ } from '#/components/inputs';
 
-function NewGroupName({ when, name, setName }) {
+function NewGroupPageSetGroupName({ when, name, setName }) {
 	if (!when) return null;
 
 	return (
@@ -16,4 +16,4 @@ function NewGroupName({ when, name, setName }) {
 	);
 }
 
-export default NewGroupName;
+export default NewGroupPageSetGroupName;

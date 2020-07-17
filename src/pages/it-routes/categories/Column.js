@@ -3,9 +3,12 @@ import React, { useEffect } from 'react';
 import { Button, ButtonItemControl$ } from '#/components/buttons';
 import { Input, InputTransparent$ } from '#/components/inputs';
 import { FlexRow$, FlexCol$ } from '#/components/flex';
+import { useArray } from '#/hooks';
 import { FONT_FAM } from '#/GlobalStyles';
 
 function Column({ items = [], name, selectedItem, setSelectedItem, updateState }) {
+
+	const { add, remove, moveUp, moveDown } = useArray();
 
 	useEffect(() => {
 		if (name === 'sub-categories' && selectedItem)
