@@ -1,4 +1,2 @@
-export { default as withAdd } from './withAdd';
-export { default as withRemove } from './withRemove';
-export { default as withReorder } from './withReorder';
-export { default as ColumnWithAddAndRemove } from './ColumnWithAddAndRemove';
+export { default as AddItem } from './AddItem';
+export { default as Column } from './Column';

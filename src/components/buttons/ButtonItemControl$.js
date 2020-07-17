@@ -33,12 +33,13 @@ const Add$ = styled.button`
 	border: none;
 	border-radius: 50px;
 	background: #0096ac;
-	width: 32px; 
+	width: 30px; 
 	position: relative;
 	background-image: ${`url(${ plus })` };
 	background-size: 50%;
 	background-repeat: no-repeat;
 	background-position: center;
+	flex-shrink: 0;
 
 	&:hover,
 	&:focus {

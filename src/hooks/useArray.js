@@ -1,6 +1,6 @@
 function useArray(items, setItems) {
 	const add = (item) => {
-		setItems([ ...items, item ]);
+		item && setItems([ ...new Set([ ...items, item ]) ]);
 	};
 
 	const remove = (index) => {

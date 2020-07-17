@@ -38,7 +38,7 @@ function NewGroupPage({ initialData }) {
 
 			<NewGroupPageProcessStages stage={ stage } setStage={ setStage } />
 
-			<Form$ as='form' onSubmit={ handleNextStage }>
+			<FlexCol$$>
 				<NewGroupPageSetGroupName
 					when={ stage === 1 }
 					name={ name }
@@ -60,11 +60,12 @@ function NewGroupPage({ initialData }) {
 					className='next'
 					styleAs={ ButtonPrimary$$ }
 					disabled={ isNextAllowed() }
-					type='submit'>
+					type='submit'
+					onClick={ handleNextStage }>
 					Next
 				</Button>
 
-			</Form$>
+			</FlexCol$$>
 
 		</ItPageContainer$$$>
 	);
@@ -78,7 +79,7 @@ const ItPageContainer$$$ = styled(ItPageContainer$$)`
 	align-items: flex-start;
 `;
 
-const Form$ = styled(FlexCol$)`
+const FlexCol$$ = styled(FlexCol$)`
 	align-items: flex-start;
 	margin-top: 2rem;
 
@@ -86,7 +87,7 @@ const Form$ = styled(FlexCol$)`
 		margin-top: 2rem;
 	}
 
-	input, .select {
+	input#name, .select-roles {
 		width: 230px;
 	}
 

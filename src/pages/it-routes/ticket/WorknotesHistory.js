@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { formatDate } from '#/utils';
-import { FileLog, ChangeLog, WorkLog } from '#/components/logs';
+import { FileLog, ChangeLog, WorkLog } from '#/components/worklogs';
 import { FlexRow$, FlexCol$ } from '#/components/flex';
 import { CLR } from '#/GlobalStyles';
 

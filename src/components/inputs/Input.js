@@ -43,7 +43,7 @@ const Input = ({
 			<Label htmlFor={ name } />
 
 			<Input
-				className={ errors.length ? 'invalid' : '' }
+				className={ errors.length ? 'input invalid' : 'input' }
 				name={ name }
 				id={ name }
 				ref={ ref }

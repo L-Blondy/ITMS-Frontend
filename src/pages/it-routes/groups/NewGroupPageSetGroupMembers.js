@@ -3,40 +3,32 @@ import { SelectAsync, InputLabelTopAbs$ } from '#/components/inputs';
 import { Button } from '#/components/buttons';
 import { FlexRow$ } from '#/components/flex';
 import { BASE_URL } from '/BASE_URL';
-import { ColumnWithAddAndRemove } from '#/components/columns';
+import { Column, AddItem } from '#/components/columns';
 
 function NewGroupPageSetGroupMembers({ when, users, setUsers }) {
 	if (!when) return null;
 
-	const [ chosenOption, setChosenOption ] = useState('');
+	const [ members, setMembers ] = useState([]);
 
-	const addUser = () => {
-		console.log(chosenOption);
-		setChosenOption('');
-	};
 
 	return (
 		<div>
-			<FlexRow$>
-				<SelectAsync
-					styleAs={ InputLabelTopAbs$ }
-					label='Users'
-					name='user-select'
-					url={ BASE_URL + '/it/users' }
-					filterBy='name'
-					dataNesting={ [ 'users' ] }
-					noOptionsMessage={ () => 'No user found' }
-					value={ chosenOption }
-					onChange={ e => setChosenOption(e.target.value) }
-				/>
-				<Button
-					type='button'
-					onClick={ addUser }>
-					Add
-				</Button>
-			</FlexRow$>
 
-			<ColumnWithAddAndRemove />
+			<Column async
+				name='Members'
+				items={ members }
+				setItems={ setMembers }
+				addItemRender={ (props) => (
+					<AddItem async
+						name='add-members'
+						placeholder='Add member'
+						url={ BASE_URL + '/it/users' }
+						filterBy='name'
+						dataNesting={ [ 'users' ] }
+						noOptionsMessage={ () => 'No user found' }
+						{ ...props }
+					/>
+				) } />
 		</div>
 	);
 }

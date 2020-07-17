@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Column } from '.';
+import React, { useState } from 'react';
+import { Column, AddItem } from '#/components/columns';
 import { bigArrow } from '/assets/icons';
 import { BASE_URL } from '/BASE_URL';
 import { http } from '#/utils';
@@ -9,43 +8,18 @@ import { Button, ButtonPrimary$, ButtonSecondary$ } from '#/components/buttons';
 import { FlexRow$ } from '#/components/flex';
 import { ItPageContainer$$ } from '#/components/containers';
 import { withInitialFetch, withPreloader, withLocationMount } from '#/higher-order';
+import { useSetCategories, usePageTitle } from './helpers';
 import { FONT_FAM } from '#/GlobalStyles';
 
-function CategoriesPage({ setIsLoading, Preloader, initialData: categories }) {
+function CategoriesPage({ setIsLoading, Preloader, initialData }) {
 
-	const [ selectedItem, setSelectedItem ] = useState();
-	const [ state, setState ] = useState(categories);
-	const [ key, setKey ] = useState(Math.random());
-	const params = useParams();
+	const [ selectedCategory, setSelectedCategory ] = useState([]);
+	const [ state, setState ] = useState(initialData);
+	const [ setCategories, setSubCategories ] = useSetCategories(state, setState, selectedCategory);
+	const pageTitle = usePageTitle();
 
-	useEffect(() => {
-		setKey(Math.random());
-	}, [ state ]);
-
-	const pageTitle = () => {
-		const { type } = params;
-
-		const dictionary = {
-			'incidents': 'Incident categories',
-			'requests': 'Request categories',
-			'changes': 'Change categories'
-		};
-		return dictionary[ type ];
-	};
-
-	const updateCat = (catState) => {
-		const nextState = catState.reduce((result, cat) => {
-			result[ cat ] = [ ...state[ cat ] || [] ];
-			return result;
-		}, {});
-		setState(nextState);
-	};
-
-	const updateSubCat = (subCatState) => {
-		setState({
-			...state,
-			[ selectedItem ]: subCatState
-		});
+	const handleSelect = (item) => {
+		setSelectedCategory([ item ]);
 	};
 
 	const saveChanges = () => {
@@ -62,38 +36,51 @@ function CategoriesPage({ setIsLoading, Preloader, initialData: categories }) {
 		}, 500);
 	};
 
+	const cancelChanges = () => setState(initialData);
+
 	return (
 		<ItPageContainer$$$>
 			<Preloader />
 
 			<div className='wrapper'>
 
-				<FlexRow$ as='h1' className='title'>{ pageTitle() }</FlexRow$>
+				<FlexRow$ as='h1' className='title'>{ pageTitle }</FlexRow$>
 
 				<FlexRow$ className='columns'>
 					<Column
 						name='categories'
-						key={ 'a' + key }
 						items={ Object.keys(state) }
-						setSelectedItem={ setSelectedItem }
-						selectedItem={ selectedItem }
-						updateState={ updateCat }
+						setItems={ setCategories }
+						selectedItems={ selectedCategory }
+						handleSelect={ handleSelect }
+						displayAddItem={ true }
+						withReorder
+						addItemRender={ (props) => (
+							<AddItem { ...props } placeholder='Add category' />
+						) }
 					/>
 
 					<img className='big-arrow' src={ bigArrow } alt='=>' />
 
 					<Column
 						name='sub-categories'
-						key={ 'b' + key }
-						items={ state[ selectedItem ] }
-						selectedItem={ selectedItem }
-						updateState={ updateSubCat }
+						items={ state[ selectedCategory ] }
+						setItems={ setSubCategories }
+						displayAddItem={ !!state[ selectedCategory ] }
+						withReorder
+						addItemRender={ (props) => (
+							<AddItem
+								autoFocus
+								placeholder='Add sub-category'
+								{ ...props }
+							/>
+						) }
 					/>
 				</FlexRow$>
 
 				<FlexRow$ className='controls'>
 					<Button styleAs={ ButtonPrimary$ } onClick={ saveChanges }>Save</Button>
-					<Button styleAs={ ButtonSecondary$ } onClick={ () => setState(categories) }>Cancel</Button>
+					<Button styleAs={ ButtonSecondary$ } onClick={ cancelChanges }>Cancel</Button>
 				</FlexRow$>
 			</div>
 		</ItPageContainer$$$>

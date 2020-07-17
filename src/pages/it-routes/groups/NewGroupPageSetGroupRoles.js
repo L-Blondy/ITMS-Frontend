@@ -6,6 +6,7 @@ function NewGroupPageSetGroupRoles({ when, roles, setRoles, initialOptions }) {
 
 	return (
 		<SelectColumns
+			className='select-roles'
 			styleAs={ InputCommon$ }
 			minHeight='270px'
 			columnWidth='230px'

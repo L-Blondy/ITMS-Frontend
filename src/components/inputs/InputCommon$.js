@@ -10,6 +10,7 @@ const InputCommon$ = styled.span`
 	}
 
 	label, .label {
+		line-height: 28px;
 		display: block;
 	}
 
